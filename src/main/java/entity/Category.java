@@ -6,12 +6,12 @@ public class Category {
 
     private int id;
     private int name;
-    private int description;
+    private String description;
 
     public Category() {
     }
 
-    public Category(int id, int name, int description) {
+    public Category(int id, int name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -33,11 +33,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(int description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

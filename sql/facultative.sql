@@ -163,9 +163,9 @@ INSERT INTO role (id,name)
 -- course_status
 INSERT INTO course_status (id, name)
 	VALUES
-		(DEFAULT, "not start"),
-        (DEFAULT, "progress"),
-        (DEFAULT, "end");      
+		(DEFAULT, "coming_soon"),
+        (DEFAULT, "in_process"),
+        (DEFAULT, "completed");
       
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

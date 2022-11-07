@@ -10,12 +10,12 @@ public class User {
     private String lastName;
     private String email;
     private boolean isBlock;
-    private int roleId;
+    private Role role;
 
     public User() {
     }
 
-    public User(int id, String login, String password, String firstName, String lastName, String email, boolean isBlock, int roleId) {
+    public User(int id, String login, String password, String firstName, String lastName, String email, boolean isBlock, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -23,7 +23,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.isBlock = isBlock;
-        this.roleId = roleId;
+        this.role = role;
     }
 
     public int getId() {
@@ -82,12 +82,12 @@ public class User {
         isBlock = block;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", isBlock=" + isBlock +
-                ", roleId=" + roleId +
+                ", roleId=" + role +
                 '}';
     }
 
@@ -109,7 +109,7 @@ public class User {
         User user = (User) o;
         return id == user.id
                 && isBlock == user.isBlock
-                && roleId == user.roleId
+                && role == user.role
                 && login.equals(user.login)
                 && password.equals(user.password)
                 && firstName.equals(user.firstName)
@@ -119,6 +119,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, firstName, lastName, email, isBlock, roleId);
+        return Objects.hash(id, login, password, firstName, lastName, email, isBlock, role);
     }
 }

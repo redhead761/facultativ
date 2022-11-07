@@ -9,20 +9,20 @@ public class Course {
     private int duration;
     private LocalDate startDate;
     private String description;
-    private int categoryId;
-    private int courseStatusId;
+    private Category category;
+    private CourseStatus courseStatus;
 
     public Course() {
     }
 
-    public Course(int id, String title, int duration, LocalDate startDate, String description, int categoryId, int courseStatusId) {
+    public Course(int id, String title, int duration, LocalDate startDate, String description, Category category, CourseStatus courseStatus) {
         this.id = id;
         this.title = title;
         this.duration = duration;
         this.startDate = startDate;
         this.description = description;
-        this.categoryId = categoryId;
-        this.courseStatusId = courseStatusId;
+        this.category = category;
+        this.courseStatus = courseStatus;
     }
 
     public int getId() {
@@ -65,20 +65,20 @@ public class Course {
         this.description = description;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public int getCourseStatusId() {
-        return courseStatusId;
+    public CourseStatus getCourseStatus() {
+        return courseStatus;
     }
 
-    public void setCourseStatusId(int courseStatusId) {
-        this.courseStatusId = courseStatusId;
+    public void setCourseStatus(CourseStatus courseStatus) {
+        this.courseStatus = courseStatus;
     }
 
     @Override
@@ -89,8 +89,8 @@ public class Course {
                 ", duration=" + duration +
                 ", startDate=" + startDate +
                 ", description='" + description + '\'' +
-                ", categoryId=" + categoryId +
-                ", courseStatusId=" + courseStatusId +
+                ", categoryId=" + category +
+                ", courseStatusId=" + courseStatus +
                 '}';
     }
 
@@ -101,8 +101,8 @@ public class Course {
         Course course = (Course) o;
         return id == course.id
                 && duration == course.duration
-                && categoryId == course.categoryId
-                && courseStatusId == course.courseStatusId
+                && category == course.category
+                && courseStatus == course.courseStatus
                 && title.equals(course.title)
                 && startDate.equals(course.startDate)
                 && description.equals(course.description);
@@ -110,6 +110,6 @@ public class Course {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, duration, startDate, description, categoryId, courseStatusId);
+        return Objects.hash(id, title, duration, startDate, description, category, courseStatus);
     }
 }

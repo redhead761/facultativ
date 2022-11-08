@@ -1,17 +1,26 @@
 package db.entity;
 
+import java.util.Arrays;
+
 public enum Role {
-    ADMIN("admin"),
-    TEACHER("teacher"),
-    STUDENT("student");
+    ADMIN(1),
+    TEACHER(2),
+    STUDENT(3);
 
-    private final String role;
+    private final int role;
 
-    Role(String role) {
+    Role(int role) {
         this.role = role;
     }
 
-    public String getRole() {
+    public int getId() {
         return role;
+    }
+
+    public static Role of(int id) {
+        return Arrays.stream(Role.values())
+                .filter(role -> role.getId() == id)
+                .findAny()
+                .orElseThrow();
     }
 }

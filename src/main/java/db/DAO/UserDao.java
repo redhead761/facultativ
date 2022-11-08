@@ -1,6 +1,7 @@
 package db.DAO;
 
-import db.DBManager;
+
+import db.DataSource;
 import db.entity.Role;
 import db.entity.User;
 
@@ -8,13 +9,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao {
+public  class UserDao {
 
     private static final String SELECT_FROM_USERS = "SELECT * FROM users";
-
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
-        try (Connection con = DBManager.getInstance().getConnection();
+        try (Connection con = DataSource.getConnection();
              Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery(SELECT_FROM_USERS);
             while (rs.next()) {

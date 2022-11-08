@@ -1,4 +1,4 @@
-package entity;
+package db.entity;
 
 import java.util.Objects;
 

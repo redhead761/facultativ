@@ -1,4 +1,4 @@
-package entity;
+package db.entity;
 
 public enum Role {
     ADMIN("admin"),

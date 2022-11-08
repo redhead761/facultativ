@@ -1,4 +1,4 @@
-package entity;
+package db.entity;
 
 public class GradeBook {
     private Course course;

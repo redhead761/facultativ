@@ -1,4 +1,4 @@
-package entity;
+package db.entity;
 
 public enum CourseStatus {
     COMING_SOON("coming_soon"),

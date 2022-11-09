@@ -10,19 +10,19 @@ public class Course {
     private LocalDate startDate;
     private String description;
     private Category category;
-    private CourseStatus courseStatus;
+    private Status status;
 
     public Course() {
     }
 
-    public Course(int id, String title, int duration, LocalDate startDate, String description, Category category, CourseStatus courseStatus) {
+    public Course(int id, String title, int duration, LocalDate startDate, String description, Category category, Status status) {
         this.id = id;
         this.title = title;
         this.duration = duration;
         this.startDate = startDate;
         this.description = description;
         this.category = category;
-        this.courseStatus = courseStatus;
+        this.status = status;
     }
 
     public int getId() {
@@ -73,12 +73,12 @@ public class Course {
         this.category = category;
     }
 
-    public CourseStatus getCourseStatus() {
-        return courseStatus;
+    public Status getCourseStatus() {
+        return status;
     }
 
-    public void setCourseStatus(CourseStatus courseStatus) {
-        this.courseStatus = courseStatus;
+    public void setCourseStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class Course {
                 ", startDate=" + startDate +
                 ", description='" + description + '\'' +
                 ", categoryId=" + category +
-                ", courseStatusId=" + courseStatus +
+                ", courseStatusId=" + status +
                 '}';
     }
 
@@ -102,7 +102,7 @@ public class Course {
         return id == course.id
                 && duration == course.duration
                 && category == course.category
-                && courseStatus == course.courseStatus
+                && status == course.status
                 && title.equals(course.title)
                 && startDate.equals(course.startDate)
                 && description.equals(course.description);
@@ -110,6 +110,6 @@ public class Course {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, duration, startDate, description, category, courseStatus);
+        return Objects.hash(id, title, duration, startDate, description, category, status);
     }
 }

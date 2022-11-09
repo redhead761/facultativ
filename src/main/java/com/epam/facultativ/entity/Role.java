@@ -1,6 +1,5 @@
-package db.entity;
+package com.epam.facultativ.entity;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 //public enum Role {

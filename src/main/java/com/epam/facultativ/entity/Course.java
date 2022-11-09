@@ -1,4 +1,4 @@
-package db.entity;
+package com.epam.facultativ.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;

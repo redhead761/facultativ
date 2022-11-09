@@ -1,4 +1,4 @@
-package db.entity;
+package com.epam.facultativ.entity;
 
 public class GradeBook {
     private Course course;

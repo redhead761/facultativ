@@ -1,19 +1,19 @@
-package db.entity;
+package com.epam.facultativ.entity;
 
 import java.util.Objects;
 
 public class Category {
 
     private int id;
-    private int name;
+    private String title;
     private String description;
 
     public Category() {
     }
 
-    public Category(int id, int name, String description) {
+    public Category(int id, String title, String description) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
     }
 
@@ -25,12 +25,12 @@ public class Category {
         this.id = id;
     }
 
-    public int getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(int name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -45,7 +45,7 @@ public class Category {
     public String toString() {
         return "Category{" +
                 "id=" + id +
-                ", name=" + name +
+                ", title=" + title +
                 ", description=" + description +
                 '}';
     }
@@ -55,11 +55,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && name == category.name && description == category.description;
+        return id == category.id && title == category.title && description == category.description;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return Objects.hash(id, title, description);
     }
 }

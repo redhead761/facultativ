@@ -155,9 +155,9 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
     -- -----------------------------------------------------
 
     -- roles
-    INSERT INTO roles VALUES(1, 'ADMIN');
-    INSERT INTO roles VALUES(2, 'TEACHER');
-    INSERT INTO roles VALUES(3, 'STUDENT');
+    INSERT INTO roles VALUES(DEFAULT, 'ADMIN');
+    INSERT INTO roles VALUES(DEFAULT, 'TEACHER');
+    INSERT INTO roles VALUES(DEFAULT, 'STUDENT');
 
     -- course statuses
     INSERT INTO course_statuses VALUES(DEFAULT, "COMING_SOON");

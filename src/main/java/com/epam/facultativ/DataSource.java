@@ -1,4 +1,4 @@
-package db;
+package com.epam.facultativ;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

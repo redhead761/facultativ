@@ -1,4 +1,4 @@
-package db.entity;
+package com.epam.facultativ.entity;
 
 public enum CourseStatus {
     COMING_SOON("coming_soon"),

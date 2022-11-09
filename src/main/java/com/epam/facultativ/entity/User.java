@@ -1,4 +1,4 @@
-package db.entity;
+package com.epam.facultativ.entity;
 
 import java.util.Objects;
 
@@ -98,7 +98,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", isBlock=" + isBlock +
-                ", roleId=" + role +
+                ", role=" + role +
                 '}';
     }
 

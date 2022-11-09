@@ -10,12 +10,12 @@ public class User {
     private String lastName;
     private String email;
     private boolean isBlock;
-    private Role role;
+    private String role;
 
     public User() {
     }
 
-    public User(int id, String login, String password, String firstName, String lastName, String email, boolean isBlock, Role role) {
+    public User(int id, String login, String password, String firstName, String lastName, String email, boolean isBlock, String role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -82,11 +82,11 @@ public class User {
         isBlock = block;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

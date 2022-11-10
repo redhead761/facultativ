@@ -16,6 +16,7 @@ public class CategoryDao implements Dao<Category> {
     private static final String UPDATE_CATEGORY = "UPDATE categories SET title=?, description=? WHERE id=?";
     private static final String INSERT_CATEGORY = "INSERT INTO categories VALUES (DEFAULT,?,?)";
     private static final String DELETE_CATEGORY = "DELETE FROM categories WHERE id=?";
+    private static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM categories WHERE title=?";
 
     @Override
     public List<Category> findAll() {
@@ -89,6 +90,21 @@ public class CategoryDao implements Dao<Category> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Category findByTitle(String title){
+        Category category = null;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_TITLE)) {
+            stmt.setString(1, title);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                category = mapRow(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return category;
     }
 
     /*

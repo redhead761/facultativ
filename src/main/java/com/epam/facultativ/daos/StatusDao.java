@@ -18,6 +18,8 @@ public class StatusDao implements Dao<Status> {
     private static final String INSERT_STATUS = "INSERT INTO course_statuses VALUES (DEFAULT,?)";
     private static final String DELETE_STATUS = "DELETE FROM course_statuses WHERE id=?";
 
+    private static final String SELECT_STATUS_BY_TITLE = "SELECT * FROM course_statuses WHERE title=?";
+
 
     @Override
     public List<Status> findAll() {
@@ -92,6 +94,21 @@ public class StatusDao implements Dao<Status> {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public Status findByTitle (String title){
+        Status status = null;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_STATUS_BY_TITLE)) {
+            stmt.setString(1, title);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                status = mapRow(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return status;
     }
 
     /*

@@ -71,7 +71,6 @@ public class UserDao implements Dao<User> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

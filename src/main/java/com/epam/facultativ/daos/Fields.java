@@ -10,7 +10,7 @@ public class Fields {
     public static final String USER_FAMILY_NAME = "last_name";
     public static final String USER_EMAIL = "email";
     public static final String USER_ROLE_ID = "role_id";
-    public static final String USER_IS_BLOCK = "is_block";
+    public static final String USER_IS_BLOCK = "block";
 
     //Roles fields
     public static final String ROLE_ID = "id";

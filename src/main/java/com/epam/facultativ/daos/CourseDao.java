@@ -58,8 +58,8 @@ public class CourseDao implements Dao<Course> {
             stmt.setInt(++k, course.getDuration());
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, new CategoryDao().findByTitle(course.getTitle()).getId());
-            stmt.setInt(++k, new StatusDao().findByTitle(course.getTitle()).getId());
+            stmt.setInt(++k, new CategoryDao().findByTitle(course.getCategory().getTitle()).getId());
+            stmt.setInt(++k, new StatusDao().findByTitle(course.getCourseStatus().getTitle()).getId());
             stmt.setString(++k, String.valueOf(course.getId()));
 
             stmt.executeUpdate();
@@ -77,8 +77,8 @@ public class CourseDao implements Dao<Course> {
             stmt.setInt(++k, course.getDuration());
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, new CategoryDao().findByTitle(course.getTitle()).getId());
-            stmt.setInt(++k, new StatusDao().findByTitle(course.getTitle()).getId());
+            stmt.setInt(++k, new CategoryDao().findByTitle(course.getCategory().getTitle()).getId());
+            stmt.setInt(++k, new StatusDao().findByTitle(course.getCourseStatus().getTitle()).getId());
 
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {

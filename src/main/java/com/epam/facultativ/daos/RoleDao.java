@@ -13,7 +13,7 @@ public class RoleDao implements Dao<Role> {
 
     private static final String SELECT_All_ROLES = "SELECT * FROM roles";
     private static final String SELECT_ROLE_BY_ID = "SELECT * FROM roles WHERE id=?";
-    private static final String UPDATE_ROLE = "UPDATE roles SET title=? WHERE id=?";
+    private static final String UPDATE_ROLE = "UPDATE roles SET name=? WHERE id=?";
     private static final String INSERT_ROLE = "INSERT INTO roles VALUES (DEFAULT,?)";
     private static final String DELETE_ROLE = "DELETE FROM roles WHERE id=?";
 

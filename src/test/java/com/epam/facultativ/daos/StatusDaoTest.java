@@ -57,7 +57,7 @@ class StatusDaoTest {
     @Test
     void insert() {
         statusDao.insert(status);
-        assertEquals(status.toString(), statusDao.findByTitle(status.getTitle()).toString());
+        assertEquals(status.toString(), statusDao.findByName(status.getTitle()).toString());
     }
 
     @Order(3)
@@ -77,7 +77,7 @@ class StatusDaoTest {
     @Order(5)
     @Test
     void findByTitle() {
-        assertEquals(status.toString(), statusDao.findByTitle(status.getTitle()).toString());
+        assertEquals(status.toString(), statusDao.findByName(status.getTitle()).toString());
     }
 
 

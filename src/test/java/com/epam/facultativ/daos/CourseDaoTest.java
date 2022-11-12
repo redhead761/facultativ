@@ -83,6 +83,12 @@ class CourseDaoTest {
 
     @Order(5)
     @Test
+    void findByName(){
+        assertEquals(course.toString(), courseDao.findByName(course.getTitle()).toString());
+    }
+
+    @Order(6)
+    @Test
     void delete() {
         courseDao.delete(course);
         assertEquals(3, courseDao.findAll().size());

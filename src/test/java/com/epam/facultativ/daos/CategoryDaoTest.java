@@ -56,7 +56,7 @@ class CategoryDaoTest {
     @Test
     void insert() {
         categoryDao.insert(category);
-        assertEquals(category.toString(), categoryDao.findByTitle(category.getTitle()).toString());
+        assertEquals(category.toString(), categoryDao.findByName(category.getTitle()).toString());
     }
 
     @Order(3)
@@ -76,7 +76,7 @@ class CategoryDaoTest {
     @Order(5)
     @Test
     void findByTitle() {
-        assertEquals(category.toString(), categoryDao.findByTitle(category.getTitle()).toString());
+        assertEquals(category.toString(), categoryDao.findByName(category.getTitle()).toString());
     }
 
     @Order(6)

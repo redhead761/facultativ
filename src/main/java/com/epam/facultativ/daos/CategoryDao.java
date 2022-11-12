@@ -92,7 +92,8 @@ public class CategoryDao implements Dao<Category> {
         }
     }
 
-    public Category findByTitle(String title){
+    @Override
+    public Category findByName(String title) {
         Category category = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_TITLE)) {

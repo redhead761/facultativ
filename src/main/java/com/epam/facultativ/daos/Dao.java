@@ -6,6 +6,7 @@ public interface Dao<T> {
     List<T> findAll();
 
     T findById(int id);
+    T findByName(String name);
 
     void update(T t);
 

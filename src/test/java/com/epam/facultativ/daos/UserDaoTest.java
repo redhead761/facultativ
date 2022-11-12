@@ -1,6 +1,5 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.entity.Category;
 import com.epam.facultativ.entity.Role;
 import com.epam.facultativ.entity.User;
 import org.junit.jupiter.api.*;
@@ -74,7 +73,7 @@ class UserDaoTest {
     @Order(4)
     @Test
     void getUserByLogin() {
-        assertEquals(user.toString(), userDao.getUserByLogin(user.getLogin()).toString());
+        assertEquals(user.toString(), userDao.findByName(user.getLogin()).toString());
     }
 
     @Order(5)

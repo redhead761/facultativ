@@ -13,6 +13,7 @@ public class CourseDao implements Dao<Course> {
 
     private static final String SELECT_All_COURSES = "SELECT * FROM courses";
     private static final String SELECT_COURSE_BY_ID = "SELECT * FROM courses WHERE id=?";
+    private static final String SELECT_COURSE_BY_TITLE = "SELECT * FROM courses WHERE title=?";
     private static final String UPDATE_COURSE = "UPDATE courses SET title=?, duration=?, " +
             "course_start_date=?, description=?, category_id=?, course_status_id=? WHERE id=?";
     private static final String INSERT_COURSE = "INSERT INTO courses VALUES (DEFAULT,?,?,?,?,?,?)";
@@ -50,6 +51,22 @@ public class CourseDao implements Dao<Course> {
     }
 
     @Override
+    public Course findByName(String name) {
+        Course course = null;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_TITLE)) {
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                course = mapRow(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return course;
+    }
+
+    @Override
     public void update(Course course) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
@@ -58,8 +75,8 @@ public class CourseDao implements Dao<Course> {
             stmt.setInt(++k, course.getDuration());
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, new CategoryDao().findByTitle(course.getCategory().getTitle()).getId());
-            stmt.setInt(++k, new StatusDao().findByTitle(course.getCourseStatus().getTitle()).getId());
+            stmt.setInt(++k, new CategoryDao().findByName(course.getCategory().getTitle()).getId());
+            stmt.setInt(++k, new StatusDao().findByName(course.getCourseStatus().getTitle()).getId());
             stmt.setString(++k, String.valueOf(course.getId()));
 
             stmt.executeUpdate();
@@ -77,8 +94,8 @@ public class CourseDao implements Dao<Course> {
             stmt.setInt(++k, course.getDuration());
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, new CategoryDao().findByTitle(course.getCategory().getTitle()).getId());
-            stmt.setInt(++k, new StatusDao().findByTitle(course.getCourseStatus().getTitle()).getId());
+            stmt.setInt(++k, new CategoryDao().findByName(course.getCategory().getTitle()).getId());
+            stmt.setInt(++k, new StatusDao().findByName(course.getCourseStatus().getTitle()).getId());
 
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {

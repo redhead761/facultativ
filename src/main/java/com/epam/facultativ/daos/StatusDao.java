@@ -1,7 +1,6 @@
 package com.epam.facultativ.daos;
 
 import com.epam.facultativ.DataSource;
-import com.epam.facultativ.entity.Role;
 import com.epam.facultativ.entity.Status;
 
 import java.sql.*;
@@ -17,9 +16,7 @@ public class StatusDao implements Dao<Status> {
     private static final String UPDATE_STATUS = "UPDATE course_statuses SET title=? WHERE id=?";
     private static final String INSERT_STATUS = "INSERT INTO course_statuses VALUES (DEFAULT,?)";
     private static final String DELETE_STATUS = "DELETE FROM course_statuses WHERE id=?";
-
     private static final String SELECT_STATUS_BY_TITLE = "SELECT * FROM course_statuses WHERE title=?";
-
 
     @Override
     public List<Status> findAll() {
@@ -63,7 +60,6 @@ public class StatusDao implements Dao<Status> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -81,7 +77,6 @@ public class StatusDao implements Dao<Status> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -93,10 +88,10 @@ public class StatusDao implements Dao<Status> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    public Status findByTitle (String title){
+    @Override
+    public Status findByName(String title) {
         Status status = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_STATUS_BY_TITLE)) {

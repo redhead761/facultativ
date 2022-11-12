@@ -94,4 +94,8 @@ class UserDaoTest {
         userDao.delete(user);
         assertEquals(3, userDao.findAll().size());
     }
+//      Need to implements
+//    @Test
+//    void usersByCourse() {
+//    }
 }

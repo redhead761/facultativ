@@ -1,7 +1,9 @@
 package com.epam.facultativ.daos;
 
 import com.epam.facultativ.DataSource;
+import com.epam.facultativ.entity.Category;
 import com.epam.facultativ.entity.Course;
+import com.epam.facultativ.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ public class CourseDao implements Dao<Course> {
             "course_start_date=?, description=?, category_id=?, course_status_id=? WHERE id=?";
     private static final String INSERT_COURSE = "INSERT INTO courses VALUES (DEFAULT,?,?,?,?,?,?)";
     private static final String DELETE_COURSE = "DELETE FROM courses WHERE id=?";
+    private static final String SELECT_COURSE_BY_CATEGORY = "SELECT * FROM courses WHERE category_id=?";
+
+    private static final String SELECT_COURSES_USER =
+            "SELECT * FROM courses JOIN users_course ON courses.id = users_course.course_id WHERE user_id=?";
+
 
     @Override
     public List<Course> findAll() {
@@ -120,6 +127,36 @@ public class CourseDao implements Dao<Course> {
         }
     }
 
+    public List<Course> findByCategory(Category category){
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
+            stmt.setString(1, String.valueOf(category.getId()));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                courses.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
+    public List<Course> findByUser(int id) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_USER)) {
+            stmt.setString(1, String.valueOf(id));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                courses.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
     /*
    *******
    helper methods
@@ -140,4 +177,5 @@ public class CourseDao implements Dao<Course> {
             throw new IllegalStateException(e);
         }
     }
+
 }

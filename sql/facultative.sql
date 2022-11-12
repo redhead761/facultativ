@@ -177,38 +177,50 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
     -- --teachers
     INSERT INTO users VALUES(DEFAULT, 'Eddard', '111111', 'Eddard', 'Stark,', 'Stark@game.com', false,(SELECT id FROM roles WHERE name='TEACHER'));
     INSERT INTO users VALUES(DEFAULT, 'Tywin', '222222', 'Tywin', 'Lannister,', 'Lannister@game.com', false,(SELECT id FROM roles WHERE name='TEACHER'));
-    INSERT INTO users VALUES(DEFAULT, 'Rhaegar', '333333', 'Rhaegar', 'Targaryen,', 'Targaryen@game.com', false,(SELECT id FROM roles WHERE name='TEACHER'));
-    INSERT INTO users VALUES(DEFAULT, 'Baratheon ', '444444', 'Robert', 'Baratheon ,', 'Baratheon@game.com', false,(SELECT id FROM roles WHERE name='TEACHER'));
+--    INSERT INTO users VALUES(DEFAULT, 'Rhaegar', '333333', 'Rhaegar', 'Targaryen,', 'Targaryen@game.com', false,(SELECT id FROM roles WHERE name='TEACHER'));
+--    INSERT INTO users VALUES(DEFAULT, 'Baratheon ', '444444', 'Robert', 'Baratheon ,', 'Baratheon@game.com', false,(SELECT id FROM roles WHERE name='TEACHER'));
 
     -- --students
     INSERT INTO users VALUES(DEFAULT, 'Sansa ', '555555', 'Sansa', 'Stark', 'Sansa@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
     INSERT INTO users VALUES(DEFAULT, 'Arya ', '666666', 'Arya', 'Stark', 'Arya@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Brandon ', '777777', 'Brandon', 'Stark', 'Brandon@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Tyrion ', '888888', 'Tyrion', 'Lannister', 'Tyrion@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Bronn ', '999999', 'Bronn', 'Lannister', 'Bronn@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Joffrie ', '101010', 'Joffrie', 'Lannister', 'Joffrie@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Viserys ', '121212', 'Viserys', 'Targaryen', 'Viserys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Daenerys ', '131313', 'Daenerys', 'Targaryen', 'Daenerys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Missandei ', '141414', 'Missandei', 'Targaryen', 'Missandei@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Renly ', '171717', 'Renly', 'Baratheon', 'Renly@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Stannis ', '181818', 'Stannis', 'Baratheon', 'Stannis@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
-    INSERT INTO users VALUES(DEFAULT, 'Selyse ', '191919', 'Selyse', 'Baratheon', 'Selyse@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Brandon ', '777777', 'Brandon', 'Stark', 'Brandon@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Tyrion ', '888888', 'Tyrion', 'Lannister', 'Tyrion@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Bronn ', '999999', 'Bronn', 'Lannister', 'Bronn@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Joffrie ', '101010', 'Joffrie', 'Lannister', 'Joffrie@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Viserys ', '121212', 'Viserys', 'Targaryen', 'Viserys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Daenerys ', '131313', 'Daenerys', 'Targaryen', 'Daenerys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Missandei ', '141414', 'Missandei', 'Targaryen', 'Missandei@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Renly ', '171717', 'Renly', 'Baratheon', 'Renly@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Stannis ', '181818', 'Stannis', 'Baratheon', 'Stannis@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+--    INSERT INTO users VALUES(DEFAULT, 'Selyse ', '191919', 'Selyse', 'Baratheon', 'Selyse@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
 
     -- courses
     -- --coming soon
-    INSERT INTO courses VALUES(DEFAULT, 'Java', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
-    INSERT INTO courses VALUES(DEFAULT, 'English', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
-    INSERT INTO courses VALUES(DEFAULT, 'Higher mathematics', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
+    INSERT INTO courses VALUES(DEFAULT, 'Java', 20, '2020-11-22', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
+--    INSERT INTO courses VALUES(DEFAULT, 'English', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
+--    INSERT INTO courses VALUES(DEFAULT, 'Higher mathematics', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
 
     -- --in progress
      INSERT INTO courses VALUES(DEFAULT, 'Python', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
-     INSERT INTO courses VALUES(DEFAULT, 'Polish', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
-     INSERT INTO courses VALUES(DEFAULT, 'Basics of geometry', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
+--     INSERT INTO courses VALUES(DEFAULT, 'Polish', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
+--     INSERT INTO courses VALUES(DEFAULT, 'Basics of geometry', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
 
      -- --completed
-     INSERT INTO courses VALUES(DEFAULT, 'C++', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
-     INSERT INTO courses VALUES(DEFAULT, 'Italian ', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
-     INSERT INTO courses VALUES(DEFAULT, 'Mathematical analysis', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+     INSERT INTO courses VALUES(DEFAULT, 'C++', 50, '2020-05-08', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+--     INSERT INTO courses VALUES(DEFAULT, 'Italian ', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+--     INSERT INTO courses VALUES(DEFAULT, 'Mathematical analysis', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+
+
+    -- --users_course
+     insert into users_course VALUES (1,1);
+     insert into users_course VALUES (1,2);
+     insert into users_course VALUES (1,3);
+     insert into users_course VALUES (2,1);
+     insert into users_course VALUES (2,2);
+     insert into users_course VALUES (2,3);
+     insert into users_course VALUES (3,1);
+     insert into users_course VALUES (3,2);
+     insert into users_course VALUES (3,3);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

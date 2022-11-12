@@ -18,6 +18,8 @@ public class UserDao implements Dao<User> {
             "last_name=?, email=?, block=?, role_id=? WHERE id=?";
     private static final String INSERT_USER = "INSERT INTO users VALUES (DEFAULT,?,?,?,?,?,?,?)";
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
+    private static final String SELECT_USERS_COURSE =
+            "SELECT * FROM users JOIN users_course ON users.id = users_course.user_id WHERE course_id=?";
 
     @Override
     public List<User> findAll() {
@@ -127,6 +129,21 @@ public class UserDao implements Dao<User> {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE)) {
             stmt.setString(1, String.valueOf(new RoleDao().findByName(role).getId()));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                users.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
+
+    public List<User> usersByCourse(int id) {
+        List<User> users = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_USERS_COURSE)) {
+            stmt.setString(1, String.valueOf(id));
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 users.add(mapRow(rs));

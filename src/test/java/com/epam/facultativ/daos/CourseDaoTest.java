@@ -93,4 +93,8 @@ class CourseDaoTest {
         courseDao.delete(course);
         assertEquals(3, courseDao.findAll().size());
     }
+// need to implement
+//    @Test
+//    void findByCategory() {
+//    }
 }

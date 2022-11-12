@@ -89,8 +89,8 @@ public class Course {
                 ", duration=" + duration +
                 ", startDate=" + startDate +
                 ", description='" + description + '\'' +
-                ", categoryId=" + category +
-                ", courseStatusId=" + status +
+                ", category=" + category.getTitle() +
+                ", course status=" + status.getTitle() +
                 '}';
     }
 

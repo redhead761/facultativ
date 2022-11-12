@@ -1,6 +1,7 @@
 package com.epam.facultativ.daos;
 
 import com.epam.facultativ.DataSource;
+import com.epam.facultativ.entity.Role;
 import com.epam.facultativ.entity.User;
 
 import java.sql.*;
@@ -18,7 +19,7 @@ public class UserDao implements Dao<User> {
     private static final String SELECT_ROLE_BY_ID = "SELECT name FROM roles WHERE id=?";
     private static final String SELECT_ID_ROLE = "SELECT id FROM roles WHERE name=?";
     private static final String UPDATE_USER = "UPDATE users SET login=?, password=?, first_name=?, " +
-            "last_name=?, email=?, is_block=?, role_id=? WHERE id=?";
+            "last_name=?, email=?, block=?, role_id=? WHERE id=?";
     private static final String INSERT_USER = "INSERT INTO users VALUES (DEFAULT,?,?,?,?,?,?,?)";
     private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
 
@@ -64,7 +65,7 @@ public class UserDao implements Dao<User> {
             stmt.setString(++k, user.getLastName());
             stmt.setString(++k, user.getEmail());
             stmt.setBoolean(++k, user.isBlock());
-            stmt.setString(++k, String.valueOf(getRoleId(user.getRole())));
+            stmt.setInt(++k, user.getRole().getId());
             stmt.setString(++k, String.valueOf(user.getId()));
 
             stmt.executeUpdate();
@@ -84,8 +85,7 @@ public class UserDao implements Dao<User> {
             stmt.setString(++k, user.getLastName());
             stmt.setString(++k, user.getEmail());
             stmt.setBoolean(++k, user.isBlock());
-            stmt.setString(++k, String.valueOf(getRoleId(user.getRole())));
-
+            stmt.setInt(++k, new RoleDao().findById(user.getRole().getId()).getId());
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -128,7 +128,7 @@ public class UserDao implements Dao<User> {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE)) {
-            stmt.setString(1, String.valueOf(getRoleId(role)));
+            stmt.setString(1, String.valueOf(new RoleDao().findByTitle(role).getId()));
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 users.add(mapRow(rs));
@@ -154,7 +154,8 @@ public class UserDao implements Dao<User> {
             user.setLastName(rs.getString(USER_FAMILY_NAME));
             user.setEmail(rs.getString(USER_EMAIL));
             user.setBlock(rs.getBoolean(USER_IS_BLOCK));
-            user.setRole(getRoleById(rs.getInt(USER_ROLE_ID)));
+//            user.setRole(getRoleById(rs.getInt(USER_ROLE_ID)));
+            user.setRole(new RoleDao().findById(rs.getInt(USER_ROLE_ID)));
             return user;
         } catch (SQLException e) {
             throw new IllegalStateException(e);

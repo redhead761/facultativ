@@ -17,6 +17,8 @@ public class RoleDao implements Dao<Role> {
     private static final String INSERT_ROLE = "INSERT INTO roles VALUES (DEFAULT,?)";
     private static final String DELETE_ROLE = "DELETE FROM roles WHERE id=?";
 
+    private static final String SELECT_ROLE_BY_TITLE = "SELECT * FROM roles WHERE name=?";
+
 
     @Override
     public List<Role> findAll() {
@@ -88,6 +90,21 @@ public class RoleDao implements Dao<Role> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Role findByTitle(String title){
+        Role role = null;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_ROLE_BY_TITLE)) {
+            stmt.setString(1, String.valueOf(title));
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                role = mapRow(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return role;
     }
 
     /*

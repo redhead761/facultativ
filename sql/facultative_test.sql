@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` VARCHAR(32) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
+  `block` TINYINT NOT NULL,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
@@ -171,16 +172,16 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
 
     -- users
     -- --admin
-    INSERT INTO users VALUES(DEFAULT, 'admin', 'admin', 'admin', 'admin,', 'admin@gmail.com', (SELECT id FROM roles WHERE name='ADMIN'));
+    INSERT INTO users VALUES(DEFAULT, 'admin', 'admin', 'admin', 'admin,', 'admin@gmail.com', false, (SELECT id FROM roles WHERE name='ADMIN'));
 
     -- --teachers
-    INSERT INTO users VALUES(DEFAULT, 'Eddard', '111111', 'Eddard', 'Stark,', 'Stark@game.com', (SELECT id FROM roles WHERE name='TEACHER'));
+    INSERT INTO users VALUES(DEFAULT, 'Eddard', '111111', 'Eddard', 'Stark,', 'Stark@game.com', false, (SELECT id FROM roles WHERE name='TEACHER'));
 --    INSERT INTO users VALUES(DEFAULT, 'Tywin', '222222', 'Tywin', 'Lannister,', 'Lannister@game.com', (SELECT id FROM roles WHERE name='TEACHER'));
 --    INSERT INTO users VALUES(DEFAULT, 'Rhaegar', '333333', 'Rhaegar', 'Targaryen,', 'Targaryen@game.com', (SELECT id FROM roles WHERE name='TEACHER'));
 --    INSERT INTO users VALUES(DEFAULT, 'Baratheon ', '444444', 'Robert', 'Baratheon ,', 'Baratheon@game.com', (SELECT id FROM roles WHERE name='TEACHER'));
 
     -- --students
-    INSERT INTO users VALUES(DEFAULT, 'Sansa ', '555555', 'Sansa', 'Stark', 'Sansa@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
+    INSERT INTO users VALUES(DEFAULT, 'Sansa ', '555555', 'Sansa', 'Stark', 'Sansa@game.com', false, (SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Arya ', '666666', 'Arya', 'Stark', 'Arya@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Brandon ', '777777', 'Brandon', 'Stark', 'Brandon@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Tyrion ', '888888', 'Tyrion', 'Lannister', 'Tyrion@game.com', (SELECT id FROM roles WHERE name='STUDENT'));

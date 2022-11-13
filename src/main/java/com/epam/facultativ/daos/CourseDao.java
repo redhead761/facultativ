@@ -25,6 +25,7 @@ public class CourseDao implements Dao<Course> {
     private static final String SELECT_COURSES_USER =
             "SELECT * FROM courses JOIN users_course ON courses.id = users_course.course_id WHERE user_id=?";
 
+    private static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
 
     @Override
     public List<Course> findAll() {
@@ -127,7 +128,7 @@ public class CourseDao implements Dao<Course> {
         }
     }
 
-    public List<Course> findByCategory(Category category){
+    public List<Course> findByCategory(Category category) {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
@@ -155,6 +156,19 @@ public class CourseDao implements Dao<Course> {
             throw new RuntimeException(e);
         }
         return courses;
+    }
+
+    public void insertUserToCourse(User user, Course... courses) {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(INSERT_USERS_COURSE)) {
+            for (Course course : courses) {
+                stmt.setInt(1, course.getId());
+                stmt.setInt(2, user.getId());
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*

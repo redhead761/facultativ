@@ -52,7 +52,7 @@ class UserDaoTest {
     @Order(1)
     @Test
     void findAll() {
-        assertEquals(3, userDao.findAll().size());
+        assertEquals(5, userDao.findAll().size());
     }
 
     @Order(2)
@@ -92,7 +92,7 @@ class UserDaoTest {
     @Test
     void delete() {
         userDao.delete(user);
-        assertEquals(3, userDao.findAll().size());
+        assertEquals(5, userDao.findAll().size());
     }
 //      Need to implements
 //    @Test

@@ -125,8 +125,8 @@ CREATE TABLE IF NOT EXISTS `users_course` (
   CONSTRAINT `fk_course_has_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 -- -----------------------------------------------------
 -- Table `grade_book`
@@ -143,13 +143,13 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
   CONSTRAINT `fk_course_has_user1_course1`
     FOREIGN KEY (`course_id`)
     REFERENCES `courses` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_course_has_user1_user1`
     FOREIGN KEY (`student_id`)
     REFERENCES `users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
     -- -----------------------------------------------------
     -- Inserts
@@ -182,8 +182,8 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
 
     -- --students
     INSERT INTO users VALUES(DEFAULT, 'Sansa ', '555555', 'Sansa', 'Stark', 'Sansa@game.com', false, (SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Arya ', '666666', 'Arya', 'Stark', 'Arya@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Brandon ', '777777', 'Brandon', 'Stark', 'Brandon@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
+    INSERT INTO users VALUES(DEFAULT, 'Arya ', '666666', 'Arya', 'Stark', 'Arya@game.com', false, (SELECT id FROM roles WHERE name='STUDENT'));
+    INSERT INTO users VALUES(DEFAULT, 'Brandon ', '777777', 'Brandon', 'Stark', 'Brandon@game.com', false, (SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Tyrion ', '888888', 'Tyrion', 'Lannister', 'Tyrion@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Bronn ', '999999', 'Bronn', 'Lannister', 'Bronn@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Joffrie ', '101010', 'Joffrie', 'Lannister', 'Joffrie@game.com', (SELECT id FROM roles WHERE name='STUDENT'));
@@ -210,6 +210,9 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
 --     INSERT INTO courses VALUES(DEFAULT, 'Italian ', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
 --     INSERT INTO courses VALUES(DEFAULT, 'Mathematical analysis', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
 
+	--	--grade book
+    INSERT INTO grade_book VALUES(1,3,5);
+    INSERT INTO grade_book VALUES(1,4,5);
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

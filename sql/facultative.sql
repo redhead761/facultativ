@@ -114,6 +114,7 @@ DROP TABLE IF EXISTS `users_course` ;
 CREATE TABLE IF NOT EXISTS `users_course` (
   `course_id` INT NOT NULL,
   `user_id` INT NOT NULL,
+  `grade` INT UNSIGNED NULL,
   PRIMARY KEY (`course_id`, `user_id`),
   INDEX `fk_course_has_user_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_course_has_user_course1_idx` (`course_id` ASC) VISIBLE,
@@ -131,25 +132,25 @@ CREATE TABLE IF NOT EXISTS `users_course` (
 -- -----------------------------------------------------
 -- Table `grade_book`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `grade_book` ;
-
-CREATE TABLE IF NOT EXISTS `grade_book` (
-  `course_id` INT NOT NULL,
-  `student_id` INT NOT NULL,
-  `grade` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`course_id`, `student_id`),
-  INDEX `fk_course_has_user1_user1_idx` (`student_id` ASC) VISIBLE,
-  INDEX `fk_course_has_user1_course1_idx` (`course_id` ASC) VISIBLE,
-  CONSTRAINT `fk_course_has_user1_course1`
-    FOREIGN KEY (`course_id`)
-    REFERENCES `courses` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_course_has_user1_user1`
-    FOREIGN KEY (`student_id`)
-    REFERENCES `users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+--DROP TABLE IF EXISTS `grade_book` ;
+--
+--CREATE TABLE IF NOT EXISTS `grade_book` (
+--  `course_id` INT NOT NULL,
+--  `student_id` INT NOT NULL,
+--  `grade` INT UNSIGNED NOT NULL,
+--  PRIMARY KEY (`course_id`, `student_id`),
+--  INDEX `fk_course_has_user1_user1_idx` (`student_id` ASC) VISIBLE,
+--  INDEX `fk_course_has_user1_course1_idx` (`course_id` ASC) VISIBLE,
+--  CONSTRAINT `fk_course_has_user1_course1`
+--    FOREIGN KEY (`course_id`)
+--    REFERENCES `courses` (`id`)
+--    ON DELETE NO ACTION
+--    ON UPDATE NO ACTION,
+--  CONSTRAINT `fk_course_has_user1_user1`
+--    FOREIGN KEY (`student_id`)
+--    REFERENCES `users` (`id`)
+--    ON DELETE NO ACTION
+--    ON UPDATE NO ACTION);
 
     -- -----------------------------------------------------
     -- Inserts
@@ -212,15 +213,15 @@ CREATE TABLE IF NOT EXISTS `grade_book` (
 
 
     -- --users_course
-     insert into users_course VALUES (1,1);
-     insert into users_course VALUES (1,2);
-     insert into users_course VALUES (1,3);
-     insert into users_course VALUES (2,1);
-     insert into users_course VALUES (2,2);
-     insert into users_course VALUES (2,3);
-     insert into users_course VALUES (3,1);
-     insert into users_course VALUES (3,2);
-     insert into users_course VALUES (3,3);
+     insert into users_course VALUES (1,1,null);
+     insert into users_course VALUES (1,2,null);
+     insert into users_course VALUES (1,3,null);
+     insert into users_course VALUES (2,1,null);
+     insert into users_course VALUES (2,2,null);
+     insert into users_course VALUES (2,3,null);
+     insert into users_course VALUES (3,1,null);
+     insert into users_course VALUES (3,2,null);
+     insert into users_course VALUES (3,3,null);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

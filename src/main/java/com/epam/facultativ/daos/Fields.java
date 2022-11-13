@@ -34,6 +34,8 @@ public class Fields {
     public static final String STATUS_ID = "id";
     public static final String STATUS_TITLE = "title";
 
+    //Grade book fields
+    public static final String GRADE = "grade";
 
 
 }

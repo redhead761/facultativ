@@ -57,7 +57,7 @@ class CourseDaoTest {
     @Order(1)
     @Test
     void findAll() {
-        assertEquals(3,courseDao.findAll().size());
+        assertEquals(3, courseDao.findAll().size());
     }
 
     @Order(2)
@@ -83,7 +83,7 @@ class CourseDaoTest {
 
     @Order(5)
     @Test
-    void findByName(){
+    void findByName() {
         assertEquals(course.toString(), courseDao.findByName(course.getTitle()).toString());
     }
 
@@ -93,8 +93,19 @@ class CourseDaoTest {
         courseDao.delete(course);
         assertEquals(3, courseDao.findAll().size());
     }
+
+
 // need to implement
 //    @Test
 //    void findByCategory() {
 //    }
+//@Test
+//void findByUser() {
+//}
+
+    //    @Test
+//    void insertUserToCourse() {
+//    }
+
+
 }

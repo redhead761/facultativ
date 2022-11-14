@@ -21,7 +21,7 @@ public class DataSource {
         config.setJdbcUrl(properties.getProperty("connection.url"));
         config.setUsername(properties.getProperty("user.name"));
         config.setPassword(properties.getProperty("password"));
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setDriverClassName(properties.getProperty("driver"));
 
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");

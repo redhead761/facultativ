@@ -15,9 +15,6 @@ public class DataSource {
 
     static {
         Properties properties = getProperties();
-//        config.setJdbcUrl( "jdbc:mysql://localhost:3306/facultative" );
-//        config.setUsername( "root" );
-//        config.setPassword( "132465" );
         config.setJdbcUrl(properties.getProperty("connection.url"));
         config.setUsername(properties.getProperty("user.name"));
         config.setPassword(properties.getProperty("password"));

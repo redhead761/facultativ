@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
             }
             case "STUDENT" -> {
                 req.setAttribute("res", user.toString());
-                req.getRequestDispatcher("StudentCabinet.jsp.jsp").forward(req, resp);
+                req.getRequestDispatcher("StudentCabinet.jsp").forward(req, resp);
                 break;
             }
         }

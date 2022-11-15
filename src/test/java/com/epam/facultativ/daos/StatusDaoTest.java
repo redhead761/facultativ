@@ -3,48 +3,17 @@ package com.epam.facultativ.daos;
 import com.epam.facultativ.entity.Status;
 import org.junit.jupiter.api.*;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StatusDaoTest {
-
-    private static String saveProperties;
-    private static final String testProperties =
-            "connection.url = jdbc:mysql://localhost:3306/facultative_test\nuser.name = root\npassword = 132465";
     private static StatusDao statusDao;
     private static Status status;
 
     @BeforeAll
     static void setUp() {
-        Path of = Path.of("db.properties");
-        try {
-            saveProperties = Files.readString(of);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Files.write(of, testProperties.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         statusDao = new StatusDao();
         status = new Status(11, "Complete and delete");
-    }
-
-    @AfterAll
-    static void tearDown() {
-        try (PrintWriter out = new PrintWriter("db.properties")) {
-            out.print(saveProperties);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Order(1)
@@ -79,7 +48,6 @@ class StatusDaoTest {
     void findByTitle() {
         assertEquals(status.toString(), statusDao.findByName(status.getTitle()).toString());
     }
-
 
     @Order(6)
     @Test

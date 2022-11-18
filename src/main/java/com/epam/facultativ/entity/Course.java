@@ -9,8 +9,10 @@ public class Course {
     private int duration;
     private LocalDate startDate;
     private String description;
+    private int studentsOnCourse;
     private Category category;
     private Status status;
+
 
     public Course() {
     }
@@ -65,6 +67,13 @@ public class Course {
         this.description = description;
     }
 
+    public int getStudentsOnCourse() {
+        return studentsOnCourse;
+    }
+
+    public void setStudentsOnCourse(int studentsOnCourse) {
+        this.studentsOnCourse = studentsOnCourse;
+    }
     public Category getCategory() {
         return category;
     }
@@ -112,4 +121,6 @@ public class Course {
     public int hashCode() {
         return Objects.hash(id, title, duration, startDate, description, category, status);
     }
+
+
 }

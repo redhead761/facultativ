@@ -16,17 +16,18 @@ import java.util.List;
 public class StartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = null;
-        List<Course> courses = new ArrayList<>();
+        String action;
+        List<Course> courses = new CourseService().sortByAZ();
 
-        if(req.getParameter("action") == null){
+        if (req.getParameter("action") == null) {
             courses = new CourseService().sortByAZ();
-        }else{
+        } else {
             action = req.getParameter("action");
             switch (action) {
                 case "sortaz" -> courses = new CourseService().sortByAZ();
                 case "sortza" -> courses = new CourseService().sortByZA();
                 case "sortduration" -> courses = new CourseService().sortByDuration();
+                case "sortstudents" -> courses = new CourseService().sortByNumber();
             }
         }
         req.setAttribute("courses", courses);

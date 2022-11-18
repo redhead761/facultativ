@@ -51,9 +51,10 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `duration` INT UNSIGNED NOT NULL,
   `course_start_date` DATETIME NOT NULL,
   `description` VARCHAR(45) NULL,
+  `students_on_course` INT NULL,
   `category_id` INT NOT NULL,
   `course_status_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
+    PRIMARY KEY (`id`),
   INDEX `fk_course_category_idx` (`category_id` ASC) VISIBLE,
   INDEX `fk_course_course_status1_idx` (`course_status_id` ASC) VISIBLE,
   UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE,
@@ -132,9 +133,9 @@ CREATE TABLE IF NOT EXISTS `users_course` (
 -- -----------------------------------------------------
 -- Table `grade_book`
 -- -----------------------------------------------------
---DROP TABLE IF EXISTS `grade_book` ;
+-- DROP TABLE IF EXISTS `grade_book` ;
 --
---CREATE TABLE IF NOT EXISTS `grade_book` (
+-- CREATE TABLE IF NOT EXISTS `grade_book` (
 --  `course_id` INT NOT NULL,
 --  `student_id` INT NOT NULL,
 --  `grade` INT UNSIGNED NOT NULL,
@@ -189,39 +190,48 @@ CREATE TABLE IF NOT EXISTS `users_course` (
 --    INSERT INTO users VALUES(DEFAULT, 'Bronn ', '999999', 'Bronn', 'Lannister', 'Bronn@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Joffrie ', '101010', 'Joffrie', 'Lannister', 'Joffrie@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
 --    INSERT INTO users VALUES(DEFAULT, 'Viserys ', '121212', 'Viserys', 'Targaryen', 'Viserys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Daenerys ', '131313', 'Daenerys', 'Targaryen', 'Daenerys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Missandei ', '141414', 'Missandei', 'Targaryen', 'Missandei@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Renly ', '171717', 'Renly', 'Baratheon', 'Renly@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Stannis ', '181818', 'Stannis', 'Baratheon', 'Stannis@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
---    INSERT INTO users VALUES(DEFAULT, 'Selyse ', '191919', 'Selyse', 'Baratheon', 'Selyse@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+   INSERT INTO users VALUES(DEFAULT, 'Daenerys ', '131313', 'Daenerys', 'Targaryen', 'Daenerys@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+   INSERT INTO users VALUES(DEFAULT, 'Missandei ', '141414', 'Missandei', 'Targaryen', 'Missandei@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+   INSERT INTO users VALUES(DEFAULT, 'Renly ', '171717', 'Renly', 'Baratheon', 'Renly@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+   INSERT INTO users VALUES(DEFAULT, 'Stannis ', '181818', 'Stannis', 'Baratheon', 'Stannis@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
+   INSERT INTO users VALUES(DEFAULT, 'Selyse ', '191919', 'Selyse', 'Baratheon', 'Selyse@game.com', false,(SELECT id FROM roles WHERE name='STUDENT'));
 
     -- courses
     -- --coming soon
-    INSERT INTO courses VALUES(DEFAULT, 'Java', 20, '2020-11-22', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
+    INSERT INTO courses VALUES(DEFAULT, 'Java', 20, '2020-11-22', null, 0, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
 --    INSERT INTO courses VALUES(DEFAULT, 'English', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
 --    INSERT INTO courses VALUES(DEFAULT, 'Higher mathematics', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
 
     -- --in progress
-     INSERT INTO courses VALUES(DEFAULT, 'Python', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
+     INSERT INTO courses VALUES(DEFAULT, 'Python', 100, '2020-11-08', null, 0, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
 --     INSERT INTO courses VALUES(DEFAULT, 'Polish', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
 --     INSERT INTO courses VALUES(DEFAULT, 'Basics of geometry', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
 
      -- --completed
-     INSERT INTO courses VALUES(DEFAULT, 'C++', 50, '2020-05-08', null, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+     INSERT INTO courses VALUES(DEFAULT, 'C++', 50, '2020-05-08', null, 0, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
 --     INSERT INTO courses VALUES(DEFAULT, 'Italian ', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
 --     INSERT INTO courses VALUES(DEFAULT, 'Mathematical analysis', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
 
 
     -- --users_course
      insert into users_course VALUES (1,1,null);
+     UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=1;
      insert into users_course VALUES (1,2,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=1;
      insert into users_course VALUES (1,3,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=1;
      insert into users_course VALUES (2,1,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=2;
      insert into users_course VALUES (2,2,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=2;
      insert into users_course VALUES (2,3,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=2;
      insert into users_course VALUES (3,1,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=3;
      insert into users_course VALUES (3,2,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=3;
      insert into users_course VALUES (3,3,null);
+      UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=3;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

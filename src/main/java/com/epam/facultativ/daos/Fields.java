@@ -24,6 +24,7 @@ public class Fields {
     public static final String COURSE_DESCRIPTION = "description";
     public static final String COURSE_CATEGORY_ID = "category_id";
     public static final String COURSE_STATUS_ID = "course_status_id";
+    public static final String NUMBER_STUDENTS_ON_COURSE = "students_on_course";
 
     //Categories fields
     public static final String CATEGORY_ID = "id";

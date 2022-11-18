@@ -34,6 +34,13 @@ public class CourseService {
                 .collect(Collectors.toList());
     }
 
+    public List<Course> sortByNumber(){
+        return new CourseDao().findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Course::getStudentsOnCourse))
+                .collect(Collectors.toList());
+    }
+
     public int countStudentByCourse(Course course) {
         int result = 0;
         List<User> users = new UserDao().usersByCourse(course.getId());

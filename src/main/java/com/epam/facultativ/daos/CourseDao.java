@@ -17,8 +17,8 @@ public class CourseDao implements Dao<Course> {
     private static final String SELECT_COURSE_BY_ID = "SELECT * FROM courses WHERE id=?";
     private static final String SELECT_COURSE_BY_TITLE = "SELECT * FROM courses WHERE title=?";
     private static final String UPDATE_COURSE = "UPDATE courses SET title=?, duration=?, " +
-            "course_start_date=?, description=?, category_id=?, course_status_id=? WHERE id=?";
-    private static final String INSERT_COURSE = "INSERT INTO courses VALUES (DEFAULT,?,?,?,?,?,?)";
+            "course_start_date=?, description=?, category_id=?, course_status_id=?,students_on_course=0 WHERE id=?";
+    private static final String INSERT_COURSE = "INSERT INTO courses VALUES (DEFAULT,?,?,?,?,0,?,?)";
     private static final String DELETE_COURSE = "DELETE FROM courses WHERE id=?";
     private static final String SELECT_COURSE_BY_CATEGORY = "SELECT * FROM courses WHERE category_id=?";
 
@@ -26,6 +26,8 @@ public class CourseDao implements Dao<Course> {
             "SELECT * FROM courses JOIN users_course ON courses.id = users_course.course_id WHERE user_id=?";
 
     private static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
+    private static final String ADD_NUMBER_STUDENTS_TO_COURSE =
+            "UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=?";
 
     @Override
     public List<Course> findAll() {
@@ -165,7 +167,18 @@ public class CourseDao implements Dao<Course> {
                 stmt.setInt(1, course.getId());
                 stmt.setInt(2, user.getId());
                 stmt.executeUpdate();
+                addNumberStudentsToCourse(course);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void addNumberStudentsToCourse(Course course) {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {
+            stmt.setInt(1, course.getId());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -184,6 +197,7 @@ public class CourseDao implements Dao<Course> {
             course.setDuration(rs.getInt(COURSE_DURATION));
             course.setStartDate(rs.getDate(COURSE_START_DATE).toLocalDate());
             course.setDescription(rs.getString(COURSE_DESCRIPTION));
+            course.setStudentsOnCourse(rs.getInt(NUMBER_STUDENTS_ON_COURSE));
             course.setCategory(new CategoryDao().findById(rs.getInt(COURSE_CATEGORY_ID)));
             course.setCourseStatus(new StatusDao().findById(rs.getInt(COURSE_STATUS_ID)));
             return course;

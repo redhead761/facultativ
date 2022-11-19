@@ -1,25 +1,16 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.DataSource;
+import com.epam.facultativ.connection.DataSource;
 import com.epam.facultativ.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultativ.daos.Constants.*;
 import static com.epam.facultativ.daos.Fields.*;
 
 public class UserDao implements Dao<User> {
-    private static final String SELECT_All_USERS = "SELECT * FROM users";
-    private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?";
-    private static final String SELECT_USER_BY_LOGIN = "SELECT * FROM users WHERE login=?";
-    private static final String SELECT_USERS_BY_ROLE = "SELECT * FROM users WHERE role_id=?";
-    private static final String UPDATE_USER = "UPDATE users SET login=?, password=?, first_name=?, " +
-            "last_name=?, email=?, block=?, role_id=? WHERE id=?";
-    private static final String INSERT_USER = "INSERT INTO users VALUES (DEFAULT,?,?,?,?,?,?,?)";
-    private static final String DELETE_USER = "DELETE FROM users WHERE id=?";
-    private static final String SELECT_USERS_COURSE =
-            "SELECT * FROM users JOIN users_course ON users.id = users_course.user_id WHERE course_id=?";
 
     @Override
     public List<User> findAll() {

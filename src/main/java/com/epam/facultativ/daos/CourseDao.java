@@ -1,6 +1,6 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.DataSource;
+import com.epam.facultativ.connection.DataSource;
 import com.epam.facultativ.entity.Category;
 import com.epam.facultativ.entity.Course;
 import com.epam.facultativ.entity.User;
@@ -9,25 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultativ.daos.Constants.*;
 import static com.epam.facultativ.daos.Fields.*;
 
 public class CourseDao implements Dao<Course> {
-
-    private static final String SELECT_All_COURSES = "SELECT * FROM courses";
-    private static final String SELECT_COURSE_BY_ID = "SELECT * FROM courses WHERE id=?";
-    private static final String SELECT_COURSE_BY_TITLE = "SELECT * FROM courses WHERE title=?";
-    private static final String UPDATE_COURSE = "UPDATE courses SET title=?, duration=?, " +
-            "course_start_date=?, description=?, category_id=?, course_status_id=?,students_on_course=0 WHERE id=?";
-    private static final String INSERT_COURSE = "INSERT INTO courses VALUES (DEFAULT,?,?,?,?,0,?,?)";
-    private static final String DELETE_COURSE = "DELETE FROM courses WHERE id=?";
-    private static final String SELECT_COURSE_BY_CATEGORY = "SELECT * FROM courses WHERE category_id=?";
-
-    private static final String SELECT_COURSES_USER =
-            "SELECT * FROM courses JOIN users_course ON courses.id = users_course.course_id WHERE user_id=?";
-
-    private static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
-    private static final String ADD_NUMBER_STUDENTS_TO_COURSE =
-            "UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=?";
 
     @Override
     public List<Course> findAll() {

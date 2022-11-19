@@ -1,22 +1,16 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.DataSource;
+import com.epam.facultativ.connection.DataSource;
 import com.epam.facultativ.entity.Status;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultativ.daos.Constants.*;
 import static com.epam.facultativ.daos.Fields.*;
 
 public class StatusDao implements Dao<Status> {
-
-    private static final String SELECT_All_STATUSES = "SELECT * FROM course_statuses";
-    private static final String SELECT_STATUS_BY_ID = "SELECT * FROM course_statuses WHERE id=?";
-    private static final String UPDATE_STATUS = "UPDATE course_statuses SET title=? WHERE id=?";
-    private static final String INSERT_STATUS = "INSERT INTO course_statuses VALUES (DEFAULT,?)";
-    private static final String DELETE_STATUS = "DELETE FROM course_statuses WHERE id=?";
-    private static final String SELECT_STATUS_BY_TITLE = "SELECT * FROM course_statuses WHERE title=?";
 
     @Override
     public List<Status> findAll() {

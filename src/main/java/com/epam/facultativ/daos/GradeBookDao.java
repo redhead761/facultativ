@@ -1,6 +1,6 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.DataSource;
+import com.epam.facultativ.connection.DataSource;
 import com.epam.facultativ.entity.GradeBook;
 
 import java.sql.*;
@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.facultativ.daos.Fields.*;
+
+/**
+ * the implementation of this class is questionable
+ */
 
 public class GradeBookDao {
     private static final String SELECT_All_GRADE_BOOK = "SELECT * FROM grade_book";

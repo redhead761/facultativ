@@ -1,22 +1,18 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.DataSource;
+import com.epam.facultativ.connection.DataSource;
 import com.epam.facultativ.entity.Role;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultativ.daos.Constants.*;
 import static com.epam.facultativ.daos.Fields.*;
 
 public class RoleDao implements Dao<Role> {
 
-    private static final String SELECT_All_ROLES = "SELECT * FROM roles";
-    private static final String SELECT_ROLE_BY_ID = "SELECT * FROM roles WHERE id=?";
-    private static final String UPDATE_ROLE = "UPDATE roles SET name=? WHERE id=?";
-    private static final String INSERT_ROLE = "INSERT INTO roles VALUES (DEFAULT,?)";
-    private static final String DELETE_ROLE = "DELETE FROM roles WHERE id=?";
-    private static final String SELECT_ROLE_BY_TITLE = "SELECT * FROM roles WHERE name=?";
+
 
     @Override
     public List<Role> findAll() {

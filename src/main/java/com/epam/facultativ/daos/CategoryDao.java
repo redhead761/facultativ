@@ -1,22 +1,16 @@
 package com.epam.facultativ.daos;
 
-import com.epam.facultativ.DataSource;
+import com.epam.facultativ.connection.DataSource;
 import com.epam.facultativ.entity.Category;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultativ.daos.Constants.*;
 import static com.epam.facultativ.daos.Fields.*;
 
 public class CategoryDao implements Dao<Category> {
-
-    private static final String SELECT_All_CATEGORIES = "SELECT * FROM categories";
-    private static final String SELECT_CATEGORY_BY_ID = "SELECT * FROM categories WHERE id=?";
-    private static final String UPDATE_CATEGORY = "UPDATE categories SET title=?, description=? WHERE id=?";
-    private static final String INSERT_CATEGORY = "INSERT INTO categories VALUES (DEFAULT,?,?)";
-    private static final String DELETE_CATEGORY = "DELETE FROM categories WHERE id=?";
-    private static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM categories WHERE title=?";
 
     @Override
     public List<Category> findAll() {

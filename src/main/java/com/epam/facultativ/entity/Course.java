@@ -82,11 +82,11 @@ public class Course {
         this.category = category;
     }
 
-    public Status getCourseStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setCourseStatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

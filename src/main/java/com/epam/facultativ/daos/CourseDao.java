@@ -71,7 +71,7 @@ public class CourseDao implements Dao<Course> {
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
             stmt.setInt(++k, new CategoryDao().findByName(course.getCategory().getTitle()).getId());
-            stmt.setInt(++k, new StatusDao().findByName(course.getCourseStatus().getTitle()).getId());
+            stmt.setInt(++k, new StatusDao().findByName(course.getStatus().getTitle()).getId());
             stmt.setString(++k, String.valueOf(course.getId()));
 
             stmt.executeUpdate();
@@ -90,7 +90,7 @@ public class CourseDao implements Dao<Course> {
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
             stmt.setInt(++k, new CategoryDao().findByName(course.getCategory().getTitle()).getId());
-            stmt.setInt(++k, new StatusDao().findByName(course.getCourseStatus().getTitle()).getId());
+            stmt.setInt(++k, new StatusDao().findByName(course.getStatus().getTitle()).getId());
 
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -184,7 +184,7 @@ public class CourseDao implements Dao<Course> {
             course.setDescription(rs.getString(COURSE_DESCRIPTION));
             course.setStudentsOnCourse(rs.getInt(NUMBER_STUDENTS_ON_COURSE));
             course.setCategory(new CategoryDao().findById(rs.getInt(COURSE_CATEGORY_ID)));
-            course.setCourseStatus(new StatusDao().findById(rs.getInt(COURSE_STATUS_ID)));
+            course.setStatus(new StatusDao().findById(rs.getInt(COURSE_STATUS_ID)));
             return course;
         } catch (SQLException e) {
             throw new IllegalStateException(e);

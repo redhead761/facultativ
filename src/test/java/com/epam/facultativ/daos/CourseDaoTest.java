@@ -22,7 +22,7 @@ class CourseDaoTest {
         course.setStartDate(LocalDate.parse("2022-12-12"));
         course.setDescription("some description");
         course.setCategory(new CategoryDao().findById(1));
-        course.setCourseStatus(new StatusDao().findById(1));
+        course.setStatus(new StatusDao().findById(1));
     }
 
     @Order(1)

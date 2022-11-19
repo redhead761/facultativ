@@ -199,18 +199,18 @@ CREATE TABLE IF NOT EXISTS `users_course` (
     -- courses
     -- --coming soon
     INSERT INTO courses VALUES(DEFAULT, 'Java', 20, '2020-11-22', null, 0, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
---    INSERT INTO courses VALUES(DEFAULT, 'English', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
---    INSERT INTO courses VALUES(DEFAULT, 'Higher mathematics', 100, '2020-11-22', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
+    INSERT INTO courses VALUES(DEFAULT, 'English', 100, '2020-11-22', null, 0, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
+    INSERT INTO courses VALUES(DEFAULT, 'Higher mathematics', 100, '2020-11-22', null, 0, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMING_SOON"));
 
     -- --in progress
      INSERT INTO courses VALUES(DEFAULT, 'Python', 100, '2020-11-08', null, 0, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
---     INSERT INTO courses VALUES(DEFAULT, 'Polish', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
---     INSERT INTO courses VALUES(DEFAULT, 'Basics of geometry', 100, '2020-11-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
+     INSERT INTO courses VALUES(DEFAULT, 'Polish', 100, '2020-11-08', null, 0, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
+     INSERT INTO courses VALUES(DEFAULT, 'Basics of geometry', 100, '2020-11-08', null, 0, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="IN_PROCESS"));
 
      -- --completed
      INSERT INTO courses VALUES(DEFAULT, 'C++', 50, '2020-05-08', null, 0, (SELECT id FROM categories WHERE title="PROGRAMMING"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
---     INSERT INTO courses VALUES(DEFAULT, 'Italian ', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
---     INSERT INTO courses VALUES(DEFAULT, 'Mathematical analysis', 100, '2020-05-08', null, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+     INSERT INTO courses VALUES(DEFAULT, 'Italian ', 100, '2020-05-08', null, 0, (SELECT id FROM categories WHERE title="FOREIGN_LANGUAGE"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
+     INSERT INTO courses VALUES(DEFAULT, 'Mathematical analysis', 100, '2020-05-08', null, 0, (SELECT id FROM categories WHERE title="MATH"), (SELECT id FROM course_statuses WHERE title="COMPLETED"));
 
 
     -- --users_course

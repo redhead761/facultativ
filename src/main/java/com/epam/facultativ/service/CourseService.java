@@ -1,5 +1,6 @@
 package com.epam.facultativ.service;
 
+import com.epam.facultativ.daos.CategoryDao;
 import com.epam.facultativ.daos.CourseDao;
 import com.epam.facultativ.daos.UserDao;
 import com.epam.facultativ.entity.Category;
@@ -51,8 +52,9 @@ public class CourseService {
         return result;
     }
 
-    public List<Course> coursesByCategory(Category category) {
-        return new CourseDao().findByCategory(category);
+    public List<Course> coursesByCategory(String category) {
+        Category categoryEntity= new CategoryDao().findByName(category);
+        return new CourseDao().findByCategory(categoryEntity);
     }
 
     public List<Course> coursesByTeacher(User user) {
@@ -61,8 +63,16 @@ public class CourseService {
         return courses;
     }
 
-    public void addUserToCourse(User user, Course course) {
+    public void addUserToCourse(String userId, String courseId) {
+        User user = new UserDao().findById(Integer.parseInt(userId));
+                Course course = new CourseDao().findById(Integer.parseInt(courseId));
         new CourseDao().insertUserToCourse(user, course);
     }
+
+    public List<Course> findCoursesForStudent(String userId){
+        return new CourseDao().findByUser(Integer.parseInt(userId));
+    }
+
+
 
 }

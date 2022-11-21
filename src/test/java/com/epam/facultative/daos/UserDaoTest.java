@@ -1,6 +1,5 @@
 package com.epam.facultative.daos;
 
-import com.epam.facultative.daos.impl.UserDao;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
 import org.junit.jupiter.api.*;
@@ -23,14 +22,14 @@ class UserDaoTest {
     @Order(1)
     @Test
     void findAll() {
-        assertEquals(5, userDao.findAll().size());
+        assertEquals(5, userDao.getAll().size());
     }
 
     @Order(2)
     @Test
     void insert() {
         userDao.add(user);
-        assertEquals(user.toString(), userDao.findById(user.getId()).toString());
+        assertEquals(user.toString(), userDao.getById(user.getId()).toString());
     }
 
     @Order(3)
@@ -38,19 +37,19 @@ class UserDaoTest {
     void update() {
         user.setLogin("otherTestLogin");
         userDao.update(user);
-        assertEquals(user.toString(), userDao.findById(user.getId()).toString());
+        assertEquals(user.toString(), userDao.getById(user.getId()).toString());
     }
 
     @Order(4)
     @Test
     void getUserByLogin() {
-        assertEquals(user.toString(), userDao.findByName(user.getLogin()).toString());
+        assertEquals(user.toString(), userDao.getByName(user.getLogin()).toString());
     }
 
     @Order(5)
     @Test
     void findById() {
-        assertEquals(user.toString(), userDao.findById(user.getId()).toString());
+        assertEquals(user.toString(), userDao.getById(user.getId()).toString());
     }
 
     @Order(6)
@@ -63,7 +62,7 @@ class UserDaoTest {
     @Test
     void delete() {
         userDao.delete(user);
-        assertEquals(5, userDao.findAll().size());
+        assertEquals(5, userDao.getAll().size());
     }
 //      Need to implements
 //    @Test

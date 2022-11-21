@@ -3,15 +3,16 @@ package com.epam.facultative.daos;
 import java.util.List;
 
 public interface Dao<T> {
-    List<T> findAll();
+    List<T> getAll();
 
-    T findById(int id);
+    T getById(int id);
 
-    T findByName(String name);
+    T getByName(String name);
 
     void add(T t);
 
     void update(T t);
 
-    void delete(T t);
+    void delete(int id);
 }
+

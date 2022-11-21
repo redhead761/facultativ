@@ -1,8 +1,5 @@
 package com.epam.facultative.service;
 
-import com.epam.facultative.daos.impl.CategoryDao;
-import com.epam.facultative.daos.impl.CourseDao;
-import com.epam.facultative.daos.impl.UserDao;
 import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.User;
@@ -22,28 +19,28 @@ public class CourseService {
     }
 
     public List<Course> sortByAZ() {
-        return courseDao.findAll()
+        return courseDao.getAll()
                 .stream()
                 .sorted(Comparator.comparing(Course::getTitle))
                 .collect(Collectors.toList());
     }
 
     public List<Course> sortByZA() {
-        return courseDao.findAll()
+        return courseDao.getAll()
                 .stream()
                 .sorted((o1, o2) -> o2.getTitle().compareTo(o1.getTitle()))
                 .collect(Collectors.toList());
     }
 
     public List<Course> sortByDuration() {
-        return courseDao.findAll()
+        return courseDao.getAll()
                 .stream()
                 .sorted(Comparator.comparingInt(Course::getDuration))
                 .collect(Collectors.toList());
     }
 
     public List<Course> sortByNumber() {
-        return courseDao.findAll()
+        return courseDao.getAll()
                 .stream()
                 .sorted(Comparator.comparingInt(Course::getAmountStudents))
                 .collect(Collectors.toList());
@@ -71,8 +68,8 @@ public class CourseService {
     }
 
     public void addUserToCourse(String userId, String courseId) {
-        User user = userDao.findById(Integer.parseInt(userId));
-        Course course = courseDao.findById(Integer.parseInt(courseId));
+        User user = userDao.getById(Integer.parseInt(userId));
+        Course course = courseDao.getById(Integer.parseInt(courseId));
         new CourseDao().insertUserToCourse(user, course);
     }
 

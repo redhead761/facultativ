@@ -1,6 +1,5 @@
 package com.epam.facultative.service;
 
-import com.epam.facultative.daos.impl.UserDao;
 import com.epam.facultative.entity.User;
 
 public class UserService {
@@ -11,7 +10,7 @@ public class UserService {
     }
 
     public User getUserByLogin(String login) {
-        return userDao.findByName(login);
+        return userDao.getByName(login);
 
     }
 }

@@ -1,6 +1,5 @@
 package com.epam.facultative.daos;
 
-import com.epam.facultative.daos.impl.CategoryDao;
 import com.epam.facultative.entity.Category;
 import org.junit.jupiter.api.*;
 
@@ -20,14 +19,14 @@ class CategoryDaoTest {
     @Order(1)
     @Test
     void findAll() {
-        assertEquals(3, categoryDao.findAll().size());
+        assertEquals(3, categoryDao.getAll().size());
     }
 
     @Order(2)
     @Test
     void insert() {
         categoryDao.add(category);
-        assertEquals(category.toString(), categoryDao.findByName(category.getTitle()).toString());
+        assertEquals(category.toString(), categoryDao.getByName(category.getTitle()).toString());
     }
 
     @Order(3)
@@ -35,25 +34,25 @@ class CategoryDaoTest {
     void update() {
         category.setTitle("Chemical");
         categoryDao.update(category);
-        assertEquals(category.toString(), categoryDao.findById(category.getId()).toString());
+        assertEquals(category.toString(), categoryDao.getById(category.getId()).toString());
     }
 
     @Order(4)
     @Test
     void findById() {
-        assertEquals(category.toString(), categoryDao.findById(category.getId()).toString());
+        assertEquals(category.toString(), categoryDao.getById(category.getId()).toString());
     }
 
     @Order(5)
     @Test
     void findByTitle() {
-        assertEquals(category.toString(), categoryDao.findByName(category.getTitle()).toString());
+        assertEquals(category.toString(), categoryDao.getByName(category.getTitle()).toString());
     }
 
     @Order(6)
     @Test
     void delete() {
         categoryDao.delete(category);
-        assertEquals(3, categoryDao.findAll().size());
+        assertEquals(3, categoryDao.getAll().size());
     }
 }

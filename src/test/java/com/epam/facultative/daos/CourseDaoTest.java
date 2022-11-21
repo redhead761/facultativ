@@ -1,8 +1,5 @@
 package com.epam.facultative.daos;
 
-import com.epam.facultative.daos.impl.CategoryDao;
-import com.epam.facultative.daos.impl.CourseDao;
-import com.epam.facultative.daos.impl.StatusDao;
 import com.epam.facultative.entity.Course;
 import org.junit.jupiter.api.*;
 
@@ -24,21 +21,21 @@ class CourseDaoTest {
         course.setDuration(100);
         course.setStartDate(LocalDate.parse("2022-12-12"));
         course.setDescription("some description");
-        course.setCategory(new CategoryDao().findById(1));
-        course.setStatus(new StatusDao().findById(1));
+        course.setCategory(new CategoryDao().getById(1));
+        course.setStatus(new StatusDao().getById(1));
     }
 
     @Order(1)
     @Test
     void findAll() {
-        assertEquals(3, courseDao.findAll().size());
+        assertEquals(3, courseDao.getAll().size());
     }
 
     @Order(2)
     @Test
     void insert() {
         courseDao.add(course);
-        assertEquals(course.toString(), courseDao.findById(course.getId()).toString());
+        assertEquals(course.toString(), courseDao.getById(course.getId()).toString());
     }
 
     @Order(3)
@@ -46,26 +43,26 @@ class CourseDaoTest {
     void update() {
         course.setTitle("Spanish");
         courseDao.update(course);
-        assertEquals(course.toString(), courseDao.findById(course.getId()).toString());
+        assertEquals(course.toString(), courseDao.getById(course.getId()).toString());
     }
 
     @Order(4)
     @Test
     void findById() {
-        assertEquals(course.toString(), courseDao.findById(course.getId()).toString());
+        assertEquals(course.toString(), courseDao.getById(course.getId()).toString());
     }
 
     @Order(5)
     @Test
     void findByName() {
-        assertEquals(course.toString(), courseDao.findByName(course.getTitle()).toString());
+        assertEquals(course.toString(), courseDao.getByName(course.getTitle()).toString());
     }
 
     @Order(6)
     @Test
     void delete() {
         courseDao.delete(course);
-        assertEquals(3, courseDao.findAll().size());
+        assertEquals(3, courseDao.getAll().size());
     }
 
 

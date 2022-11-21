@@ -9,27 +9,28 @@ package com.epam.facultative.daos.impl;
 class Constants {
 
     //SQL request for Category DAO
-    static final String SELECT_All_CATEGORIES = "SELECT * FROM categories";
-    static final String SELECT_CATEGORY_BY_ID = "SELECT * FROM categories WHERE id=?";
-    static final String UPDATE_CATEGORY = "UPDATE categories SET title=?, description=? WHERE id=?";
-    static final String INSERT_CATEGORY = "INSERT INTO categories VALUES (DEFAULT,?,?)";
-    static final String DELETE_CATEGORY = "DELETE FROM categories WHERE id=?";
-    static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM categories WHERE title=?";
+    static final String SELECT_All_CATEGORIES = "SELECT * FROM category";
+    static final String SELECT_CATEGORY_BY_ID = "SELECT * FROM category WHERE id=?";
+    static final String UPDATE_CATEGORY = "UPDATE category SET title=?, description=? WHERE id=?";
+    static final String INSERT_CATEGORY = "INSERT INTO category VALUES (DEFAULT,?,?)";
+    static final String DELETE_CATEGORY = "DELETE FROM category WHERE id=?";
+    static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM category WHERE title=?";
 
     //SQL request for Course DAO
-    static final String SELECT_All_COURSES = "SELECT * FROM courses";
-    static final String SELECT_COURSE_BY_ID = "SELECT * FROM courses WHERE id=?";
-    static final String SELECT_COURSE_BY_TITLE = "SELECT * FROM courses WHERE title=?";
-    static final String INSERT_COURSE = "INSERT INTO courses VALUES (DEFAULT,?,?,?,?,0,?,?)";
-    static final String DELETE_COURSE = "DELETE FROM courses WHERE id=?";
-    static final String SELECT_COURSE_BY_CATEGORY = "SELECT * FROM courses WHERE category_id=?";
+    static final String SELECT_All_COURSES = "SELECT * FROM course";
+    static final String SELECT_COURSE_BY_ID = "SELECT * FROM course WHERE id=?";
+    static final String SELECT_COURSE_BY_TITLE = "SELECT * FROM course WHERE title=?";
+    static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,0,?,?,?)";
+    static final String DELETE_COURSE = "DELETE FROM course WHERE id=?";
+    static final String SELECT_COURSE_BY_CATEGORY = "SELECT * FROM course WHERE category_id=?";
     static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
-    static final String UPDATE_COURSE = "UPDATE courses SET title=?, duration=?, " +
-            "course_start_date=?, description=?, category_id=?, course_status_id=?,students_on_course=0 WHERE id=?";
+    static final String UPDATE_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,?)";
+    static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?, " +
+            "course_start_date=?, description=?, category_id=?, course_status_id=?,amount_students=0 WHERE id=?";
     static final String SELECT_COURSES_USER =
-            "SELECT * FROM courses JOIN users_course ON courses.id = users_course.course_id WHERE user_id=?";
+            "SELECT * FROM course JOIN users_course ON course.id = users_course.course_id WHERE user_id=?";
     static final String ADD_NUMBER_STUDENTS_TO_COURSE =
-            "UPDATE courses SET students_on_course = students_on_course + 1 WHERE id=?";
+            "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
 
     //SQL request for Role DAO
     static final String SELECT_All_ROLES = "SELECT * FROM roles";
@@ -48,14 +49,14 @@ class Constants {
     static final String SELECT_STATUS_BY_TITLE = "SELECT * FROM course_statuses WHERE title=?";
 
     //SQL request for User DAO
-    static final String SELECT_All_USERS = "SELECT * FROM users";
-    static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id=?";
-    static final String SELECT_USER_BY_LOGIN = "SELECT * FROM users WHERE login=?";
-    static final String SELECT_USERS_BY_ROLE = "SELECT * FROM users WHERE role_id=?";
-    static final String INSERT_USER = "INSERT INTO users VALUES (DEFAULT,?,?,?,?,?,?,?)";
-    static final String DELETE_USER = "DELETE FROM users WHERE id=?";
+    static final String SELECT_All_USERS = "SELECT * FROM user";
+    static final String SELECT_USER_BY_ID = "SELECT * FROM user WHERE id=?";
+    static final String SELECT_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
+    static final String SELECT_USERS_BY_ROLE = "SELECT * FROM user WHERE role_id=?";
+    static final String INSERT_USER = "INSERT INTO user VALUES (DEFAULT,?,?,?,?,?,?,?)";
+    static final String DELETE_USER = "DELETE FROM user WHERE id=?";
     static final String SELECT_USERS_COURSE =
-            "SELECT * FROM users JOIN users_course ON users.id = users_course.user_id WHERE course_id=?";
-    static final String UPDATE_USER = "UPDATE users SET login=?, password=?, first_name=?, " +
-            "last_name=?, email=?, block=?, role_id=? WHERE id=?";
+            "SELECT * FROM user JOIN users_course ON user.id = users_course.user_id WHERE course_id=?";
+    static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?, " +
+            "surname=?, email=?, block=?, role_id=? WHERE id=?";
 }

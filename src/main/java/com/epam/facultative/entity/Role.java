@@ -1,5 +1,7 @@
 package com.epam.facultative.entity;
 
+import java.util.Arrays;
+
 public enum Role {
     ADMIN(1),
     TEACHER(2),
@@ -15,12 +17,11 @@ public enum Role {
         return id;
     }
 
-
-    //    public static Role of(int id) {
-//        return Arrays.stream(Role.values())
-//                .filter(role -> role.getId() == id)
-//                .findAny()
-//                .orElseThrow();
-//    }
+    public static Role of(int id) {
+        return Arrays.stream(Role.values())
+                .filter(role -> role.getId() == id)
+                .findAny()
+                .orElseThrow();
+    }
 }
 

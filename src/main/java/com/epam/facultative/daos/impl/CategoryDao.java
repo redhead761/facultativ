@@ -1,14 +1,15 @@
-package com.epam.facultative.daos;
+package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.connection.DataSource;
+import com.epam.facultative.daos.Dao;
 import com.epam.facultative.entity.Category;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.Constants.*;
-import static com.epam.facultative.daos.Fields.*;
+import static com.epam.facultative.daos.impl.Constants.*;
+import static com.epam.facultative.daos.impl.Fields.*;
 
 public class CategoryDao implements Dao<Category> {
 

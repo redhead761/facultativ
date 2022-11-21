@@ -6,8 +6,8 @@ public class User {
     private int id;
     private String login;
     private String password;
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String surname;
     private String email;
     private boolean isBlock;
     private Role role;
@@ -15,12 +15,12 @@ public class User {
     public User() {
     }
 
-    public User(int id, String login, String password, String firstName, String lastName, String email, boolean isBlock, Role role) {
+    public User(int id, String login, String password, String name, String surname, String email, boolean isBlock, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
+        this.surname = surname;
         this.email = email;
         this.isBlock = isBlock;
         this.role = role;
@@ -50,20 +50,20 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {
@@ -94,8 +94,9 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", isBlock=" + isBlock +
                 ", role=" + role +
@@ -109,16 +110,16 @@ public class User {
         User user = (User) o;
         return id == user.id
                 && isBlock == user.isBlock
-                && role == user.role
-                && login.equals(user.login)
-                && password.equals(user.password)
-                && firstName.equals(user.firstName)
-                && lastName.equals(user.lastName)
-                && email.equals(user.email);
+                && Objects.equals(login, user.login)
+                && Objects.equals(password, user.password)
+                && Objects.equals(name, user.name)
+                && Objects.equals(surname, user.surname)
+                && Objects.equals(email, user.email)
+                && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, firstName, lastName, email, isBlock, role);
+        return Objects.hash(id, login, password, name, surname, email, isBlock, role);
     }
 }

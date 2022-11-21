@@ -1,5 +1,6 @@
 package com.epam.facultative.daos;
 
+import com.epam.facultative.daos.impl.UserDao;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
 import org.junit.jupiter.api.*;

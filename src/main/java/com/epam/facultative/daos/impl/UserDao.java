@@ -1,14 +1,16 @@
-package com.epam.facultative.daos;
+package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.connection.DataSource;
+import com.epam.facultative.daos.Dao;
+import com.epam.facultative.daos.impl.RoleDao;
 import com.epam.facultative.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.Constants.*;
-import static com.epam.facultative.daos.Fields.*;
+import static com.epam.facultative.daos.impl.Constants.*;
+import static com.epam.facultative.daos.impl.Fields.*;
 
 public class UserDao implements Dao<User> {
 
@@ -50,8 +52,8 @@ public class UserDao implements Dao<User> {
             int k = 0;
             stmt.setString(++k, user.getLogin());
             stmt.setString(++k, user.getPassword());
-            stmt.setString(++k, user.getFirstName());
-            stmt.setString(++k, user.getLastName());
+            stmt.setString(++k, user.getName());
+            stmt.setString(++k, user.getSurname());
             stmt.setString(++k, user.getEmail());
             stmt.setBoolean(++k, user.isBlock());
             stmt.setInt(++k, user.getRole().getId());
@@ -70,8 +72,8 @@ public class UserDao implements Dao<User> {
             int k = 0;
             stmt.setString(++k, user.getLogin());
             stmt.setString(++k, user.getPassword());
-            stmt.setString(++k, user.getFirstName());
-            stmt.setString(++k, user.getLastName());
+            stmt.setString(++k, user.getName());
+            stmt.setString(++k, user.getSurname());
             stmt.setString(++k, user.getEmail());
             stmt.setBoolean(++k, user.isBlock());
             stmt.setInt(++k, new RoleDao().findById(user.getRole().getId()).getId());
@@ -156,8 +158,8 @@ public class UserDao implements Dao<User> {
             user.setId(rs.getInt(USER_ID));
             user.setLogin(rs.getString(USER_LOGIN));
             user.setPassword(rs.getString(USER_PASSWORD));
-            user.setFirstName(rs.getString(USER_FIRST_NAME));
-            user.setLastName(rs.getString(USER_FAMILY_NAME));
+            user.setName(rs.getString(USER_FIRST_NAME));
+            user.setSurname(rs.getString(USER_FAMILY_NAME));
             user.setEmail(rs.getString(USER_EMAIL));
             user.setBlock(rs.getBoolean(USER_IS_BLOCK));
             user.setRole(new RoleDao().findById(rs.getInt(USER_ROLE_ID)));

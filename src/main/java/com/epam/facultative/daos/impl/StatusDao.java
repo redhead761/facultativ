@@ -1,57 +1,56 @@
-package com.epam.facultative.daos;
+package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.connection.DataSource;
-import com.epam.facultative.entity.Role;
+import com.epam.facultative.daos.Dao;
+import com.epam.facultative.entity.Status;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.Constants.*;
-import static com.epam.facultative.daos.Fields.*;
+import static com.epam.facultative.daos.impl.Constants.*;
+import static com.epam.facultative.daos.impl.Fields.*;
 
-public class RoleDao implements Dao<Role> {
-
-
+public class StatusDao implements Dao<Status> {
 
     @Override
-    public List<Role> findAll() {
-        List<Role> roles = new ArrayList<>();
+    public List<Status> findAll() {
+        List<Status> statuses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SELECT_All_ROLES);
+            ResultSet rs = stmt.executeQuery(SELECT_All_STATUSES);
             while (rs.next()) {
-                roles.add(mapRow(rs));
+                statuses.add(mapRow(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return roles;
+        return statuses;
     }
 
     @Override
-    public Role findById(int id) {
-        Role role = null;
+    public Status findById(int id) {
+        Status status = null;
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_ROLE_BY_ID)) {
+             PreparedStatement stmt = con.prepareStatement(SELECT_STATUS_BY_ID)) {
             stmt.setString(1, String.valueOf(id));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                role = mapRow(rs);
+                status = mapRow(rs);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return role;
+        return status;
     }
 
     @Override
-    public void update(Role role) {
+    public void update(Status status) {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UPDATE_ROLE)) {
+             PreparedStatement stmt = con.prepareStatement(UPDATE_STATUS)) {
             int k = 0;
-            stmt.setString(++k, role.getTitle());
-            stmt.setString(++k, String.valueOf(role.getId()));
+            stmt.setString(++k, status.getTitle());
+            stmt.setString(++k, String.valueOf(status.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,15 +58,15 @@ public class RoleDao implements Dao<Role> {
     }
 
     @Override
-    public void insert(Role role) {
+    public void insert(Status status) {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(INSERT_ROLE, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = con.prepareStatement(INSERT_STATUS, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;
-            stmt.setString(++k, role.getTitle());
+            stmt.setString(++k, status.getTitle());
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    role.setId(generatedKeys.getInt(1));
+                    status.setId(generatedKeys.getInt(1));
                 }
             }
         } catch (SQLException e) {
@@ -76,10 +75,10 @@ public class RoleDao implements Dao<Role> {
     }
 
     @Override
-    public void delete(Role role) {
+    public void delete(Status status) {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(DELETE_ROLE)) {
-            stmt.setString(1, String.valueOf(role.getId()));
+             PreparedStatement stmt = con.prepareStatement(DELETE_STATUS)) {
+            stmt.setString(1, String.valueOf(status.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -87,19 +86,19 @@ public class RoleDao implements Dao<Role> {
     }
 
     @Override
-    public Role findByName(String title) {
-        Role role = null;
+    public Status findByName(String title) {
+        Status status = null;
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_ROLE_BY_TITLE)) {
-            stmt.setString(1, String.valueOf(title));
+             PreparedStatement stmt = con.prepareStatement(SELECT_STATUS_BY_TITLE)) {
+            stmt.setString(1, title);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                role = mapRow(rs);
+                status = mapRow(rs);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return role;
+        return status;
     }
 
     /*
@@ -107,12 +106,13 @@ public class RoleDao implements Dao<Role> {
    helper methods
    *******
     */
-    private Role mapRow(ResultSet rs) {
+
+    private Status mapRow(ResultSet rs) {
         try {
-            Role role = new Role();
-            role.setId(rs.getInt(ROLE_ID));
-            role.setTitle(rs.getString(ROLE_TITLE));
-            return role;
+            Status status = new Status();
+            status.setId(rs.getInt(STATUS_ID));
+            status.setTitle(rs.getString(STATUS_TITLE));
+            return status;
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

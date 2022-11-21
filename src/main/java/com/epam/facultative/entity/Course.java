@@ -8,11 +8,10 @@ public class Course {
     private String title;
     private int duration;
     private LocalDate startDate;
+    private int amountStudents;
     private String description;
-    private int studentsOnCourse;
     private Category category;
     private Status status;
-
 
     public Course() {
     }
@@ -67,13 +66,14 @@ public class Course {
         this.description = description;
     }
 
-    public int getStudentsOnCourse() {
-        return studentsOnCourse;
+    public int getAmountStudents() {
+        return amountStudents;
     }
 
-    public void setStudentsOnCourse(int studentsOnCourse) {
-        this.studentsOnCourse = studentsOnCourse;
+    public void setAmountStudents(int amountStudents) {
+        this.amountStudents = amountStudents;
     }
+
     public Category getCategory() {
         return category;
     }
@@ -97,9 +97,10 @@ public class Course {
                 ", title='" + title + '\'' +
                 ", duration=" + duration +
                 ", startDate=" + startDate +
+                ", amountStudents=" + amountStudents +
                 ", description='" + description + '\'' +
-                ", category=" + category.getTitle() +
-                ", course status=" + status.getTitle() +
+                ", category=" + category +
+                ", status=" + status +
                 '}';
     }
 
@@ -110,17 +111,16 @@ public class Course {
         Course course = (Course) o;
         return id == course.id
                 && duration == course.duration
-                && category == course.category
-                && status == course.status
-                && title.equals(course.title)
-                && startDate.equals(course.startDate)
-                && description.equals(course.description);
+                && amountStudents == course.amountStudents
+                && Objects.equals(title, course.title)
+                && Objects.equals(startDate, course.startDate)
+                && Objects.equals(description, course.description)
+                && Objects.equals(category, course.category)
+                && status == course.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, duration, startDate, description, category, status);
+        return Objects.hash(id, title, duration, startDate, amountStudents, description, category, status);
     }
-
-
 }

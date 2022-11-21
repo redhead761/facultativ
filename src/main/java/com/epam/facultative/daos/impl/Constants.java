@@ -1,4 +1,4 @@
-package com.epam.facultative.daos;
+package com.epam.facultative.daos.impl;
 
 /**
  * Holder for SQL request.

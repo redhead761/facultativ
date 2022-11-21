@@ -1,8 +1,8 @@
 package com.epam.facultative.service;
 
-import com.epam.facultative.daos.CategoryDao;
-import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.daos.UserDao;
+import com.epam.facultative.daos.impl.CategoryDao;
+import com.epam.facultative.daos.impl.CourseDao;
+import com.epam.facultative.daos.impl.UserDao;
 import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.User;
@@ -45,7 +45,7 @@ public class CourseService {
     public List<Course> sortByNumber() {
         return courseDao.findAll()
                 .stream()
-                .sorted(Comparator.comparingInt(Course::getStudentsOnCourse))
+                .sorted(Comparator.comparingInt(Course::getAmountStudents))
                 .collect(Collectors.toList());
     }
 

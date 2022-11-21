@@ -1,5 +1,6 @@
 package com.epam.facultative.daos;
 
+import com.epam.facultative.daos.impl.StatusDao;
 import com.epam.facultative.entity.Status;
 import org.junit.jupiter.api.*;
 

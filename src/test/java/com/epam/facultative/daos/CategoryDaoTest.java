@@ -1,5 +1,6 @@
 package com.epam.facultative.daos;
 
+import com.epam.facultative.daos.impl.CategoryDao;
 import com.epam.facultative.entity.Category;
 import org.junit.jupiter.api.*;
 

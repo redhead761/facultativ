@@ -1,6 +1,6 @@
 package com.epam.facultative.service;
 
-import com.epam.facultative.daos.UserDao;
+import com.epam.facultative.daos.impl.UserDao;
 import com.epam.facultative.entity.User;
 
 public class UserService {

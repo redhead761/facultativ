@@ -1,5 +1,6 @@
 package com.epam.facultative.daos;
 
+import com.epam.facultative.daos.impl.RoleDao;
 import com.epam.facultative.entity.Role;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;

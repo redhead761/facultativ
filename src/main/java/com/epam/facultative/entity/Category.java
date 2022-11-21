@@ -55,7 +55,9 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && title == category.title && description == category.description;
+        return id == category.id
+                && title.equals(category.title)
+                && description.equals(category.description);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.epam.facultative.daos;
+package com.epam.facultative.daos.impl;
 
 /**
  * Holder for fields names of DB tables and beans.

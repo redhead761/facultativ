@@ -1,6 +1,7 @@
-package com.epam.facultative.daos;
+package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.connection.DataSource;
+import com.epam.facultative.daos.Dao;
 import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.User;
@@ -9,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.Constants.*;
-import static com.epam.facultative.daos.Fields.*;
+import static com.epam.facultative.daos.impl.Constants.*;
+import static com.epam.facultative.daos.impl.Fields.*;
 
 public class CourseDao implements Dao<Course> {
 
@@ -182,7 +183,7 @@ public class CourseDao implements Dao<Course> {
             course.setDuration(rs.getInt(COURSE_DURATION));
             course.setStartDate(rs.getDate(COURSE_START_DATE).toLocalDate());
             course.setDescription(rs.getString(COURSE_DESCRIPTION));
-            course.setStudentsOnCourse(rs.getInt(NUMBER_STUDENTS_ON_COURSE));
+            course.setAmountStudents(rs.getInt(NUMBER_STUDENTS_ON_COURSE));
             course.setCategory(new CategoryDao().findById(rs.getInt(COURSE_CATEGORY_ID)));
             course.setStatus(new StatusDao().findById(rs.getInt(COURSE_STATUS_ID)));
             return course;

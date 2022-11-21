@@ -82,7 +82,7 @@ public class CourseDao implements Dao<Course> {
     }
 
     @Override
-    public void insert(Course course) {
+    public void add(Course course) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;

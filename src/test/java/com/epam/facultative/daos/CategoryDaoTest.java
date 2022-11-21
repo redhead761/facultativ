@@ -26,7 +26,7 @@ class CategoryDaoTest {
     @Order(2)
     @Test
     void insert() {
-        categoryDao.insert(category);
+        categoryDao.add(category);
         assertEquals(category.toString(), categoryDao.findByName(category.getTitle()).toString());
     }
 

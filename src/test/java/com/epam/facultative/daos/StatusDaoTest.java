@@ -26,7 +26,7 @@ class StatusDaoTest {
     @Order(2)
     @Test
     void insert() {
-        statusDao.insert(status);
+        statusDao.add(status);
         assertEquals(status.toString(), statusDao.findByName(status.getTitle()).toString());
     }
 

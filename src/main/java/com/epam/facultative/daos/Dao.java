@@ -9,9 +9,9 @@ public interface Dao<T> {
 
     T findByName(String name);
 
-    void update(T t);
+    void add(T t);
 
-    void insert(T t);
+    void update(T t);
 
     void delete(T t);
 }

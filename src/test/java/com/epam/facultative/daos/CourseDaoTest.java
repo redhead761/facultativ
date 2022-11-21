@@ -37,7 +37,7 @@ class CourseDaoTest {
     @Order(2)
     @Test
     void insert() {
-        courseDao.insert(course);
+        courseDao.add(course);
         assertEquals(course.toString(), courseDao.findById(course.getId()).toString());
     }
 

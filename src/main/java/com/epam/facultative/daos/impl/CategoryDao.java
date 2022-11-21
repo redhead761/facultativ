@@ -59,7 +59,7 @@ public class CategoryDao implements Dao<Category> {
     }
 
     @Override
-    public void insert(Category category) {
+    public void add(Category category) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_CATEGORY, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;

@@ -66,7 +66,7 @@ public class UserDao implements Dao<User> {
     }
 
     @Override
-    public void insert(User user) {
+    public void add(User user) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;

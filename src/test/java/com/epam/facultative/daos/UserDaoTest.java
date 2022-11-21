@@ -29,7 +29,7 @@ class UserDaoTest {
     @Order(2)
     @Test
     void insert() {
-        userDao.insert(user);
+        userDao.add(user);
         assertEquals(user.toString(), userDao.findById(user.getId()).toString());
     }
 

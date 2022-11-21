@@ -58,7 +58,7 @@ public class StatusDao implements Dao<Status> {
     }
 
     @Override
-    public void insert(Status status) {
+    public void add(Status status) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_STATUS, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;

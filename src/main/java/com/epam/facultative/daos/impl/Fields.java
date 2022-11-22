@@ -22,6 +22,9 @@ class Fields {
     static final String COURSE_DESCRIPTION = "description";
     static final String COURSE_CATEGORY_ID = "category_id";
     static final String COURSE_STATUS_ID = "status_id";
+    static final String COURSE_STATUS = "course_status";
+    static final String COURSE_CATEGORY = "course_category";
+    static final String COURSE_CATEGORY_DESCRIPTION = "category_description";
 
     //User fields
     static final String USER_ID = "id";
@@ -32,5 +35,6 @@ class Fields {
     static final String USER_EMAIL = "email";
     static final String USER_IS_BLOCK = "block";
     static final String USER_ROLE_ID = "role_id";
+    static final String USER_ROLE_NAME = "role_name";
 
 }

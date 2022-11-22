@@ -1,8 +1,8 @@
 package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.connection.DataSource;
-import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.daos.CourseDao;
+import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.Status;
 
@@ -14,7 +14,6 @@ import static com.epam.facultative.daos.impl.Constants.*;
 import static com.epam.facultative.daos.impl.Fields.*;
 
 public class MySqlCourseDao implements CourseDao {
-    private static final CategoryDao categoryDao = MySqlDaoFactory.getInstance().getCategoryDao();
 
     @Override
     public List<Course> getAll() {
@@ -36,7 +35,7 @@ public class MySqlCourseDao implements CourseDao {
         Course course = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_ID)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 course = mapRow(rs);
@@ -72,7 +71,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(++k, course.getDuration());
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
             stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, categoryDao.getByName(course.getCategory().getTitle()).getId());
+            stmt.setInt(++k, course.getCategory().getId());
             stmt.setInt(++k, course.getStatus().getId());
             stmt.executeUpdate();
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -93,8 +92,9 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setString(++k, course.getTitle());
             stmt.setInt(++k, course.getDuration());
             stmt.setDate(++k, Date.valueOf(course.getStartDate()));
+            stmt.setInt(++k, course.getAmountStudents());
             stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, categoryDao.getByName(course.getCategory().getTitle()).getId());
+            stmt.setInt(++k, course.getCategory().getId());
             stmt.setInt(++k, course.getStatus().getId());
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
@@ -107,7 +107,7 @@ public class MySqlCourseDao implements CourseDao {
     public void delete(int id) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_COURSE)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -119,7 +119,7 @@ public class MySqlCourseDao implements CourseDao {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_USER)) {
-            stmt.setString(1, String.valueOf(userId));
+            stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
@@ -135,7 +135,7 @@ public class MySqlCourseDao implements CourseDao {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
-            stmt.setString(1, String.valueOf(categoryId));
+            stmt.setInt(1, categoryId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
@@ -150,10 +150,10 @@ public class MySqlCourseDao implements CourseDao {
     public void addUserToCourse(int courseId, int userId) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_USERS_COURSE)) {
-                stmt.setInt(1, courseId);
-                stmt.setInt(2, userId);
-                stmt.executeUpdate();
-                addNumberStudentsToCourse(courseId);
+            stmt.setInt(1, courseId);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+            addNumberStudentsToCourse(courseId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -192,9 +192,21 @@ public class MySqlCourseDao implements CourseDao {
             course.setStartDate(rs.getDate(COURSE_START_DATE).toLocalDate());
             course.setAmountStudents(rs.getInt(COURSE_AMOUNT_STUDENTS));
             course.setDescription(rs.getString(COURSE_DESCRIPTION));
-            course.setCategory(categoryDao.getById(rs.getInt(COURSE_CATEGORY_ID)));
-            course.setStatus(Status.of(rs.getInt(COURSE_STATUS_ID)));
+            course.setCategory(mapRowCategory(rs));
+            course.setStatus(Status.valueOf(rs.getString(COURSE_STATUS)));
             return course;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private Category mapRowCategory(ResultSet rs) {
+        try {
+            Category category = new Category();
+            category.setId(rs.getInt(COURSE_CATEGORY_ID));
+            category.setTitle(rs.getString(COURSE_CATEGORY));
+            category.setDescription(rs.getString(COURSE_CATEGORY_DESCRIPTION));
+            return category;
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

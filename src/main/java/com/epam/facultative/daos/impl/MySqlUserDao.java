@@ -11,7 +11,6 @@ import java.util.List;
 
 import static com.epam.facultative.daos.impl.Constants.*;
 import static com.epam.facultative.daos.impl.Fields.*;
-import static com.epam.facultative.daos.impl.Fields.USER_ROLE_ID;
 
 public class MySqlUserDao implements UserDao {
     @Override
@@ -34,7 +33,7 @@ public class MySqlUserDao implements UserDao {
         User user = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_ID)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 user = mapRow(rs);
@@ -107,7 +106,7 @@ public class MySqlUserDao implements UserDao {
     public void delete(int id) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_USER)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -119,7 +118,7 @@ public class MySqlUserDao implements UserDao {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE)) {
-            stmt.setString(1, String.valueOf(roleId));
+            stmt.setInt(1, roleId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 users.add(mapRow(rs));
@@ -135,7 +134,7 @@ public class MySqlUserDao implements UserDao {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USERS_COURSE)) {
-            stmt.setString(1, String.valueOf(courseId));
+            stmt.setInt(1, courseId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 users.add(mapRow(rs));
@@ -156,7 +155,7 @@ public class MySqlUserDao implements UserDao {
             user.setSurname(rs.getString(USER_FAMILY_NAME));
             user.setEmail(rs.getString(USER_EMAIL));
             user.setBlock(rs.getBoolean(USER_IS_BLOCK));
-            user.setRole(Role.of(rs.getInt(USER_ROLE_ID)));
+            user.setRole(Role.valueOf(rs.getString(USER_ROLE_NAME)));
             return user;
         } catch (SQLException e) {
             throw new IllegalStateException(e);

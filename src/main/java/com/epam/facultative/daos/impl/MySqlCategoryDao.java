@@ -32,7 +32,7 @@ public class MySqlCategoryDao implements CategoryDao {
         Category category = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_ID)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 category = mapRow(rs);
@@ -95,7 +95,7 @@ public class MySqlCategoryDao implements CategoryDao {
     public void delete(int id) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_CATEGORY)) {
-            stmt.setString(1, String.valueOf(id));
+            stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

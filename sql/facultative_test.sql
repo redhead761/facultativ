@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   `title` VARCHAR(255) NOT NULL,
   `duration` INT UNSIGNED NOT NULL,
   `start_date` DATETIME NOT NULL,
+  `amount_students` INT UNSIGNED NULL DEFAULT 0,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `category_id` INT NOT NULL,
   `status_id` INT NOT NULL,

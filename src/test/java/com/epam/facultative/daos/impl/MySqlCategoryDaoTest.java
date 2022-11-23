@@ -4,16 +4,9 @@ import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.daos.DaoFactory;
 import com.epam.facultative.entity.Category;
 
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.junit.jupiter.api.*;
-
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

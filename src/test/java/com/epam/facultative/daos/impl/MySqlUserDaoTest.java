@@ -1,7 +1,11 @@
 package com.epam.facultative.daos.impl;
 
+import com.epam.facultative.daos.CategoryDao;
+import com.epam.facultative.daos.CourseDao;
 import com.epam.facultative.daos.DaoFactory;
 import com.epam.facultative.daos.UserDao;
+import com.epam.facultative.entity.Category;
+import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
 
@@ -13,18 +17,24 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class MySqlUserDaoTest {
-
+    private static Preparation prep;
     private static UserDao userDao;
+    private static CourseDao courseDao;
+    private static CategoryDao categoryDao;
     private static User testUser;
-    static Preparation prep;
+    private static Course testCourse;
+    private static Category testCategory;
 
     @BeforeAll
     static void setUp() {
         prep = new Preparation();
         userDao = DaoFactory.getInstance().getUserDao();
+        courseDao = DaoFactory.getInstance().getCourseDao();
+        categoryDao = DaoFactory.getInstance().getCategoryDao();
         testUser = prep.getTestUser();
+        testCourse = prep.getTestCourse();
+        testCategory = prep.getTestCategory();
     }
 
     @BeforeEach
@@ -71,7 +81,6 @@ class MySqlUserDaoTest {
         user.setLogin("some login");
         user.setEmail(testUser.getEmail());
         assertThrows(RuntimeException.class, () -> userDao.add(user));
-        userDao.delete(testUser.getId());
     }
 
     @Test
@@ -99,7 +108,6 @@ class MySqlUserDaoTest {
         testUser.setId(-1);
         userDao.add(testUser);
         assertEquals(1, userDao.getAll().size());
-        userDao.delete(testUser.getId());
     }
 
     @Test
@@ -108,5 +116,17 @@ class MySqlUserDaoTest {
         List<User> users = userDao.getByRole(testUser.getRole().getId());
         assertEquals(testUser, users.get(0));
         userDao.delete(testUser.getId());
+    }
+
+    @Test
+    void testGetUserByCourse() {
+        userDao.add(testUser);
+        categoryDao.add(testCategory);
+        testCourse.setCategory(testCategory);
+        courseDao.add(testCourse);
+
+        courseDao.addUserToCourse(testCourse.getId(),testUser.getId());
+        List<User> user = userDao.getUsersByCourse(testCourse.getId());
+        assertEquals(testUser,user.get(0));
     }
 }

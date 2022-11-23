@@ -4,23 +4,35 @@ import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.daos.DaoFactory;
 import com.epam.facultative.entity.Category;
 
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.jupiter.api.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.Reader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class MySqlCategoryDaoTest {
-    private CategoryDao categoryDao;
-    private Category testCategory;
+    private static CategoryDao categoryDao;
+    private static Category testCategory;
+    static Preparation prep;
+
+    @BeforeAll
+    static void setUp() {
+        prep = new Preparation();
+        categoryDao = DaoFactory.getInstance().getCategoryDao();
+        testCategory = prep.getTestCategory();
+    }
 
     @BeforeEach
-    void setUp() {
-        categoryDao = DaoFactory.getInstance().getCategoryDao();
-        testCategory = new Category();
-        testCategory.setTitle("testCategory");
-        testCategory.setDescription("test description");
+    void refreshDB() throws SQLException, FileNotFoundException {
+        prep.refreshDB();
     }
 
     @Test
@@ -28,13 +40,13 @@ class MySqlCategoryDaoTest {
         categoryDao.add(testCategory);
 
         Category category = categoryDao.getByName(testCategory.getTitle());
-        assertEquals(testCategory,category);
+        assertEquals(testCategory, category);
 
         testCategory.setTitle("otherCategory");
         testCategory.setDescription("otherDescription");
         categoryDao.update(testCategory);
         category = categoryDao.getById(testCategory.getId());
-        assertEquals(testCategory,category);
+        assertEquals(testCategory, category);
 
         categoryDao.delete(testCategory.getId());
         assertEquals(0, categoryDao.getAll().size());
@@ -46,7 +58,7 @@ class MySqlCategoryDaoTest {
         category.setTitle(testCategory.getTitle());
         categoryDao.add(testCategory);
         assertThrows(RuntimeException.class, () -> categoryDao.add(category));
-        categoryDao.delete(testCategory.getId());
+
     }
 
     @Test
@@ -58,7 +70,6 @@ class MySqlCategoryDaoTest {
         testCategory.setTitle("testTitle");
         categoryDao.add(testCategory);
         assertEquals(1, categoryDao.getAll().size());
-        categoryDao.delete(testCategory.getId());
     }
 
 }

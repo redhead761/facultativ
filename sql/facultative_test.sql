@@ -164,8 +164,8 @@ CREATE TABLE IF NOT EXISTS `users_course` (
 --    -- --teachers
 --    INSERT INTO user VALUES(DEFAULT, 'Eddard', '111111', 'Eddard', 'Stark,', 'Stark@game.com', DEFAULT, (SELECT id FROM role WHERE name='TEACHER'));
 --    INSERT INTO user VALUES(DEFAULT, 'Tywin', '222222', 'Tywin', 'Lannister,', 'Lannister@game.com', DEFAULT, (SELECT id FROM role WHERE name='TEACHER'));
-----    INSERT INTO user VALUES(DEFAULT, 'Rhaegar', '333333', 'Rhaegar', 'Targaryen,', 'Targaryen@game.com', DEFAULT, (SELECT id FROM role WHERE name='TEACHER'));
-----    INSERT INTO user VALUES(DEFAULT, 'Baratheon ', '444444', 'Robert', 'Baratheon ,', 'Baratheon@game.com', DEFAULT,(SELECT id FROM role WHERE name='TEACHER'));
+--    INSERT INTO user VALUES(DEFAULT, 'Rhaegar', '333333', 'Rhaegar', 'Targaryen,', 'Targaryen@game.com', DEFAULT, (SELECT id FROM role WHERE name='TEACHER'));
+--    INSERT INTO user VALUES(DEFAULT, 'Baratheon ', '444444', 'Robert', 'Baratheon ,', 'Baratheon@game.com', DEFAULT,(SELECT id FROM role WHERE name='TEACHER'));
 --
 --    -- --students
 --    INSERT INTO user VALUES(DEFAULT, 'Sansa ', '555555', 'Sansa', 'Stark', 'Sansa@game.com', DEFAULT, (SELECT id FROM role WHERE name='STUDENT'));
@@ -204,8 +204,6 @@ CREATE TABLE IF NOT EXISTS `users_course` (
 --     insert into users_course VALUES (2,2,DEFAULT);
 --     insert into users_course VALUES (2,4,DEFAULT);
 --     insert into users_course VALUES (3,2,DEFAULT);
-
-
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

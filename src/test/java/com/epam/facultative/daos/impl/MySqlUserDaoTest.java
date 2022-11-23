@@ -7,6 +7,8 @@ import com.epam.facultative.entity.User;
 
 import org.junit.jupiter.api.*;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,20 +16,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MySqlUserDaoTest {
 
-    private UserDao userDao;
-    private User testUser;
+    private static UserDao userDao;
+    private static User testUser;
+    static Preparation prep;
+
+    @BeforeAll
+    static void setUp() {
+        prep = new Preparation();
+        userDao = DaoFactory.getInstance().getUserDao();
+        testUser = prep.getTestUser();
+    }
 
     @BeforeEach
-    void setUp() {
-        userDao = DaoFactory.getInstance().getUserDao();
-        testUser = new User();
-        testUser.setLogin("testLogin");
-        testUser.setPassword("testPassword");
-        testUser.setName("testName");
-        testUser.setSurname("testSurname");
-        testUser.setEmail("test@test.com");
-        testUser.setBlock(false);
-        testUser.setRole(Role.ADMIN);
+    void refreshDB() throws SQLException, FileNotFoundException {
+        prep.refreshDB();
     }
 
     @Test

@@ -1,15 +1,14 @@
 package com.epam.facultative.daos.impl;
 
-import com.epam.facultative.daos.CategoryDao;
-import com.epam.facultative.daos.DaoFactory;
+import com.epam.facultative.daos.*;
 import com.epam.facultative.entity.Category;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class MySqlCategoryDaoTest {
     private static CategoryDao categoryDao;
@@ -51,7 +50,6 @@ class MySqlCategoryDaoTest {
         category.setTitle(testCategory.getTitle());
         categoryDao.add(testCategory);
         assertThrows(RuntimeException.class, () -> categoryDao.add(category));
-
     }
 
     @Test
@@ -64,5 +62,4 @@ class MySqlCategoryDaoTest {
         categoryDao.add(testCategory);
         assertEquals(1, categoryDao.getAll().size());
     }
-
 }

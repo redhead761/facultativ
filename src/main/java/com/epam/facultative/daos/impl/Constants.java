@@ -37,9 +37,9 @@ class Constants {
                     "FROM course JOIN category ON course.category_id = category.id " +
                     "JOIN status ON course.status_id = status.id WHERE course.category_id=?";
     static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
-    static final String UPDATE_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,?)";
+    static final String UPDATE_USERS_COURSE = "UPDATE users_course SET course_id=?,user_id=?,grade=?";
     static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?, " +
-            "start_date=?,amount_students=0, description=?, category_id=?, status_id=? WHERE id=?";
+            "start_date=?,amount_students=?, description=?, category_id=?, status_id=? WHERE id=?";
     static final String SELECT_COURSES_USER =
             "SELECT course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
                     " status.title AS course_status, category.title AS course_category, category.description AS category_description " +
@@ -48,6 +48,8 @@ class Constants {
                     "JOIN users_course ON course.id = users_course.course_id WHERE user_id=?";
     static final String ADD_NUMBER_STUDENTS_TO_COURSE =
             "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
+
+    static final String GET_GRADE = "SELECT grade FROM users_course WHERE course_id=? AND user_id=?";
 
     //SQL request for User DAO
     static final String SELECT_All_USERS =

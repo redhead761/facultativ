@@ -12,4 +12,6 @@ public interface CourseDao extends Dao<Course> {
     void addUserToCourse(int courseId, int userId);
 
     void updateUsersCourse(int courseId, int userId, int grade);
+
+    int getGrade(int courseId,int userId);
 }

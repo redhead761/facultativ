@@ -24,6 +24,7 @@ class Fields {
     static final String COURSE_STATUS = "course_status";
     static final String COURSE_CATEGORY = "course_category";
     static final String COURSE_CATEGORY_DESCRIPTION = "category_description";
+    static final String COURSE_GRADE = "grade";
 
     //User fields
     static final String USER_ID = "id";

@@ -1,13 +1,7 @@
 package com.epam.facultative.daos.impl;
 
-import com.epam.facultative.daos.CategoryDao;
-import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.daos.DaoFactory;
-import com.epam.facultative.daos.UserDao;
-import com.epam.facultative.entity.Category;
-import com.epam.facultative.entity.Course;
-import com.epam.facultative.entity.Role;
-import com.epam.facultative.entity.User;
+import com.epam.facultative.daos.*;
+import com.epam.facultative.entity.*;
 
 import org.junit.jupiter.api.*;
 
@@ -125,8 +119,8 @@ class MySqlUserDaoTest {
         testCourse.setCategory(testCategory);
         courseDao.add(testCourse);
 
-        courseDao.addUserToCourse(testCourse.getId(),testUser.getId());
+        courseDao.addUserToCourse(testCourse.getId(), testUser.getId());
         List<User> user = userDao.getUsersByCourse(testCourse.getId());
-        assertEquals(testUser,user.get(0));
+        assertEquals(testUser, user.get(0));
     }
 }

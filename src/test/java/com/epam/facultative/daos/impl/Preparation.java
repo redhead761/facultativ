@@ -48,7 +48,6 @@ class Preparation {
         course.setTitle("testTitle");
         course.setDuration(100);
         course.setStartDate(LocalDate.now());
-        course.setAmountStudents(5);
         course.setDescription("testDescription");
         course.setStatus(Status.COMING_SOON);
         return course;

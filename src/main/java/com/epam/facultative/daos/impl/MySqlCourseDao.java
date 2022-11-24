@@ -165,12 +165,29 @@ public class MySqlCourseDao implements CourseDao {
              PreparedStatement stmt = con.prepareStatement(UPDATE_USERS_COURSE)) {
             stmt.setInt(1, courseId);
             stmt.setInt(2, userId);
-            stmt.setInt(2, grade);
+            stmt.setInt(3, grade);
             stmt.executeUpdate();
             addNumberStudentsToCourse(courseId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public int getGrade(int courseId, int userId) {
+        int grade = 0;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(GET_GRADE)) {
+            stmt.setInt(1, courseId);
+            stmt.setInt(2, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                grade = rs.getInt(COURSE_GRADE);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return grade;
     }
 
     private void addNumberStudentsToCourse(int id) {

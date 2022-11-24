@@ -1,6 +1,7 @@
 package com.epam.facultative.daos;
 
 import com.epam.facultative.entity.Course;
+import com.epam.facultative.entity.Status;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface CourseDao extends Dao<Course> {
 
     void updateUsersCourse(int courseId, int userId, int grade);
 
-    int getGrade(int courseId,int userId);
+    int getGrade(int courseId, int userId);
+
+    List<Course> getByStatus(Status status);
 }

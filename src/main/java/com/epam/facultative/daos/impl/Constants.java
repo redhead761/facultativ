@@ -50,6 +50,10 @@ class Constants {
             "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
 
     static final String GET_GRADE = "SELECT grade FROM users_course WHERE course_id=? AND user_id=?";
+    static final String SELECT_COURSE_BY_STATUS = "SELECT course.id, course.title, course.duration , course.start_date, course.amount_students, course.description, course.category_id, " +
+            "status.title AS course_status, category.title AS course_category, category.description AS category_description " +
+            "FROM course JOIN category ON course.category_id = category.id " +
+            "JOIN status ON course.status_id = status.id WHERE course.status_id=?";
 
     //SQL request for User DAO
     static final String SELECT_All_USERS =
@@ -71,4 +75,6 @@ class Constants {
                     "FROM user JOIN role ON user.role_id = role.id JOIN users_course ON user.id = users_course.user_id WHERE course_id=?";
     static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?, " +
             "surname=?, email=?, block=?, role_id=? WHERE id=?";
+
+    static final String BLOCK_UNBLOCK_USER = "UPDATE user SET block=? where id=?";
 }

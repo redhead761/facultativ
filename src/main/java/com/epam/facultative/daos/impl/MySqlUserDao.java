@@ -145,6 +145,20 @@ public class MySqlUserDao implements UserDao {
         return users;
     }
 
+    @Override
+    public void blockUnblockStudent(int userId, boolean block) {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
+            int k = 0;
+            stmt.setBoolean(++k, block);
+            stmt.setInt(++k, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private User mapRow(ResultSet rs) {
         try {
             User user = new User();

@@ -8,4 +8,6 @@ public interface UserDao extends Dao<User> {
     List<User> getByRole(int roleId);
 
     List<User> getUsersByCourse(int courseId);
+
+    void blockUnblockStudent(int userId, boolean block);
 }

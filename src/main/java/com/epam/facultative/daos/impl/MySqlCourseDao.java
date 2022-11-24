@@ -190,6 +190,22 @@ public class MySqlCourseDao implements CourseDao {
         return grade;
     }
 
+    @Override
+    public List<Course> getByStatus(Status status) {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
+            stmt.setInt(1, status.getId());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                courses.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return courses;
+    }
+
     private void addNumberStudentsToCourse(int id) {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {

@@ -16,6 +16,7 @@ public class CourseDTO {
     private Category category;
     private Status status;
     private UserDTO teacher;
+    private int grade;
 
     public CourseDTO() {
     }
@@ -102,6 +103,14 @@ public class CourseDTO {
 
     public void setTeacher(UserDTO teacher) {
         this.teacher = teacher;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.epam.facultative.entity.Category;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
+import com.epam.facultative.exception.DAOException;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +29,7 @@ class MySqlCategoryDaoTest {
     }
 
     @Test
-    void testCRUD() {
+    void testCRUD() throws DAOException {
         categoryDao.add(testCategory);
 
         Category category = categoryDao.getByName(testCategory.getTitle());
@@ -45,7 +46,7 @@ class MySqlCategoryDaoTest {
     }
 
     @Test
-    void testUniqueFields() {
+    void testUniqueFields() throws DAOException {
         Category category = new Category();
         category.setTitle(testCategory.getTitle());
         categoryDao.add(testCategory);
@@ -53,7 +54,7 @@ class MySqlCategoryDaoTest {
     }
 
     @Test
-    void testNotNullFields() {
+    void testNotNullFields() throws DAOException {
         testCategory.setTitle(null);
         assertThrows(RuntimeException.class, () -> categoryDao.add(testCategory));
 

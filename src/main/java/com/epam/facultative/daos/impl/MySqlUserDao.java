@@ -4,6 +4,7 @@ import com.epam.facultative.connection.DataSource;
 import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
+import com.epam.facultative.exception.DAOException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import static com.epam.facultative.daos.impl.Fields.*;
 
 public class MySqlUserDao implements UserDao {
     @Override
-    public List<User> getAll() {
+    public List<User> getAll() throws DAOException {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement stmt = con.createStatement()) {
@@ -23,13 +24,13 @@ public class MySqlUserDao implements UserDao {
                 users.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
         return users;
     }
 
     @Override
-    public User getById(int id) {
+    public User getById(int id) throws DAOException {
         User user = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_ID)) {
@@ -39,13 +40,13 @@ public class MySqlUserDao implements UserDao {
                 user = mapRow(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return user;
     }
 
     @Override
-    public User getByName(String name) {
+    public User getByName(String name) throws DAOException {
         User user = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USER_BY_LOGIN)) {
@@ -55,13 +56,13 @@ public class MySqlUserDao implements UserDao {
                 user = mapRow(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return user;
     }
 
     @Override
-    public void add(User user) {
+    public void add(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;
@@ -79,12 +80,12 @@ public class MySqlUserDao implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
             int k = 0;
@@ -98,23 +99,23 @@ public class MySqlUserDao implements UserDao {
             stmt.setString(++k, String.valueOf(user.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_USER)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public List<User> getByRole(int roleId) {
+    public List<User> getByRole(int roleId) throws DAOException {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE)) {
@@ -124,13 +125,13 @@ public class MySqlUserDao implements UserDao {
                 users.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return users;
     }
 
     @Override
-    public List<User> getUsersByCourse(int courseId) {
+    public List<User> getUsersByCourse(int courseId) throws DAOException {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_USERS_COURSE)) {
@@ -140,13 +141,13 @@ public class MySqlUserDao implements UserDao {
                 users.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return users;
     }
 
     @Override
-    public void blockUnblockStudent(int userId, boolean block) {
+    public void blockUnblockStudent(int userId, boolean block) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
             int k = 0;
@@ -154,12 +155,11 @@ public class MySqlUserDao implements UserDao {
             stmt.setInt(++k, userId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
-
-    private User mapRow(ResultSet rs) {
+    private User mapRow(ResultSet rs) throws DAOException {
         try {
             User user = new User();
             user.setId(rs.getInt(USER_ID));
@@ -172,7 +172,7 @@ public class MySqlUserDao implements UserDao {
             user.setRole(Role.valueOf(rs.getString(USER_ROLE_NAME)));
             return user;
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DAOException(e);
         }
     }
 }

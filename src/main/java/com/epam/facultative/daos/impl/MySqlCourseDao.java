@@ -2,9 +2,8 @@ package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.connection.DataSource;
 import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.entity.Category;
-import com.epam.facultative.entity.Course;
-import com.epam.facultative.entity.Status;
+import com.epam.facultative.entity.*;
+import com.epam.facultative.exception.DAOException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import static com.epam.facultative.daos.impl.Fields.*;
 public class MySqlCourseDao implements CourseDao {
 
     @Override
-    public List<Course> getAll() {
+    public List<Course> getAll() throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              Statement stmt = con.createStatement()) {
@@ -25,13 +24,13 @@ public class MySqlCourseDao implements CourseDao {
                 courses.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
         return courses;
     }
 
     @Override
-    public Course getById(int id) {
+    public Course getById(int id) throws DAOException {
         Course course = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_ID)) {
@@ -41,13 +40,13 @@ public class MySqlCourseDao implements CourseDao {
                 course = mapRow(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return course;
     }
 
     @Override
-    public Course getByName(String name) {
+    public Course getByName(String name) throws DAOException {
         Course course = null;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_TITLE)) {
@@ -57,13 +56,13 @@ public class MySqlCourseDao implements CourseDao {
                 course = mapRow(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return course;
     }
 
     @Override
-    public void add(Course course) {
+    public void add(Course course) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_COURSE, Statement.RETURN_GENERATED_KEYS)) {
             int k = 0;
@@ -80,12 +79,12 @@ public class MySqlCourseDao implements CourseDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void update(Course course) {
+    public void update(Course course) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
             int k = 0;
@@ -99,23 +98,23 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_COURSE)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public List<Course> getByUser(int userId) {
+    public List<Course> getByUser(int userId) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_USER)) {
@@ -125,13 +124,13 @@ public class MySqlCourseDao implements CourseDao {
                 courses.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return courses;
     }
 
     @Override
-    public List<Course> getByCategory(int categoryId) {
+    public List<Course> getByCategory(int categoryId) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
@@ -141,13 +140,13 @@ public class MySqlCourseDao implements CourseDao {
                 courses.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return courses;
     }
 
     @Override
-    public void addUserToCourse(int courseId, int userId) {
+    public void addUserToCourse(int courseId, int userId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_USERS_COURSE)) {
             stmt.setInt(1, courseId);
@@ -155,12 +154,12 @@ public class MySqlCourseDao implements CourseDao {
             stmt.executeUpdate();
             addNumberStudentsToCourse(courseId);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public void updateUsersCourse(int courseId, int userId, int grade) {
+    public void updateUsersCourse(int courseId, int userId, int grade) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_USERS_COURSE)) {
             stmt.setInt(1, courseId);
@@ -169,12 +168,12 @@ public class MySqlCourseDao implements CourseDao {
             stmt.executeUpdate();
             addNumberStudentsToCourse(courseId);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
     @Override
-    public int getGrade(int courseId, int userId) {
+    public int getGrade(int courseId, int userId) throws DAOException {
         int grade = 0;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(GET_GRADE)) {
@@ -185,13 +184,13 @@ public class MySqlCourseDao implements CourseDao {
                 grade = rs.getInt(COURSE_GRADE);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return grade;
     }
 
     @Override
-    public List<Course> getByStatus(Status status) {
+    public List<Course> getByStatus(Status status) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
@@ -201,22 +200,22 @@ public class MySqlCourseDao implements CourseDao {
                 courses.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
         return courses;
     }
 
-    private void addNumberStudentsToCourse(int id) {
+    private void addNumberStudentsToCourse(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DAOException(e);
         }
     }
 
-    private Course mapRow(ResultSet rs) {
+    private Course mapRow(ResultSet rs) throws DAOException {
         try {
             Course course = new Course();
             course.setId(rs.getInt(COURSE_ID));
@@ -229,11 +228,11 @@ public class MySqlCourseDao implements CourseDao {
             course.setStatus(Status.valueOf(rs.getString(COURSE_STATUS)));
             return course;
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DAOException(e);
         }
     }
 
-    private Category mapRowCategory(ResultSet rs) {
+    private Category mapRowCategory(ResultSet rs) throws DAOException {
         try {
             Category category = new Category();
             category.setId(rs.getInt(COURSE_CATEGORY_ID));
@@ -241,7 +240,7 @@ public class MySqlCourseDao implements CourseDao {
             category.setDescription(rs.getString(COURSE_CATEGORY_DESCRIPTION));
             return category;
         } catch (SQLException e) {
-            throw new IllegalStateException(e);
+            throw new DAOException(e);
         }
     }
 }

@@ -1,18 +1,20 @@
 package com.epam.facultative.daos;
 
+import com.epam.facultative.exception.DAOException;
+
 import java.util.List;
 
 public interface Dao<T> {
-    List<T> getAll();
+    List<T> getAll() throws DAOException;
 
-    T getById(int id);
+    T getById(int id) throws DAOException;
 
-    T getByName(String name);
+    T getByName(String name) throws DAOException;
 
-    void add(T t);
+    void add(T t) throws DAOException;
 
-    void update(T t);
+    void update(T t) throws DAOException;
 
-    void delete(int id);
+    void delete(int id) throws DAOException;
 }
 

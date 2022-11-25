@@ -3,6 +3,7 @@ package com.epam.facultative.daos.impl;
 import com.epam.facultative.daos.*;
 import com.epam.facultative.entity.*;
 
+import com.epam.facultative.exception.DAOException;
 import org.junit.jupiter.api.*;
 
 import java.io.FileNotFoundException;
@@ -37,7 +38,7 @@ class MySqlUserDaoTest {
     }
 
     @Test
-    void testCRUD() {
+    void testCRUD() throws DAOException {
         userDao.add(testUser);
 
         User user = userDao.getByName(testUser.getLogin());
@@ -59,7 +60,7 @@ class MySqlUserDaoTest {
     }
 
     @Test
-    void testUniqueFields() {
+    void testUniqueFields() throws DAOException {
         User user = new User();
         user.setLogin(testUser.getLogin());
         user.setPassword("some password");
@@ -78,7 +79,7 @@ class MySqlUserDaoTest {
     }
 
     @Test
-    void testNotNullFields() {
+    void testNotNullFields() throws DAOException {
         testUser.setLogin(null);
         assertThrows(RuntimeException.class, () -> userDao.add(testUser));
 
@@ -105,7 +106,7 @@ class MySqlUserDaoTest {
     }
 
     @Test
-    void testGetUserByRole() {
+    void testGetUserByRole() throws DAOException {
         userDao.add(testUser);
         List<User> users = userDao.getByRole(testUser.getRole().getId());
         assertEquals(testUser, users.get(0));
@@ -113,7 +114,7 @@ class MySqlUserDaoTest {
     }
 
     @Test
-    void testGetUserByCourse() {
+    void testGetUserByCourse() throws DAOException {
         userDao.add(testUser);
         categoryDao.add(testCategory);
         testCourse.setCategory(testCategory);

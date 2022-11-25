@@ -2,6 +2,7 @@ package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.*;
 import com.epam.facultative.entity.*;
+import com.epam.facultative.exception.DAOException;
 import org.junit.jupiter.api.*;
 
 import java.io.FileNotFoundException;
@@ -39,7 +40,7 @@ class MySqlCourseDaoTest {
     }
 
     @Test
-    void testCRUD() {
+    void testCRUD() throws DAOException {
         categoryDao.add(testCategory);
         testCourse.setCategory(testCategory);
         courseDao.add(testCourse);
@@ -60,7 +61,7 @@ class MySqlCourseDaoTest {
     }
 
     @Test
-    void testUniqueFields() {
+    void testUniqueFields() throws DAOException {
         categoryDao.add(testCategory);
         testCourse.setCategory(testCategory);
 
@@ -77,7 +78,7 @@ class MySqlCourseDaoTest {
     }
 
     @Test
-    void testNotNullFields() {
+    void testNotNullFields() throws DAOException {
         categoryDao.add(testCategory);
         testCourse.setCategory(testCategory);
 
@@ -102,34 +103,34 @@ class MySqlCourseDaoTest {
     }
 
     @Test
-    void addUserToCourseAndGetByUser() {
+    void addUserToCourseAndGetByUser() throws DAOException {
         fillDB();
         List<Course> course = courseDao.getByUser(testUser.getId());
         assertEquals(testCourse, course.get(0));
     }
 
     @Test
-    void getByCategory() {
+    void getByCategory() throws DAOException {
         fillDB();
         List<Course> courses = courseDao.getByCategory(testCategory.getId());
         assertEquals(testCourse, courses.get(0));
     }
 
     @Test
-    void updateUsersCourseAndGetGrade() {
+    void updateUsersCourseAndGetGrade() throws DAOException {
         fillDB();
         courseDao.updateUsersCourse(testCourse.getId(), testUser.getId(), 5);
         assertEquals(5, courseDao.getGrade(testCourse.getId(), testUser.getId()));
     }
 
     @Test
-    void deleteManyToMany() {
+    void deleteManyToMany() throws DAOException {
         fillDB();
         assertDoesNotThrow(() -> courseDao.delete(testCourse.getId()));
         assertDoesNotThrow(() -> userDao.delete(testUser.getId()));
     }
 
-    void fillDB() {
+    void fillDB() throws DAOException {
         categoryDao.add(testCategory);
         testCourse.setCategory(testCategory);
         courseDao.add(testCourse);

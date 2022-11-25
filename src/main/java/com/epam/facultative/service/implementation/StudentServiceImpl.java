@@ -5,7 +5,11 @@ import com.epam.facultative.dto.*;
 import com.epam.facultative.entity.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
+
+import static com.epam.facultative.utils.HashPassword.*;
+import static com.epam.facultative.utils.validator.Validator.*;
 
 import java.util.*;
 
@@ -95,9 +99,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(User user) throws ServiceException {
+    public void addStudent(User user) throws ServiceException, ValidateException {
         try {
-            userDao.add(user);
+            if (validateLogin(user.getLogin())
+                    && validatePassword(user.getPassword())
+                    && validateNameAndSurname(user.getName(), user.getSurname())
+                    && validateEmail(user.getEmail())) {
+                user.setRole(Role.STUDENT);
+                user.setPassword(encode(user.getPassword()));
+                userDao.add(user);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

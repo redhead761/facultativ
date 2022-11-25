@@ -3,11 +3,13 @@ package com.epam.facultative.service.implementation;
 import com.epam.facultative.daos.*;
 import com.epam.facultative.dto.*;
 import com.epam.facultative.entity.*;
-import com.epam.facultative.exception.DAOException;
-import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.*;
 import com.epam.facultative.service.AdminService;
 
 import java.util.*;
+
+import static com.epam.facultative.utils.HashPassword.*;
+import static com.epam.facultative.utils.validator.Validator.*;
 
 public class AdminServiceImpl implements AdminService {
     private final CourseDao courseDao;
@@ -38,18 +40,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addCourse(Course course) throws ServiceException {
+    public void addCourse(Course course) throws ServiceException, ValidateException {
         try {
-            courseDao.add(course);
+            if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
+                courseDao.add(course);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void updateCourse(Course course) throws ServiceException {
+    public void updateCourse(Course course) throws ServiceException, ValidateException {
         try {
-            courseDao.update(course);
+            if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
+                courseDao.add(course);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -65,18 +71,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addCategory(Category category) throws ServiceException {
+    public void addCategory(Category category) throws ServiceException, ValidateException {
         try {
-            categoryDao.add(category);
+            if (validateCategoryData(category.getTitle(), category.getDescription())) {
+                categoryDao.add(category);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void updateCategory(Category category) throws ServiceException {
+    public void updateCategory(Category category) throws ServiceException, ValidateException {
         try {
-            categoryDao.update(category);
+            if (validateCategoryData(category.getTitle(), category.getDescription())) {
+                categoryDao.add(category);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -119,10 +129,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addTeacher(User user) throws ServiceException {
-        user.setRole(Role.TEACHER);
+    public void addTeacher(User user) throws ServiceException, ValidateException {
         try {
-            userDao.add(user);
+            if (validateLogin(user.getLogin())
+                    && validatePassword(user.getPassword())
+                    && validateNameAndSurname(user.getName(), user.getSurname())
+                    && validateEmail(user.getEmail())) {
+                user.setRole(Role.TEACHER);
+                user.setPassword(encode(user.getPassword()));
+                userDao.add(user);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

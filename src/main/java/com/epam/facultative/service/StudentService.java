@@ -3,6 +3,7 @@ package com.epam.facultative.service;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.entity.User;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface StudentService {
 
     void enroll(int courseId, int userId) throws ServiceException;
 
-    void addStudent(User user) throws ServiceException;
+    void addStudent(User user) throws ServiceException, ValidateException;
 }

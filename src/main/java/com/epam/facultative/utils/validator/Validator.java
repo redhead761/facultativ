@@ -1,8 +1,8 @@
-package com.epam.facultative.service.util.validator;
+package com.epam.facultative.utils.validator;
 
 import com.epam.facultative.exception.ValidateException;
 
-import static com.epam.facultative.service.util.validator.Constants.*;
+import static com.epam.facultative.utils.validator.Constants.*;
 
 public final class Validator {
 

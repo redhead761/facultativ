@@ -8,7 +8,7 @@ public class HashPassword {
     private HashPassword(){}
 
     public static String encode(String password) {
-        return argon2.hash(2,15*1024,1, password.toCharArray());
+        return argon2.hash(2,22*2222,2, password.toCharArray());
     }
 
     public static boolean verify(String hash, String password) {

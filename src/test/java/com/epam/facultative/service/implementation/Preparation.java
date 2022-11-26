@@ -4,7 +4,7 @@ import com.epam.facultative.entity.*;
 
 import java.time.LocalDate;
 
-public class Preparation {
+class Preparation {
     Category getTestCategory() {
         Category category = new Category();
         category.setTitle("testCategory");
@@ -15,7 +15,7 @@ public class Preparation {
     User getTestUser() {
         User user = new User();
         user.setLogin("testLogin");
-        user.setPassword("testPassword");
+        user.setPassword("testPassword123");
         user.setName("testName");
         user.setSurname("testSurname");
         user.setEmail("test@test.com");

@@ -35,58 +35,29 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<CourseDTO> getCoursesComingSoon(int studentId) throws ServiceException {
-        List<CourseDTO> result = new ArrayList<>();
-        List<CourseDTO> coursesDTO;
         try {
-            coursesDTO = getCoursesByStudent(studentId);
-        } catch (ServiceException e) {
-            throw new ServiceException(e);
+            return prepareCourses(courseDao.getByStatus(studentId, Status.COMING_SOON));
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
         }
-        for (CourseDTO course : coursesDTO) {
-            if (course.getStatus().equals(Status.COMING_SOON)) {
-                result.add(course);
-            }
-        }
-        return result;
     }
 
     @Override
     public List<CourseDTO> getCoursesInProgress(int studentId) throws ServiceException {
-        List<CourseDTO> result = new ArrayList<>();
-        List<CourseDTO> coursesDTO;
         try {
-            coursesDTO = getCoursesByStudent(studentId);
-        } catch (ServiceException e) {
-            throw new ServiceException(e);
+            return prepareCourses(courseDao.getByStatus(studentId, Status.IN_PROCESS));
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
         }
-        for (CourseDTO course : coursesDTO) {
-            if (course.getStatus().equals(Status.IN_PROCESS)) {
-                result.add(course);
-            }
-        }
-        return result;
     }
 
     @Override
     public List<CourseDTO> getCoursesCompleted(int studentId) throws ServiceException {
-        List<CourseDTO> result = new ArrayList<>();
-        List<CourseDTO> coursesDTO;
         try {
-            coursesDTO = getCoursesByStudent(studentId);
-        } catch (ServiceException e) {
-            throw new ServiceException(e);
+            return prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED));
+        } catch (DAOException e) {
+            throw new RuntimeException(e);
         }
-        for (CourseDTO course : coursesDTO) {
-            if (course.getStatus().equals(Status.COMING_SOON)) {
-                try {
-                    course.setGrade(courseDao.getGrade(course.getId(), studentId));
-                } catch (DAOException e) {
-                    throw new ServiceException(e);
-                }
-                result.add(course);
-            }
-        }
-        return result;
     }
 
     @Override
@@ -120,14 +91,14 @@ public class StudentServiceImpl implements StudentService {
             List<User> users;
             try {
                 users = userDao.getUsersByCourse(course.getId());
+                for (User user : users) {
+                    if (user.getRole().equals(Role.TEACHER)) {
+                        UserDTO teacher = converter.userToDTO(user);
+                        coursesDTO.add(converter.courseToDTO(course, teacher));
+                    }
+                }
             } catch (DAOException e) {
                 throw new ServiceException(e);
-            }
-            for (User user : users) {
-                if (user.getRole().equals(Role.TEACHER)) {
-                    UserDTO teacher = converter.userToDTO(user);
-                    coursesDTO.add(converter.courseToDTO(course, teacher));
-                }
             }
         }
         return coursesDTO;

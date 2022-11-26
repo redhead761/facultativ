@@ -8,6 +8,7 @@ import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
 import org.junit.jupiter.api.Test;
 
+import static com.epam.facultative.utils.HashPassword.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -105,27 +106,21 @@ class StudentServiceImplTest {
         user.setEmail("@test.com");
         assertThrows(ValidateException.class, () -> studentService.addStudent(user));
     }
-//
-//    @Test
-//    void getCoursesByStudent() {
-//
-//    }
-//
-//    @Test
-//    void getCoursesComingSoon() {
-//    }
-//
-//    @Test
-//    void getCoursesInProgress() {
-//    }
-//
-//    @Test
-//    void getCoursesCompleted() {
-//    }
-//
-//    @Test
-//    void enroll() {
-//    }
+
+    @Test
+    void testPasswordHashing() {
+        String password = preparation.getTestUser().getPassword();
+        String encoded = encode(password);
+        assertNotEquals(password, encoded);
+    }
+
+    @Test
+    void testVerifying() {
+        String password = preparation.getTestUser().getPassword();
+        String encoded = encode(password);
+        assertTrue(verify(encoded, password));
+    }
+
 
 
 }

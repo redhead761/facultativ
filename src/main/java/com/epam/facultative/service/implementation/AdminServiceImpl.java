@@ -30,11 +30,11 @@ public class AdminServiceImpl implements AdminService {
         List<User> users;
         try {
             users = userDao.getUsersByCourse(courseId);
+            for (User user : users) {
+                usersDTO.add(converter.userToDTO(user));
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }
-        for (User user : users) {
-            usersDTO.add(converter.userToDTO(user));
         }
         return usersDTO;
     }

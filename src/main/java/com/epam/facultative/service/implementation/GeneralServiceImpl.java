@@ -5,12 +5,15 @@ import com.epam.facultative.dto.*;
 import com.epam.facultative.entity.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.epam.facultative.utils.HashPassword.verify;
 
 public class GeneralServiceImpl implements GeneralService {
     private final CourseDao courseDao;
@@ -21,6 +24,23 @@ public class GeneralServiceImpl implements GeneralService {
         this.courseDao = courseDao;
         this.userDao = userDao;
         this.converter = new Converter();
+    }
+
+
+    @Override
+    public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
+        try {
+            User user = userDao.getByName(login);
+            if (user == null) {
+                throw new ValidateException("Login not exist");
+            }
+            if (!verify(user.getPassword(), password)) {
+                throw new ValidateException("Wrong password");
+            }
+            return converter.userToDTO(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

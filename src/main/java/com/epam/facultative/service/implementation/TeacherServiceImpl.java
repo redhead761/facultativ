@@ -38,15 +38,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<UserDTO> getStudentsByCourse(int courseId) throws ServiceException {
         List<UserDTO> students = new ArrayList<>();
-        List<User> users = null;
+        List<User> users;
         try {
             users = userDao.getUsersByCourse(courseId);
+            for (User user : users) {
+                if (user.getRole().equals(Role.STUDENT))
+                    students.add(converter.userToDTO(user));
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }
-        for (User user : users) {
-            if (user.getRole().equals(Role.STUDENT))
-                students.add(converter.userToDTO(user));
         }
         return students;
     }
@@ -54,14 +54,14 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<CourseDTO> getTeacherCourses(int teacherId) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();
-        List<Course> courses = null;
+        List<Course> courses;
         try {
             courses = courseDao.getByUser(teacherId);
+            for (Course course : courses) {
+                coursesDTO.add(converter.courseToDTO(course, null));
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }
-        for (Course course : courses) {
-            coursesDTO.add(converter.courseToDTO(course,null));
         }
         return coursesDTO;
     }

@@ -71,33 +71,33 @@ class MySqlUserDaoTest {
         user.setRole(Role.TEACHER);
 
         userDao.add(testUser);
-        assertThrows(RuntimeException.class, () -> userDao.add(user));
+        assertThrows(DAOException.class, () -> userDao.add(user));
 
         user.setLogin("some login");
         user.setEmail(testUser.getEmail());
-        assertThrows(RuntimeException.class, () -> userDao.add(user));
+        assertThrows(DAOException.class, () -> userDao.add(user));
     }
 
     @Test
     void testNotNullFields() throws DAOException {
         testUser.setLogin(null);
-        assertThrows(RuntimeException.class, () -> userDao.add(testUser));
+        assertThrows(DAOException.class, () -> userDao.add(testUser));
 
         testUser.setLogin("testLogin");
         testUser.setPassword(null);
-        assertThrows(RuntimeException.class, () -> userDao.add(testUser));
+        assertThrows(DAOException.class, () -> userDao.add(testUser));
 
         testUser.setPassword("testPassword");
         testUser.setName(null);
-        assertThrows(RuntimeException.class, () -> userDao.add(testUser));
+        assertThrows(DAOException.class, () -> userDao.add(testUser));
 
         testUser.setName("testName");
         testUser.setSurname(null);
-        assertThrows(RuntimeException.class, () -> userDao.add(testUser));
+        assertThrows(DAOException.class, () -> userDao.add(testUser));
 
         testUser.setSurname("testSurname");
         testUser.setEmail(null);
-        assertThrows(RuntimeException.class, () -> userDao.add(testUser));
+        assertThrows(DAOException.class, () -> userDao.add(testUser));
 
         testUser.setEmail("test@test.com");
         testUser.setId(-1);

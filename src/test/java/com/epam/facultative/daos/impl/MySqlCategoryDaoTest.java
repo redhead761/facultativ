@@ -50,13 +50,13 @@ class MySqlCategoryDaoTest {
         Category category = new Category();
         category.setTitle(testCategory.getTitle());
         categoryDao.add(testCategory);
-        assertThrows(RuntimeException.class, () -> categoryDao.add(category));
+        assertThrows(DAOException.class, () -> categoryDao.add(category));
     }
 
     @Test
     void testNotNullFields() throws DAOException {
         testCategory.setTitle(null);
-        assertThrows(RuntimeException.class, () -> categoryDao.add(testCategory));
+        assertThrows(DAOException.class, () -> categoryDao.add(testCategory));
 
         testCategory.setId(-1);
         testCategory.setTitle("testTitle");

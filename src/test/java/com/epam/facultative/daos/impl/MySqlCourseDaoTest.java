@@ -74,7 +74,7 @@ class MySqlCourseDaoTest {
         course.setCategory(testCourse.getCategory());
 
         courseDao.add(testCourse);
-        assertThrows(RuntimeException.class, () -> courseDao.add(course));
+        assertThrows(DAOException.class, () -> courseDao.add(course));
     }
 
     @Test
@@ -83,11 +83,11 @@ class MySqlCourseDaoTest {
         testCourse.setCategory(testCategory);
 
         testCourse.setTitle(null);
-        assertThrows(RuntimeException.class, () -> courseDao.add(testCourse));
+        assertThrows(DAOException.class, () -> courseDao.add(testCourse));
 
         testCourse.setTitle("testTitle");
         testCourse.setDuration(-1);
-        assertThrows(RuntimeException.class, () -> courseDao.add(testCourse));
+        assertThrows(DAOException.class, () -> courseDao.add(testCourse));
 
         testCourse.setDuration(50);
         testCourse.setStartDate(null);

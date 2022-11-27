@@ -5,6 +5,7 @@ import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.User;
+import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
@@ -33,5 +34,7 @@ public interface AdminService {
 
     void unblockStudent(int userId) throws ServiceException;
 
-    void addTeacher(User user) throws ServiceException, ValidateException;
+    void addTeacher(User user) throws ServiceException, ValidateException, DAOException;
+
+    List<Category> getAllCategories() throws ServiceException;
 }

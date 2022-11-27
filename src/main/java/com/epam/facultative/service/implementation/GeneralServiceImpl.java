@@ -110,13 +110,14 @@ public class GeneralServiceImpl implements GeneralService {
         try {
             for (Course course : courses) {
                 List<User> users;
+                UserDTO teacher = null;
                 users = userDao.getUsersByCourse(course.getId());
                 for (User user : users) {
                     if (user.getRole().equals(Role.TEACHER)) {
-                        UserDTO teacher = converter.userToDTO(user);
-                        coursesDTO.add(converter.courseToDTO(course, teacher));
+                        teacher = converter.userToDTO(user);
                     }
                 }
+                coursesDTO.add(converter.courseToDTO(course, teacher));
             }
         } catch (DAOException e) {
             throw new ServiceException(e);

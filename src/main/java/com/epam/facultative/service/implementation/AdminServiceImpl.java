@@ -70,8 +70,17 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+
+
     @Override
     public void addCategory(Category category) throws ServiceException, ValidateException {
+        try {
+            if (categoryDao.getByName(category.getTitle()) != null){
+                throw new ValidateException("Login not unique");
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         try {
             if (validateCategoryData(category.getTitle(), category.getDescription())) {
                 categoryDao.add(category);
@@ -129,7 +138,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addTeacher(User user) throws ServiceException, ValidateException {
+    public void addTeacher(User user) throws ServiceException, ValidateException, DAOException {
+        if (userDao.getByName(user.getLogin()) != null){
+            throw new ValidateException("Login not unique");
+        }
         try {
             if (validateLogin(user.getLogin())
                     && validatePassword(user.getPassword())
@@ -139,6 +151,15 @@ public class AdminServiceImpl implements AdminService {
                 user.setPassword(encode(user.getPassword()));
                 userDao.add(user);
             }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Category> getAllCategories() throws ServiceException {
+        try {
+            return categoryDao.getAll();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -15,6 +15,14 @@ public class User {
     public User() {
     }
 
+    public User(String login, String password, String name, String surname, String email) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
+
     public User(int id, String login, String password, String name, String surname, String email, boolean isBlock, Role role) {
         this.id = id;
         this.login = login;

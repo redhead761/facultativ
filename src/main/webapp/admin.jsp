@@ -9,17 +9,17 @@
 </head>
 
 <body>
-    <h2> Student data </h2>
+    <h2> Admin data </h2>
     <hr>
     Name: ${user.name}<br>
-    Family name: ${user.surname}<br>
+    Surname: ${user.surname}<br>
     Email: ${user.email}<br>
     <a href="controller?action=add_category">Add category</a><br>
     <a href="controller?action=add_course">Add course</a><br>
     <a href="controller?action=add teacher>">Add teacher</a><br>
 
     <div align="center">
-            <table border="1" cellpadding="6">
+            <table border="1" cellpadding="7">
                 <caption><h2>All courses in facultative</h2></caption>
                 <tr>
                     <th>Title</th>
@@ -28,6 +28,7 @@
                     <th>Students on course</th>
                     <th>Category</th>
                     <th>Status</th>
+                    <th>Teacher</th>
                     <th>Action</th>
                 </tr>
                 <c:forEach var="course" items="${courses}">
@@ -38,6 +39,7 @@
                         <td><c:out value="${course.amountStudents}" /></td>
                         <td><c:out value="${course.getCategory().title}" /></td>
                         <td><c:out value="${course.getStatus()}" /></td>
+                        <td><c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}" /></td>
                         <td>
                             <a href="controller?action=enroll&courseId=<c:out value='${course.id}'/>&userId=<c:out value='${user.id}'/>">Enroll</a>
                         </td>
@@ -46,17 +48,23 @@
             </table>
         </div>
 
-        <a href="controller?action=sortaz&role=STUDENT">Sort by A...Z</a>|
-        <a href="controller?action=sortza&role=STUDENT">Sort by Z...A</a>|
-        <a href="controller?action=sortduration&role=STUDENT">Sort by duration</a> |
-        <a href="controller?action=sortstudents&role=STUDENT">Sort by number of students</a><br>
+    <form action="controller">
+        <input type="hidden" name="action" value="sort" />
+        Sort: <select name="sort_type">
+            <option>alphabet</option>
+            <option>reverse alphabet</option>
+            <option>duration</option>
+            <option>amount students</option>
+            </select>  <input type="submit" value="enter"/>
+            </form>
+
         <form action="controller">
                <input type="hidden" name="role" value="STUDENT" />
                <input type="hidden" name="action" value="choosecategory" />
                Choose category:<input name="category"/>
                <button type="submit" value="enter"/>Enter</button>
         </form>
-    <a href="index.jsp">Log out/a>
+    <a href="auth.jsp">Log out</a>
 </body>
 
 </html>

@@ -37,4 +37,7 @@ public interface AdminService {
     void addTeacher(User user) throws ServiceException, ValidateException, DAOException;
 
     List<Category> getAllCategories() throws ServiceException;
+
+    List<UserDTO> getAllTeachers() throws ServiceException;
+    List<UserDTO> getAllStudents() throws ServiceException;
 }

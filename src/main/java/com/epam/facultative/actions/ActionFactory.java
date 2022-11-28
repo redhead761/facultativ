@@ -10,6 +10,11 @@ public class ActionFactory {
 
     static {
         ACTION_MAP.put("auth", new AuthAction());
+        ACTION_MAP.put("admin_categories", new AdminCategoriesAction());
+        ACTION_MAP.put("admin_courses", new AdminCoursesAction());
+        ACTION_MAP.put("admin_teachers", new AdminTeachersAction());
+        ACTION_MAP.put("admin_students", new AdminStudentsAction());
+        ACTION_MAP.put("log_out", new LogOutAction());
         ACTION_MAP.put("student", new StudentAction());
         ACTION_MAP.put("register", new RegisterAction());
         ACTION_MAP.put("add_category", new AddCategoryAction());

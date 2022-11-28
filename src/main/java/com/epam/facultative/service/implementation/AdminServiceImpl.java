@@ -71,11 +71,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
     @Override
     public void addCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (categoryDao.getByName(category.getTitle()) != null){
+            if (categoryDao.getByName(category.getTitle()) != null) {
                 throw new ValidateException("Login not unique");
             }
         } catch (DAOException e) {
@@ -139,7 +138,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addTeacher(User user) throws ServiceException, ValidateException, DAOException {
-        if (userDao.getByName(user.getLogin()) != null){
+        if (userDao.getByName(user.getLogin()) != null) {
             throw new ValidateException("Login not unique");
         }
         try {
@@ -163,5 +162,33 @@ public class AdminServiceImpl implements AdminService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<UserDTO> getAllTeachers() throws ServiceException {
+        List<UserDTO> usersDTO = new ArrayList<>();
+        try {
+            List<User> users = userDao.getByRole(Role.TEACHER.getId());
+            for (User user : users) {
+                usersDTO.add(converter.userToDTO(user));
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return usersDTO;
+    }
+
+    @Override
+    public List<UserDTO> getAllStudents() throws ServiceException {
+        List<UserDTO> usersDTO = new ArrayList<>();
+        try {
+            List<User> users = userDao.getByRole(Role.STUDENT.getId());
+            for (User user : users) {
+                usersDTO.add(converter.userToDTO(user));
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return usersDTO;
     }
 }

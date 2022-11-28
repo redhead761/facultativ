@@ -93,7 +93,7 @@ public class AdminServiceImpl implements AdminService {
     public void updateCategory(Category category) throws ServiceException, ValidateException {
         try {
             if (validateCategoryData(category.getTitle(), category.getDescription())) {
-                categoryDao.add(category);
+                categoryDao.update(category);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -190,5 +190,14 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException(e);
         }
         return usersDTO;
+    }
+
+    @Override
+    public Category getCategory(int id) throws ServiceException {
+        try {
+            return categoryDao.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

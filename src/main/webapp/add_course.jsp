@@ -8,7 +8,7 @@
 </head>
 
 <body>
-
+<%@ include file="parts/admin_header.jsp" %><br><br>
     <h2>Category page</h2>
     ${error}
     <form action="controller" method="post">
@@ -19,7 +19,7 @@
        Description: <input name="description" /><br>
        <input type="submit" value="enter"/>
     </form>
-    <a href="admin.jsp">Back</a><br>
+    <a href="controller?action=admin_courses">Back</a><br>
 
 <div align="center">
             <table border="1" cellpadding="2">

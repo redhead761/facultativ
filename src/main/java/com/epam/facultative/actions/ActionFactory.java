@@ -14,12 +14,22 @@ public class ActionFactory {
         ACTION_MAP.put("admin_courses", new AdminCoursesAction());
         ACTION_MAP.put("admin_teachers", new AdminTeachersAction());
         ACTION_MAP.put("admin_students", new AdminStudentsAction());
+        ACTION_MAP.put("select_by_teacher", new SelectByTeacherAction());
+        ACTION_MAP.put("select_by_category", new SelectByCategoryAction());
+        ACTION_MAP.put("admin_sort", new AdminSortAction());
+        ACTION_MAP.put("edit_category", new EditCategoryAction());
+        ACTION_MAP.put("add_category", new AddCategoryAction());
+        ACTION_MAP.put("update_category", new UpdateCategoryAction());
+        ACTION_MAP.put("delete_category", new DeleteCategoryAction());
+
+        ACTION_MAP.put("add_course", new AddCourseAction());
+
         ACTION_MAP.put("log_out", new LogOutAction());
         ACTION_MAP.put("student", new StudentAction());
         ACTION_MAP.put("register", new RegisterAction());
-        ACTION_MAP.put("add_category", new AddCategoryAction());
-        ACTION_MAP.put("add_course", new AddCourseAction());
-        ACTION_MAP.put("sort", new SortAction());
+
+
+
     }
 
     private ActionFactory() {

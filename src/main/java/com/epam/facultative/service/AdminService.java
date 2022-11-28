@@ -39,5 +39,8 @@ public interface AdminService {
     List<Category> getAllCategories() throws ServiceException;
 
     List<UserDTO> getAllTeachers() throws ServiceException;
+
     List<UserDTO> getAllStudents() throws ServiceException;
+
+    Category getCategory(int id) throws ServiceException;
 }

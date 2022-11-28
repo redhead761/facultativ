@@ -13,8 +13,7 @@ public class AddCategoryAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
-        String path;
-        if (req.getParameter("title") != null) {
+         if (req.getParameter("title") != null) {
             String title = req.getParameter("title");
             String description = req.getParameter("description");
             Category category = new Category();
@@ -22,24 +21,14 @@ public class AddCategoryAction implements Action {
             category.setDescription(description);
             try {
                 adminService.addCategory(category);
+                req.setAttribute("message", "Successful");
             } catch (ServiceException e) {
                 throw new RuntimeException(e);
             } catch (ValidateException e) {
-                req.setAttribute("error", e.getMessage());
+                req.setAttribute("message", e.getMessage());
             }
         }
 
-
-        List<Category> categories = null;
-        try {
-            categories = adminService.getAllCategories();
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        }
-        req.setAttribute("categories", categories);
-        System.out.println(categories);
-        path = "add_category.jsp";
-
-        return path;
+         return "category_form.jsp";
     }
 }

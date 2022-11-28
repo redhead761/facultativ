@@ -9,7 +9,8 @@
 
 <body>
 
-<%@ include file="parts/admin_header.jsp" %>
+<%@ include file="parts/admin_header.jsp" %><br><br>
+    <a href="category_form.jsp">Add category</a><br><br>
     <a href="admin.jsp">Back</a><br><br>
 
 <div align="center">

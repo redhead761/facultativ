@@ -11,13 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-public class AdminCoursesAction implements Action {
+public class SelectByTeacherAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         try {
-            List<CourseDTO> courses = generalService.sortByAlphabet();
+            String teacherId = req.getParameter("teacher_id");
+            List<CourseDTO> courses = generalService.getCoursesByTeacher(Integer.parseInt(teacherId));
             List<UserDTO> teachers = adminService.getAllTeachers();
             List<Category> categories = adminService.getAllCategories();
             req.setAttribute("courses", courses);

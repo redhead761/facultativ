@@ -13,19 +13,22 @@
     <a href="admin.jsp">Back</a><br><br>
 
     <div align="center">
-            <table border="1" cellpadding="3">
-                <caption><h2>All courses in facultative</h2></caption>
+            <table border="1" cellpadding="4">
+                <caption><h2>All students in facultative</h2></caption>
                 <tr>
                     <th>Name</th>
                     <th>Surname</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 <c:forEach var="student" items="${students}">
                     <tr>
                         <td><c:out value="${student.name}" /></td>
                         <td><c:out value="${student.surname}" /></td>
+                        <td><c:out value="${student.isBlock()}" /></td>
                         <td>
-                            <a href="controller?action=enroll&student_id=<c:out value='${student.id}'/>">Assigned</a>
+                            <a href="controller?action=block&student_id=<c:out value='${student.id}'/>">Block   </a>
+                            <a href="controller?action=unblock&student_id=<c:out value='${student.id}'/>">Unblock</a>
                         </td>
                     </tr>
                 </c:forEach>

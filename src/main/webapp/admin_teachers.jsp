@@ -10,11 +10,12 @@
 <body>
 
 <%@ include file="parts/admin_header.jsp" %>
+    <a href="add_teacher.jsp">Add teacher</a><br><br>
     <a href="admin.jsp">Back</a><br><br>
 
     <div align="center">
             <table border="1" cellpadding="3">
-                <caption><h2>All courses in facultative</h2></caption>
+                <caption><h2>All teachers in facultative</h2></caption>
                 <tr>
                     <th>Name</th>
                     <th>Surname</th>

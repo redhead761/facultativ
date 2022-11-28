@@ -10,6 +10,7 @@
 <body>
 
 <%@ include file="parts/admin_header.jsp" %>
+    <a href="add_course.jsp">Add course</a><br><br>
     <a href="admin.jsp">Back</a><br><br>
 
     <div align="center">
@@ -44,20 +45,35 @@
         </div>
 
     <form action="controller">
-        <input type="hidden" name="action" value="sort" />
+        <input type="hidden" name="action" value="admin_sort" />
         Sort: <select name="sort_type">
             <option>alphabet</option>
             <option>reverse alphabet</option>
             <option>duration</option>
             <option>amount students</option>
-            </select>  <input type="submit" value="enter"/>
-            </form>
+            </select>
+            <input type="submit" value="enter"/>
+    </form>
+
+    <form action="controller">
+        <input type="hidden" name="action" value="select_by_teacher" />
+
+        Group by teacher: <select name="teacher_id">
+            <c:forEach var="teacher" items="${teachers}">
+            <option value="${teacher.id}">${teacher.name} ${teacher.surname} </option>
+            </c:forEach>
+            </select>
+            <input type="submit" value="enter"/>
+    </form>
 
         <form action="controller">
-               <input type="hidden" name="role" value="STUDENT" />
-               <input type="hidden" name="action" value="choosecategory" />
-               Choose category:<input name="category"/>
-               <button type="submit" value="enter"/>Enter</button>
+            <input type="hidden" name="action" value="select_by_category" />
+            Group by category: <select name="category_id">
+                <c:forEach var="category" items="${categories}">
+                <option value="${category.id}">${category.title}</option>
+                </c:forEach>
+                </select>
+                <input type="submit" value="enter"/>
         </form>
 </body>
 </html>

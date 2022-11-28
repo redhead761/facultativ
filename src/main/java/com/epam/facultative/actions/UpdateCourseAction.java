@@ -1,6 +1,5 @@
 package com.epam.facultative.actions;
 
-import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Course;
 import com.epam.facultative.entity.Status;
 import com.epam.facultative.exception.ServiceException;
@@ -11,10 +10,11 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 
-public class AddCourseAction implements Action {
+public class UpdateCourseAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
+        int id = Integer.parseInt(req.getParameter("course_id"));
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));
@@ -22,6 +22,7 @@ public class AddCourseAction implements Action {
         int categoryId = Integer.parseInt(req.getParameter("category"));
         Status status = Status.valueOf(req.getParameter("status"));
         Course course = new Course();
+        course.setId(id);
         course.setTitle(title);
         course.setDuration(duration);
         course.setStartDate(date);
@@ -29,7 +30,7 @@ public class AddCourseAction implements Action {
         course.setStatus(status);
         try {
             course.setCategory(adminService.getCategory(categoryId));
-            adminService.addCourse(course);
+            adminService.updateCourse(course);
             req.setAttribute("message", "Successful");
         } catch (ServiceException e) {
             req.setAttribute("message", e.getMessage());

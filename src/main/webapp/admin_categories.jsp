@@ -26,7 +26,8 @@
                         <td><c:out value="${category.title}" /></td>
                         <td><c:out value="${category.description}" /></td>
                         <td>
-                            <a href="controller?action=edit_category&category_id=<c:out value='${category.id}'/>">Edit   </a>
+                            <a href="controller?action=edit_category&category_id=<c:out value='${category.id}'/>">Edit</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="controller?action=delete_category&category_id=<c:out value='${category.id}'/>">Delete</a>
                         </td>
                     </tr>

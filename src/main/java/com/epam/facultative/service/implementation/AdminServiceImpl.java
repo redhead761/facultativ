@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
     public void updateCourse(Course course) throws ServiceException, ValidateException {
         try {
             if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
-                courseDao.add(course);
+                courseDao.update(course);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -196,6 +196,16 @@ public class AdminServiceImpl implements AdminService {
     public Category getCategory(int id) throws ServiceException {
         try {
             return categoryDao.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public CourseDTO getCourse(int id) throws ServiceException {
+        try {
+            Course course = courseDao.getById(id);
+            return converter.courseToDTO(course, null);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -10,7 +10,7 @@
 <body>
 
 <%@ include file="parts/admin_header.jsp" %>
-    <a href="add_course.jsp">Add course</a><br><br>
+    <a href="controller?action=show_course_form">Add course</a><br><br>
     <a href="admin.jsp">Back</a><br><br>
 
     <div align="center">
@@ -34,9 +34,17 @@
                         <td><c:out value="${course.amountStudents}" /></td>
                         <td><c:out value="${course.getCategory().title}" /></td>
                         <td><c:out value="${course.getStatus()}" /></td>
-                        <td><c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}" /></td>
                         <td>
-                            <a href="controller?action=edit_course&course_id=<c:out value='${course.id}'/>">Edit   </a>
+                        <c:if test="${course.getTeacher() != null}">
+                            <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
+                        </c:if>
+                        <c:if test="${course.getTeacher() == null}">
+                            <a href="controller?action=assign&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                        </c:if>
+                        </td>
+                        <td>
+                            <a href="controller?action=show_course_form&course_id=<c:out value='${course.id}'/>">Edit</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
                         </td>
                     </tr>
@@ -66,7 +74,7 @@
             <input type="submit" value="enter"/>
     </form>
 
-        <form action="controller">
+    <form action="controller">
             <input type="hidden" name="action" value="select_by_category" />
             Group by category: <select name="category_id">
                 <c:forEach var="category" items="${categories}">
@@ -74,6 +82,7 @@
                 </c:forEach>
                 </select>
                 <input type="submit" value="enter"/>
-        </form>
+    </form>
+
 </body>
 </html>

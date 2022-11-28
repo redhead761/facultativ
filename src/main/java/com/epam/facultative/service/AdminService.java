@@ -43,4 +43,6 @@ public interface AdminService {
     List<UserDTO> getAllStudents() throws ServiceException;
 
     Category getCategory(int id) throws ServiceException;
+
+    CourseDTO getCourse(int id) throws ServiceException;
 }

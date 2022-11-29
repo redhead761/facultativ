@@ -2,6 +2,7 @@ package com.epam.facultative.connection;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.slf4j.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,8 +13,10 @@ import java.util.Properties;
 import static com.epam.facultative.connection.Constants.*;
 
 public class DataSource {
+    private static final Logger logger = LoggerFactory.getLogger(DataSource.class);
     private static final HikariConfig config = new HikariConfig();
     private static final HikariDataSource ds;
+
 
     static {
         Properties properties = getProperties();

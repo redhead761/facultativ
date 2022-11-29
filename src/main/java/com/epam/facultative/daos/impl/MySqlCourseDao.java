@@ -152,7 +152,6 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(1, courseId);
             stmt.setInt(2, userId);
             stmt.executeUpdate();
-            addNumberStudentsToCourse(courseId);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -195,7 +194,7 @@ public class MySqlCourseDao implements CourseDao {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
             stmt.setInt(1, userId);
-            stmt.setInt(2,status.getId());
+            stmt.setInt(2, status.getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
@@ -206,7 +205,8 @@ public class MySqlCourseDao implements CourseDao {
         return courses;
     }
 
-    private void addNumberStudentsToCourse(int id) throws DAOException {
+    @Override
+    public void addNumberStudentsToCourse(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {
             stmt.setInt(1, id);

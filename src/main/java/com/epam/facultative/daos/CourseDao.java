@@ -18,4 +18,6 @@ public interface CourseDao extends Dao<Course> {
     void addUserToCourse(int courseId, int userId) throws DAOException;
 
     void updateUsersCourse(int courseId, int userId, int grade) throws DAOException;
+
+    void addNumberStudentsToCourse(int id) throws DAOException;
 }

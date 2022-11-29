@@ -11,11 +11,11 @@ public interface CourseDao extends Dao<Course> {
 
     List<Course> getByCategory(int categoryId) throws DAOException;
 
-    void addUserToCourse(int courseId, int userId) throws DAOException;
-
-    void updateUsersCourse(int courseId, int userId, int grade) throws DAOException;
+    List<Course> getByStatus(int id, Status status) throws DAOException;
 
     int getGrade(int courseId, int userId) throws DAOException;
 
-    List<Course> getByStatus(int id, Status status) throws DAOException;
+    void addUserToCourse(int courseId, int userId) throws DAOException;
+
+    void updateUsersCourse(int courseId, int userId, int grade) throws DAOException;
 }

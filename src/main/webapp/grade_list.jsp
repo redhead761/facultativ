@@ -9,7 +9,7 @@
 
 <body>
 
-<%@ include file="parts/admin_header.jsp" %>
+
     <a href="admin.jsp">Back</a><br><br>
 
     <div align="center">
@@ -27,9 +27,12 @@
                         <td><c:out value="${student.surname}" /></td>
                         <td><c:out value="${student.isBlock()}" /></td>
                         <td>
-                            <a href="controller?action=block&student_id=<c:out value='${student.id}'/>">Block</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="controller?action=unblock&student_id=<c:out value='${student.id}'/>">Unblock</a>
+                                <form action="controller" method="post">
+                                   <input type="hidden" name="action" value="grade" />
+                                   <input type="hidden" name="course_id" value="${course_id}" />
+                                   Grade:   <input name="grade"/><br>
+                                   <input type="submit" value="enter"/>
+                                </form>
                         </td>
                     </tr>
                 </c:forEach>

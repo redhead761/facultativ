@@ -10,22 +10,24 @@
 <body>
 
 <%@ include file="parts/admin_header.jsp" %>
-    <a href="add_teacher.jsp">Add teacher</a><br><br>
-    <a href="admin.jsp">Back</a><br><br>
+
+    <a href="controller?action=admin_courses">Back</a><br><br>
 
     <div align="center">
-            <table border="1" cellpadding="2">
+            <table border="1" cellpadding="3">
                 <caption><h2>All teachers in facultative</h2></caption>
                 <tr>
                     <th>Name</th>
                     <th>Surname</th>
-                    <th>Email</th>
+                    <th>Action</th>
                 </tr>
                 <c:forEach var="teacher" items="${teachers}">
                     <tr>
                         <td><c:out value="${teacher.name}" /></td>
                         <td><c:out value="${teacher.surname}" /></td>
-                        <td><c:out value="${teacher.email}" /></td>
+                        <td>
+                            <a href="controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

@@ -210,4 +210,14 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public UserDTO getTeacher(int id) throws ServiceException {
+        try {
+            User teacher = userDao.getById(id);
+            return converter.userToDTO(teacher);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

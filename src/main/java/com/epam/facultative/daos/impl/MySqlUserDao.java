@@ -1,6 +1,6 @@
 package com.epam.facultative.daos.impl;
 
-import com.epam.facultative.connection.DataSource;
+import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
@@ -149,7 +149,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public void blockUnblockStudent(int userId, boolean block) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
+             PreparedStatement stmt = con.prepareStatement(BLOCK_UNBLOCK_USER)) {
             int k = 0;
             stmt.setBoolean(++k, block);
             stmt.setInt(++k, userId);

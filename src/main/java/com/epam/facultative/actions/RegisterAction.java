@@ -5,6 +5,7 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,6 @@ public class RegisterAction implements Action {
         String path = null;
         String type = req.getParameter("type");
         String login = req.getParameter("login");
-
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeat_password");
         String name = req.getParameter("name");
@@ -29,6 +29,8 @@ public class RegisterAction implements Action {
                     if (!password.equals(repeatPassword)) {
                         throw new ValidateException("Wrong repeat password");
                     }
+                    GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
+                    req.setAttribute("courses",generalService.sortByAlphabet());
                     studentService.addStudent(user);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
@@ -53,12 +55,12 @@ public class RegisterAction implements Action {
                 } catch (DAOException e) {
                     throw new RuntimeException(e);
                 }
-                path = "teacher.jsp";
+                path = "add_teacher.jsp";
             } catch (ServiceException e) {
                 path = "error.jsp";
                 req.setAttribute("error", e.getMessage());
             } catch (ValidateException e) {
-                path = "register.jsp";
+                path = "add_teacher.jsp";
                 req.setAttribute("error", e.getMessage());
             }
         }

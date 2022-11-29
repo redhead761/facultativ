@@ -6,6 +6,7 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
+import com.epam.facultative.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -26,7 +27,13 @@ public class AuthAction implements Action {
             req.getSession().setAttribute("courses", courses);
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PAGE;
-                case TEACHER -> path = TEACHER_PAGE;
+                case TEACHER -> {
+                    TeacherService teacherService = ServiceFactory.getInstance().getTeacherService();
+                    List<CourseDTO> coursesTeacher = teacherService.getTeacherCourses(user.getId());
+                    req.setAttribute("coursesTeacher" , coursesTeacher);
+
+                    path = TEACHER_PAGE;
+                }
                 case STUDENT -> path = STUDENT_PAGE;
             }
         } catch (ValidateException e) {

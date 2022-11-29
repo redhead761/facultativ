@@ -13,7 +13,7 @@
     ${error}
     <form action="controller" method="post">
        <input type="hidden" name="action" value="register" />
-       <input type="hidden" name="type" value="student" />
+       <input type="hidden" name="type" value="teacher" />
        Login:   <input name="login"/><br>
        Password:   <input type="password" name="password" /><br>
        Repeat password: <input type="password" name="repeat_password" /><br>
@@ -22,7 +22,6 @@
        Email: <input name="email" /><br>
        <input type="submit" value="enter"/>
     </form>
-    <a href="register.jsp"> Register </a><br><br>
 
     <a href="controller?action=admin_teachers">Back</a><br>
 </body>

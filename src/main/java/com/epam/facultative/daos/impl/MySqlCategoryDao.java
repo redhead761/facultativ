@@ -1,6 +1,6 @@
 package com.epam.facultative.daos.impl;
 
-import com.epam.facultative.connection.DataSource;
+import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.entity.Category;
 import com.epam.facultative.exception.DAOException;

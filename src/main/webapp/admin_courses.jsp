@@ -39,7 +39,7 @@
                             <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
                         </c:if>
                         <c:if test="${course.getTeacher() == null}">
-                            <a href="controller?action=assign&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                            <a href="controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
                         </c:if>
                         </td>
                         <td>

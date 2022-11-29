@@ -1,4 +1,4 @@
-package com.epam.facultative.connection;
+package com.epam.facultative.daos.connection;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static com.epam.facultative.connection.Constants.*;
-
 public class DataSource {
     private static final Logger logger = LoggerFactory.getLogger(DataSource.class);
     private static final HikariConfig config = new HikariConfig();
@@ -20,10 +18,10 @@ public class DataSource {
 
     static {
         Properties properties = getProperties();
-        config.setJdbcUrl(properties.getProperty(URL_PROPERTY));
-        config.setUsername(properties.getProperty(USER_NAME_PROPERTY));
-        config.setPassword(properties.getProperty(PASSWORD_PROPERTY));
-        config.setDriverClassName(properties.getProperty(DRIVER_PROPERTY));
+        config.setJdbcUrl(properties.getProperty(Constants.URL_PROPERTY));
+        config.setUsername(properties.getProperty(Constants.USER_NAME_PROPERTY));
+        config.setPassword(properties.getProperty(Constants.PASSWORD_PROPERTY));
+        config.setDriverClassName(properties.getProperty(Constants.DRIVER_PROPERTY));
 
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -42,7 +40,7 @@ public class DataSource {
         Properties properties = new Properties();
         try (InputStream inputStream = DataSource.class
                 .getClassLoader()
-                .getResourceAsStream(DB_SETTINGS_FILE)) {
+                .getResourceAsStream(Constants.DB_SETTINGS_FILE)) {
             properties.load(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -1,4 +1,4 @@
-package com.epam.facultative.connection;
+package com.epam.facultative.daos.connection;
 
 /**
  * Holder for fields property and settings file.

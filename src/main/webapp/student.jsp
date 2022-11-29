@@ -17,7 +17,7 @@
     <a href="controller?action=myCourse&userId=<c:out value='${user.id}'/>">My courses</a><br>
 
     <div align="center">
-            <table border="1" cellpadding="6">
+            <table border="1" cellpadding="8">
                 <caption><h2>All courses in facultative</h2></caption>
                 <tr>
                     <th>Title</th>
@@ -26,6 +26,7 @@
                     <th>Students on course</th>
                     <th>Category</th>
                     <th>Status</th>
+                    <th>Teacher</th>
                     <th>Action</th>
                 </tr>
                 <c:forEach var="course" items="${courses}">
@@ -33,11 +34,21 @@
                         <td><c:out value="${course.title}" /></td>
                         <td><c:out value="${course.duration}" /></td>
                         <td><c:out value="${course.startDate}" /></td>
-                        <td><c:out value="${course.studentsOnCourse}" /></td>
+                        <td><c:out value="${course.amountStudents}" /></td>
                         <td><c:out value="${course.getCategory().title}" /></td>
-                        <td><c:out value="${course.getStatus().title}" /></td>
+                        <td><c:out value="${course.getStatus()}" /></td>
                         <td>
-                            <a href="controller?action=enroll&courseId=<c:out value='${course.id}'/>&userId=<c:out value='${user.id}'/>">Enroll</a>
+                        <c:if test="${course.getTeacher() != null}">
+                            <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
+                        </c:if>
+                        <c:if test="${course.getTeacher() == null}">
+                            <a href="controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                        </c:if>
+                        </td>
+                        <td>
+                            <a href="controller?action=show_course_form&course_id=<c:out value='${course.id}'/>">Edit</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
                         </td>
                     </tr>
                 </c:forEach>

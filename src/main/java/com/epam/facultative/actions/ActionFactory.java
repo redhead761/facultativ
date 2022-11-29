@@ -30,6 +30,13 @@ public class ActionFactory {
         ACTION_MAP.put("edit_course", new EditCourseAction());
         ACTION_MAP.put("update_course", new UpdateCourseAction());
         ACTION_MAP.put("delete_course", new DeleteCourseAction());
+        ACTION_MAP.put("show_assign_page", new ShowAssignPageAction());
+        ACTION_MAP.put("assign", new AssignAction());
+
+        ACTION_MAP.put("block", new BlockStudentAction());
+        ACTION_MAP.put("unblock", new UnblockStudentAction());
+
+        ACTION_MAP.put("show_grade_list", new ShowGradeListAction());
 
 
         ACTION_MAP.put("log_out", new LogOutAction());

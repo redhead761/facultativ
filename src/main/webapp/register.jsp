@@ -9,7 +9,7 @@
 
 <body>
 
-    <h2>Auth page</h2>
+    <h2>Register page</h2>
     ${error}
     <form action="controller" method="post">
        <input type="hidden" name="action" value="register" />
@@ -22,6 +22,6 @@
        Email: <input name="email" /><br>
        <input type="submit" value="enter"/>
     </form>
-    <a href="register.jsp"> Register </a>
+    <a href="auth.jsp"> Back </a>
 </body>
 </html>

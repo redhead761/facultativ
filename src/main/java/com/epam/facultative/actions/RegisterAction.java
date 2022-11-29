@@ -30,7 +30,7 @@ public class RegisterAction implements Action {
                         throw new ValidateException("Wrong repeat password");
                     }
                     GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-                    req.setAttribute("courses",generalService.sortByAlphabet());
+                    req.setAttribute("courses",generalService.sortCoursesByAlphabet());
                     studentService.addStudent(user);
                 } catch (DAOException e) {
                     throw new RuntimeException(e);

@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-import static com.epam.facultative.actions.Constants.*;
-
 public class AdminSortAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
@@ -27,10 +25,10 @@ public class AdminSortAction implements Action {
             req.setAttribute("teachers", teachers);
             req.setAttribute("categories", categories);
             switch (typeSort) {
-                case "alphabet" -> courses = generalService.sortByAlphabet();
-                case "reverse alphabet" -> courses = generalService.sortByAlphabetReverse();
-                case "duration" -> courses = generalService.sortByDuration();
-                case "amount students" -> courses = generalService.sortByNumberStudentsOnCourse();
+                case "alphabet" -> courses = generalService.sortCoursesByAlphabet();
+                case "reverse alphabet" -> courses = generalService.sortCoursesByAlphabetReverse();
+                case "duration" -> courses = generalService.sortCoursesByDuration();
+                case "amount students" -> courses = generalService.sortCoursesBuAmountOfStudents();
             }
         } catch (ServiceException e) {
             req.setAttribute("error", e.getMessage());

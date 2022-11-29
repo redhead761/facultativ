@@ -17,7 +17,7 @@ public class AdminCoursesAction implements Action {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         try {
-            List<CourseDTO> courses = generalService.sortByAlphabet();
+            List<CourseDTO> courses = generalService.sortCoursesByAlphabet();
             List<UserDTO> teachers = adminService.getAllTeachers();
             List<Category> categories = adminService.getAllCategories();
             req.setAttribute("courses", courses);

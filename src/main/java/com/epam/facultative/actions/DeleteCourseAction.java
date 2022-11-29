@@ -14,7 +14,7 @@ public class DeleteCourseAction implements Action {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {
             adminService.deleteCourse(Integer.parseInt(id));
-            req.setAttribute("courses", generalService.sortByAlphabet());
+            req.setAttribute("courses", generalService.sortCoursesByAlphabet());
             req.setAttribute("teachers",adminService.getAllTeachers());
             req.setAttribute("categories", adminService.getAllCategories());
         } catch (ServiceException e) {

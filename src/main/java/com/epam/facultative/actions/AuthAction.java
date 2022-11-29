@@ -22,7 +22,7 @@ public class AuthAction implements Action {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {
             UserDTO user = generalService.authorization(login, password);
-            List<CourseDTO> courses = generalService.sortByAlphabet();
+            List<CourseDTO> courses = generalService.sortCoursesByAlphabet();
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("courses", courses);
             switch (user.getRole()) {

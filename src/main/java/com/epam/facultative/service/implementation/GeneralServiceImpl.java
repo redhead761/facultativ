@@ -18,14 +18,17 @@ import static com.epam.facultative.utils.HashPassword.verify;
 public class GeneralServiceImpl implements GeneralService {
     private final CourseDao courseDao;
     private final UserDao userDao;
+    private final CategoryDao categoryDao;
     private final Converter converter;
 
-    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao) {
+
+    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao) {
         this.courseDao = courseDao;
         this.userDao = userDao;
+        this.categoryDao = categoryDao;
         this.converter = new Converter();
-    }
 
+    }
 
     @Override
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
@@ -44,7 +47,16 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> sortByAlphabet() throws ServiceException {
+    public List<CourseDTO> getAllCourses() throws ServiceException {
+        try {
+            return prepareCourses(courseDao.getAll());
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<CourseDTO> sortCoursesByAlphabet() throws ServiceException {
         try {
             return prepareCourses(courseDao.getAll()).stream()
                     .sorted(Comparator.comparing(CourseDTO::getTitle))
@@ -55,7 +67,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> sortByAlphabetReverse() throws ServiceException {
+    public List<CourseDTO> sortCoursesByAlphabetReverse() throws ServiceException {
         try {
             return prepareCourses(courseDao.getAll()).stream()
                     .sorted((o1, o2) -> o2.getTitle().compareTo(o1.getTitle()))
@@ -66,7 +78,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> sortByDuration() throws ServiceException {
+    public List<CourseDTO> sortCoursesByDuration() throws ServiceException {
         try {
             return prepareCourses(courseDao.getAll()).stream()
                     .sorted(Comparator.comparing(CourseDTO::getDuration))
@@ -77,7 +89,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> sortByNumberStudentsOnCourse() throws ServiceException {
+    public List<CourseDTO> sortCoursesBuAmountOfStudents() throws ServiceException {
         try {
             return prepareCourses(courseDao.getAll()).stream()
                     .sorted(Comparator.comparing(CourseDTO::getAmountStudents))
@@ -103,6 +115,43 @@ public class GeneralServiceImpl implements GeneralService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<UserDTO> getAllStudents() throws ServiceException {
+        List<UserDTO> usersDTO = new ArrayList<>();
+        try {
+            List<User> users = userDao.getByRole(Role.STUDENT.getId());
+            for (User user : users) {
+                usersDTO.add(converter.userToDTO(user));
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return usersDTO;
+    }
+
+    @Override
+    public List<Category> getAllCategories() throws ServiceException {
+        try {
+            return categoryDao.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<UserDTO> getAllTeachers() throws ServiceException {
+        List<UserDTO> usersDTO = new ArrayList<>();
+        try {
+            List<User> users = userDao.getByRole(Role.TEACHER.getId());
+            for (User user : users) {
+                usersDTO.add(converter.userToDTO(user));
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return usersDTO;
     }
 
     private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {

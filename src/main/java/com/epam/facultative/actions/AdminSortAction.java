@@ -16,24 +16,25 @@ import static com.epam.facultative.actions.Constants.*;
 public class AdminSortAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
+        String path;
         String typeSort = req.getParameter("sort_type");
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         List<CourseDTO> courses = null;
         try {
-            List<UserDTO> teachers = generalService.getAllTeachers();
-            List<Category> categories = generalService.getAllCategories();
-            req.setAttribute("teachers", teachers);
-            req.setAttribute("categories", categories);
+            req.setAttribute("teachers", generalService.getAllTeachers());
+            req.setAttribute("categories", generalService.getAllCategories());
             switch (typeSort) {
                 case "alphabet" -> courses = generalService.sortCoursesByAlphabet();
                 case "reverse alphabet" -> courses = generalService.sortCoursesByAlphabetReverse();
                 case "duration" -> courses = generalService.sortCoursesByDuration();
                 case "amount students" -> courses = generalService.sortCoursesBuAmountOfStudents();
             }
+            path = ADMIN_PAGE;
+            req.setAttribute("courses", courses);
         } catch (ServiceException e) {
+            path = ERROR_PAGE;
             req.setAttribute("error", e.getMessage());
         }
-        req.setAttribute("courses", courses);
-        return ADMIN_PAGE;
+        return path;
     }
 }

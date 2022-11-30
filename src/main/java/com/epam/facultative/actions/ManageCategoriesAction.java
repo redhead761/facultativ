@@ -1,23 +1,24 @@
 package com.epam.facultative.actions;
 
-import com.epam.facultative.entity.Category;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
+import static com.epam.facultative.actions.Constants.*;
 
 public class ManageCategoriesAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
+        String path;
+        GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {
-            List<Category> categories = adminService.getAllCategories();
-            req.setAttribute("categories", categories);
+            req.setAttribute("categories", generalService.getAllCategories());
+            path = MANAGE_CATEGORIES_PAGE;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("message", e.getMessage());
         }
-        return "admin_categories.jsp";
+        return path;
     }
 }

@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class LogOutAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        req.getSession().removeAttribute("user");
+        req.getSession().invalidate();
         return "auth.jsp";
     }
 }

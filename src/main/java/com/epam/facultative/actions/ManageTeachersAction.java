@@ -1,23 +1,24 @@
 package com.epam.facultative.actions;
 
-import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
+import static com.epam.facultative.actions.Constants.*;
 
 public class ManageTeachersAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
+        String path;
+        GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {
-            List<UserDTO> teachers = adminService.getAllTeachers();
-            req.setAttribute("teachers", teachers);
+            req.setAttribute("teachers", generalService.getAllTeachers());
+            path = MANAGE_TEACHERS_PAGE;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("message", e.getMessage());
         }
-        return "admin_teachers.jsp";
+        return path;
     }
 }

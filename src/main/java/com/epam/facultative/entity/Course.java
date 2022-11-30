@@ -16,6 +16,15 @@ public class Course {
     public Course() {
     }
 
+    public Course(String title, int duration, LocalDate startDate, String description, Category category, Status status) {
+        this.title = title;
+        this.duration = duration;
+        this.startDate = startDate;
+        this.description = description;
+        this.category = category;
+        this.status = status;
+    }
+
     public Course(int id, String title, int duration, LocalDate startDate, String description, Category category, Status status) {
         this.id = id;
         this.title = title;

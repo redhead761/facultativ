@@ -1,16 +1,12 @@
 package com.epam.facultative.actions;
 
-import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.List;
 
 import static com.epam.facultative.actions.Constants.*;
 
@@ -25,12 +21,9 @@ public class AuthAction implements Action {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("statuses", Status.values());
-            List<CourseDTO> courses = generalService.getAllCourses();
-            List<UserDTO> teachers = generalService.getAllTeachers();
-            List<Category> categories = generalService.getAllCategories();
-            req.setAttribute("courses", courses);
-            req.setAttribute("teachers", teachers);
-            req.setAttribute("categories", categories);
+            req.setAttribute("courses", generalService.getAllCourses());
+            req.setAttribute("categories", generalService.getAllCategories());
+            req.setAttribute("teachers", generalService.getAllTeachers());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PAGE;
                 case TEACHER -> path = TEACHER_PAGE;

@@ -5,17 +5,23 @@ import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.epam.facultative.actions.Constants.*;
+
 public class AssignAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
+        String path;
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         try {
-            adminService.assigned(courseId,teacherId);
+            adminService.assigned(courseId, teacherId);
+            req.setAttribute("message","Successful");
+            path = MANAGE_COURSE_ACTION;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("error", e.getMessage());
         }
-        return "controller?action=manage_courses";
+        return path;
     }
 }

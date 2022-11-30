@@ -26,7 +26,8 @@
         </form>
 
         <form action="controller">
-            <input type="hidden" name="action" value="select_by_teacher" />
+            <input type="hidden" name="action" value="select_courses" />
+            <input type="hidden" name="type" value="by_teacher" />
             Select from teacher: <select name="teacher_id">
                 <c:forEach var="teacher" items="${teachers}">
                 <option value="${teacher.id}">${teacher.name} ${teacher.surname} </option>
@@ -36,7 +37,8 @@
         </form>
 
         <form action="controller">
-                <input type="hidden" name="action" value="select_by_category" />
+                <input type="hidden" name="action" value="select_courses" />
+                 <input type="hidden" name="type" value="by_category" />
                 Select from category: <select name="category_id">
                     <c:forEach var="category" items="${categories}">
                     <option value="${category.id}">${category.title}</option>
@@ -48,6 +50,7 @@
         <div align="center">
             <table border="1" cellpadding="8">
                 <caption><h2>All courses in facultative</h2></caption>
+                ${message}
                 <tr>
                     <th>Title</th>
                     <th>Duration</th>

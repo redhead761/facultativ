@@ -16,8 +16,7 @@ public class ActionFactory {
         ACTION_MAP.put("manage_teachers", new ManageTeachersAction());
         ACTION_MAP.put("manage_students", new ManageStudentsAction());
 
-        ACTION_MAP.put("select_by_teacher", new SelectByTeacherAction());
-        ACTION_MAP.put("select_by_category", new SelectByCategoryAction());
+        ACTION_MAP.put("select_courses", new SelectCoursesAction());
         ACTION_MAP.put("admin_sort", new AdminSortAction());
 
         ACTION_MAP.put("add_category", new AddCategoryAction());

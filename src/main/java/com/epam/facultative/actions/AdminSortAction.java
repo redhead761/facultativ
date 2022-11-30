@@ -20,6 +20,10 @@ public class AdminSortAction implements Action {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         List<CourseDTO> courses = null;
         try {
+            List<UserDTO> teachers = generalService.getAllTeachers();
+            List<Category> categories = generalService.getAllCategories();
+            req.setAttribute("teachers", teachers);
+            req.setAttribute("categories", categories);
             switch (typeSort) {
                 case "alphabet" -> courses = generalService.sortCoursesByAlphabet();
                 case "reverse alphabet" -> courses = generalService.sortCoursesByAlphabetReverse();

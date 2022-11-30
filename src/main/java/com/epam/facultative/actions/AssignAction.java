@@ -16,6 +16,6 @@ public class AssignAction implements Action {
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        return "assign_page.jsp";
+        return "controller?action=manage_courses";
     }
 }

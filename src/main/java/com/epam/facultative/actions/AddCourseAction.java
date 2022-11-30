@@ -10,24 +10,29 @@ import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class AddCourseAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
-        String title = req.getParameter("title");
-        int duration = Integer.parseInt(req.getParameter("duration"));
-        LocalDate date = LocalDate.parse(req.getParameter("start_date"));
-        String description = req.getParameter("description");
-        int categoryId = Integer.parseInt(req.getParameter("category"));
-        Status status = Status.valueOf(req.getParameter("status"));
-        Course course = new Course();
-        course.setTitle(title);
-        course.setDuration(duration);
-        course.setStartDate(date);
-        course.setDescription(description);
-        course.setStatus(status);
+
         try {
+            AdminService adminService = ServiceFactory.getInstance().getAdminService();
+            List<Category> categories = adminService.getAllCategories();
+            req.setAttribute("categories", categories);
+
+            String title = req.getParameter("title");
+            int duration = Integer.parseInt(req.getParameter("duration"));
+            LocalDate date = LocalDate.parse(req.getParameter("start_date"));
+            String description = req.getParameter("description");
+            int categoryId = Integer.parseInt(req.getParameter("category"));
+            Status status = Status.valueOf(req.getParameter("status"));
+            Course course = new Course();
+            course.setTitle(title);
+            course.setDuration(duration);
+            course.setStartDate(date);
+            course.setDescription(description);
+            course.setStatus(status);
             course.setCategory(adminService.getCategory(categoryId));
             adminService.addCourse(course);
             req.setAttribute("message", "Successful");
@@ -35,6 +40,8 @@ public class AddCourseAction implements Action {
             req.setAttribute("message", e.getMessage());
         } catch (ValidateException e) {
             req.setAttribute("message", e.getMessage());
+        } catch (RuntimeException e) {
+            req.setAttribute("message", "ooops");
         }
         return "course_form.jsp";
     }

@@ -13,17 +13,11 @@ public class ShowCourseFormAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
-
+        String courseId = req.getParameter("course_id");
         try {
-
             List<Category> categories = adminService.getAllCategories();
-            Status[] statuses = Status.values();
             req.setAttribute("categories", categories);
-            req.setAttribute("statuses", statuses);
-            if (req.getParameter("course_id") != null) {
-                int courseId = Integer.parseInt(req.getParameter("course_id"));
-                req.setAttribute("course", adminService.getCourse(courseId));
-            }
+            req.setAttribute("course_id", courseId);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }

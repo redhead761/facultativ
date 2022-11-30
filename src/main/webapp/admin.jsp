@@ -60,7 +60,7 @@
                 </tr>
                 <c:forEach var="course" items="${courses}">
                 <tr>
-                    <td><c:out value="${course.title}" /></td>
+                    <td>${course.title}</td>
                     <td><c:out value="${course.duration}" /></td>
                     <td><c:out value="${course.startDate}" /></td>
                     <td><c:out value="${course.amountStudents}" /></td>
@@ -75,7 +75,7 @@
                         </c:if>
                     </td>
                     <td>
-                        <a href="controller?action=show_course_form&course_id=<c:out value='${course.id}'/>">Edit</a>
+                        <a href="controller?action=show_course_form&course_id=${course.id}">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
                     </td>

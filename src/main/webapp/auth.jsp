@@ -12,8 +12,8 @@
             ${error}
             <form action="controller" method="post">
                 <input type="hidden" name="action" value="auth" />
-                Login:   <input name="login"/><br>
-                Password:   <input type="password" name="password" /><br>
+                Login:   <input name="login"/><br><br>
+                Password:   <input type="password" name="password" /><br><br>
                  <input type="submit" value="Log in"/>
             </form>
             Don't have account?

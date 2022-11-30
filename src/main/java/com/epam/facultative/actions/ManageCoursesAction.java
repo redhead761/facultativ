@@ -11,21 +11,22 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-public class AdminCoursesAction implements Action {
+import static com.epam.facultative.actions.Constants.*;
+
+public class ManageCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
         try {
-            List<CourseDTO> courses = generalService.sortCoursesByAlphabet();
-            List<UserDTO> teachers = adminService.getAllTeachers();
-            List<Category> categories = adminService.getAllCategories();
+            List<CourseDTO> courses = generalService.getAllCourses();
+            List<UserDTO> teachers = generalService.getAllTeachers();
+            List<Category> categories = generalService.getAllCategories();
             req.setAttribute("courses", courses);
             req.setAttribute("teachers", teachers);
             req.setAttribute("categories", categories);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        return "admin_courses.jsp";
+        return ADMIN_PAGE;
     }
 }

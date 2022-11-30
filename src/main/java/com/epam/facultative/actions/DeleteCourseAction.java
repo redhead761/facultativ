@@ -14,12 +14,12 @@ public class DeleteCourseAction implements Action {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {
             adminService.deleteCourse(Integer.parseInt(id));
-            req.setAttribute("courses", generalService.sortCoursesByAlphabet());
-            req.setAttribute("teachers",adminService.getAllTeachers());
-            req.setAttribute("categories", adminService.getAllCategories());
+            req.setAttribute("courses", generalService.getAllCourses());
+            req.setAttribute("teachers",generalService.getAllTeachers());
+            req.setAttribute("categories", generalService.getAllCategories());
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        return "admin_courses.jsp";
+        return "admin.jsp";
     }
 }

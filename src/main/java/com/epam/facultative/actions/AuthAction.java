@@ -3,6 +3,7 @@ package com.epam.facultative.actions;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entity.Category;
+import com.epam.facultative.entity.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
@@ -23,12 +24,13 @@ public class AuthAction implements Action {
         try {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
+            req.getSession().setAttribute("statuses", Status.values());
             List<CourseDTO> courses = generalService.getAllCourses();
             List<UserDTO> teachers = generalService.getAllTeachers();
             List<Category> categories = generalService.getAllCategories();
-            req.getSession().setAttribute("courses", courses);
-            req.getSession().setAttribute("teachers", teachers);
-            req.getSession().setAttribute("categories", categories);
+            req.setAttribute("courses", courses);
+            req.setAttribute("teachers", teachers);
+            req.setAttribute("categories", categories);
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PAGE;
                 case TEACHER -> path = TEACHER_PAGE;

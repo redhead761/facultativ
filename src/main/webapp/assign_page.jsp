@@ -11,7 +11,7 @@
 
 <%@ include file="parts/admin_header.jsp" %>
 
-    <a href="controller?action=admin_courses">Back</a><br><br>
+    <a href="controller?action=manage_courses">Back</a><br><br>
 
     <div align="center">
             <table border="1" cellpadding="3">

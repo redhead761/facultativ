@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-public class AdminStudentsAction implements Action {
+public class ManageStudentsAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         AdminService adminService = ServiceFactory.getInstance().getAdminService();

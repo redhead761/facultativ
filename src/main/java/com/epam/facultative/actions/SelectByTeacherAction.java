@@ -1,6 +1,8 @@
 package com.epam.facultative.actions;
 
 import com.epam.facultative.dto.CourseDTO;
+import com.epam.facultative.dto.UserDTO;
+import com.epam.facultative.entity.Category;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
@@ -15,6 +17,10 @@ public class SelectByTeacherAction implements Action {
     public String execute(HttpServletRequest req) {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {
+            List<UserDTO> teachers = generalService.getAllTeachers();
+            List<Category> categories = generalService.getAllCategories();
+            req.setAttribute("teachers", teachers);
+            req.setAttribute("categories", categories);
             String teacherId = req.getParameter("teacher_id");
             List<CourseDTO> courses = generalService.getCoursesByTeacher(Integer.parseInt(teacherId));
             req.setAttribute("courses", courses);

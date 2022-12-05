@@ -37,7 +37,7 @@ class Constants {
                     "FROM course JOIN category ON course.category_id = category.id " +
                     "JOIN status ON course.status_id = status.id WHERE course.category_id=?";
     static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
-    static final String UPDATE_USERS_COURSE = "UPDATE users_course SET course_id=?,user_id=?,grade=?";
+    static final String UPDATE_USERS_COURSE = "UPDATE users_course SET grade=? WHERE course_id=? AND user_id=?";
     static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?, " +
             "start_date=?,amount_students=?, description=?, category_id=?, status_id=? WHERE id=?";
     static final String SELECT_COURSES_USER =

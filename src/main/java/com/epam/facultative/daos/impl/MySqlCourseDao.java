@@ -161,11 +161,10 @@ public class MySqlCourseDao implements CourseDao {
     public void updateUsersCourse(int courseId, int userId, int grade) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_USERS_COURSE)) {
-            stmt.setInt(1, courseId);
-            stmt.setInt(2, userId);
-            stmt.setInt(3, grade);
+            stmt.setInt(1, grade);
+            stmt.setInt(2, courseId);
+            stmt.setInt(3, userId);
             stmt.executeUpdate();
-            addNumberStudentsToCourse(courseId);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

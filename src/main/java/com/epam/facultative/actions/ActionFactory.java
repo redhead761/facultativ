@@ -36,6 +36,7 @@ public class ActionFactory {
         ACTION_MAP.put("show_teacher_courses", new ShowTeacherCoursesAction());
         ACTION_MAP.put("show_grade_list", new ShowGradeListAction());
         ACTION_MAP.put("grade", new GradeAction());
+        ACTION_MAP.put("all_courses", new AllCoursesAction());
 
         ACTION_MAP.put("log_out", new LogOutAction());
         ACTION_MAP.put("student", new StudentAction());

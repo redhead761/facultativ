@@ -21,6 +21,7 @@ class Constants {
     static final String MANAGE_COURSES_ACTION = "controller?action=manage_courses";
     static final String COURSE_FORM_ACTION = "controller?action=show_course_form";
     static final String MANAGE_CATEGORIES_ACTION = "controller?action=manage_categories";
+    static final String SHOW_TEACHER_COURSES_ACTION = "controller?action=show_teacher_courses";
 
 
 }

@@ -51,7 +51,7 @@
         </form>
 
         <div align="center">
-            <table border="1" cellpadding="8">
+            <table border="1" cellpadding="7">
                 <caption><h2>All courses in facultative</h2></caption>
                 ${message}
                 <tr>
@@ -62,7 +62,6 @@
                     <th>Category</th>
                     <th>Status</th>
                     <th>Teacher</th>
-                    <th>Action</th>
                 </tr>
                 <c:forEach var="course" items="${courses}">
                 <tr>
@@ -79,11 +78,6 @@
                         <c:if test="${course.getTeacher() == null}">
                             <a href="controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
                         </c:if>
-                    </td>
-                    <td>
-                        <a href="controller?action=show_course_form&course_id=${course.id}">Edit</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
                     </td>
                 </tr>
                 </c:forEach>

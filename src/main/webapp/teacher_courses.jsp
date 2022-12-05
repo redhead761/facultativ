@@ -14,7 +14,7 @@
         Surname: ${user.surname}<br>
         Email: ${user.email}<br>
 
-        <a href="controller?action=log_out">Log out</a>
+        <a href="controller?action=all_courses">Back</a>
 
         <div align="center">
             <table border="1" cellpadding="8">
@@ -37,7 +37,7 @@
                     <td><c:out value="${course.getCategory().title}" /></td>
                     <td><c:out value="${course.getStatus()}" /></td>
                     <td>
-                        <a href="controller?action=show_grade_list&course_id=<c:out value='${course.id}'/>">Grade</a>
+                        <a href="controller?action=show_grade_list&course_id=${course.id}">Grade</a>
                     </td>
                 </tr>
             </c:forEach>

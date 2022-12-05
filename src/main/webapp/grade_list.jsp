@@ -13,6 +13,7 @@
     <a href="controller?action=show_teacher_courses">Back</a><br><br>
 
     <div align="center">
+            {message}
             <table border="1" cellpadding="4">
                 <caption><h2>All students in facultative</h2></caption>
                 <tr>
@@ -30,6 +31,7 @@
                                 <form action="controller" method="post">
                                    <input type="hidden" name="action" value="grade" />
                                    <input type="hidden" name="course_id" value="${course_id}" />
+                                   <input type="hidden" name="student_id" value="${student.id}" />
                                    Grade:   <input name="grade"/><br>
                                    <input type="submit" value="enter"/>
                                 </form>

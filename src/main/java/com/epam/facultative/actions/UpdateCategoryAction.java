@@ -7,22 +7,28 @@ import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.epam.facultative.actions.Constants.*;
+
 public class UpdateCategoryAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        String id = req.getParameter("category_id");
+        String path;
+        int id = Integer.parseInt(req.getParameter("category_id"));
         String title = req.getParameter("title");
         String description = req.getParameter("description");
-        Category category = new Category(Integer.parseInt(id), title, description);
+        Category category = new Category(id, title, description);
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         try {
             adminService.updateCategory(category);
             req.setAttribute("message", "Successful");
+            path = MANAGE_CATEGORIES_ACTION;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("message", e.getMessage());
         } catch (ValidateException e) {
+            path = MANAGE_CATEGORIES_ACTION;
             req.setAttribute("message", e.getMessage());
         }
-        return "category_form.jsp";
+        return path;
     }
 }

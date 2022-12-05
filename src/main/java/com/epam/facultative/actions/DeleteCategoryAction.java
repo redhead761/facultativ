@@ -5,17 +5,22 @@ import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.epam.facultative.actions.Constants.*;
+
 public class DeleteCategoryAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        String id = req.getParameter("category_id");
+        String path;
+        int id = Integer.parseInt(req.getParameter("category_id"));
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         try {
-            adminService.deleteCategory(Integer.parseInt(id));
-            req.setAttribute("categories", adminService.getAllCategories());
+            adminService.deleteCategory(id);
+            req.setAttribute("message", "Successful");
+            path = MANAGE_CATEGORIES_ACTION;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("message", "Successful");
         }
-        return "admin_categories.jsp";
+        return path;
     }
 }

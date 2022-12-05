@@ -10,6 +10,8 @@ import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.epam.facultative.actions.Constants.*;
+
 public class RegisterAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
@@ -25,43 +27,36 @@ public class RegisterAction implements Action {
         if (type.equals("student")) {
             StudentService studentService = ServiceFactory.getInstance().getStudentService();
             try {
-                try {
-                    if (!password.equals(repeatPassword)) {
-                        throw new ValidateException("Wrong repeat password");
-                    }
-                    GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-                    req.setAttribute("courses",generalService.sortCoursesByAlphabet());
-                    studentService.addStudent(user);
-                } catch (DAOException e) {
-                    throw new RuntimeException(e);
+                if (!password.equals(repeatPassword)) {
+                    throw new ValidateException("Wrong repeat password");
                 }
-                path = "student.jsp";
+                GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
+                req.getSession().setAttribute("courses", generalService.getAllCourses());
+                studentService.addStudent(user);
+                path = STUDENT_PAGE;
             } catch (ServiceException e) {
-                path = "error.jsp";
-                req.setAttribute("error", e.getMessage());
+                path = ERROR_PAGE;
+                req.setAttribute("message", e.getMessage());
             } catch (ValidateException e) {
-                path = "register.jsp";
-                req.setAttribute("error", e.getMessage());
+                path = AUTH_PAGE;
+                req.setAttribute("message", e.getMessage());
             }
         }
         if (type.equals("teacher")) {
             AdminService adminService = ServiceFactory.getInstance().getAdminService();
             try {
-                try {
-                    if (!password.equals(repeatPassword)) {
-                        throw new ValidateException("Wrong repeat password");
-                    }
-                    adminService.addTeacher(user);
-                } catch (DAOException e) {
-                    throw new RuntimeException(e);
+                if (!password.equals(repeatPassword)) {
+                    throw new ValidateException("Wrong repeat password");
                 }
-                path = "add_teacher.jsp";
+                adminService.addTeacher(user);
+                path = ADD_TEACHER_PAGE;
+                req.setAttribute("message", "Successful");
             } catch (ServiceException e) {
-                path = "error.jsp";
-                req.setAttribute("error", e.getMessage());
+                path = ERROR_PAGE;
+                req.setAttribute("message", e.getMessage());
             } catch (ValidateException e) {
-                path = "add_teacher.jsp";
-                req.setAttribute("error", e.getMessage());
+                path = ADD_TEACHER_PAGE;
+                req.setAttribute("message", e.getMessage());
             }
         }
         return path;

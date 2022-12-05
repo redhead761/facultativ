@@ -17,7 +17,7 @@ public class AssignAction implements Action {
         try {
             adminService.assigned(courseId, teacherId);
             req.setAttribute("message","Successful");
-            path = MANAGE_COURSE_ACTION;
+            path = MANAGE_COURSES_ACTION;
         } catch (ServiceException e) {
             path = ERROR_PAGE;
             req.setAttribute("error", e.getMessage());

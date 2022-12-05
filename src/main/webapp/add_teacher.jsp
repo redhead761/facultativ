@@ -10,7 +10,7 @@
 <body>
 <%@ include file="parts/admin_header.jsp" %><br><br>
     <h2>Add teacher</h2>
-    ${error}
+    ${message}
     <form action="controller" method="post">
        <input type="hidden" name="action" value="register" />
        <input type="hidden" name="type" value="teacher" />
@@ -23,6 +23,6 @@
        <input type="submit" value="enter"/>
     </form>
 
-    <a href="controller?action=admin_teachers">Back</a><br>
+    <a href="controller?action=manage_teachers">Back</a><br>
 </body>
 </html>

@@ -70,11 +70,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(User user) throws ServiceException, ValidateException, DAOException {
-        if (userDao.getByName(user.getLogin()) != null){
-            throw new ValidateException("Login not unique");
-        }
+    public void addStudent(User user) throws ServiceException, ValidateException {
         try {
+            if (userDao.getByName(user.getLogin()) != null){
+                throw new ValidateException("Login not unique");
+            }
             if (validateLogin(user.getLogin())
                     && validatePassword(user.getPassword())
                     && validateNameAndSurname(user.getName(), user.getSurname())

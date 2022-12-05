@@ -19,5 +19,5 @@ public interface StudentService {
 
     void enroll(int courseId, int userId) throws ServiceException;
 
-    void addStudent(User user) throws ServiceException, ValidateException, DAOException;
+    void addStudent(User user) throws ServiceException, ValidateException;
 }

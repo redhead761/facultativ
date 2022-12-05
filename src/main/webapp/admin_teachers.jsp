@@ -2,18 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
+    <head>
+        <title> Facultative </title>
+    </head>
 
-<head>
-    <title> Facultative </title>
-</head>
+    <body>
+        <%@ include file="parts/admin_header.jsp" %>
+        <a href="add_teacher.jsp">Add teacher</a><br><br>
+        <a href="controller?action=manage_courses">Back</a><br><br>
 
-<body>
-
-<%@ include file="parts/admin_header.jsp" %>
-    <a href="add_teacher.jsp">Add teacher</a><br><br>
-    <a href="admin.jsp">Back</a><br><br>
-
-    <div align="center">
+        <div align="center">
             <table border="1" cellpadding="2">
                 <caption><h2>All teachers in facultative</h2></caption>
                 <tr>
@@ -31,5 +29,5 @@
             </table>
         </div>
 
-</body>
+    </body>
 </html>

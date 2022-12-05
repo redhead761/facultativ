@@ -7,9 +7,12 @@ import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.epam.facultative.actions.Constants.*;
+
 public class AddCategoryAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
+        String path;
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         String title = req.getParameter("title");
         String description = req.getParameter("description");
@@ -19,11 +22,14 @@ public class AddCategoryAction implements Action {
         try {
             adminService.addCategory(category);
             req.setAttribute("message", "Successful");
+            path = CATEGORY_FORM_PAGE;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("message", e.getMessage());
         } catch (ValidateException e) {
+            path = CATEGORY_FORM_PAGE;
             req.setAttribute("message", e.getMessage());
         }
-        return "category_form.jsp";
+        return path;
     }
 }

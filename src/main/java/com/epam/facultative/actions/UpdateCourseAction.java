@@ -36,7 +36,7 @@ public class UpdateCourseAction implements Action {
             course.setId(courseId);
             adminService.updateCourse(course);
             req.setAttribute("message", "Successful");
-            path = MANAGE_COURSE_ACTION;
+            path = MANAGE_COURSES_ACTION;
         } catch (ServiceException e) {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());

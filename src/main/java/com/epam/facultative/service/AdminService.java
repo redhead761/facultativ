@@ -34,7 +34,7 @@ public interface AdminService {
 
     void unblockStudent(int userId) throws ServiceException;
 
-    void addTeacher(User user) throws ServiceException, ValidateException, DAOException;
+    void addTeacher(User user) throws ServiceException, ValidateException;
 
     List<Category> getAllCategories() throws ServiceException;
 

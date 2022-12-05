@@ -10,7 +10,7 @@
 <body>
 
 
-    <a href="admin.jsp">Back</a><br><br>
+    <a href="controller?action=show_teacher_courses">Back</a><br><br>
 
     <div align="center">
             <table border="1" cellpadding="4">

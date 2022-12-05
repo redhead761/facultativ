@@ -1,10 +1,7 @@
 package com.epam.facultative.actions;
 
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entity.Category;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,11 +10,12 @@ import java.util.List;
 
 import static com.epam.facultative.actions.Constants.*;
 
-public class AdminSortAction implements Action {
+public class SortAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        String path;
+        String path = null;
         String typeSort = req.getParameter("sort_type");
+        String typeCabinet = req.getParameter("cabinet_type");
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         List<CourseDTO> courses = null;
         try {
@@ -29,7 +27,11 @@ public class AdminSortAction implements Action {
                 case "duration" -> courses = generalService.sortCoursesByDuration();
                 case "amount students" -> courses = generalService.sortCoursesBuAmountOfStudents();
             }
-            path = ADMIN_PAGE;
+            switch (typeCabinet) {
+                case "admin" -> path = ADMIN_PAGE;
+                case "student" -> path = STUDENT_PAGE;
+                case "teacher" -> path = TEACHER_PAGE;
+            }
             req.setAttribute("courses", courses);
         } catch (ServiceException e) {
             path = ERROR_PAGE;

@@ -1,7 +1,7 @@
 package com.epam.facultative.actions;
 
+import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entity.User;
-import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -23,7 +23,7 @@ public class RegisterAction implements Action {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
-        User user = new User(login, password, name, surname, email);
+        User newUser = new User(login, password, name, surname, email);
         if (type.equals("student")) {
             StudentService studentService = ServiceFactory.getInstance().getStudentService();
             try {
@@ -32,13 +32,15 @@ public class RegisterAction implements Action {
                 }
                 GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
                 req.getSession().setAttribute("courses", generalService.getAllCourses());
-                studentService.addStudent(user);
+                studentService.addStudent(newUser);
+                UserDTO user = generalService.authorization(login,password);
+                req.getSession().setAttribute("user", user);
                 path = STUDENT_PAGE;
             } catch (ServiceException e) {
                 path = ERROR_PAGE;
                 req.setAttribute("message", e.getMessage());
             } catch (ValidateException e) {
-                path = AUTH_PAGE;
+                path = REGISTER_PAGE;
                 req.setAttribute("message", e.getMessage());
             }
         }
@@ -48,7 +50,7 @@ public class RegisterAction implements Action {
                 if (!password.equals(repeatPassword)) {
                     throw new ValidateException("Wrong repeat password");
                 }
-                adminService.addTeacher(user);
+                adminService.addTeacher(newUser);
                 path = ADD_TEACHER_PAGE;
                 req.setAttribute("message", "Successful");
             } catch (ServiceException e) {

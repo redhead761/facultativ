@@ -3,14 +3,14 @@
 
 <html>
 
-<head>
-    <title> Facultative </title>
-</head>
+    <head>
+        <title> Facultative </title>
+    </head>
 
 <body>
 
     <h2>Register page</h2>
-    ${error}
+    ${message}
     <form action="controller" method="post">
        <input type="hidden" name="action" value="register" />
        <input type="hidden" name="type" value="student" />

@@ -15,7 +15,8 @@
         <a href="controller?action=show_course_form">Add course</a><br><br>
 
         <form action="controller">
-            <input type="hidden" name="action" value="admin_sort" />
+            <input type="hidden" name="action" value="sort" />
+            <input type="hidden" name="cabinet_type" value="admin" />
             Sort: <select name="sort_type">
                 <option>alphabet</option>
                 <option>reverse alphabet</option>
@@ -28,6 +29,7 @@
         <form action="controller">
             <input type="hidden" name="action" value="select_courses" />
             <input type="hidden" name="type" value="by_teacher" />
+            <input type="hidden" name="cabinet_type" value="admin" />
             Select from teacher: <select name="teacher_id">
                 <c:forEach var="teacher" items="${teachers}">
                 <option value="${teacher.id}">${teacher.name} ${teacher.surname} </option>
@@ -38,7 +40,8 @@
 
         <form action="controller">
                 <input type="hidden" name="action" value="select_courses" />
-                 <input type="hidden" name="type" value="by_category" />
+                <input type="hidden" name="type" value="by_category" />
+                <input type="hidden" name="cabinet_type" value="admin" />
                 Select from category: <select name="category_id">
                     <c:forEach var="category" items="${categories}">
                     <option value="${category.id}">${category.title}</option>

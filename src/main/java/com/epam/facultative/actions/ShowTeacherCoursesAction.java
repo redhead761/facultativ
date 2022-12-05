@@ -1,27 +1,25 @@
 package com.epam.facultative.actions;
 
-import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
-
 import static com.epam.facultative.actions.Constants.*;
 
-public class ShowGradeListAction implements Action {
+public class ShowTeacherCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        int courseId = Integer.parseInt(req.getParameter("course_id"));
-        req.setAttribute("course_id", courseId);
+        String path;
+        int userId = Integer.parseInt(req.getParameter("user_id"));
         TeacherService teacherService = ServiceFactory.getInstance().getTeacherService();
         try {
-            List<UserDTO> students = teacherService.getStudentsByCourse(courseId);
-            req.setAttribute("students", students);
+            req.setAttribute("courses", teacherService.getTeacherCourses(userId));
+            path = TEACHER_COURSES_PAGE;
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            path = ERROR_PAGE;
+            req.setAttribute("message", e.getMessage());
         }
-        return GRADE_PAGE;
+        return path;
     }
 }

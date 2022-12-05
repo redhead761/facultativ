@@ -13,13 +13,12 @@ import static com.epam.facultative.actions.Constants.*;
 public class SelectCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
-        String path;
+        String path = null;
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         List<CourseDTO> courses = null;
         try {
             req.setAttribute("teachers", generalService.getAllTeachers());
             req.setAttribute("categories", generalService.getAllCategories());
-
             switch (req.getParameter("type")) {
                 case "by_teacher" -> {
                     int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
@@ -30,8 +29,12 @@ public class SelectCoursesAction implements Action {
                     courses = generalService.getCoursesByCategory(categoryId);
                 }
             }
+            switch (req.getParameter("cabinet_type")) {
+                case "admin" -> path = ADMIN_PAGE;
+                case "student" -> path = STUDENT_PAGE;
+                case "teacher" -> path = TEACHER_PAGE;
+            }
             req.setAttribute("courses", courses);
-            path = ADMIN_PAGE;
         } catch (ServiceException e) {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());

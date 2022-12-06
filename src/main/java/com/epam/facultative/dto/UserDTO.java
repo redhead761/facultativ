@@ -12,6 +12,8 @@ public class UserDTO {
     private String email;
     private boolean isBlock;
     private Role role;
+    private CourseDTO course;
+    private int grade;
 
     public UserDTO() {
     }
@@ -106,5 +108,21 @@ public class UserDTO {
                 ", isBlock=" + isBlock +
                 ", role=" + role +
                 '}';
+    }
+
+    public CourseDTO getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseDTO course) {
+        this.course = course;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 }

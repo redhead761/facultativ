@@ -29,4 +29,18 @@ public class Converter {
         courseDTO.setTeacher(userDTO);
         return courseDTO;
     }
+
+    public UserDTO userToStudent(User user, CourseDTO courseDTO, int grade) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setLogin(user.getLogin());
+        userDTO.setName(user.getName());
+        userDTO.setSurname(user.getSurname());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setBlock(user.isBlock());
+        userDTO.setRole(user.getRole());
+        userDTO.setCourse(courseDTO);
+        userDTO.setGrade(grade);
+        return userDTO;
+    }
 }

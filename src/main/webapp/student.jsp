@@ -11,7 +11,8 @@
         Name: ${user.name}<br>
         Surname: ${user.surname}<br>
         Email: ${user.email}<br>
-        <a href=>My courses</a><br><br>
+        <a href="controller?action=show_student_courses">My courses</a><br><br>
+                <a href="controller?action=log_out">Log out</a><br><br>
 
         <form action="controller">
             <input type="hidden" name="action" value="sort" />

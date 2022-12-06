@@ -15,6 +15,10 @@ class Constants {
     static final String ADD_TEACHER_PAGE = "add_teacher.jsp";
     static final String GRADE_PAGE = "grade_list.jsp";
     static final String TEACHER_COURSES_PAGE = "teacher_courses.jsp";
+    static final String STUDENT_COURSES_PAGE = "student_courses.jsp";
+    static final String COMING_SOON_COURSES_PAGE = "coming_soon_courses.jsp";
+    static final String IN_PROGRESS_COURSES_PAGE = "in_progress_courses.jsp";
+    static final String COMPLETED_COURSES_PAGE = "completed_courses.jsp";
 
 
 
@@ -22,6 +26,9 @@ class Constants {
     static final String COURSE_FORM_ACTION = "controller?action=show_course_form";
     static final String MANAGE_CATEGORIES_ACTION = "controller?action=manage_categories";
     static final String SHOW_TEACHER_COURSES_ACTION = "controller?action=show_teacher_courses";
+
+
+    
 
 
 }

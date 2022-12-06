@@ -52,9 +52,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<CourseDTO> getCoursesCompleted(int studentId) throws ServiceException {
+    public List<UserDTO> getCoursesCompleted(int studentId) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED));
+            User user = userDao.getById(studentId);
+            List<UserDTO> students = new ArrayList<>();
+            List<CourseDTO> courses = prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED));
+            for (CourseDTO course : courses) {
+                int grade = courseDao.getGrade(course.getId(), studentId);
+                students.add(converter.userToStudent(user, course, grade));
+            }
+            return students;
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
@@ -64,6 +71,7 @@ public class StudentServiceImpl implements StudentService {
     public void enroll(int courseId, int userId) throws ServiceException {
         try {
             courseDao.addUserToCourse(courseId, userId);
+            courseDao.addNumberStudentsToCourse(courseId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -72,7 +80,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudent(User user) throws ServiceException, ValidateException {
         try {
-            if (userDao.getByName(user.getLogin()) != null){
+            if (userDao.getByName(user.getLogin()) != null) {
                 throw new ValidateException("Login not unique");
             }
             if (validateLogin(user.getLogin())
@@ -87,6 +95,7 @@ public class StudentServiceImpl implements StudentService {
             throw new ServiceException(e);
         }
     }
+
 
     private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();

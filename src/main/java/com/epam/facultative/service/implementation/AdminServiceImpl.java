@@ -56,9 +56,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateCourse(Course course) throws ServiceException, ValidateException {
         try {
-            if (courseDao.getByName(course.getTitle()) != null) {
-                throw new ValidateException("Login not unique");
-            }
             if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
                 courseDao.update(course);
             }

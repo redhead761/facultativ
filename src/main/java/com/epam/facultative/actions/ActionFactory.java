@@ -43,6 +43,11 @@ public class ActionFactory {
         ACTION_MAP.put("register", new RegisterAction());
 
         ACTION_MAP.put("enroll", new EnrollAction());
+        ACTION_MAP.put("show_student_courses", new ShowStudentCoursesAction());
+        ACTION_MAP.put("show_coming_soon_courses", new ShowComingSoonCoursesAction());
+        ACTION_MAP.put("show_progress_courses", new ShowInProgressCourses());
+        ACTION_MAP.put("show_completed_courses", new ShowCompletedCoursesAction());
+        ACTION_MAP.put("show_student_cabinet", new ShowStudentCabinetAction());
     }
 
     private ActionFactory() {

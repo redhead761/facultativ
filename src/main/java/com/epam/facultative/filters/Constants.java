@@ -51,5 +51,6 @@ public class Constants {
         STUDENT_ACTIONS.add("select_courses");
         STUDENT_ACTIONS.add("enroll");
         STUDENT_ACTIONS.add("auth");
+        STUDENT_ACTIONS.add("show_student_cabinet");
     }
 }

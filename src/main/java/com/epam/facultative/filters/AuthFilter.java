@@ -21,8 +21,7 @@ public class AuthFilter implements Filter {
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
         String action = request.getParameter("action");
-        System.out.println("action = " + action);
-        if (user == null && (action == null || action.equals("auth"))) {
+        if (user == null && (action == null || action.equals("auth") || action.equals("register"))) {
             filterChain.doFilter(request, response);
         } else if (user != null && user.getRole().equals(Role.ADMIN) && ADMIN_ACTIONS.contains(action)) {
             filterChain.doFilter(request, response);

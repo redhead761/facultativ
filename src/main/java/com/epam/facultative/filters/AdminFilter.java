@@ -12,11 +12,11 @@ import java.io.IOException;
 
 import static com.epam.facultative.filters.Constants.*;
 
-@WebFilter("/admin/*")
+@WebFilter(urlPatterns="/admin/*", servletNames="controller")
 public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
+System.out.println("in filter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
@@ -24,7 +24,9 @@ public class AdminFilter implements Filter {
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
         String action = request.getParameter("action");
-        if (user != null && user.getRole().equals(Role.ADMIN) && ADMIN_ACTIONS.contains(action)){
+        System.out.println(action);
+        if (user != null && user.getRole().equals(Role.ADMIN)){
+            System.out.println("in IF");
             filterChain.doFilter(request,response);
         }
         else {

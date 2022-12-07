@@ -13,13 +13,13 @@
         ${message}
 
         <c:if test="${param.category_id != null}">
-            <form action="../controller" method="post">
+            <form action="controller" method="post">
             <input type="hidden" name="action" value="update_category" />
             <input type="hidden" name="category_id" value="${param.category_id}" />
         </c:if>
 
         <c:if test="${param.category_id == null}">
-            <form action="../controller" method="post">
+            <form action="controller" method="post">
             <input type="hidden" name="action" value="add_category" />
         </c:if>
             Title: <input name="title"/><br>

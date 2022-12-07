@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static com.epam.facultative.filters.Constants.STUDENT_ACTIONS;
 
-@WebFilter("/student/*")
+@WebFilter(urlPatterns="/student/*", servletNames="controller")
 public class StudentFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -23,7 +23,7 @@ public class StudentFilter implements Filter {
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
         String action = request.getParameter("action");
-        if (user != null && user.getRole().equals(Role.STUDENT) && STUDENT_ACTIONS.contains(action)){
+        if (user != null && user.getRole().equals(Role.STUDENT)){
             filterChain.doFilter(request,response);
         }
         else {

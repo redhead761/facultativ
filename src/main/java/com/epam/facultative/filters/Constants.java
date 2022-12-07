@@ -29,6 +29,8 @@ public class Constants {
         ADMIN_ACTIONS.add("add_course");
         ADMIN_ACTIONS.add("manage_students");
         ADMIN_ACTIONS.add("log_out");
+        ADMIN_ACTIONS.add("show_category_form");
+        ADMIN_ACTIONS.add("auth");
 
         TEACHER_ACTIONS.add("show_teacher_courses");
         TEACHER_ACTIONS.add("grade");
@@ -38,6 +40,7 @@ public class Constants {
         TEACHER_ACTIONS.add("show_assign_page");
         TEACHER_ACTIONS.add("all_courses");
         TEACHER_ACTIONS.add("show_grade_list");
+        TEACHER_ACTIONS.add("auth");
 
         STUDENT_ACTIONS.add("show_coming_soon_courses");
         STUDENT_ACTIONS.add("show_progress_courses");
@@ -47,7 +50,6 @@ public class Constants {
         STUDENT_ACTIONS.add("sort");
         STUDENT_ACTIONS.add("select_courses");
         STUDENT_ACTIONS.add("enroll");
-
-
+        STUDENT_ACTIONS.add("auth");
     }
 }

@@ -21,6 +21,7 @@ public class ActionFactory {
         ACTION_MAP.put("select_courses", new SelectCoursesAction());
         ACTION_MAP.put("sort", new SortAction());
 
+        ACTION_MAP.put("show_category_form", new ShowCategoryFormAction());
         ACTION_MAP.put("add_category", new AddCategoryAction());
         ACTION_MAP.put("update_category", new UpdateCategoryAction());
         ACTION_MAP.put("delete_category", new DeleteCategoryAction());

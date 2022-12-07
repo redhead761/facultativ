@@ -9,7 +9,7 @@
     <body>
 
         <%@ include file="../parts/admin_header.jsp" %><br><br>
-        <a href="admin/category_form.jsp">Add category</a><br><br>
+        <a href="controller?action=show_category_form">Add category</a><br><br>
         <a href="controller?action=manage_courses">Back</a><br><br>
 
         <div align="center">
@@ -26,7 +26,7 @@
                 <td><c:out value="${category.title}" /></td>
                 <td><c:out value="${category.description}" /></td>
                 <td>
-                    <a href="admin/category_form.jsp?category_id=${category.id}">Edit</a>
+                    <a href="controller?action=show_category_form&category_id=${category.id}">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="controller?action=delete_category&category_id=${category.id}">Delete</a>
                 </td>

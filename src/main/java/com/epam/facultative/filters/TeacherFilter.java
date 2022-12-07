@@ -6,11 +6,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-
-import static com.epam.facultative.filters.Constants.TEACHER_ACTIONS;
 
 @WebFilter(urlPatterns="/teacher/*", servletNames="controller")
 public class TeacherFilter implements Filter {
@@ -18,11 +15,9 @@ public class TeacherFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(false);
         String loginURI = request.getContextPath();
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
-        String action = request.getParameter("action");
         if (user != null && user.getRole().equals(Role.TEACHER)){
             filterChain.doFilter(request,response);
         }

@@ -38,12 +38,10 @@
                     <td><c:out value="${course.getCourse().getCategory().title}" /></td>
                     <td><c:out value="${course.getCourse().getStatus()}" /></td>
                     <td>
-                        <c:if test="${course.getCourse().getTeacher() != null}">
+
                             <c:out value="${course.getCourse().getTeacher().getName()} ${course.getCourse().getTeacher().getSurname()}"/>
-                        </c:if>
-                        <c:if test="${course.getCourse().getTeacher() == null}">
-                            <a href="controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
-                        </c:if>
+
+
                     </td>
                     <td><c:out value="${course.getGrade()}" /></td>
                 </tr>

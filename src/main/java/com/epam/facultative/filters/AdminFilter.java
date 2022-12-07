@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import static com.epam.facultative.filters.Constants.*;
+
 @WebFilter("/admin/*")
 public class AdminFilter implements Filter {
     @Override
@@ -21,7 +23,8 @@ public class AdminFilter implements Filter {
         String loginURI = request.getContextPath();
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
-        if (user != null && user.getRole().equals(Role.ADMIN)){
+        String action = request.getParameter("action");
+        if (user != null && user.getRole().equals(Role.ADMIN) && ADMIN_ACTIONS.contains(action)){
             filterChain.doFilter(request,response);
         }
         else {

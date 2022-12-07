@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+import static com.epam.facultative.filters.Constants.TEACHER_ACTIONS;
+
 @WebFilter("/teacher/*")
 public class TeacherFilter implements Filter {
     @Override
@@ -20,7 +22,8 @@ public class TeacherFilter implements Filter {
         String loginURI = request.getContextPath();
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
-        if (user != null && user.getRole().equals(Role.TEACHER)){
+        String action = request.getParameter("action");
+        if (user != null && user.getRole().equals(Role.TEACHER) && TEACHER_ACTIONS.contains(action)){
             filterChain.doFilter(request,response);
         }
         else {

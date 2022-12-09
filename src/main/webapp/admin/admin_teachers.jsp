@@ -1,33 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
-    <head>
-        <title> Facultative </title>
-    </head>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Facultative </title>
+</head>
 
-    <body>
-        <%@ include file="../parts/admin_header.jsp" %>
-        <a href="admin/add_teacher.jsp">Add teacher</a><br><br>
-        <a href="controller?action=manage_courses">Back</a><br><br>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
-        <div align="center">
-            <table border="1" cellpadding="2">
-                <caption><h2>All teachers in facultative</h2></caption>
-                <tr>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Email</th>
-                </tr>
-                <c:forEach var="teacher" items="${teachers}">
-                    <tr>
-                        <td><c:out value="${teacher.name}" /></td>
-                        <td><c:out value="${teacher.surname}" /></td>
-                        <td><c:out value="${teacher.email}" /></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
-
-    </body>
+<jsp:include page="../parts/admin_header.jsp"/>
+<a class="btn btn-primary" href="controller?action=manage_courses" role="button">Back</a>
+<div class="table-responsive col-lg-10 mx-auto p-4">
+    <table class="table table-success table-striped caption-top table-bordered">
+        <caption>
+            <a class="btn btn-primary" href="../admin/add_teacher.jsp" role="button">Add teacher</a>
+            All teachers in facultative
+        </caption>
+        <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Email</th>
+        </thead>
+        <c:forEach var="teacher" items="${requestScope.teachers}">
+            <tbody>
+            <td>${teacher.name}</td>
+            <td>${teacher.surname}</td>
+            <td>${teacher.email}</td>
+            </tbody>
+        </c:forEach>
+    </table>
+</div>
+<jsp:include page="/parts/footer.jsp"/>
+</body>
 </html>

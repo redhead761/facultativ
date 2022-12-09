@@ -18,7 +18,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-<%@ include file="../parts/admin_header.jsp" %>
+<jsp:include page="../parts/admin_header.jsp"/>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
@@ -106,6 +106,6 @@
         </c:forEach>
     </table>
 </div>
-<%@ include file="../parts/footer.jsp" %>
+<jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

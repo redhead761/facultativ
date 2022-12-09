@@ -21,7 +21,7 @@
 <%@ include file="../parts/admin_header.jsp" %>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered ">
+    <table class="table table-success table-striped caption-top table-bordered">
         <caption>
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
                     data-bs-toggle="dropdown"

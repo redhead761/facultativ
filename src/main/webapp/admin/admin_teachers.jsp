@@ -21,7 +21,7 @@
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-primary" href="../admin/add_teacher.jsp" role="button">Add teacher</a>
+            <a class="btn btn-primary" href="controller?action=show_add_teacher_form" role="button">Add teacher</a>
             All teachers in facultative
         </caption>
         <thead>

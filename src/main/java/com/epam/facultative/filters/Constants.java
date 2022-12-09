@@ -31,6 +31,7 @@ public class Constants {
         ADMIN_ACTIONS.add("log_out");
         ADMIN_ACTIONS.add("show_category_form");
         ADMIN_ACTIONS.add("auth");
+        ADMIN_ACTIONS.add("show_add_teacher_form");
 
         TEACHER_ACTIONS.add("show_teacher_courses");
         TEACHER_ACTIONS.add("grade");

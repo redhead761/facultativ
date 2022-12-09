@@ -17,17 +17,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<h2> Admin data </h2>
-<hr>
-Name: ${user.name}<br>
-Surname: ${user.surname}<br>
-Email: ${user.email}<br>
-<%@ include file="../parts/admin_header.jsp" %>
-<a href="controller?action=show_course_form">Add course</a>
 
+<%@ include file="../parts/admin_header.jsp" %>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
-
     <table class="table table-success table-striped caption-top table-bordered ">
         <caption>
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
@@ -73,6 +66,9 @@ Email: ${user.email}<br>
                     </li>
                 </c:forEach>
             </ul>
+            <a class="btn btn-primary" href="controller?action=show_course_form" role="button">Add course</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            All courses in facultative
         </caption>
         ${message}
         <thead>
@@ -110,5 +106,6 @@ Email: ${user.email}<br>
         </c:forEach>
     </table>
 </div>
+<%@ include file="../parts/footer.jsp" %>
 </body>
 </html>

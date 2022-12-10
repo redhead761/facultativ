@@ -50,7 +50,7 @@
         </div>
 
         <div class="form-floating col-lg-2 ">
-            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$" title="Password must be between 8 and 20 characters, capital letter and no special characters    ">
+            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$" title="Password must be between 8 and 20 characters, capital letter and no special characters">
             <label for="floatingPassword">Password</label>
         </div>
 
@@ -61,6 +61,6 @@
     Don't have account?
     <a href="register.jsp"> Register </a>
 </div>
-
+<jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

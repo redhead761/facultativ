@@ -1,89 +1,102 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
 <html>
-    <head>
-        <title> Student cabinet </title>
-    </head>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <body>
-        <h2> Student data </h2><hr>
-        Name: ${user.name}<br>
-        Surname: ${user.surname}<br>
-        Email: ${user.email}<br>
-        <a href="controller?action=show_student_courses">My courses</a><br><br>
-                <a href="controller?action=log_out">Log out</a><br><br>
+    <title> Facultative </title>
+</head>
 
-        <form action="controller">
-            <input type="hidden" name="action" value="sort" />
-            <input type="hidden" name="cabinet_type" value="student" />
-            Sort: <select name="sort_type">
-                <option>alphabet</option>
-                <option>reverse alphabet</option>
-                <option>duration</option>
-                <option>amount students</option>
-                </select>
-                <input type="submit" value="enter"/>
-        </form>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
-        <form action="controller">
-            <input type="hidden" name="action" value="select_courses" />
-            <input type="hidden" name="type" value="by_teacher" />
-            <input type="hidden" name="cabinet_type" value="student" />
-            Select from teacher: <select name="teacher_id">
+<jsp:include page="../parts/student_header.jsp"/>
+
+<div class="table-responsive col-lg-10 mx-auto p-4">
+    <table class="table table-success table-striped caption-top table-bordered">
+        <caption>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Sort
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item"
+                       href="controller?action=sort&cabinet_type=student&sort_type=alphabet">Alphabetical</a></li>
+                <li><a class="dropdown-item"
+                       href="controller?action=sort&cabinet_type=student&sort_type=reverse alphabet">Reverse
+                    alphabetical</a></li>
+                <li><a class="dropdown-item"
+                       href="controller?action=sort&cabinet_type=student&sort_type=duration">Duration</a></li>
+                <li><a class="dropdown-item"
+                       href="controller?action=sort&cabinet_type=student&sort_type=amount students">Amount
+                    students</a></li>
+            </ul>
+
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Select by teacher
+            </button>
+            <ul class="dropdown-menu">
                 <c:forEach var="teacher" items="${teachers}">
-                <option value="${teacher.id}">${teacher.name} ${teacher.surname} </option>
+                    <li><a class="dropdown-item"
+                           href="controller?action=select_courses&cabinet_type=student&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                    </li>
                 </c:forEach>
-                </select>
-                <input type="submit" value="enter"/>
-        </form>
+            </ul>
 
-        <form action="controller">
-                <input type="hidden" name="action" value="select_courses" />
-                <input type="hidden" name="type" value="by_category" />
-                <input type="hidden" name="cabinet_type" value="student" />
-                Select from category: <select name="category_id">
-                    <c:forEach var="category" items="${categories}">
-                    <option value="${category.id}">${category.title}</option>
-                    </c:forEach>
-                    </select>
-                    <input type="submit" value="enter"/>
-        </form>
-
-        <div align="center">
-            <table border="1" cellpadding="8">
-                <caption><h2>All courses in facultative</h2></caption>
-                ${message}
-                <tr>
-                    <th>Title</th>
-                    <th>Duration</th>
-                    <th>Start date</th>
-                    <th>Students on course</th>
-                    <th>Category</th>
-                    <th>Status</th>
-                    <th>Teacher</th>
-                    <th>Action</th>
-                </tr>
-                <c:forEach var="course" items="${courses}">
-                <tr>
-                    <td>${course.title}</td>
-                    <td><c:out value="${course.duration}" /></td>
-                    <td><c:out value="${course.startDate}" /></td>
-                    <td><c:out value="${course.amountStudents}" /></td>
-                    <td><c:out value="${course.getCategory().title}" /></td>
-                    <td><c:out value="${course.getStatus()}" /></td>
-                    <td>
-
-                            <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
-
-
-                    </td>
-                    <td>
-                        <a href="controller?action=enroll&course_id=${course.id}">Enroll</a>
-                    </td>
-                </tr>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Select by category
+            </button>
+            <ul class="dropdown-menu">
+                <c:forEach var="category" items="${categories}">
+                    <li><a class="dropdown-item"
+                           href="controller?action=select_courses&cabinet_type=student&type=by_category&category_id=${category.id}">${category.title}</a>
+                    </li>
                 </c:forEach>
-            </table>
-        </div>
-    </body>
+            </ul>
+            All courses in facultative
+        </caption>
+        ${message}
+        <thead>
+        <th scope="col">Title</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Start date</th>
+        <th scope="col">Students on course</th>
+        <th scope="col">Category</th>
+        <th scope="col">Status</th>
+        <th scope="col">Teacher</th>
+        <th scope="col">Action</th>
+        </thead>
+        <c:forEach var="course" items="${courses}">
+            <tbody>
+            <td>${course.title}</td>
+            <td><c:out value="${course.duration}"/></td>
+            <td><c:out value="${course.startDate}"/></td>
+            <td><c:out value="${course.amountStudents}"/></td>
+            <td><c:out value="${course.getCategory().title}"/></td>
+            <td><c:out value="${course.getStatus()}"/></td>
+            <td>
+                <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
+            </td>
+            <td>
+                <a href="controller?action=enroll&course_id=${course.id}">Enroll</a>
+            </td>
+            </tbody>
+        </c:forEach>
+    </table>
+</div>
+<jsp:include page="/parts/footer.jsp"/>
+</body>
 </html>

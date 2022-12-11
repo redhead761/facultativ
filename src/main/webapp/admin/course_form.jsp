@@ -36,23 +36,29 @@
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
                 <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                       pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must...">
+                       pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must..." required>
                 <label for="floatingInputTitle">Title</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2">
                 <input class="form-control" name="duration" id="floatingInputDuration" placeholder="duration"
-                       pattern="^[0-9]{0,3}" title="duration must...">
+                       pattern="^[0-9]{0,3}" title="duration must..." required>
                 <label for="floatingInputDuration">Duration</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2">
-                <input class="form-control" type="date" name="start_date" id="floatingInputDate" placeholder="duration">
+                <input class="form-control" type="date" name="start_date" id="floatingInputDate" placeholder="date" required>
                 <label for="floatingInputDate">Start date</label>
             </div>
 
+            <div class="form-floating mt-4 mb-3 col-lg-2">
+                <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
+                       pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must...">
+                <label for="floatingInputDescription">Description</label>
+            </div>
+
             <div class="mt-2 col-lg-2">
-                <select name="category" class="form-select form-select-lg mb-3">
+                <select name="category" class="form-select form-select-lg mb-3" required>
                     <option disabled selected>Select category</option>
                     <c:forEach var="category" items="${categories}">
                         <option value="${category.id}">${category.title}</option>
@@ -61,7 +67,7 @@
             </div>
 
             <div class="mt-2 col-lg-2">
-                <select name="status" class="form-select form-select-lg mb-3">
+                <select name="status" class="form-select form-select-lg mb-3" required>
                     <option disabled selected>Select status</option>
                     <c:forEach var="status" items="${statuses}">
                         <option>${status.valueOf(status)}</option>

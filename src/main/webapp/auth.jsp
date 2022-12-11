@@ -45,12 +45,15 @@
         <input type="hidden" name="action" value="auth"/>
 
         <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="login" id="floatingInput" placeholder="login" pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="Login must...">
+            <input class="form-control" name="login" id="floatingInput" placeholder="login"
+                   pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="Login must..." required>
             <label for="floatingInput">Login</label>
         </div>
 
         <div class="form-floating col-lg-2 ">
-            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$" title="Password must be between 8 and 20 characters, capital letter and no special characters">
+            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password"
+                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
+                   title="Password must be between 8 and 20 characters, capital letter and no special characters" required>
             <label for="floatingPassword">Password</label>
         </div>
 

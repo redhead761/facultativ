@@ -36,13 +36,13 @@
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
                 <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                       pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must...">
+                       pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must..." required>
                 <label for="floatingInputTitle">Title</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
                 <input class="form-control" name="title" id="floatingInputDescription" placeholder="description"
-                       pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must...">
+                       pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must..." required>
                 <label for="floatingInputDescription">Desctiption</label>
             </div>
 

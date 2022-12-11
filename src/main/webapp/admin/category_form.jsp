@@ -18,36 +18,37 @@
 
 <%@ include file="../parts/admin_header.jsp" %>
 <a class="btn btn-primary" href="controller?action=manage_categories" role="button">Back</a>
-<h2>Please fill in the fields</h2>
-${message}
+<div align="center">
 
-<c:if test="${param.category_id != null}">
-<form action="controller" method="post">
-    <input type="hidden" name="action" value="update_category"/>
-    <input type="hidden" name="category_id" value="${param.category_id}"/>
-    </c:if>
+    <h2>Please fill in the fields</h2>
+    ${message}
 
-    <c:if test="${param.category_id == null}">
+    <c:if test="${param.category_id != null}">
     <form action="controller" method="post">
-        <input type="hidden" name="action" value="add_category"/>
+        <input type="hidden" name="action" value="update_category"/>
+        <input type="hidden" name="category_id" value="${param.category_id}"/>
         </c:if>
 
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                   pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must...">
-            <label for="floatingInputTitle">Title</label>
-        </div>
+        <c:if test="${param.category_id == null}">
+        <form action="controller" method="post">
+            <input type="hidden" name="action" value="add_category"/>
+            </c:if>
 
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="title" id="floatingInputDescription" placeholder="description"
-                   pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must...">
-            <label for="floatingInputDescription">Desctiption</label>
-        </div>
+            <div class="form-floating mt-4 mb-3 col-lg-2 ">
+                <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
+                       pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must...">
+                <label for="floatingInputTitle">Title</label>
+            </div>
 
-        <input type="submit" value="enter"/>
-    </form>
+            <div class="form-floating mt-4 mb-3 col-lg-2 ">
+                <input class="form-control" name="title" id="floatingInputDescription" placeholder="description"
+                       pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must...">
+                <label for="floatingInputDescription">Desctiption</label>
+            </div>
 
-    <jsp:include page="/parts/footer.jsp"/>
-
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+</div>
+<jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

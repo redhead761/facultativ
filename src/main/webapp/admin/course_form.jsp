@@ -51,41 +51,25 @@
                 <label for="floatingInputDate">Start date</label>
             </div>
 
-            <div class="dropdown mt-4 mb-3 col-lg-2">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuCategory"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    Category
-                </button>
-                <ul class="dropdown-menu">
+            <div class="mt-2 col-lg-2">
+                <select name="category" class="form-select form-select-lg mb-3">
+                    <option disabled selected>Select category</option>
                     <c:forEach var="category" items="${categories}">
-                        <li>
-                            <button class="list-group-item"
-                                    value="category_id=${category.id}">${category.title}</button>
-                        </li>
+                        <option value="${category.id}">${category.title}</option>
                     </c:forEach>
-                </ul>
+                </select>
             </div>
 
-            <div class="dropdown mt-4 mb-3 col-lg-2">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuStatus"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    Status
-                </button>
-                <ul class="dropdown-menu">
+            <div class="mt-2 col-lg-2">
+                <select name="status" class="form-select form-select-lg mb-3">
+                    <option disabled selected>Select status</option>
                     <c:forEach var="status" items="${statuses}">
-                        <li>
-                            <button class="list-group-item"
-                                    value="status_id=${status.id}">${status.valueOf(status)}</button>
-                        </li>
+                        <option>${status.valueOf(status)}</option>
                     </c:forEach>
-                </ul>
+                </select>
             </div>
 
-            <div class="form-floating mt-4 mb-3 col-lg-2 ">
-                <input class="input" type="submit" value="enter">
-            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 </div>
 

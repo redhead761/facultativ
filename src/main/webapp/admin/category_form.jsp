@@ -21,7 +21,13 @@
 <div align="center">
 
     <h2>Please fill in the fields</h2>
-    ${message}
+
+    <c:if test="${message != null}">
+        <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
+            <strong>${message}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
 
     <c:if test="${param.category_id != null}">
     <form action="controller" method="post">
@@ -35,14 +41,14 @@
             </c:if>
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
-                <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
+                <input class="form-control" name="title" id="floatingInputTitle" placeholder="title" value="${title}"
                        pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must..." required>
                 <label for="floatingInputTitle">Title</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
-                <input class="form-control" name="title" id="floatingInputDescription" placeholder="description"
-                       pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must..." required>
+                <input class="form-control" name="title" id="floatingInputDescription" placeholder="description" value="${description}"
+                       pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must..." >
                 <label for="floatingInputDescription">Desctiption</label>
             </div>
 

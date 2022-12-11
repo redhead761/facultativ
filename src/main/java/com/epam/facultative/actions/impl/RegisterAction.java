@@ -34,13 +34,17 @@ public class RegisterAction implements Action {
                 GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
                 req.getSession().setAttribute("courses", generalService.getAllCourses());
                 studentService.addStudent(newUser);
-                UserDTO user = generalService.authorization(login,password);
+                UserDTO user = generalService.authorization(login, password);
                 req.getSession().setAttribute("user", user);
                 path = STUDENT_PAGE;
             } catch (ServiceException e) {
                 path = ERROR_PAGE;
                 req.setAttribute("message", e.getMessage());
             } catch (ValidateException e) {
+                req.setAttribute("login", login);
+                req.setAttribute("name", name);
+                req.setAttribute("surname", surname);
+                req.setAttribute("email", email);
                 path = REGISTER_PAGE;
                 req.setAttribute("message", e.getMessage());
             }
@@ -58,6 +62,10 @@ public class RegisterAction implements Action {
                 path = ERROR_PAGE;
                 req.setAttribute("message", e.getMessage());
             } catch (ValidateException e) {
+                req.setAttribute("login", login);
+                req.setAttribute("name", name);
+                req.setAttribute("surname", surname);
+                req.setAttribute("email", email);
                 path = ADD_TEACHER_PAGE;
                 req.setAttribute("message", e.getMessage());
             }

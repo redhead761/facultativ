@@ -18,14 +18,16 @@ public class AddCourseAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
         String path;
+
+        String title = req.getParameter("title");
+        int duration = Integer.parseInt(req.getParameter("duration"));
+        LocalDate date = LocalDate.parse(req.getParameter("start_date"));
+        String description = req.getParameter("description");
+
         try {
             AdminService adminService = ServiceFactory.getInstance().getAdminService();
             req.setAttribute("categories", adminService.getAllCategories());
 
-            String title = req.getParameter("title");
-            int duration = Integer.parseInt(req.getParameter("duration"));
-            LocalDate date = LocalDate.parse(req.getParameter("start_date"));
-            String description = req.getParameter("description");
             Category category = adminService.getCategory(Integer.parseInt(req.getParameter("category")));
             Status status = Status.valueOf(req.getParameter("status"));
 
@@ -37,12 +39,17 @@ public class AddCourseAction implements Action {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());
         } catch (ValidateException e) {
+            req.setAttribute("title", title);
+            req.setAttribute("duration", duration);
+            req.setAttribute("start_date", date);
+            req.setAttribute("description", description);
             path = COURSE_FORM_PAGE;
             req.setAttribute("message", e.getMessage());
-        } catch (RuntimeException e) {
-            path = COURSE_FORM_PAGE;
-            req.setAttribute("message", "Incorrect duration or start date");
         }
+//        catch (RuntimeException e) {
+//            path = COURSE_FORM_PAGE;
+//            req.setAttribute("message", "Incorrect duration or start date");
+//        }
         return path;
     }
 }

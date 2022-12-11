@@ -31,11 +31,13 @@ public class AuthAction implements Action {
                 case STUDENT -> path = STUDENT_PAGE;
             }
         } catch (ValidateException e) {
+            req.setAttribute("login", login);
+            req.setAttribute("password", password);
             path = AUTH_PAGE;
-            req.setAttribute("error", e.getMessage());
+            req.setAttribute("message", e.getMessage());
         } catch (ServiceException e) {
             path = ERROR_PAGE;
-            req.setAttribute("error", e.getMessage());
+            req.setAttribute("message", e.getMessage());
         }
         return path;
     }

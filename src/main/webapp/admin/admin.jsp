@@ -20,6 +20,13 @@
 
 <jsp:include page="../parts/admin_header.jsp"/>
 
+<c:if test="${message != null}">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>${message}!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
@@ -70,7 +77,6 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             All courses in facultative
         </caption>
-        ${message}
         <thead>
         <th scope="col">Title</th>
         <th scope="col">Duration</th>
@@ -101,11 +107,40 @@
                 <a href="controller?action=show_course_form&course_id=${course.id}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">The confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Sure you want to delete the course?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <form method="post" action="controller">
+                                    <input type="hidden" name="action" value="delete_course">
+                                    <input type="hidden" name="course_id" value="${course_id}">
+                                    <button type="submit" class="btn btn-primary mt-4 mb-4">Confirm</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
             </tbody>
         </c:forEach>
     </table>
 </div>
+
+
 <jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

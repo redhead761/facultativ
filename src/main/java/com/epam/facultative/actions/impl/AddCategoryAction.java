@@ -28,6 +28,8 @@ public class AddCategoryAction implements Action {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());
         } catch (ValidateException e) {
+            req.setAttribute("title", title);
+            req.setAttribute("description", description);
             path = CATEGORY_FORM_PAGE;
             req.setAttribute("message", e.getMessage());
         }

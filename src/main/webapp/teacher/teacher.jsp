@@ -20,7 +20,14 @@
 
 <jsp:include page="../parts/teacher_header.jsp"/>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
+<c:if test="${message != null}">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>${message}!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
+<div class="table-responsive col-lg-10 mx-auto p-4 align-content-end">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
@@ -68,7 +75,6 @@
             </ul>
             All courses in facultative
         </caption>
-        ${message}
         <thead>
         <th scope="col">Title</th>
         <th scope="col">Duration</th>
@@ -77,7 +83,6 @@
         <th scope="col">Category</th>
         <th scope="col">Status</th>
         <th scope="col">Teacher</th>
-        <th scope="col">Action</th>
         </thead>
         <c:forEach var="course" items="${courses}">
             <tbody>
@@ -87,19 +92,7 @@
             <td><c:out value="${course.amountStudents}"/></td>
             <td><c:out value="${course.getCategory().title}"/></td>
             <td><c:out value="${course.getStatus()}"/></td>
-            <td>
-                <c:if test="${course.getTeacher() != null}">
-                    <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
-                </c:if>
-                <c:if test="${course.getTeacher() == null}">
-                    <a href="controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
-                </c:if>
-            </td>
-            <td>
-                <a href="controller?action=show_course_form&course_id=${course.id}">Edit</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
-            </td>
+            <td><c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/></td>
             </tbody>
         </c:forEach>
     </table>

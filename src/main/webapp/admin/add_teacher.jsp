@@ -19,7 +19,7 @@
 
 
 <%@ include file="../parts/admin_header.jsp" %>
-<a class="btn btn-primary" href="controller?action=manage_teachers" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_teachers" role="button">Back</a>
 <div align="center">
     <h2>Add teacher</h2>
 

@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/admin_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=manage_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
@@ -35,7 +35,7 @@
             <td>${teacher.surname}</td>
             <td>${teacher.email}</td>
             <td>
-                <a href="controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>&course_id=<c:out value='${course.id}'/>">Assigned</a>
             </td>
             </tbody>
         </c:forEach>

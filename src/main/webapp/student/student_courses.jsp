@@ -19,7 +19,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/student_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=show_student_cabinet" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_student_cabinet" role="button">Back</a>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">

@@ -26,12 +26,12 @@
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-md-flex p-3 mb-2 justify-content-md-end">
-                <a class="btn btn-primary" href="controller?action=manage_courses" role="button">Manage courses</a>
-                <a class="btn btn-primary" href="controller?action=manage_categories" role="button">Manage
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Manage courses</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_categories" role="button">Manage
                     categories</a>
-                <a class="btn btn-primary" href="controller?action=manage_teachers" role="button">Manage teachers</a>
-                <a class="btn btn-primary" href="controller?action=manage_students" role="button">Manage students</a>
-                <a class="btn btn-primary" href="controller?action=log_out" role="button">Log out</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_teachers" role="button">Manage teachers</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_students" role="button">Manage students</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=log_out" role="button">Log out</a>
             </div>
         </div>
     </div>

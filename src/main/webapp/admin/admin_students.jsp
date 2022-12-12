@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/admin_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=manage_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
 
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
@@ -37,9 +37,9 @@
             <td>${student.surname}</td>
             <td>${student.isBlock()}</td>
             <td>
-                <a href="controller?action=block&student_id=${student.id}">Block</a>
+                <a href="${pageContext.request.contextPath}/controller?action=block&student_id=${student.id}">Block</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="controller?action=unblock&student_id=${student.id}">Unblock</a>
+                <a href="${pageContext.request.contextPath}/controller?action=unblock&student_id=${student.id}">Unblock</a>
             </td>
             </tbody>
         </c:forEach>

@@ -26,8 +26,8 @@
     </div>
     <div class="col">
       <div class="d-grid gap-2 d-md-flex p-3 mb-2 justify-content-md-end">
-        <a class="btn btn-primary" href="controller?action=show_teacher_courses&user_id=${user.id}" role="button">My courses</a>
-        <a class="btn btn-primary" href="controller?action=log_out" role="button">Log out</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&user_id=${user.id}" role="button">My courses</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=log_out" role="button">Log out</a>
       </div>
     </div>
   </div>

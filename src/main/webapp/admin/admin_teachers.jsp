@@ -17,11 +17,11 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/admin_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=manage_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-primary" href="controller?action=show_add_teacher_form" role="button">Add teacher</a>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_add_teacher_form" role="button">Add teacher</a>
             All teachers in facultative
         </caption>
         <thead>

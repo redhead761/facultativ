@@ -17,12 +17,12 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/admin_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=manage_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-primary" href="controller?action=show_category_form" role="button">Add category</a>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_category_form" role="button">Add category</a>
             All categories in facultative
         </caption>
         <thead>
@@ -35,9 +35,9 @@
             <td>${category.title}</td>
             <td>${category.description}</td>
             <td>
-                <a href="controller?action=show_category_form&category_id=${category.id}">Edit</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_category_form&category_id=${category.id}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="controller?action=delete_category&category_id=${category.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/controller?action=delete_category&category_id=${category.id}">Delete</a>
             </td>
             </tbody>
         </c:forEach>

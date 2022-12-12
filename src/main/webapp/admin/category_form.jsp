@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 <%@ include file="../parts/admin_header.jsp" %>
-<a class="btn btn-primary" href="controller?action=manage_categories" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_categories" role="button">Back</a>
 <div align="center">
 
     <h2>Please fill in the fields</h2>

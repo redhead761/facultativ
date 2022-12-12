@@ -17,7 +17,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/teacher_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=show_teacher_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses" role="button">Back</a>
 
 <div align="center">
     ${message}

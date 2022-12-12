@@ -11,6 +11,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 public class ManageCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
+        System.out.println("In mange courses action");
         String path;
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         try {

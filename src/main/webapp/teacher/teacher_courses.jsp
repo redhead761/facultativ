@@ -18,7 +18,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/teacher_header.jsp"/>
-<a class="btn btn-primary" href="controller?action=all_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=all_courses" role="button">Back</a>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
@@ -43,7 +43,7 @@
             <td><c:out value="${course.getCategory().title}"/></td>
             <td><c:out value="${course.getStatus()}"/></td>
             <td>
-                <a href="controller?action=show_grade_list&course_id=${course.id}">Grade</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_grade_list&course_id=${course.id}">Grade</a>
             </td>
             </tbody>
         </c:forEach>

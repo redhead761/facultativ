@@ -16,19 +16,20 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String address;
-        String actionName = req.getParameter("action");
-        if (actionName == null) {
-            address = "auth.jsp";
-        } else {
-            Action action = ACTION_FACTORY.getAction(actionName);
-            address = action.execute(req);
-        }
-        req.getRequestDispatcher(address).forward(req, resp);
+        System.out.println("In do get");
+        req.getRequestDispatcher(process(req)).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        System.out.println("In do post");
+        resp.sendRedirect(process(req));
+    }
+
+    private String process(HttpServletRequest req) {
+        System.out.println("In process");
+        String actionName = req.getParameter("action");
+        Action action = ACTION_FACTORY.getAction(actionName);
+        return action.execute(req);
     }
 }

@@ -27,14 +27,14 @@
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-md-flex p-3 mb-2 justify-content-md-end">
-                <a class="btn btn-primary" href="controller?action=show_student_courses" role="button">My courses</a>
-                <a class="btn btn-primary" href="controller?action=show_coming_soon_courses" role="button">My coming
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_student_courses" role="button">My courses</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses" role="button">My coming
                     soon</a>
-                <a class="btn btn-primary" href="controller?action=show_progress_courses" role="button">My progress
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_progress_courses" role="button">My progress
                     </a>
-                <a class="btn btn-primary" href="controller?action=show_completed_courses" role="button">My complete
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_completed_courses" role="button">My complete
                     </a>
-                <a class="btn btn-primary" href="controller?action=log_out" role="button">Log out</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=log_out" role="button">Log out</a>
             </div>
         </div>
     </div>

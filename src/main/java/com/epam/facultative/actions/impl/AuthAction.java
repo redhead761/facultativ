@@ -14,6 +14,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 public class AuthAction implements Action {
     @Override
     public String execute(HttpServletRequest req) {
+        System.out.println("In auth action");
         String path = null;
         String login = req.getParameter("login");
         String password = req.getParameter("password");
@@ -22,9 +23,10 @@ public class AuthAction implements Action {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("statuses", Status.values());
-            req.setAttribute("courses", generalService.getAllCourses());
-            req.setAttribute("categories", generalService.getAllCategories());
-            req.setAttribute("teachers", generalService.getAllTeachers());
+            req.getSession().setAttribute("action", "auth");
+            req.getSession().setAttribute("courses", generalService.getAllCourses());
+            req.getSession().setAttribute("categories", generalService.getAllCategories());
+            req.getSession().setAttribute("teachers", generalService.getAllTeachers());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PAGE;
                 case TEACHER -> path = TEACHER_PAGE;

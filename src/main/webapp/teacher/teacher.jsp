@@ -37,14 +37,14 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=teacher&sort_type=alphabet">Alphabetical</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=teacher&sort_type=alphabet">Alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=teacher&sort_type=reverse alphabet">Reverse
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=teacher&sort_type=reverse alphabet">Reverse
                     alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=teacher&sort_type=duration">Duration</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=teacher&sort_type=duration">Duration</a></li>
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=teacher&sort_type=amount students">Amount
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=teacher&sort_type=amount students">Amount
                     students</a></li>
             </ul>
 
@@ -56,7 +56,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="teacher" items="${teachers}">
                     <li><a class="dropdown-item"
-                           href="controller?action=select_courses&cabinet_type=teacher&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=teacher&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -69,7 +69,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="category" items="${categories}">
                     <li><a class="dropdown-item"
-                           href="controller?action=select_courses&cabinet_type=teacher&type=by_category&category_id=${category.id}">${category.title}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=teacher&type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
                 </c:forEach>
             </ul>

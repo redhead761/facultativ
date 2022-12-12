@@ -37,14 +37,14 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=admin&sort_type=alphabet">Alphabetical</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=alphabet">Alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=admin&sort_type=reverse alphabet">Reverse
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=reverse alphabet">Reverse
                     alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=admin&sort_type=duration">Duration</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=duration">Duration</a></li>
                 <li><a class="dropdown-item"
-                       href="controller?action=sort&cabinet_type=admin&sort_type=amount students">Amount
+                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=amount students">Amount
                     students</a></li>
             </ul>
 
@@ -56,7 +56,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="teacher" items="${teachers}">
                     <li><a class="dropdown-item"
-                           href="controller?action=select_courses&cabinet_type=admin&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -69,11 +69,11 @@
             <ul class="dropdown-menu">
                 <c:forEach var="category" items="${categories}">
                     <li><a class="dropdown-item"
-                           href="controller?action=select_courses&cabinet_type=admin&type=by_category&category_id=${category.id}">${category.title}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
                 </c:forEach>
             </ul>
-            <a class="btn btn-primary" href="controller?action=show_course_form" role="button">Add course</a>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_course_form" role="button">Add course</a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             All courses in facultative
         </caption>
@@ -100,13 +100,13 @@
                     <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
                 </c:if>
                 <c:if test="${course.getTeacher() == null}">
-                    <a href="controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                    <a href="${pageContext.request.contextPath}/controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
                 </c:if>
             </td>
             <td>
-                <a href="controller?action=show_course_form&course_id=${course.id}">Edit</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${course.id}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
+                <a href="${pageContext.request.contextPath}/controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
 
 <%--                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">--%>
 <%--                    Delete--%>

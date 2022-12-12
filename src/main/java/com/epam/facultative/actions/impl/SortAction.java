@@ -5,15 +5,18 @@ import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.epam.facultative.actions.impl.Constants.*;
 
 public class SortAction implements Action {
     @Override
-    public String execute(HttpServletRequest req) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String path = null;
         String typeSort = req.getParameter("sort_type");
         String typeCabinet = req.getParameter("cabinet_type");

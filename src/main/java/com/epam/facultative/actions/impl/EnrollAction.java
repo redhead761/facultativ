@@ -6,13 +6,17 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 import static com.epam.facultative.actions.impl.Constants.*;
 
 public class EnrollAction implements Action {
     @Override
-    public String execute(HttpServletRequest req) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         StudentService studentService = ServiceFactory.getInstance().getStudentService();

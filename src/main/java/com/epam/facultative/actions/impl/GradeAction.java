@@ -4,13 +4,17 @@ import com.epam.facultative.actions.Action;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.TeacherService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 import static com.epam.facultative.actions.impl.Constants.*;
 
 public class GradeAction implements Action {
     @Override
-    public String execute(HttpServletRequest req) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String path;
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int studentId = Integer.parseInt(req.getParameter("student_id"));

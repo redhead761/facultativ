@@ -7,13 +7,17 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 import static com.epam.facultative.actions.impl.Constants.*;
 
 public class AuthAction implements Action {
     @Override
-    public String execute(HttpServletRequest req) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In auth action");
         String path = null;
         String login = req.getParameter("login");
@@ -33,10 +37,10 @@ public class AuthAction implements Action {
                 case STUDENT -> path = STUDENT_PAGE;
             }
         } catch (ValidateException e) {
-            req.setAttribute("login", login);
-            req.setAttribute("password", password);
+            req.getSession().setAttribute("login", login);
             path = AUTH_PAGE;
             req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher(path).forward(req, resp);
         } catch (ServiceException e) {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());

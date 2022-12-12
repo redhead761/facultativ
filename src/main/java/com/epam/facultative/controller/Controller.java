@@ -17,19 +17,19 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In do get");
-        req.getRequestDispatcher(process(req)).forward(req, resp);
+        req.getRequestDispatcher(process(req,resp)).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In do post");
-        resp.sendRedirect(process(req));
+        resp.sendRedirect(process(req,resp));
     }
 
-    private String process(HttpServletRequest req) {
+    private String process(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In process");
         String actionName = req.getParameter("action");
         Action action = ACTION_FACTORY.getAction(actionName);
-        return action.execute(req);
+        return action.execute(req,resp);
     }
 }

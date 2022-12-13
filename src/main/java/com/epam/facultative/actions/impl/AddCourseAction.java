@@ -19,7 +19,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 
 public class AddCourseAction implements Action {
     @Override
-    public String execute(HttpServletRequest req,HttpServletResponse resp) {
+    public String execute(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
         String path;
 
         String title = req.getParameter("title");
@@ -48,11 +48,8 @@ public class AddCourseAction implements Action {
             req.setAttribute("description", description);
             path = COURSE_FORM_PAGE;
             req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher(path).forward(req,resp);
         }
-//        catch (RuntimeException e) {
-//            path = COURSE_FORM_PAGE;
-//            req.setAttribute("message", "Incorrect duration or start date");
-//        }
         return path;
     }
 }

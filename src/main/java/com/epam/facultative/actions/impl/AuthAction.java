@@ -27,7 +27,6 @@ public class AuthAction implements Action {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("statuses", Status.values());
-            req.getSession().setAttribute("action", "auth");
             req.getSession().setAttribute("courses", generalService.getAllCourses());
             req.getSession().setAttribute("categories", generalService.getAllCategories());
             req.getSession().setAttribute("teachers", generalService.getAllTeachers());
@@ -37,10 +36,10 @@ public class AuthAction implements Action {
                 case STUDENT -> path = STUDENT_PAGE;
             }
         } catch (ValidateException e) {
-            req.getSession().setAttribute("login", login);
+            req.setAttribute("login", login);
             path = AUTH_PAGE;
             req.setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(path).forward(req, resp);
+            req.getRequestDispatcher(path).forward(req,resp);
         } catch (ServiceException e) {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());

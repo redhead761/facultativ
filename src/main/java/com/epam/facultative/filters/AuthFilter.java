@@ -21,7 +21,7 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
-        String action = (String) request.getSession().getAttribute("action");
+        String action = (String) request.getAttribute("action");
         System.out.println("Action = " + action);
         if (user == null && (action == null || action.equals("auth") || action.equals("register"))) {
             System.out.println("In first");

@@ -16,7 +16,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 
 public class UpdateCategoryAction implements Action {
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path;
         int id = Integer.parseInt(req.getParameter("category_id"));
         String title = req.getParameter("title");
@@ -33,6 +33,7 @@ public class UpdateCategoryAction implements Action {
         } catch (ValidateException e) {
             path = MANAGE_CATEGORIES_ACTION;
             req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher(path).forward(req,resp);
         }
         return path;
     }

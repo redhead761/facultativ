@@ -20,7 +20,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 
 public class UpdateCourseAction implements Action {
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path;
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
@@ -50,6 +50,7 @@ public class UpdateCourseAction implements Action {
         } catch (RuntimeException e) {
             path = COURSE_FORM_ACTION;
             req.setAttribute("message", "Incorrect duration or start date");
+            req.getRequestDispatcher(path).forward(req,resp);
         }
         return path;
     }

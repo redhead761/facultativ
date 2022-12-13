@@ -19,7 +19,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 
 public class RegisterAction implements Action {
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = null;
         String type = req.getParameter("type");
         String login = req.getParameter("login");
@@ -51,6 +51,7 @@ public class RegisterAction implements Action {
                 req.setAttribute("email", email);
                 path = REGISTER_PAGE;
                 req.setAttribute("message", e.getMessage());
+                req.getRequestDispatcher(path).forward(req,resp);
             }
         }
         if (type.equals("teacher")) {

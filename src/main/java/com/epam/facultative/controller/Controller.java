@@ -24,6 +24,7 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In do post");
         resp.sendRedirect(process(req,resp));
+        req.getSession().removeAttribute("action");
     }
 
     private String process(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {

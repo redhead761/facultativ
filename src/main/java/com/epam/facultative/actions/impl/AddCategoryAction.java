@@ -16,7 +16,7 @@ import static com.epam.facultative.actions.impl.Constants.*;
 
 public class AddCategoryAction implements Action {
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path;
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         String title = req.getParameter("title");
@@ -31,6 +31,7 @@ public class AddCategoryAction implements Action {
         } catch (ServiceException e) {
             path = ERROR_PAGE;
             req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher(path).forward(req,resp);
         } catch (ValidateException e) {
             req.setAttribute("title", title);
             req.setAttribute("description", description);

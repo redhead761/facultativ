@@ -35,7 +35,7 @@
         <th scope="col"><fmt:message key="surname"/></th>
         <th scope="col"><fmt:message key="email"/></th>
         </thead>
-        <c:forEach var="teacher" items="${requestScope.teachers}">
+        <c:forEach var="teacher" items="${sessionScope.teachers}">
             <tbody>
             <td>${teacher.name}</td>
             <td>${teacher.surname}</td>

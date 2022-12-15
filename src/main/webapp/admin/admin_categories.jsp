@@ -36,7 +36,7 @@
         <th scope="col"><fmt:message key="admin.table.category.description"/></th>
         <th scope="col"><fmt:message key="action"/></th>
         </thead>
-        <c:forEach var="category" items="${categories}">
+        <c:forEach var="category" items="${sessionScope.categories}">
             <tbody>
             <td>${category.title}</td>
             <td>${category.description}</td>

@@ -1,9 +1,11 @@
 package com.epam.facultative.actions;
 
-import com.epam.facultative.actions.impl.*;
+import com.epam.facultative.actions.impl.admin.*;
+import com.epam.facultative.actions.impl.general.*;
+import com.epam.facultative.actions.impl.student.*;
+import com.epam.facultative.actions.impl.teacher.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ActionFactory {
     private static final ActionFactory ACTION_FACTORY = new ActionFactory();
@@ -43,7 +45,6 @@ public class ActionFactory {
         ACTION_MAP.put("all_courses", new AllCoursesAction());
 
         ACTION_MAP.put("log_out", new LogOutAction());
-        ACTION_MAP.put("student", new StudentAction());
         ACTION_MAP.put("register", new RegisterAction());
 
         ACTION_MAP.put("enroll", new EnrollAction());

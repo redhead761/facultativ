@@ -2,6 +2,7 @@ package com.epam.facultative.controller;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionFactory;
+import com.epam.facultative.exception.ServiceException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -25,13 +26,17 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In do post");
         resp.sendRedirect(process(req,resp));
-        req.getSession().removeAttribute("action");
+//        req.getSession().removeAttribute("action");
     }
 
     private String process(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("In process");
         String actionName = req.getParameter("action");
         Action action = ACTION_FACTORY.getAction(actionName);
-        return action.execute(req,resp);
+        try {
+            return action.execute(req,resp);
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

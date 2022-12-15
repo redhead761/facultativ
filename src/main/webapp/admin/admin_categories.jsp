@@ -1,5 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${sessionScope.language}" scope="session"/>
+<fmt:setBundle basename="resources"/>
 
 <html>
 <head>
@@ -17,18 +23,18 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/admin_header.jsp"/>
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
+<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button"><fmt:message key="back"/></a>
 
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_category_form" role="button">Add category</a>
-            All categories in facultative
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_category_form" role="button"><fmt:message key="admin.add.category"/></a>
+            <fmt:message key="admin.table.category.name"/>
         </caption>
         <thead>
-        <th scope="col">Title</th>
-        <th scope="col">Description</th>
-        <th scope="col">Action</th>
+        <th scope="col"><fmt:message key="admin.table.category.title"/></th>
+        <th scope="col"><fmt:message key="admin.table.category.description"/></th>
+        <th scope="col"><fmt:message key="action"/></th>
         </thead>
         <c:forEach var="category" items="${categories}">
             <tbody>

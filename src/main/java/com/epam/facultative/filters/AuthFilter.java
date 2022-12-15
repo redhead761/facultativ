@@ -28,6 +28,7 @@ public class AuthFilter implements Filter {
 //        Locale language = (Locale) request.getSession().getAttribute("language");
         String locale = (String) request.getAttribute("locale");
 //        System.out.println("Language = " + language);
+        System.out.println(request.getDispatcherType());
         System.out.println("Action = " + action);
 //        if (language != null) {
 //            System.out.println("In lang");

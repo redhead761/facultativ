@@ -26,13 +26,6 @@
 
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<div class="col">
-    <div class="d-grid gap-2 d-md-flex p-3 mb-2 justify-content-md-end" id="language" name="language">
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/?language=en" role="button">En</a>
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/?language=ua" role="button">UA</a>
-    </div>
-</div>
-
 <c:if test="${message != null}">
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         <strong>${message}!</strong>
@@ -92,6 +85,8 @@
                role="button"><fmt:message key="admin.add.course"/></a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <fmt:message key="admin.table.course.name"/>
+
+
         </caption>
         <thead>
         <th scope="col"><fmt:message key="admin.table.course.title"/></th>
@@ -127,6 +122,61 @@
             </tbody>
         </c:forEach>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <c:if test="${sessionScope.currentPage == 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.currentPage > 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage-1}">Previous</a>
+                </li>
+            </c:if>
+
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">${sessionScope.currentPage}</span>
+            </li>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">${sessionScope.currentPage+1}</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
+                <li class="page-item disabled">
+                    <span class="page-link">${sessionScope.currentPage+2}</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+1}">Next</a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

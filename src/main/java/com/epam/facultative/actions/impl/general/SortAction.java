@@ -21,7 +21,7 @@ public class SortAction implements Action {
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         switch (typeSort) {
-            case "alphabet" -> courses = generalService.sortCoursesByAlphabet();
+            case "alphabet" -> courses = generalService.sortCoursesByAlphabet(1,3);
             case "reverse alphabet" -> courses = generalService.sortCoursesByAlphabetReverse();
             case "duration" -> courses = generalService.sortCoursesByDuration();
             case "amount students" -> courses = generalService.sortCoursesBuAmountOfStudents();

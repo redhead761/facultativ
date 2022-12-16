@@ -14,6 +14,8 @@ import static com.epam.facultative.daos.impl.Fields.*;
 
 public class MySqlCourseDao implements CourseDao {
 
+    private int noOfRecords;
+
     @Override
     public List<Course> getAll() throws DAOException {
         List<Course> courses = new ArrayList<>();
@@ -213,6 +215,62 @@ public class MySqlCourseDao implements CourseDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    @Override
+    public List<Course> getAllPagination(int offset, int numberOfRows) throws DAOException {
+        String query = "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
+                " category_id,status.title AS course_status, category.title AS course_category," +
+                " category.description AS category_description " +
+                "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
+                "LIMIT ?,?";
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            int k = 0;
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                courses.add(mapRow(rs));
+            }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return courses;
+    }
+
+    @Override
+    public int getNoOfRecords() {
+        return noOfRecords;
+    }
+
+    @Override
+    public List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
+        String query = "SELECT course.id, course.title,duration,start_date,amount_students,course.description," +
+                " category_id,status.title AS course_status, category.title AS course_category," +
+                " category.description AS category_description " +
+                "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
+                "ORDER BY " + sortBy + " LIMIT ?,?";
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            int k = 0;
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                courses.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return courses;
     }
 
     private Course mapRow(ResultSet rs) throws DAOException {

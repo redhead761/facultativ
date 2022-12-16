@@ -12,9 +12,9 @@ public interface GeneralService {
 
     UserDTO authorization(String login, String password) throws ServiceException, ValidateException;
 
-    List<CourseDTO> getAllCourses() throws ServiceException;
+    List<CourseDTO> getAllCourses(int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> sortCoursesByAlphabet() throws ServiceException;
+    List<CourseDTO> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException;
 
     List<CourseDTO> sortCoursesByAlphabetReverse() throws ServiceException;
 
@@ -31,4 +31,6 @@ public interface GeneralService {
     List<Category> getAllCategories() throws ServiceException;
 
     List<UserDTO> getAllTeachers() throws ServiceException;
+
+    public int getNoOfRecords();
 }

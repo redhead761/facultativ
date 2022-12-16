@@ -56,6 +56,8 @@
 
     </form>
 
+
+
     <fmt:message key="auth.foot.message"/>
     <a href="register.jsp"> Register </a>
 </div>

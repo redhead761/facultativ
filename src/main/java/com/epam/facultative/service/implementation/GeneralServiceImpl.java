@@ -47,20 +47,19 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> getAllCourses() throws ServiceException {
+    public List<CourseDTO> getAllCourses(int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getAll());
+            return prepareCourses(courseDao.getAllPagination(offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByAlphabet() throws ServiceException {
+    public List<CourseDTO> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getAll()).stream()
-                    .sorted(Comparator.comparing(CourseDTO::getTitle))
-                    .collect(Collectors.toList());
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "title");
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -154,6 +153,12 @@ public class GeneralServiceImpl implements GeneralService {
         return usersDTO;
     }
 
+    @Override
+    public int getNoOfRecords() {
+        return courseDao.getNoOfRecords();
+    }
+
+
     private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         try {
@@ -173,4 +178,5 @@ public class GeneralServiceImpl implements GeneralService {
         }
         return coursesDTO;
     }
+
 }

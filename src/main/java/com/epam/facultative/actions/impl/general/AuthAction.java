@@ -15,6 +15,10 @@ import static com.epam.facultative.actions.Constants.*;
 public class AuthAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        int page = 1;
+        int recordsPerPage = 5;
+
+
         System.out.println("In auth action");
         String path = null;
         String login = req.getParameter("login");
@@ -24,7 +28,13 @@ public class AuthAction implements Action {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("statuses", Status.values());
-            req.getSession().setAttribute("courses", generalService.getAllCourses());
+            req.getSession().setAttribute("courses", generalService.getAllCourses(0, recordsPerPage));
+
+            int noOfRecords = generalService.getNoOfRecords();
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            req.getSession().setAttribute("noOfCoursesPages", noOfPages);
+            req.getSession().setAttribute("currentPage", page);
+
             req.getSession().setAttribute("categories", generalService.getAllCategories());
             req.getSession().setAttribute("teachers", generalService.getAllTeachers());
             switch (user.getRole()) {

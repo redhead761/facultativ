@@ -14,7 +14,7 @@ public class DeleteCourseAction implements Action {
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         adminService.deleteCourse(id);
-        req.getSession().setAttribute("courses", generalService.getAllCourses());
+        req.getSession().setAttribute("courses", generalService.getAllCourses(0,3));
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         req.getSession().setAttribute("message", "Successful");

@@ -13,7 +13,7 @@ public class ShowStudentCabinetAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String path;
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-        req.getSession().setAttribute("courses", generalService.getAllCourses());
+        req.getSession().setAttribute("courses", generalService.getAllCourses(0,3));
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         path = STUDENT_PAGE;

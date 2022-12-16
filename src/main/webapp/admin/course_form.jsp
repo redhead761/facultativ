@@ -30,13 +30,13 @@
 
 
     <c:if test="${course_id != null}">
-    <form action="controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="action" value="update_course"/>
         <input type="hidden" name="course_id" value="${course_id}"/>
         </c:if>
 
         <c:if test="${course_id == null}">
-        <form action="controller" method="post">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="action" value="add_course"/>
             </c:if>
 

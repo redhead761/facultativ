@@ -31,7 +31,7 @@ public class RegisterAction implements Action {
                     throw new ValidateException("Wrong repeat password");
                 }
                 GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-                req.getSession().setAttribute("courses", generalService.getAllCourses());
+                req.getSession().setAttribute("courses", generalService.getAllCourses(0, 3));
                 studentService.addStudent(newUser);
                 UserDTO user = generalService.authorization(login, password);
                 req.getSession().setAttribute("user", user);

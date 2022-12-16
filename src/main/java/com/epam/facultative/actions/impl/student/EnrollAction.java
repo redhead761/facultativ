@@ -15,7 +15,7 @@ public class EnrollAction implements Action {
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         StudentService studentService = ServiceFactory.getInstance().getStudentService();
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-        req.getSession().setAttribute("courses", generalService.getAllCourses());
+        req.getSession().setAttribute("courses", generalService.getAllCourses(0,3));
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         studentService.enroll(courseId, user.getId());

@@ -20,4 +20,10 @@ public interface CourseDao extends Dao<Course> {
     void updateUsersCourse(int courseId, int userId, int grade) throws DAOException;
 
     void addNumberStudentsToCourse(int id) throws DAOException;
+
+    public List<Course> getAllPagination(int offset, int numberOfRows) throws DAOException;
+
+    public int getNoOfRecords();
+
+    public List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException;
 }

@@ -11,7 +11,7 @@ public class AllCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-        req.getSession().setAttribute("courses", generalService.getAllCourses());
+        req.getSession().setAttribute("courses", generalService.getAllCourses(0,3));
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         return TEACHER_PAGE;

@@ -13,7 +13,7 @@ public class ShowStudentCoursesAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         StudentService studentService = ServiceFactory.getInstance().getStudentService();
-        req.getSession().setAttribute("courses", studentService.getCoursesByStudent(user.getId()));
+        req.getSession().setAttribute("courses", studentService.getCoursesByStudent(user.getId(), 1, 5));
         return STUDENT_COURSES_PAGE;
     }
 }

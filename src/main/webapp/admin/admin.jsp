@@ -64,7 +64,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="teacher" items="${teachers}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -77,7 +77,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="category" items="${categories}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&type=by_category&category_id=${category.id}">${category.title}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&select_type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -98,7 +98,7 @@
         <th scope="col"><fmt:message key="admin.table.course.teacher"/></th>
         <th scope="col"><fmt:message key="action"/></th>
         </thead>
-        <c:forEach var="course" items="${courses}">
+        <c:forEach var="course" items="${sessionScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>

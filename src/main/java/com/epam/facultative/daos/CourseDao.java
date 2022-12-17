@@ -7,9 +7,9 @@ import com.epam.facultative.exception.DAOException;
 import java.util.List;
 
 public interface CourseDao extends Dao<Course> {
-    List<Course> getByUser(int userId) throws DAOException;
+    List<Course> getByUser(int userId, int offset, int numberOfRows) throws DAOException;
 
-    List<Course> getByCategory(int categoryId) throws DAOException;
+    List<Course> getByCategory(int categoryId, int offset, int numberOfRows) throws DAOException;
 
     List<Course> getByStatus(int id, Status status) throws DAOException;
 

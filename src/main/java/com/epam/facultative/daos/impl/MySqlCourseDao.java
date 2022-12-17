@@ -116,15 +116,23 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public List<Course> getByUser(int userId) throws DAOException {
+    public List<Course> getByUser(int userId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_USER)) {
-            stmt.setInt(1, userId);
+            int k = 0;
+            stmt.setInt(++k, userId);
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -132,15 +140,23 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public List<Course> getByCategory(int categoryId) throws DAOException {
+    public List<Course> getByCategory(int categoryId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
-            stmt.setInt(1, categoryId);
+            int k = 0;
+            stmt.setInt(++k, categoryId);
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -252,7 +268,7 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
-        String query = "SELECT course.id, course.title,duration,start_date,amount_students,course.description," +
+        String query = "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
                 " category_id,status.title AS course_status, category.title AS course_category," +
                 " category.description AS category_description " +
                 "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
@@ -267,6 +283,11 @@ public class MySqlCourseDao implements CourseDao {
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

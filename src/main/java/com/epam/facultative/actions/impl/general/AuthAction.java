@@ -27,6 +27,7 @@ public class AuthAction implements Action {
         try {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
+            req.getSession().setAttribute("role", user.getRole());
             req.getSession().setAttribute("statuses", Status.values());
             req.getSession().setAttribute("courses", generalService.getAllCourses(0, recordsPerPage));
 

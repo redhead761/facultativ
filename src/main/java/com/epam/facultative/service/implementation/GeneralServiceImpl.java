@@ -66,51 +66,48 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByAlphabetReverse() throws ServiceException {
+    public List<CourseDTO> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getAll()).stream()
-                    .sorted((o1, o2) -> o2.getTitle().compareTo(o1.getTitle()))
-                    .collect(Collectors.toList());
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "title DESC");
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByDuration() throws ServiceException {
+    public List<CourseDTO> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getAll()).stream()
-                    .sorted(Comparator.comparing(CourseDTO::getDuration))
-                    .collect(Collectors.toList());
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "duration");
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesBuAmountOfStudents() throws ServiceException {
+    public List<CourseDTO> sortCoursesBuAmountOfStudents(int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getAll()).stream()
-                    .sorted(Comparator.comparing(CourseDTO::getAmountStudents))
-                    .collect(Collectors.toList());
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "amount_students");
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> getCoursesByCategory(int categoryId) throws ServiceException {
+    public List<CourseDTO> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByCategory(categoryId));
+            return prepareCourses(courseDao.getByCategory(categoryId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> getCoursesByTeacher(int teacherId) throws ServiceException {
+    public List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByUser(teacherId));
+            return prepareCourses(courseDao.getByUser(teacherId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

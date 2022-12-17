@@ -16,15 +16,15 @@ public interface GeneralService {
 
     List<CourseDTO> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> sortCoursesByAlphabetReverse() throws ServiceException;
+    List<CourseDTO> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> sortCoursesByDuration() throws ServiceException;
+    List<CourseDTO> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> sortCoursesBuAmountOfStudents() throws ServiceException;
+    List<CourseDTO> sortCoursesBuAmountOfStudents(int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> getCoursesByCategory(int categoryId) throws ServiceException;
+    List<CourseDTO> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> getCoursesByTeacher(int teacherId) throws ServiceException;
+    List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException;
 
     List<UserDTO> getAllStudents() throws ServiceException;
 

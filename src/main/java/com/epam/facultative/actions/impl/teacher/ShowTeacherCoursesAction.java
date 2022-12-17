@@ -15,9 +15,9 @@ public class ShowTeacherCoursesAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String path;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-                TeacherService teacherService = ServiceFactory.getInstance().getTeacherService();
+        TeacherService teacherService = ServiceFactory.getInstance().getTeacherService();
         try {
-            req.setAttribute("courses", teacherService.getTeacherCourses(user.getId()));
+            req.setAttribute("courses", teacherService.getTeacherCourses(user.getId(), 1, 5));
             path = TEACHER_COURSES_PAGE;
         } catch (ServiceException e) {
             path = ERROR_PAGE;

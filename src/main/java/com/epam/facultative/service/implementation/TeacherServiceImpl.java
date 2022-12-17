@@ -52,11 +52,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<CourseDTO> getTeacherCourses(int teacherId) throws ServiceException {
+    public List<CourseDTO> getTeacherCourses(int teacherId, int offset, int numberOfRows) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         List<Course> courses;
+
         try {
-            courses = courseDao.getByUser(teacherId);
+            courses = courseDao.getByUser(teacherId, offset, numberOfRows);
             for (Course course : courses) {
                 coursesDTO.add(converter.courseToDTO(course, null));
             }

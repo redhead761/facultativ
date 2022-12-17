@@ -102,19 +102,19 @@ class MySqlCourseDaoTest {
         assertThrows(RuntimeException.class, () -> courseDao.add(testCourse));
     }
 
-    @Test
-    void addUserToCourseAndGetByUser() throws DAOException {
-        fillDB();
-        List<Course> course = courseDao.getByUser(testUser.getId());
-        assertEquals(testCourse, course.get(0));
-    }
+//    @Test
+//    void addUserToCourseAndGetByUser() throws DAOException {
+//        fillDB();
+//        List<Course> course = courseDao.getByUser(testUser.getId());
+//        assertEquals(testCourse, course.get(0));
+//    }
 
-    @Test
-    void getByCategory() throws DAOException {
-        fillDB();
-        List<Course> courses = courseDao.getByCategory(testCategory.getId());
-        assertEquals(testCourse, courses.get(0));
-    }
+//    @Test
+//    void getByCategory() throws DAOException {
+//        fillDB();
+//        List<Course> courses = courseDao.getByCategory(testCategory.getId());
+//        assertEquals(testCourse, courses.get(0));
+//    }
 
     @Test
     void updateUsersCourseAndGetGrade() throws DAOException {

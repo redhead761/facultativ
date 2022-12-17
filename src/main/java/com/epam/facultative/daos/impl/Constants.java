@@ -32,20 +32,20 @@ class Constants {
     static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,0,?,?,?)";
     static final String DELETE_COURSE = "DELETE FROM course WHERE id=?";
     static final String SELECT_COURSE_BY_CATEGORY =
-            "SELECT course.id, course.title, course.duration , course.start_date, course.amount_students, course.description, course.category_id, " +
+            "SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration , course.start_date, course.amount_students, course.description, course.category_id, " +
                     "status.title AS course_status, category.title AS course_category, category.description AS category_description " +
                     "FROM course JOIN category ON course.category_id = category.id " +
-                    "JOIN status ON course.status_id = status.id WHERE course.category_id=?";
+                    "JOIN status ON course.status_id = status.id WHERE course.category_id=? LIMIT ?,?";
     static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
     static final String UPDATE_USERS_COURSE = "UPDATE users_course SET grade=? WHERE course_id=? AND user_id=?";
     static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?, " +
             "start_date=?,amount_students=?, description=?, category_id=?, status_id=? WHERE id=?";
     static final String SELECT_COURSES_USER =
-            "SELECT course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
+            "SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
                     " status.title AS course_status, category.title AS course_category, category.description AS category_description " +
                     "FROM course JOIN category ON course.category_id = category.id " +
                     "JOIN status ON course.status_id = status.id " +
-                    "JOIN users_course ON course.id = users_course.course_id WHERE user_id=?";
+                    "JOIN users_course ON course.id = users_course.course_id WHERE user_id=? LIMIT ?,?";
     static final String ADD_NUMBER_STUDENTS_TO_COURSE =
             "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
 

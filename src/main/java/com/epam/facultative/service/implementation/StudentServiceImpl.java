@@ -25,9 +25,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<CourseDTO> getCoursesByStudent(int studentId) throws ServiceException {
+    public List<CourseDTO> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByUser(studentId));
+            return prepareCourses(courseDao.getByUser(studentId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

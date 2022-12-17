@@ -10,7 +10,7 @@ import com.epam.facultative.exception.ValidateException;
 import java.util.List;
 
 public interface StudentService {
-    List<CourseDTO> getCoursesByStudent(int studentId) throws ServiceException;
+    List<CourseDTO> getCoursesByStudent(int studentId, int offset,int numberOfRows) throws ServiceException;
 
     List<CourseDTO> getCoursesComingSoon(int studentId) throws ServiceException;
 

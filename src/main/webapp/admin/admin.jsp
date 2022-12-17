@@ -43,16 +43,16 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=alphabet">Alphabetical</a>
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=alphabet">Alphabetical</a>
                 </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=reverse alphabet">Reverse
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=reverse alphabet">Reverse
                     alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=duration">Duration</a>
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=duration">Duration</a>
                 </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=admin&sort_type=amount students">Amount
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=amount students">Amount
                     students</a></li>
             </ul>
 
@@ -62,9 +62,9 @@
                 <fmt:message key="admin.select.teacher"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="teacher" items="${teachers}">
+                <c:forEach var="teacher" items="${sessionScope.teachers}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -75,9 +75,9 @@
                 <fmt:message key="admin.select.category"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="category" items="${categories}">
+                <c:forEach var="category" items="${sessionScope.categories}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=admin&select_type=by_category&category_id=${category.id}">${category.title}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
                 </c:forEach>
             </ul>

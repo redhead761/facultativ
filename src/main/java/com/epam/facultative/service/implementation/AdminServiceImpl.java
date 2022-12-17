@@ -25,21 +25,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserDTO> getStudents(int courseId) throws ServiceException {
-        List<UserDTO> usersDTO = new ArrayList<>();
-        List<User> users;
-        try {
-            users = userDao.getUsersByCourse(courseId);
-            for (User user : users) {
-                usersDTO.add(converter.userToDTO(user));
-            }
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-        return usersDTO;
-    }
-
-    @Override
     public void addCourse(Course course) throws ServiceException, ValidateException {
         try {
             if (courseDao.getByName(course.getTitle()) != null) {
@@ -112,6 +97,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<Category> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException {
+        try {
+            return categoryDao.getAllPagination(offset, numberOfRows);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getNoOfRecordsCategories() {
+        return categoryDao.getNoOfRecords();
+    }
+
+    @Override
     public void assigned(int idCourse, int idUser) throws ServiceException {
         try {
             courseDao.addUserToCourse(idCourse, idUser);
@@ -158,40 +157,33 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Category> getAllCategories() throws ServiceException {
+    public List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            return categoryDao.getAll();
+            List<User> users = userDao.getByRolePagination(Role.STUDENT.getId(), offset, noOfRecords);
+            List<UserDTO> students = new ArrayList<>();
+            for (User user :
+                    users) {
+                students.add(converter.userToDTO(user));
+            }
+            return students;
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<UserDTO> getAllTeachers() throws ServiceException {
-        List<UserDTO> usersDTO = new ArrayList<>();
+    public List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<User> users = userDao.getByRole(Role.TEACHER.getId());
-            for (User user : users) {
-                usersDTO.add(converter.userToDTO(user));
+            List<User> users = userDao.getByRolePagination(Role.TEACHER.getId(), offset, noOfRecords);
+            List<UserDTO> teachers = new ArrayList<>();
+            for (User user :
+                    users) {
+                teachers.add(converter.userToDTO(user));
             }
+            return teachers;
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        return usersDTO;
-    }
-
-    @Override
-    public List<UserDTO> getAllStudents() throws ServiceException {
-        List<UserDTO> usersDTO = new ArrayList<>();
-        try {
-            List<User> users = userDao.getByRole(Role.STUDENT.getId());
-            for (User user : users) {
-                usersDTO.add(converter.userToDTO(user));
-            }
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-        return usersDTO;
     }
 
     @Override
@@ -221,5 +213,15 @@ public class AdminServiceImpl implements AdminService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public int getNoOfRecordsTeachers() {
+        return userDao.getNoOfRecords();
+    }
+
+    @Override
+    public int getNoOfRecordsStudents() {
+        return userDao.getNoOfRecords();
     }
 }

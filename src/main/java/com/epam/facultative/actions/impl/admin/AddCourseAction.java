@@ -24,7 +24,8 @@ public class AddCourseAction implements Action {
 
         try {
             AdminService adminService = ServiceFactory.getInstance().getAdminService();
-            req.setAttribute("categories", adminService.getAllCategories());
+            GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
+            req.setAttribute("categories", generalService.getAllCategories());
             Category category = adminService.getCategory(Integer.parseInt(req.getParameter("category")));
             Status status = Status.valueOf(req.getParameter("status"));
             Course course = new Course(title, duration, date, description, category, status);

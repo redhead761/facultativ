@@ -14,7 +14,7 @@ public class UnblockStudentAction implements Action {
         int studentId = Integer.parseInt(req.getParameter("student_id"));
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         adminService.unblockStudent(studentId);
-        req.getSession().setAttribute("students", adminService.getAllStudents());
+        req.getSession().setAttribute("students", adminService.getAllStudentsPagination(1, 5));
         return MANAGE_STUDENTS_PAGE;
     }
 }

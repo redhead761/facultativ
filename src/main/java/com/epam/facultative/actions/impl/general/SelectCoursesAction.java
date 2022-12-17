@@ -15,13 +15,11 @@ import static com.epam.facultative.actions.Constants.*;
 public class SelectCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        System.out.println("In select action");
         req.getSession().removeAttribute("sort_type");
         int page = 1;
-        if (req.getParameter("page") != null) {
-            page = Integer.parseInt(req.getParameter("page"));
-        }
         int recordsPerPage = 5;
+        if (req.getParameter("page") != null)
+            page = Integer.parseInt(req.getParameter("page"));
 
         String path = null;
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
@@ -37,21 +35,18 @@ public class SelectCoursesAction implements Action {
             case "by_teacher" -> {
                 int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
                 courses = generalService.getCoursesByTeacher(teacherId, (page - 1) * recordsPerPage, recordsPerPage);
-                int noOfRecords = generalService.getNoOfRecords();
-                int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-                req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-                req.getSession().setAttribute("currentPage", page);
             }
             case "by_category" -> {
                 int categoryId = Integer.parseInt(req.getParameter("category_id"));
                 courses = generalService.getCoursesByCategory(categoryId, (page - 1) * recordsPerPage, recordsPerPage);
-                int noOfRecords = generalService.getNoOfRecords();
-                int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-                req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-                req.getSession().setAttribute("currentPage", page);
-
             }
+
         }
+        int noOfRecords = generalService.getNoOfRecordsCourses();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.getSession().setAttribute("noOfCoursesPages", noOfPages);
+        req.getSession().setAttribute("currentPage", page);
+
         Role role = (Role) req.getSession().getAttribute("role");
         switch (role) {
             case ADMIN -> path = ADMIN_PAGE;

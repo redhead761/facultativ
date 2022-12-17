@@ -114,20 +114,6 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<UserDTO> getAllStudents() throws ServiceException {
-        List<UserDTO> usersDTO = new ArrayList<>();
-        try {
-            List<User> users = userDao.getByRole(Role.STUDENT.getId());
-            for (User user : users) {
-                usersDTO.add(converter.userToDTO(user));
-            }
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-        return usersDTO;
-    }
-
-    @Override
     public List<Category> getAllCategories() throws ServiceException {
         try {
             return categoryDao.getAll();
@@ -151,10 +137,9 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public int getNoOfRecords() {
+    public int getNoOfRecordsCourses() {
         return courseDao.getNoOfRecords();
     }
-
 
     private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();
@@ -175,5 +160,6 @@ public class GeneralServiceImpl implements GeneralService {
         }
         return coursesDTO;
     }
+
 
 }

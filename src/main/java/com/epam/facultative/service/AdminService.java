@@ -12,22 +12,25 @@ import com.epam.facultative.exception.ValidateException;
 import java.util.List;
 
 public interface AdminService {
-
-
-    List<UserDTO> getStudents(int courseId) throws ServiceException;
-
+    //Course
     void addCourse(Course course) throws ServiceException, ValidateException;
 
     void updateCourse(Course course) throws ServiceException, ValidateException;
 
     void deleteCourse(int courseId) throws ServiceException;
 
+    //Category
     void addCategory(Category category) throws ServiceException, ValidateException;
 
     void updateCategory(Category category) throws ServiceException, ValidateException;
 
     void deleteCategory(int categoryId) throws ServiceException;
 
+    List<Category> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException;
+
+    int getNoOfRecordsCategories();
+
+    //User
     void assigned(int idCourse, int idUser) throws ServiceException;
 
     void blockStudent(int userId) throws ServiceException;
@@ -36,14 +39,17 @@ public interface AdminService {
 
     void addTeacher(User user) throws ServiceException, ValidateException;
 
-    List<Category> getAllCategories() throws ServiceException;
+    List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
 
-    List<UserDTO> getAllTeachers() throws ServiceException;
-
-    List<UserDTO> getAllStudents() throws ServiceException;
+    List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
 
     Category getCategory(int id) throws ServiceException;
 
     CourseDTO getCourse(int id) throws ServiceException;
+
     UserDTO getTeacher(int id) throws ServiceException;
- }
+
+    int getNoOfRecordsTeachers();
+
+    int getNoOfRecordsStudents();
+}

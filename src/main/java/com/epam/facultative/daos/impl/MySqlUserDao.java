@@ -2,6 +2,7 @@ package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.UserDao;
+import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
 import com.epam.facultative.exception.DAOException;
@@ -14,6 +15,8 @@ import static com.epam.facultative.daos.impl.Constants.*;
 import static com.epam.facultative.daos.impl.Fields.*;
 
 public class MySqlUserDao implements UserDao {
+    private int noOfRecords;
+
     @Override
     public List<User> getAll() throws DAOException {
         List<User> users = new ArrayList<>();
@@ -131,6 +134,32 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
+    public List<User> getByRolePagination(int roleId, int offset, int numberOfRows) throws DAOException {
+        List<User> users = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS user.id, user.login, user.password, user.name, user.surname, user.email, user.block, role.name AS role_name " +
+                     "FROM user  JOIN role ON role.id = user.role_id WHERE user.role_id=? LIMIT ?,?")) {
+            int k = 0;
+            stmt.setInt(++k, roleId);
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                users.add(mapRow(rs));
+            }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
+
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return users;
+    }
+
+    @Override
     public List<User> getUsersByCourse(int courseId) throws DAOException {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
@@ -157,6 +186,12 @@ public class MySqlUserDao implements UserDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+
+    @Override
+    public int getNoOfRecords() {
+        return noOfRecords;
     }
 
     private User mapRow(ResultSet rs) throws DAOException {

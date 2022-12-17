@@ -3,6 +3,7 @@ package com.epam.facultative.daos.impl;
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.entity.Category;
+import com.epam.facultative.entity.Course;
 import com.epam.facultative.exception.DAOException;
 
 import java.sql.*;
@@ -13,6 +14,8 @@ import static com.epam.facultative.daos.impl.Constants.*;
 import static com.epam.facultative.daos.impl.Fields.*;
 
 public class MySqlCategoryDao implements CategoryDao {
+    private int noOfRecords;
+
     @Override
     public List<Category> getAll() throws DAOException {
         List<Category> categories = new ArrayList<>();
@@ -102,6 +105,37 @@ public class MySqlCategoryDao implements CategoryDao {
             throw new DAOException(e);
         }
     }
+
+
+    @Override
+    public List<Category> getAllPagination(int offset, int numberOfRows) throws DAOException {
+        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM category LIMIT ?,?";
+        List<Category> categories = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)) {
+            int k = 0;
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                categories.add(mapRow(rs));
+            }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return categories;
+    }
+
+    @Override
+    public int getNoOfRecords() {
+        return noOfRecords;
+    }
+
 
     private Category mapRow(ResultSet rs) throws DAOException {
         try {

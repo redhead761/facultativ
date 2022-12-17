@@ -10,6 +10,8 @@ import static com.epam.facultative.actions.Constants.*;
 public class DeleteCourseAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        req.getSession().removeAttribute("sort_type");
+        req.getSession().removeAttribute("select_type");
         int id = Integer.parseInt(req.getParameter("course_id"));
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();

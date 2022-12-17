@@ -26,11 +26,9 @@ public interface GeneralService {
 
     List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException;
 
-    List<UserDTO> getAllStudents() throws ServiceException;
-
     List<Category> getAllCategories() throws ServiceException;
 
     List<UserDTO> getAllTeachers() throws ServiceException;
 
-    public int getNoOfRecords();
+    int getNoOfRecordsCourses();
 }

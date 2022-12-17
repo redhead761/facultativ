@@ -31,7 +31,7 @@ public class AuthAction implements Action {
             req.getSession().setAttribute("statuses", Status.values());
             req.getSession().setAttribute("courses", generalService.getAllCourses(0, recordsPerPage));
 
-            int noOfRecords = generalService.getNoOfRecords();
+            int noOfRecords = generalService.getNoOfRecordsCourses();
             int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
             req.getSession().setAttribute("noOfCoursesPages", noOfPages);
             req.getSession().setAttribute("currentPage", page);

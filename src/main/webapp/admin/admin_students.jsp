@@ -37,7 +37,7 @@
         <th scope="col"><fmt:message key="admin.table.student.status"/></th>
         <th scope="col"><fmt:message key="action"/></th>
         </thead>
-        <c:forEach var="student" items="${students}">
+        <c:forEach var="student" items="${sessionScope.students}">
             <tbody>
             <td>${student.name}</td>
             <td>${student.surname}</td>
@@ -50,6 +50,61 @@
             </tbody>
         </c:forEach>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <c:if test="${sessionScope.currentPage == 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.currentPage > 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_students&page=${sessionScope.currentPage-1}">Previous</a>
+                </li>
+            </c:if>
+
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">${sessionScope.currentPage}</span>
+            </li>
+
+            <c:if test="${sessionScope.noOfStudentsPages - sessionScope.currentPage < 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">${sessionScope.currentPage+1}</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfStudentsPages - sessionScope.currentPage >= 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_students&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfStudentsPages - sessionScope.currentPage < 2}">
+                <li class="page-item disabled">
+                    <span class="page-link">${sessionScope.currentPage+2}</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfStudentsPages - sessionScope.currentPage >= 2}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_students&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfStudentsPages - sessionScope.currentPage < 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfStudentsPages - sessionScope.currentPage >= 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=manage_students&page=${sessionScope.currentPage+1}">Next</a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 

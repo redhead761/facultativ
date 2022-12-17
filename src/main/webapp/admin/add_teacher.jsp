@@ -30,7 +30,7 @@
         </div>
     </c:if>
 
-    <form action="controller" method="post">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="action" value="register"/>
         <input type="hidden" name="type" value="teacher"/>
 

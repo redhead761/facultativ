@@ -6,7 +6,6 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
-
 import java.io.IOException;
 
 import static com.epam.facultative.actions.Constants.*;

@@ -13,7 +13,9 @@ public class BlockStudentAction implements Action {
         int studentId = Integer.parseInt(req.getParameter("student_id"));
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         adminService.blockStudent(studentId);
-        req.getSession().setAttribute("students", adminService.getAllStudentsPagination(1, 5));
+        int page = (int) req.getSession().getAttribute("currentPage");
+        int recordsPerPage = 5;
+        req.getSession().setAttribute("students", adminService.getAllStudentsPagination((page - 1) * recordsPerPage, recordsPerPage));
         return MANAGE_STUDENTS_PAGE;
     }
 }

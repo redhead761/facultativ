@@ -29,14 +29,14 @@
         </div>
     </c:if>
 
-    <c:if test="${param.category_id != null}">
-    <form action="controller" method="post">
+    <c:if test="${sessionScope.category_id != null}">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="action" value="update_category"/>
         <input type="hidden" name="category_id" value="${param.category_id}"/>
         </c:if>
 
-        <c:if test="${param.category_id == null}">
-        <form action="controller" method="post">
+        <c:if test="${sessionScope.category_id == null}">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="action" value="add_category"/>
             </c:if>
 
@@ -49,7 +49,7 @@
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
                 <input class="form-control" name="title" id="floatingInputDescription" placeholder="description" value="${description}"
                        pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must..." >
-                <label for="floatingInputDescription">Desctiption</label>
+                <label for="floatingInputDescription">Description</label>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>

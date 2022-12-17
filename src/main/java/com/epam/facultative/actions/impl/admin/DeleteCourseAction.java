@@ -10,16 +10,23 @@ import static com.epam.facultative.actions.Constants.*;
 public class DeleteCourseAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        req.getSession().removeAttribute("sort_type");
-        req.getSession().removeAttribute("select_type");
+        removeRedundantAttribute(req);
+        int page = (int) req.getSession().getAttribute("currentPage");
+        int recordsPerPage = 5;
+
         int id = Integer.parseInt(req.getParameter("course_id"));
         AdminService adminService = ServiceFactory.getInstance().getAdminService();
         GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         adminService.deleteCourse(id);
-        req.getSession().setAttribute("courses", generalService.getAllCourses(0,3));
+        req.getSession().setAttribute("courses", generalService.getAllCourses((page - 1) * recordsPerPage, recordsPerPage));
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
-        req.getSession().setAttribute("message", "Successful");
+//        req.getSession().setAttribute("message", "Successful");
         return ADMIN_PAGE;
+    }
+
+    private void removeRedundantAttribute(HttpServletRequest req) {
+        req.getSession().removeAttribute("sort_type");
+        req.getSession().removeAttribute("select_type");
     }
 }

@@ -8,8 +8,8 @@ import static com.epam.facultative.actions.Constants.*;
 public class ShowCategoryFormAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String categoryId = req.getParameter("category_id");
-        req.setAttribute("category_id", categoryId);
+        int categoryId = Integer.parseInt(req.getParameter("category_id"));
+        req.getSession().setAttribute("category_id", categoryId);
         return CATEGORY_FORM_PAGE;
     }
 }

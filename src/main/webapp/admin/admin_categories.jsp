@@ -28,7 +28,7 @@
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_category_form" role="button"><fmt:message key="admin.add.category"/></a>
+            <a class="btn btn-primary" href="category_form.jsp" role="button"><fmt:message key="admin.add.category"/></a>
             <fmt:message key="admin.table.category.name"/>
         </caption>
         <thead>

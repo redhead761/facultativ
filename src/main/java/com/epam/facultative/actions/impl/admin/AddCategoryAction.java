@@ -2,35 +2,40 @@ package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.entity.Category;
-import com.epam.facultative.exception.*;
-import com.epam.facultative.service.*;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-
-import java.io.IOException;
+import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
+import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class AddCategoryAction implements Action {
+
+    private final AdminService adminService;
+
+    public AddCategoryAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
+    }
+
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        String path;
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
-        String title = req.getParameter("title");
-        String description = req.getParameter("description");
-        Category category = new Category();
-        category.setTitle(title);
-        category.setDescription(description);
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        Category category = getCategoryFromParameter(req);
         try {
             adminService.addCategory(category);
-            req.setAttribute("message", "Successful");
-            path = CATEGORY_FORM_PAGE;
+            req.getSession().setAttribute("message", "Successful");
         } catch (ValidateException e) {
-            req.setAttribute("title", title);
-            req.setAttribute("description", description);
-            path = CATEGORY_FORM_PAGE;
+            req.setAttribute("title", category.getTitle());
+            req.setAttribute("description", category.getDescription());
             req.setAttribute("message", e.getMessage());
         }
-        return path;
+        return CATEGORY_FORM_PAGE;
+    }
+
+    private Category getCategoryFromParameter(HttpServletRequest req) {
+        String title = req.getParameter("title");
+        String description = req.getParameter("description");
+        return new Category(title, description);
     }
 }

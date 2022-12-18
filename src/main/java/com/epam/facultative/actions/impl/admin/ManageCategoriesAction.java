@@ -8,23 +8,25 @@ import jakarta.servlet.http.*;
 import static com.epam.facultative.actions.Constants.*;
 
 public class ManageCategoriesAction implements Action {
+    private final AdminService adminService;
+
+    public ManageCategoriesAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         removeRedundantAttribute(req);
-
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
-
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
         req.getSession().setAttribute("categories", adminService.getAllCategoriesPagination((page - 1) * recordsPerPage, recordsPerPage));
         int noOfRecords = adminService.getNoOfRecordsCategories();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.getSession().setAttribute("noOfCategoriesPages", noOfPages);
         req.getSession().setAttribute("currentPage", page);
-
         return MANAGE_CATEGORIES_PAGE;
     }
 

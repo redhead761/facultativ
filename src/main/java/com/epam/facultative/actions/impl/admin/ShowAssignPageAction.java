@@ -2,27 +2,30 @@ package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.*;
-import jakarta.servlet.http.*;
-
-import java.util.List;
+import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class ShowAssignPageAction implements Action {
+    private final AdminService adminService;
+
+    public ShowAssignPageAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         removeRedundantAttribute(req);
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
+
         int courseId;
         if (req.getParameter("course_id") != null) {
             courseId = Integer.parseInt(req.getParameter("course_id"));
-            CourseDTO course = adminService.getCourse(courseId);
-            req.getSession().setAttribute("course", course);
+            req.getSession().setAttribute("course_id", courseId);
         }
-
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {

@@ -35,7 +35,7 @@
             <td>${teacher.surname}</td>
             <td>${teacher.email}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>&course_id=<c:out value='${course.id}'/>">Assigned</a>
+                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>&course_id=<c:out value='${sessionScope.course_id}'/>">Assigned</a>
             </td>
             </tbody>
         </c:forEach>

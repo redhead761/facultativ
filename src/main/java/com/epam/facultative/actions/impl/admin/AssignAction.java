@@ -10,15 +10,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import static com.epam.facultative.actions.Constants.*;
 
 public class AssignAction implements Action {
+    private final AdminService adminService;
+
+    public AssignAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
-        System.out.println("course id = " + courseId);
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
         adminService.assigned(courseId, teacherId);
         req.setAttribute("message", "Successful");
-        req.getSession().removeAttribute("course");
+        req.getSession().removeAttribute("course_id");
         return MANAGE_COURSES_ACTION;
     }
 }

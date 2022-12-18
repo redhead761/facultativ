@@ -1,46 +1,58 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.entity.*;
-import com.epam.facultative.exception.*;
-import com.epam.facultative.service.*;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
+import com.epam.facultative.entity.Category;
+import com.epam.facultative.entity.Course;
+import com.epam.facultative.entity.Status;
+import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
+import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class UpdateCourseAction implements Action {
+    private final AdminService adminService;
+    private final GeneralService generalService;
+
+    public UpdateCourseAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
+        generalService = ServiceFactory.getInstance().getGeneralService();
+    }
+
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        String path;
-        AdminService adminService = ServiceFactory.getInstance().getAdminService();
-        GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        Course course = getCourseFromParameter(req);
         try {
-            int courseId = Integer.parseInt(req.getParameter("course_id"));
-            req.setAttribute("categories", generalService.getAllCategories());
-
-            String title = req.getParameter("title");
-            int duration = Integer.parseInt(req.getParameter("duration"));
-            LocalDate date = LocalDate.parse(req.getParameter("start_date"));
-            String description = req.getParameter("description");
-            Category category = adminService.getCategory(Integer.parseInt(req.getParameter("category")));
-            Status status = Status.valueOf(req.getParameter("status"));
-
-            Course course = new Course(title, duration, date, description, category, status);
-            course.setId(courseId);
             adminService.updateCourse(course);
+            req.setAttribute("categories", generalService.getAllCategories());
             req.setAttribute("message", "Successful");
-            path = MANAGE_COURSES_ACTION;
-
         } catch (ValidateException e) {
-            path = COURSE_FORM_ACTION;
+            req.setAttribute("title", course.getTitle());
+            req.setAttribute("duration", course.getDuration());
+            req.setAttribute("start_date", course.getStartDate());
+            req.setAttribute("description", course.getDescription());
             req.setAttribute("message", e.getMessage());
+            return COURSE_FORM_ACTION;
         }
-        return path;
+        return MANAGE_COURSES_ACTION;
+    }
+
+    private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
+        int courseId = Integer.parseInt(req.getParameter("course_id"));
+        String title = req.getParameter("title");
+        int duration = Integer.parseInt(req.getParameter("duration"));
+        LocalDate date = LocalDate.parse(req.getParameter("start_date"));
+        String description = req.getParameter("description");
+        Status status = Status.valueOf(req.getParameter("status"));
+        int categoryId = Integer.parseInt(req.getParameter("category"));
+        Category category = adminService.getCategory(categoryId);
+        return new Course(courseId, title, duration, date, description, category, status);
     }
 }
 

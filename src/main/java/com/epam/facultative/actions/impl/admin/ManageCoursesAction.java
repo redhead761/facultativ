@@ -3,14 +3,23 @@ package com.epam.facultative.actions.impl.admin;
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionFactory;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.*;
+import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class ManageCoursesAction implements Action {
+    private final GeneralService generalService;
+
+    public ManageCoursesAction() {
+        generalService = ServiceFactory.getInstance().getGeneralService();
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
         if (req.getSession().getAttribute("sort_type") != null) {
@@ -27,9 +36,7 @@ public class ManageCoursesAction implements Action {
             page = Integer.parseInt(req.getParameter("page"));
         }
 
-        GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         req.getSession().setAttribute("courses", generalService.getAllCourses((page - 1) * recordsPerPage, recordsPerPage));
-
         int noOfRecords = generalService.getNoOfRecordsCourses();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.getSession().setAttribute("noOfCoursesPages", noOfPages);

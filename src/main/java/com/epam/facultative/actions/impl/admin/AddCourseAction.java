@@ -1,47 +1,53 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.entity.*;
-import com.epam.facultative.exception.*;
-import com.epam.facultative.service.*;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
+import com.epam.facultative.entity.Category;
+import com.epam.facultative.entity.Course;
+import com.epam.facultative.entity.Status;
+import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
+import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class AddCourseAction implements Action {
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        String path;
 
+    private final AdminService adminService;
+
+    public AddCourseAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
+    }
+
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        Course course = getCourseFromParameter(req);
+        try {
+            adminService.addCourse(course);
+            req.setAttribute("message", "Successful");
+        } catch (ValidateException e) {
+            req.setAttribute("title", course.getTitle());
+            req.setAttribute("duration", course.getDuration());
+            req.setAttribute("start_date", course.getStartDate());
+            req.setAttribute("description", course.getDescription());
+            req.setAttribute("message", e.getMessage());
+        }
+        return COURSE_FORM_PAGE;
+    }
+
+    private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));
         String description = req.getParameter("description");
-
-        try {
-            AdminService adminService = ServiceFactory.getInstance().getAdminService();
-            GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-            req.setAttribute("categories", generalService.getAllCategories());
-            Category category = adminService.getCategory(Integer.parseInt(req.getParameter("category")));
-            Status status = Status.valueOf(req.getParameter("status"));
-            Course course = new Course(title, duration, date, description, category, status);
-            adminService.addCourse(course);
-            req.setAttribute("message", "Successful");
-            path = COURSE_FORM_PAGE;
-        } catch (ValidateException e) {
-            req.setAttribute("title", title);
-            req.setAttribute("duration", duration);
-            req.setAttribute("start_date", date);
-            req.setAttribute("description", description);
-            path = COURSE_FORM_PAGE;
-            req.setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(path).forward(req, resp);
-        }
-        return path;
+        Status status = Status.valueOf(req.getParameter("status"));
+        int categoryId = Integer.parseInt(req.getParameter("category"));
+        Category category = adminService.getCategory(categoryId);
+        return new Course(title, duration, date, description, category, status);
     }
 }
 

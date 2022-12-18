@@ -18,6 +18,7 @@ public class TeacherFilter implements Filter {
         String loginURI = request.getContextPath();
 
         UserDTO user = (UserDTO) request.getSession().getAttribute("user");
+        request.getSession().removeAttribute("message");
         if (user != null && user.getRole().equals(Role.TEACHER)){
             filterChain.doFilter(request,response);
         }

@@ -22,6 +22,7 @@ public class ManageCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+        removeRedundantAttribute(req);
         if (req.getSession().getAttribute("sort_type") != null) {
             ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
             return ADMIN_PAGE;
@@ -44,5 +45,10 @@ public class ManageCoursesAction implements Action {
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         return ADMIN_PAGE;
+    }
+
+    private void removeRedundantAttribute(HttpServletRequest req) {
+        req.getSession().removeAttribute("login");
+
     }
 }

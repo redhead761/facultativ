@@ -24,7 +24,7 @@ public class ShowGradeListAction implements Action {
         int courseId = 0;
         if (req.getParameter("course_id") != null) {
             courseId = Integer.parseInt(req.getParameter("course_id"));
-            req.setAttribute("course_id", courseId);
+            req.getSession().setAttribute("course_id", courseId);
         }
 
         List<UserDTO> students = teacherService.getStudentsByCourse(courseId);

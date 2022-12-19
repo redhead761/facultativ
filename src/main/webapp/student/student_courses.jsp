@@ -26,7 +26,7 @@
         <caption>
             All courses in facultative
         </caption>
-        ${message}
+        ${sessionScope.message}
         <thead>
         <th scope="col">Title</th>
         <th scope="col">Duration</th>
@@ -36,7 +36,7 @@
         <th scope="col">Status</th>
         <th scope="col">Teacher</th>
         </thead>
-        <c:forEach var="course" items="${courses}">
+        <c:forEach var="course" items="${sessionScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>

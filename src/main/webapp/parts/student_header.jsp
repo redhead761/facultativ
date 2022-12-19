@@ -21,9 +21,9 @@
     <div class="row">
         <div class="col">
             <h2> Student data </h2>
-            Name: ${user.name}<br>
-            Surname: ${user.surname}<br>
-            Email: ${user.email}<br>
+            Name: ${sessionScope.user.name}<br>
+            Surname: ${sessionScope.user.surname}<br>
+            Email: ${sessionScope.user.email}<br>
         </div>
         <div class="col">
             <div class="d-grid gap-2 d-md-flex p-3 mb-2 justify-content-md-end">

@@ -115,7 +115,7 @@
                 </c:if>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${sessionScope.course.id}">Edit</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${course.id}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
             </td>

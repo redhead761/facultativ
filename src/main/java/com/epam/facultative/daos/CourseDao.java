@@ -11,7 +11,7 @@ public interface CourseDao extends Dao<Course> {
 
     List<Course> getByCategory(int categoryId, int offset, int numberOfRows) throws DAOException;
 
-    List<Course> getByStatus(int id, Status status) throws DAOException;
+    List<Course> getByStatus(int id, Status status, int offset, int numberOfRows) throws DAOException;
 
     int getGrade(int courseId, int userId) throws DAOException;
 

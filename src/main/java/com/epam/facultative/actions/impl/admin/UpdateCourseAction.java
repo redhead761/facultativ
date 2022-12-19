@@ -37,7 +37,8 @@ public class UpdateCourseAction implements Action {
     }
 
     private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
-        int courseId = (int) req.getSession().getAttribute("course_id");
+        String id = (String) req.getSession().getAttribute("course_id");
+        int courseId = Integer.parseInt(id);
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));

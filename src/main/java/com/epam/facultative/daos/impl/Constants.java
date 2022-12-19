@@ -51,11 +51,11 @@ class Constants {
 
     static final String GET_GRADE = "SELECT grade FROM users_course WHERE course_id=? AND user_id=?";
     static final String SELECT_COURSE_BY_STATUS = """
-            SELECT course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id,
+            SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id,
                                  status.title AS course_status, category.title AS course_category, category.description AS category_description
                                 FROM course JOIN category ON course.category_id = category.id
                                 JOIN status ON course.status_id = status.id
-                                JOIN users_course ON course.id = users_course.course_id WHERE user_id=? AND status.id = ?""";
+                                JOIN users_course ON course.id = users_course.course_id WHERE user_id=? AND status.id = ? LIMIT ?,?""";
 
     //SQL request for User DAO
     static final String SELECT_All_USERS =

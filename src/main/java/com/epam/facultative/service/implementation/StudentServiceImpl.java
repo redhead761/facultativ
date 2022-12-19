@@ -34,29 +34,29 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<CourseDTO> getCoursesComingSoon(int studentId) throws ServiceException {
+    public List<CourseDTO> getCoursesComingSoon(int studentId,int offset,int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.COMING_SOON));
+            return prepareCourses(courseDao.getByStatus(studentId, Status.COMING_SOON,offset,numberOfRows));
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> getCoursesInProgress(int studentId) throws ServiceException {
+    public List<CourseDTO> getCoursesInProgress(int studentId,int offset,int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.IN_PROCESS));
+            return prepareCourses(courseDao.getByStatus(studentId, Status.IN_PROCESS,offset,numberOfRows));
         } catch (DAOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<UserDTO> getCoursesCompleted(int studentId) throws ServiceException {
+    public List<UserDTO> getCoursesCompleted(int studentId,int offset,int numberOfRows) throws ServiceException {
         try {
             User user = userDao.getById(studentId);
             List<UserDTO> students = new ArrayList<>();
-            List<CourseDTO> courses = prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED));
+            List<CourseDTO> courses = prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED,offset,numberOfRows));
             for (CourseDTO course : courses) {
                 int grade = courseDao.getGrade(course.getId(), studentId);
                 students.add(converter.userToStudent(user, course, grade));
@@ -94,6 +94,11 @@ public class StudentServiceImpl implements StudentService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public int getNoOfRecordsCourses() {
+        return courseDao.getNoOfRecords();
     }
 
 

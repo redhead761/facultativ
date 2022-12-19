@@ -21,7 +21,7 @@
 <div align="center">
     <h2>Please fill in the fields</h2>
 
-    <c:if test="${message != null}">
+    <c:if test="${sessionScope.message != null}">
         <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
             <strong>${sessionScope.message}</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -29,39 +29,39 @@
     </c:if>
 
 
-    <c:if test="${course_id != null}">
+    <c:if test="${sessionScope.course_id != null}">
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="action" value="update_course"/>
-        <input type="hidden" name="course_id" value="${course_id}"/>
+        <input type="hidden" name="course_id" value="${sessionScope.course_id}"/>
         </c:if>
 
-        <c:if test="${course_id == null}">
+        <c:if test="${sessionScope.course_id == null}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="action" value="add_course"/>
             </c:if>
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
-                <input class="form-control" name="title" id="floatingInputTitle" placeholder="title" value="${title}"
+                <input class="form-control" name="title" id="floatingInputTitle" placeholder="title" value="${sessionScope.title}"
                        pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="title must..." required>
                 <label for="floatingInputTitle">Title</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2">
                 <input class="form-control" name="duration" id="floatingInputDuration" placeholder="duration"
-                       value="${duration}"
+                       value="${sessionScope.duration}"
                        pattern="^[0-9]{0,3}" title="duration must..." required>
                 <label for="floatingInputDuration">Duration</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2">
                 <input class="form-control" type="date" name="start_date" id="floatingInputDate" placeholder="date"
-                       value="${start_date}" required>
+                       value="${sessionScope.start_date}" required>
                 <label for="floatingInputDate">Start date</label>
             </div>
 
             <div class="form-floating mt-4 mb-3 col-lg-2">
                 <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
-                       value="${description}"
+                       value="${sessionScope.description}"
                        pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}" title="description must...">
                 <label for="floatingInputDescription">Description</label>
             </div>
@@ -69,7 +69,7 @@
             <div class="mt-2 col-lg-2">
                 <select name="category" class="form-select form-select-lg mb-3" required>
                     <option disabled selected value="">Select category</option>
-                    <c:forEach var="category" items="${categories}">
+                    <c:forEach var="category" items="${sessionScope.categories}">
                         <option value="${category.id}">${category.title}</option>
                     </c:forEach>
                 </select>
@@ -78,7 +78,7 @@
             <div class="mt-2 col-lg-2">
                 <select name="status" class="form-select form-select-lg mb-3" required>
                     <option disabled selected value="">Select status</option>
-                    <c:forEach var="status" items="${statuses}">
+                    <c:forEach var="status" items="${sessionScope.statuses}">
                         <option>${status.valueOf(status)}</option>
                     </c:forEach>
                 </select>

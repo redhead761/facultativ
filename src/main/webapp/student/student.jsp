@@ -1,6 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${sessionScope.language}" scope="session"/>
+<fmt:setBundle basename="resources"/>
 
 <html>
 <head>
@@ -30,26 +35,28 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=student&sort_type=alphabet">Alphabetical</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=alphabet">Alphabetical</a>
+                </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=student&sort_type=reverse alphabet">Reverse
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=reverse alphabet">Reverse
                     alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=student&sort_type=duration">Duration</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=duration">Duration</a>
+                </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&cabinet_type=student&sort_type=amount students">Amount
+                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=amount students">Amount
                     students</a></li>
             </ul>
 
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                Select by teacher
+                <fmt:message key="admin.select.teacher"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="teacher" items="${teachers}">
+                <c:forEach var="teacher" items="${sessionScope.teachers}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=student&type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -57,18 +64,18 @@
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                Select by category
+                <fmt:message key="admin.select.category"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="category" items="${categories}">
+                <c:forEach var="category" items="${sessionScope.categories}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&cabinet_type=student&type=by_category&category_id=${category.id}">${category.title}</a>
+                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
                 </c:forEach>
             </ul>
             All courses in facultative
         </caption>
-        ${message}
+        ${sessionScope.message}
         <thead>
         <th scope="col">Title</th>
         <th scope="col">Duration</th>
@@ -79,7 +86,7 @@
         <th scope="col">Teacher</th>
         <th scope="col">Action</th>
         </thead>
-        <c:forEach var="course" items="${courses}">
+        <c:forEach var="course" items="${sessionScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>
@@ -96,6 +103,61 @@
             </tbody>
         </c:forEach>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <c:if test="${sessionScope.currentPage == 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.currentPage > 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage-1}">Previous</a>
+                </li>
+            </c:if>
+
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">${sessionScope.currentPage}</span>
+            </li>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">${sessionScope.currentPage+1}</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
+                <li class="page-item disabled">
+                    <span class="page-link">${sessionScope.currentPage+2}</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            </c:if>
+
+            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage+1}">Next</a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

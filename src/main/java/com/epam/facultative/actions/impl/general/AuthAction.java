@@ -26,31 +26,17 @@ public class AuthAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String path = null;
-//        int page = 1;
-//        int recordsPerPage = 5;
-
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-
         try {
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute("user", user);
             req.getSession().setAttribute("role", user.getRole());
             req.getSession().setAttribute("statuses", Status.values());
-
-//            req.getSession().setAttribute("courses", generalService.getAllCourses(0, recordsPerPage));
-//
-//            int noOfRecords = generalService.getNoOfRecordsCourses();
-//            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-//            req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-//            req.getSession().setAttribute("currentPage", page);
-//
-//            req.getSession().setAttribute("categories", generalService.getAllCategories());
-//            req.getSession().setAttribute("teachers", generalService.getAllTeachers());
             switch (user.getRole()) {
                 case ADMIN -> path = MANAGE_COURSES_ACTION;
                 case TEACHER -> path = ALL_COURSES_ACTION;
-                case STUDENT -> path = STUDENT_PAGE;
+                case STUDENT -> path = SHOW_STUDENT_CABINET_ACTION;
             }
         } catch (ValidateException e) {
             req.getSession().setAttribute("login", login);

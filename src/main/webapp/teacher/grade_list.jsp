@@ -23,7 +23,7 @@
 <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses" role="button">Back</a>
 
 <div align="center">
-    ${message}
+    ${sessionScope.message}
     <div class="table-responsive col-lg-10 mx-auto p-4">
         <table class="table table-success table-striped caption-top table-bordered">
             <caption>
@@ -35,15 +35,15 @@
             <th scope="col">Status</th>
             <th scope="col">Action</th>
             </thead>
-            <c:forEach var="student" items="${students}">
+            <c:forEach var="student" items="${sessionScope.students}">
                 <tbody>
                 <td>${student.name}</td>
                 <td><c:out value="${student.surname}"/></td>
                 <td><c:out value="${student.isBlock()}"/></td>
                 <td>
-                    <form action="controller" method="post">
+                    <form action="${pageContext.request.contextPath}/controller" method="post">
                         <input type="hidden" name="action" value="grade"/>
-                        <input type="hidden" name="course_id" value="${course_id}"/>
+                        <input type="hidden" name="course_id" value="${sessionScope.course_id}"/>
                         <input type="hidden" name="student_id" value="${student.id}"/>
                         Grade: <input name="grade"/>
                         <input type="submit" value="enter"/>

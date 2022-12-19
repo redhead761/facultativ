@@ -206,16 +206,24 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public List<Course> getByStatus(int userId, Status status) throws DAOException {
+    public List<Course> getByStatus(int userId, Status status, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
-            stmt.setInt(1, userId);
-            stmt.setInt(2, status.getId());
+            int k = 0;
+            stmt.setInt(++k, userId);
+            stmt.setInt(++k, status.getId());
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
+            rs.close();
+
+            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            if (rs.next())
+                this.noOfRecords = rs.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

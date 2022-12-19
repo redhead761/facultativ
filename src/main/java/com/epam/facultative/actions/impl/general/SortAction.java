@@ -1,8 +1,8 @@
 package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.entity.Role;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
@@ -10,8 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
-
-import static com.epam.facultative.actions.Constants.*;
 
 public class SortAction implements Action {
     private final GeneralService generalService;
@@ -23,45 +21,26 @@ public class SortAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         removeRedundantAttribute(req);
-        int page = 1;
-        int recordsPerPage = 5;
-
-        if (req.getParameter("page") != null)
-            page = Integer.parseInt(req.getParameter("page"));
-
-        String path = null;
-        String sortType;
-        if ((sortType = req.getParameter("sort_type")) == null)
+        String sortType = req.getParameter("sort_type");
+        if (sortType == null) {
             sortType = (String) req.getSession().getAttribute("sort_type");
-
-        List<CourseDTO> courses = null;
-        req.getSession().setAttribute("teachers", generalService.getAllTeachers());
-        req.getSession().setAttribute("categories", generalService.getAllCategories());
+        }
         req.getSession().setAttribute("sort_type", sortType);
+        int currentPage = ActionUtils.getCurrentPage(req);
+        int recordsPerPage = 5;
+        List<CourseDTO> courses = null;
         switch (sortType) {
             case "alphabet" ->
-                    courses = generalService.sortCoursesByAlphabet((page - 1) * recordsPerPage, recordsPerPage);
+                    courses = generalService.sortCoursesByAlphabet((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "reverse alphabet" ->
-                    courses = generalService.sortCoursesByAlphabetReverse((page - 1) * recordsPerPage, recordsPerPage);
+                    courses = generalService.sortCoursesByAlphabetReverse((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "duration" ->
-                    courses = generalService.sortCoursesByDuration((page - 1) * recordsPerPage, recordsPerPage);
+                    courses = generalService.sortCoursesByDuration((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "amount students" ->
-                    courses = generalService.sortCoursesBuAmountOfStudents((page - 1) * recordsPerPage, recordsPerPage);
+                    courses = generalService.sortCoursesBuAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
         }
-        req.getSession().setAttribute("courses", courses);
-
-        int noOfRecords = generalService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-        req.getSession().setAttribute("currentPage", page);
-
-        Role role = (Role) req.getSession().getAttribute("role");
-        switch (role) {
-            case ADMIN -> path = ADMIN_PAGE;
-            case STUDENT -> path = STUDENT_PAGE;
-            case TEACHER -> path = TEACHER_PAGE;
-        }
-        return path;
+        ActionUtils.setUpPagination(req, generalService, currentPage, recordsPerPage, courses);
+        return ActionUtils.chooseCabinet(req);
     }
 
     private void removeRedundantAttribute(HttpServletRequest req) {

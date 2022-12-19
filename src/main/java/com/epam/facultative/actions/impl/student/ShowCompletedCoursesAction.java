@@ -24,11 +24,7 @@ public class ShowCompletedCoursesAction implements Action {
         int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         req.getSession().setAttribute("courses", studentService.getCoursesCompleted(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
-
-        int noOfRecords = studentService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-        req.getSession().setAttribute("currentPage", currentPage);
+        ActionUtils.setUpPaginationStudent(req, studentService, currentPage, recordsPerPage);
         return COMPLETED_COURSES_PAGE;
     }
 }

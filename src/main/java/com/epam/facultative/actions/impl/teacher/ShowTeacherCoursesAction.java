@@ -20,17 +20,14 @@ public class ShowTeacherCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         req.getSession().setAttribute("courses", teacherService.getTeacherCourses(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
-
         int noOfRecords = teacherService.getNoOfRecordsCourses();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.getSession().setAttribute("noOfCoursesPages", noOfPages);
         req.getSession().setAttribute("currentPage", currentPage);
-
         return TEACHER_COURSES_PAGE;
     }
 }

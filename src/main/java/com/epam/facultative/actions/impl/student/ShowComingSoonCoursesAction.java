@@ -24,11 +24,7 @@ public class ShowComingSoonCoursesAction implements Action {
         int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         req.getSession().setAttribute("courses", studentService.getCoursesComingSoon(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
-
-        int noOfRecords = studentService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-        req.getSession().setAttribute("currentPage", currentPage);
+        ActionUtils.setUpPaginationStudent(req, studentService, currentPage, recordsPerPage);
         return COMING_SOON_COURSES_PAGE;
     }
 }

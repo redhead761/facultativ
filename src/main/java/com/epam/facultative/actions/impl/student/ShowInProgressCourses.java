@@ -19,17 +19,14 @@ public class ShowInProgressCourses implements Action {
     public ShowInProgressCourses() {
         studentService = ServiceFactory.getInstance().getStudentService();
     }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         req.getSession().setAttribute("courses", studentService.getCoursesInProgress(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
-
-        int noOfRecords = studentService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.getSession().setAttribute("noOfCoursesPages", noOfPages);
-        req.getSession().setAttribute("currentPage", currentPage);
+        ActionUtils.setUpPaginationStudent(req, studentService, currentPage, recordsPerPage);
         return IN_PROGRESS_COURSES_PAGE;
     }
 }

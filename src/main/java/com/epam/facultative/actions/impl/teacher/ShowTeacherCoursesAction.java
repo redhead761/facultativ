@@ -1,6 +1,7 @@
 package com.epam.facultative.actions.impl.teacher;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.ServiceFactory;
@@ -11,18 +12,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import static com.epam.facultative.actions.Constants.*;
 
 public class ShowTeacherCoursesAction implements Action {
+    private final TeacherService teacherService;
+
+    public ShowTeacherCoursesAction() {
+        teacherService = ServiceFactory.getInstance().getTeacherService();
+    }
+
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String path;
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+
+        int currentPage = ActionUtils.getCurrentPage(req);
+        int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-        TeacherService teacherService = ServiceFactory.getInstance().getTeacherService();
-        try {
-            req.setAttribute("courses", teacherService.getTeacherCourses(user.getId(), 1, 5));
-            path = TEACHER_COURSES_PAGE;
-        } catch (ServiceException e) {
-            path = ERROR_PAGE;
-            req.setAttribute("message", e.getMessage());
-        }
-        return path;
+        req.getSession().setAttribute("courses", teacherService.getTeacherCourses(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
+
+        int noOfRecords = teacherService.getNoOfRecordsCourses();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.getSession().setAttribute("noOfCoursesPages", noOfPages);
+        req.getSession().setAttribute("currentPage", currentPage);
+
+        return TEACHER_COURSES_PAGE;
     }
 }

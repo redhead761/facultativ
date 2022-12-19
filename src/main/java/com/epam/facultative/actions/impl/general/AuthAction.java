@@ -49,7 +49,7 @@ public class AuthAction implements Action {
 //            req.getSession().setAttribute("teachers", generalService.getAllTeachers());
             switch (user.getRole()) {
                 case ADMIN -> path = MANAGE_COURSES_ACTION;
-                case TEACHER -> path = TEACHER_PAGE;
+                case TEACHER -> path = ALL_COURSES_ACTION;
                 case STUDENT -> path = STUDENT_PAGE;
             }
         } catch (ValidateException e) {

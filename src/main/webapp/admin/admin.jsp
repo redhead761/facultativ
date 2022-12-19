@@ -26,9 +26,9 @@
 
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<c:if test="${message != null}">
+<c:if test="${sessionScope.message != null}">
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${message}!</strong>
+        <strong>${sessionScope.message}!</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </c:if>
@@ -115,7 +115,7 @@
                 </c:if>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${course.id}">Edit</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${sessionScope.course.id}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
             </td>

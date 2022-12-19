@@ -7,7 +7,6 @@ import com.epam.facultative.entity.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,11 +17,9 @@ import static com.epam.facultative.actions.Constants.*;
 
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;
-    private final GeneralService generalService;
 
     public UpdateCourseAction() {
         adminService = ServiceFactory.getInstance().getAdminService();
-        generalService = ServiceFactory.getInstance().getGeneralService();
     }
 
     @Override
@@ -35,11 +32,12 @@ public class UpdateCourseAction implements Action {
             req.getSession().setAttribute("message", e.getMessage());
             return COURSE_FORM_ACTION;
         }
+        req.getSession().removeAttribute("course_id");
         return MANAGE_COURSES_ACTION;
     }
 
     private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
-        int courseId = Integer.parseInt(req.getParameter("course_id"));
+        int courseId = (int) req.getSession().getAttribute("course_id");
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));

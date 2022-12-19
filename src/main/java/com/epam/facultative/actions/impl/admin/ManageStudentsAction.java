@@ -1,6 +1,7 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
@@ -19,17 +20,9 @@ public class ManageStudentsAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         removeRedundantAttribute(req);
-
-        int page = 1;
+        int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
-        if (req.getParameter("page") != null) {
-            page = Integer.parseInt(req.getParameter("page"));
-        }
-        req.getSession().setAttribute("students", adminService.getAllStudentsPagination((page - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsStudents();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.getSession().setAttribute("noOfStudentsPages", noOfPages);
-        req.getSession().setAttribute("currentPage", page);
+        ActionUtils.setUpPaginationForStudents(req, adminService, currentPage, recordsPerPage);
         return MANAGE_STUDENTS_PAGE;
     }
 

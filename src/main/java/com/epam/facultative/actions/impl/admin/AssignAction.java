@@ -21,7 +21,7 @@ public class AssignAction implements Action {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
         adminService.assigned(courseId, teacherId);
-        req.setAttribute("message", "Successful");
+        req.getSession().setAttribute("message", "Successful");
         req.getSession().removeAttribute("course_id");
         return MANAGE_COURSES_ACTION;
     }

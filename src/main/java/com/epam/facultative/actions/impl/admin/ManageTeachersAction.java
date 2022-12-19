@@ -37,5 +37,6 @@ public class ManageTeachersAction implements Action {
         req.getSession().removeAttribute("sort_type");
         req.getSession().removeAttribute("select_type");
         req.getSession().removeAttribute("currentPage");
+        req.getSession().removeAttribute("message");
     }
 }

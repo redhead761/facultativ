@@ -24,7 +24,7 @@ public class DeleteCategoryAction implements Action {
         int id = Integer.parseInt(req.getParameter("category_id"));
         adminService.deleteCategory(id);
         req.getSession().setAttribute("categories", adminService.getAllCategoriesPagination((page - 1) * recordsPerPage, recordsPerPage));
-//        req.setAttribute("message", "Successful");
+        req.getSession().setAttribute("message", "Successful");
         return MANAGE_CATEGORIES_PAGE;
     }
 }

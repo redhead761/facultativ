@@ -3,67 +3,73 @@ package com.epam.facultative.actions.impl.general;
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entity.User;
-import com.epam.facultative.exception.*;
-import com.epam.facultative.service.*;
+import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
+import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.service.ServiceFactory;
+import com.epam.facultative.service.StudentService;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class RegisterAction implements Action {
+    private final StudentService studentService;
+    private final AdminService adminService;
+
+    public RegisterAction() {
+        studentService = ServiceFactory.getInstance().getStudentService();
+        adminService = ServiceFactory.getInstance().getAdminService();
+    }
+
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String path = null;
         String type = req.getParameter("type");
-        String login = req.getParameter("login");
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeat_password");
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        String email = req.getParameter("email");
-        User newUser = new User(login, password, name, surname, email);
+        User newUser = getUserForAttribute(req);
         if (type.equals("student")) {
-            StudentService studentService = ServiceFactory.getInstance().getStudentService();
             try {
-                if (!password.equals(repeatPassword)) {
-                    throw new ValidateException("Wrong repeat password");
-                }
-                GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
-                req.getSession().setAttribute("courses", generalService.getAllCourses(0, 3));
+                checkConfirmPassword(password, repeatPassword);
                 studentService.addStudent(newUser);
-                UserDTO user = generalService.authorization(login, password);
-                req.getSession().setAttribute("user", user);
-                path = STUDENT_PAGE;
+                path = AUTH_PAGE;
+                req.getSession().setAttribute("message", "Successful");
             } catch (ValidateException e) {
-                req.setAttribute("login", login);
-                req.setAttribute("name", name);
-                req.setAttribute("surname", surname);
-                req.setAttribute("email", email);
                 path = REGISTER_PAGE;
-                req.setAttribute("message", e.getMessage());
-                req.getRequestDispatcher(path).forward(req, resp);
+                req.getSession().setAttribute("message", e.getMessage());
             }
         }
         if (type.equals("teacher")) {
-            AdminService adminService = ServiceFactory.getInstance().getAdminService();
             try {
-                if (!password.equals(repeatPassword)) {
-                    throw new ValidateException("Wrong repeat password");
-                }
+                checkConfirmPassword(password, repeatPassword);
                 adminService.addTeacher(newUser);
                 path = ADD_TEACHER_PAGE;
                 req.setAttribute("message", "Successful");
             } catch (ValidateException e) {
-                req.setAttribute("login", login);
-                req.setAttribute("name", name);
-                req.setAttribute("surname", surname);
-                req.setAttribute("email", email);
                 path = ADD_TEACHER_PAGE;
                 req.setAttribute("message", e.getMessage());
             }
         }
         return path;
+    }
+
+    private User getUserForAttribute(HttpServletRequest req) {
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        String email = req.getParameter("email");
+        return new User(login, password, name, surname, email);
+    }
+
+    private void checkConfirmPassword(String password, String repeatPassword) throws ValidateException {
+        if (!password.equals(repeatPassword)) {
+            throw new ValidateException("Wrong repeat password");
+        }
     }
 }

@@ -26,9 +26,7 @@ public class AddCategoryAction implements Action {
             adminService.addCategory(category);
             req.getSession().setAttribute("message", "Successful");
         } catch (ValidateException e) {
-            req.setAttribute("title", category.getTitle());
-            req.setAttribute("description", category.getDescription());
-            req.setAttribute("message", e.getMessage());
+            req.getSession().setAttribute("message", e.getMessage());
         }
         return CATEGORY_FORM_PAGE;
     }

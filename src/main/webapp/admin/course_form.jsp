@@ -23,7 +23,7 @@
 
     <c:if test="${message != null}">
         <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-            <strong>${message}</strong>
+            <strong>${sessionScope.message}</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </c:if>

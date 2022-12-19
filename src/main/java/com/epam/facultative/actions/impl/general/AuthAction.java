@@ -26,8 +26,8 @@ public class AuthAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String path = null;
-        int page = 1;
-        int recordsPerPage = 5;
+//        int page = 1;
+//        int recordsPerPage = 5;
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");

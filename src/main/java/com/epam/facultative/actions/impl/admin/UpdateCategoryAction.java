@@ -23,11 +23,9 @@ public class UpdateCategoryAction implements Action {
         Category category = getCategoryFromParameter(req);
         try {
             adminService.updateCategory(category);
-            req.setAttribute("message", "Successful");
+            req.getSession().setAttribute("message", "Successful");
         } catch (ValidateException e) {
-            req.setAttribute("title", category.getTitle());
-            req.setAttribute("description", category.getDescription());
-            req.setAttribute("message", e.getMessage());
+            req.getSession().setAttribute("message", e.getMessage());
             return CATEGORY_FORM_PAGE;
         }
         req.getSession().removeAttribute("category_id");

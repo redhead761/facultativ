@@ -4,17 +4,25 @@ import com.epam.facultative.actions.Action;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.*;
-import jakarta.servlet.http.*;
+import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.service.ServiceFactory;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
 import static com.epam.facultative.actions.Constants.*;
 
 public class SortAction implements Action {
+    private final GeneralService generalService;
+
+    public SortAction() {
+        generalService = ServiceFactory.getInstance().getGeneralService();
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        req.getSession().removeAttribute("select_type");
+        removeRedundantAttribute(req);
         int page = 1;
         int recordsPerPage = 5;
 
@@ -26,8 +34,6 @@ public class SortAction implements Action {
         if ((sortType = req.getParameter("sort_type")) == null)
             sortType = (String) req.getSession().getAttribute("sort_type");
 
-
-        GeneralService generalService = ServiceFactory.getInstance().getGeneralService();
         List<CourseDTO> courses = null;
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
@@ -56,5 +62,9 @@ public class SortAction implements Action {
             case TEACHER -> path = TEACHER_PAGE;
         }
         return path;
+    }
+
+    private void removeRedundantAttribute(HttpServletRequest req) {
+        req.getSession().removeAttribute("select_type");
     }
 }

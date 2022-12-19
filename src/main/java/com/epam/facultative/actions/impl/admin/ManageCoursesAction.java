@@ -49,6 +49,6 @@ public class ManageCoursesAction implements Action {
 
     private void removeRedundantAttribute(HttpServletRequest req) {
         req.getSession().removeAttribute("login");
-
+        req.getSession().removeAttribute("message");
     }
 }

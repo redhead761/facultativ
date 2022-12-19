@@ -28,13 +28,9 @@ public class AddCourseAction implements Action {
         Course course = getCourseFromParameter(req);
         try {
             adminService.addCourse(course);
-            req.setAttribute("message", "Successful");
+            req.getSession().setAttribute("message", "Successful");
         } catch (ValidateException e) {
-            req.setAttribute("title", course.getTitle());
-            req.setAttribute("duration", course.getDuration());
-            req.setAttribute("start_date", course.getStartDate());
-            req.setAttribute("description", course.getDescription());
-            req.setAttribute("message", e.getMessage());
+            req.getSession().setAttribute("message", e.getMessage());
         }
         return COURSE_FORM_PAGE;
     }

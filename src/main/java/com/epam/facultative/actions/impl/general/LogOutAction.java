@@ -1,7 +1,8 @@
 package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.actions.Constants.*;
 

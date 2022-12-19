@@ -26,7 +26,7 @@ public class DeleteCourseAction implements Action {
         req.getSession().setAttribute("courses", generalService.getAllCourses((page - 1) * recordsPerPage, recordsPerPage));
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
-//        req.getSession().setAttribute("message", "Successful");
+        req.getSession().setAttribute("message", "Successful");
         return ADMIN_PAGE;
     }
 

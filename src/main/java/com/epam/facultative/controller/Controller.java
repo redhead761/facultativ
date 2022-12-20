@@ -8,35 +8,34 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
     private static final ActionFactory ACTION_FACTORY = ActionFactory.getActionFactory();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("In do get");
-        resp.sendRedirect(process(req,resp));
-//        req.getRequestDispatcher(process(req,resp)).forward(req, resp);
+        resp.sendRedirect(process(req, resp));
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("In do post");
-        resp.sendRedirect(process(req,resp));
-//        req.getSession().removeAttribute("action");
+        resp.sendRedirect(process(req, resp));
     }
 
-    private String process(HttpServletRequest req,HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("In process");
+    private String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String actionName = req.getParameter("action");
         Action action = ACTION_FACTORY.getAction(actionName);
         try {
-            return action.execute(req,resp);
+            return action.execute(req, resp);
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
+            return "error.jsp";
         }
     }
 }

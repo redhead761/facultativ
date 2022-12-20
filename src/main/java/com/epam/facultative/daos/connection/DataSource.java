@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static com.epam.facultative.daos.connection.Constants.*;
+
 public class DataSource {
     private static final Logger logger = LoggerFactory.getLogger(DataSource.class);
     private static final HikariConfig config = new HikariConfig();
@@ -18,14 +20,14 @@ public class DataSource {
 
     static {
         Properties properties = getProperties();
-        config.setJdbcUrl(properties.getProperty(Constants.URL_PROPERTY));
-        config.setUsername(properties.getProperty(Constants.USER_NAME_PROPERTY));
-        config.setPassword(properties.getProperty(Constants.PASSWORD_PROPERTY));
-        config.setDriverClassName(properties.getProperty(Constants.DRIVER_PROPERTY));
+        config.setJdbcUrl(properties.getProperty(URL_PROPERTY));
+        config.setUsername(properties.getProperty(USER_NAME_PROPERTY));
+        config.setPassword(properties.getProperty(PASSWORD_PROPERTY));
+        config.setDriverClassName(properties.getProperty(DRIVER_PROPERTY));
 
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty("cachePrepStmts", properties.getProperty(CACHE_PREPARED_STATEMENT));
+        config.addDataSourceProperty("prepStmtCacheSize", properties.getProperty(CACHE_SIZE));
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", properties.getProperty(CACHE_SQL_LIMIT));
         ds = new HikariDataSource(config);
     }
 
@@ -43,9 +45,8 @@ public class DataSource {
                 .getResourceAsStream(Constants.DB_SETTINGS_FILE)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
         }
         return properties;
     }
-
 }

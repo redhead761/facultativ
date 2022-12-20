@@ -15,6 +15,7 @@ class Constants {
     static final String INSERT_CATEGORY = "INSERT INTO category VALUES (DEFAULT,?,?)";
     static final String DELETE_CATEGORY = "DELETE FROM category WHERE id=?";
     static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM category WHERE title=?";
+    static final String SELECT_ALL_CATEGORIES_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM category LIMIT ?,?";
 
     //SQL request for Course DAO
     static final String SELECT_All_COURSES =
@@ -39,7 +40,7 @@ class Constants {
     static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
     static final String UPDATE_USERS_COURSE = "UPDATE users_course SET grade=? WHERE course_id=? AND user_id=?";
     static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?, " +
-            "start_date=?,amount_students=?, description=?, category_id=?, status_id=? WHERE id=?";
+            "start_date=?, description=?, category_id=?, status_id=? WHERE id=?";
     static final String SELECT_COURSES_USER =
             "SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
                     " status.title AS course_status, category.title AS course_category, category.description AS category_description " +
@@ -56,6 +57,12 @@ class Constants {
                                 FROM course JOIN category ON course.category_id = category.id
                                 JOIN status ON course.status_id = status.id
                                 JOIN users_course ON course.id = users_course.course_id WHERE user_id=? AND status.id = ? LIMIT ?,?""";
+
+    static final String SELECT_ALL_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
+            " category_id,status.title AS course_status, category.title AS course_category," +
+            " category.description AS category_description " +
+            "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
+            "LIMIT ?,?";
 
     //SQL request for User DAO
     static final String SELECT_All_USERS =
@@ -79,4 +86,9 @@ class Constants {
             "surname=?, email=?, block=?, role_id=? WHERE id=?";
 
     static final String BLOCK_UNBLOCK_USER = "UPDATE user SET block=? where id=?";
+
+    static final String SELECT_USERS_BY_ROLE_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS user.id, user.login, user.password, user.name, user.surname, user.email, user.block, role.name AS role_name " +
+            "FROM user  JOIN role ON role.id = user.role_id WHERE user.role_id=? LIMIT ?,?";
+
+    static final String SELECT_FOUND_ROWS = "SELECT FOUND_ROWS()";
 }

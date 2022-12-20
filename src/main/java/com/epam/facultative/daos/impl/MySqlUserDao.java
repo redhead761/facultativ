@@ -2,7 +2,6 @@ package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.UserDao;
-import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.Role;
 import com.epam.facultative.entity.User;
 import com.epam.facultative.exception.DAOException;
@@ -67,21 +66,9 @@ public class MySqlUserDao implements UserDao {
     @Override
     public void add(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
-            int k = 0;
-            stmt.setString(++k, user.getLogin());
-            stmt.setString(++k, user.getPassword());
-            stmt.setString(++k, user.getName());
-            stmt.setString(++k, user.getSurname());
-            stmt.setString(++k, user.getEmail());
-            stmt.setBoolean(++k, user.isBlock());
-            stmt.setInt(++k, user.getRole().getId());
+             PreparedStatement stmt = con.prepareStatement(INSERT_USER)) {
+            setStatementFields(user, stmt);
             stmt.executeUpdate();
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    user.setId(generatedKeys.getInt(1));
-                }
-            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -91,15 +78,7 @@ public class MySqlUserDao implements UserDao {
     public void update(User user) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
-            int k = 0;
-            stmt.setString(++k, user.getLogin());
-            stmt.setString(++k, user.getPassword());
-            stmt.setString(++k, user.getName());
-            stmt.setString(++k, user.getSurname());
-            stmt.setString(++k, user.getEmail());
-            stmt.setBoolean(++k, user.isBlock());
-            stmt.setInt(++k, user.getRole().getId());
-            stmt.setString(++k, String.valueOf(user.getId()));
+            stmt.setString(setStatementFields(user, stmt), String.valueOf(user.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -137,8 +116,7 @@ public class MySqlUserDao implements UserDao {
     public List<User> getByRolePagination(int roleId, int offset, int numberOfRows) throws DAOException {
         List<User> users = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement("SELECT SQL_CALC_FOUND_ROWS user.id, user.login, user.password, user.name, user.surname, user.email, user.block, role.name AS role_name " +
-                     "FROM user  JOIN role ON role.id = user.role_id WHERE user.role_id=? LIMIT ?,?")) {
+             PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE_PAGINATION)) {
             int k = 0;
             stmt.setInt(++k, roleId);
             stmt.setInt(++k, offset);
@@ -149,7 +127,7 @@ public class MySqlUserDao implements UserDao {
             }
             rs.close();
 
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            rs = stmt.executeQuery(SELECT_FOUND_ROWS);
             if (rs.next())
                 this.noOfRecords = rs.getInt(1);
 
@@ -188,11 +166,14 @@ public class MySqlUserDao implements UserDao {
         }
     }
 
-
     @Override
     public int getNoOfRecords() {
         return noOfRecords;
     }
+
+    /**
+     * Helping methods
+     */
 
     private User mapRow(ResultSet rs) throws DAOException {
         try {
@@ -209,5 +190,17 @@ public class MySqlUserDao implements UserDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    private int setStatementFields(User user, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setString(++k, user.getLogin());
+        stmt.setString(++k, user.getPassword());
+        stmt.setString(++k, user.getName());
+        stmt.setString(++k, user.getSurname());
+        stmt.setString(++k, user.getEmail());
+        stmt.setBoolean(++k, user.isBlock());
+        stmt.setInt(++k, user.getRole().getId());
+        return ++k;
     }
 }

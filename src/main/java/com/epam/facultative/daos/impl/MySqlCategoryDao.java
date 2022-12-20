@@ -3,7 +3,6 @@ package com.epam.facultative.daos.impl;
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.entity.Category;
-import com.epam.facultative.entity.Course;
 import com.epam.facultative.exception.DAOException;
 
 import java.sql.*;
@@ -66,16 +65,9 @@ public class MySqlCategoryDao implements CategoryDao {
     @Override
     public void add(Category category) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(INSERT_CATEGORY, Statement.RETURN_GENERATED_KEYS)) {
-            int k = 0;
-            stmt.setString(++k, category.getTitle());
-            stmt.setString(++k, category.getDescription());
+             PreparedStatement stmt = con.prepareStatement(INSERT_CATEGORY)) {
+            setStatementFields(category, stmt);
             stmt.executeUpdate();
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    category.setId(generatedKeys.getInt(1));
-                }
-            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -85,10 +77,7 @@ public class MySqlCategoryDao implements CategoryDao {
     public void update(Category category) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_CATEGORY)) {
-            int k = 0;
-            stmt.setString(++k, category.getTitle());
-            stmt.setString(++k, category.getDescription());
-            stmt.setString(++k, String.valueOf(category.getId()));
+            stmt.setString(setStatementFields(category, stmt), String.valueOf(category.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -106,13 +95,11 @@ public class MySqlCategoryDao implements CategoryDao {
         }
     }
 
-
     @Override
     public List<Category> getAllPagination(int offset, int numberOfRows) throws DAOException {
-        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM category LIMIT ?,?";
         List<Category> categories = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)) {
+             PreparedStatement stmt = con.prepareStatement(SELECT_ALL_CATEGORIES_PAGINATION)) {
             int k = 0;
             stmt.setInt(++k, offset);
             stmt.setInt(++k, numberOfRows);
@@ -122,7 +109,7 @@ public class MySqlCategoryDao implements CategoryDao {
             }
             rs.close();
 
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
+            rs = stmt.executeQuery(SELECT_FOUND_ROWS);
             if (rs.next())
                 this.noOfRecords = rs.getInt(1);
         } catch (SQLException e) {
@@ -136,16 +123,21 @@ public class MySqlCategoryDao implements CategoryDao {
         return noOfRecords;
     }
 
+    /**
+     * Helping methods
+     */
+    private Category mapRow(ResultSet rs) throws SQLException {
+        Category category = new Category();
+        category.setId(rs.getInt(CATEGORY_ID));
+        category.setTitle(rs.getString(CATEGORY_TITLE));
+        category.setDescription(rs.getString(CATEGORY_DESCRIPTION));
+        return category;
+    }
 
-    private Category mapRow(ResultSet rs) throws DAOException {
-        try {
-            Category category = new Category();
-            category.setId(rs.getInt(CATEGORY_ID));
-            category.setTitle(rs.getString(CATEGORY_TITLE));
-            category.setDescription(rs.getString(CATEGORY_DESCRIPTION));
-            return category;
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
+    private int setStatementFields(Category category, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setString(++k, category.getTitle());
+        stmt.setString(++k, category.getDescription());
+        return ++k;
     }
 }

@@ -13,7 +13,9 @@ public abstract class DaoFactory {
     }
 
     public abstract CategoryDao getCategoryDao();
+
     public abstract CourseDao getCourseDao();
+
     public abstract UserDao getUserDao();
 
-   }
+}

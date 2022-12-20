@@ -1,6 +1,5 @@
 package com.epam.facultative.daos;
 
-import com.epam.facultative.entity.Category;
 import com.epam.facultative.entity.User;
 import com.epam.facultative.exception.DAOException;
 
@@ -15,5 +14,5 @@ public interface UserDao extends Dao<User> {
 
     void blockUnblockStudent(int userId, boolean block) throws DAOException;
 
-    public int getNoOfRecords();
+    int getNoOfRecords();
 }

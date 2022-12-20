@@ -66,20 +66,9 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public void add(Course course) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(INSERT_COURSE, Statement.RETURN_GENERATED_KEYS)) {
-            int k = 0;
-            stmt.setString(++k, course.getTitle());
-            stmt.setInt(++k, course.getDuration());
-            stmt.setDate(++k, Date.valueOf(course.getStartDate()));
-            stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, course.getCategory().getId());
-            stmt.setInt(++k, course.getStatus().getId());
+             PreparedStatement stmt = con.prepareStatement(INSERT_COURSE)) {
+            setStatementFields(course, stmt);
             stmt.executeUpdate();
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    course.setId(generatedKeys.getInt(1));
-                }
-            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -89,15 +78,7 @@ public class MySqlCourseDao implements CourseDao {
     public void update(Course course) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
-            int k = 0;
-            stmt.setString(++k, course.getTitle());
-            stmt.setInt(++k, course.getDuration());
-            stmt.setDate(++k, Date.valueOf(course.getStartDate()));
-            stmt.setInt(++k, course.getAmountStudents());
-            stmt.setString(++k, course.getDescription());
-            stmt.setInt(++k, course.getCategory().getId());
-            stmt.setInt(++k, course.getStatus().getId());
-            stmt.setString(++k, String.valueOf(course.getId()));
+            stmt.setString(setStatementFields(course, stmt), String.valueOf(course.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -128,11 +109,7 @@ public class MySqlCourseDao implements CourseDao {
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
-            rs.close();
-
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -152,11 +129,7 @@ public class MySqlCourseDao implements CourseDao {
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
-            rs.close();
-
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -167,8 +140,9 @@ public class MySqlCourseDao implements CourseDao {
     public void addUserToCourse(int courseId, int userId) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_USERS_COURSE)) {
-            stmt.setInt(1, courseId);
-            stmt.setInt(2, userId);
+            int k = 0;
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, userId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -179,9 +153,10 @@ public class MySqlCourseDao implements CourseDao {
     public void updateUsersCourse(int courseId, int userId, int grade) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_USERS_COURSE)) {
-            stmt.setInt(1, grade);
-            stmt.setInt(2, courseId);
-            stmt.setInt(3, userId);
+            int k = 0;
+            stmt.setInt(++k, grade);
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, userId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -190,19 +165,19 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public int getGrade(int courseId, int userId) throws DAOException {
-        int grade = 0;
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(GET_GRADE)) {
-            stmt.setInt(1, courseId);
-            stmt.setInt(2, userId);
+            int k = 0;
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, userId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                grade = rs.getInt(COURSE_GRADE);
+                return rs.getInt(COURSE_GRADE);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return grade;
+        return 0;
     }
 
     @Override
@@ -219,11 +194,7 @@ public class MySqlCourseDao implements CourseDao {
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
-            rs.close();
-
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -243,26 +214,15 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public List<Course> getAllPagination(int offset, int numberOfRows) throws DAOException {
-        String query = "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
-                " category_id,status.title AS course_status, category.title AS course_category," +
-                " category.description AS category_description " +
-                "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
-                "LIMIT ?,?";
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)) {
-            int k = 0;
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+             PreparedStatement stmt = con.prepareStatement(SELECT_ALL_PAGINATION)) {
+            setLimitRows(stmt, offset, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
-            rs.close();
-
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -276,32 +236,24 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
-        String query = "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
-                " category_id,status.title AS course_status, category.title AS course_category," +
-                " category.description AS category_description " +
-                "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
-                "ORDER BY " + sortBy + " LIMIT ?,?";
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)) {
-            int k = 0;
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+             PreparedStatement stmt = con.prepareStatement(getQuery(sortBy))) {
+            setLimitRows(stmt, offset, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRow(rs));
             }
-            rs.close();
-
-            rs = stmt.executeQuery("SELECT FOUND_ROWS()");
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
         return courses;
     }
 
+    /**
+     * Helping methods
+     */
     private Course mapRow(ResultSet rs) throws DAOException {
         try {
             Course course = new Course();
@@ -329,5 +281,38 @@ public class MySqlCourseDao implements CourseDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+    }
+
+    private String getQuery(String sortBy) {
+        return "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
+                " category_id,status.title AS course_status, category.title AS course_category," +
+                " category.description AS category_description " +
+                "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
+                "ORDER BY " + sortBy + " LIMIT ?,?";
+    }
+
+    private int setStatementFields(Course course, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setString(++k, course.getTitle());
+        stmt.setInt(++k, course.getDuration());
+        stmt.setDate(++k, Date.valueOf(course.getStartDate()));
+        stmt.setString(++k, course.getDescription());
+        stmt.setInt(++k, course.getCategory().getId());
+        stmt.setInt(++k, course.getStatus().getId());
+        return ++k;
+    }
+
+
+    private void setFoundRows(ResultSet rs, PreparedStatement stmt) throws SQLException {
+        rs.close();
+        rs = stmt.executeQuery(SELECT_FOUND_ROWS);
+        if (rs.next())
+            this.noOfRecords = rs.getInt(1);
+    }
+
+    private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows) throws SQLException {
+        int k = 0;
+        stmt.setInt(++k, offset);
+        stmt.setInt(++k, numberOfRows);
     }
 }

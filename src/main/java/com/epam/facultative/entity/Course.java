@@ -1,9 +1,13 @@
 package com.epam.facultative.entity;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Course {
+public class Course implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private int id;
     private String title;
     private int duration;

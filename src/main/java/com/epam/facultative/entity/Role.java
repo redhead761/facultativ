@@ -1,7 +1,5 @@
 package com.epam.facultative.entity;
 
-import java.util.Arrays;
-
 public enum Role {
     ADMIN(1),
     TEACHER(2),

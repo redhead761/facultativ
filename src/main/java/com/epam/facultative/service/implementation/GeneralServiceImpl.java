@@ -1,17 +1,22 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.daos.*;
-import com.epam.facultative.dto.*;
-import com.epam.facultative.entity.*;
+import com.epam.facultative.daos.CategoryDao;
+import com.epam.facultative.daos.CourseDao;
+import com.epam.facultative.daos.UserDao;
+import com.epam.facultative.dto.Converter;
+import com.epam.facultative.dto.CourseDTO;
+import com.epam.facultative.dto.UserDTO;
+import com.epam.facultative.entity.Category;
+import com.epam.facultative.entity.Course;
+import com.epam.facultative.entity.Role;
+import com.epam.facultative.entity.User;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.epam.facultative.utils.HashPassword.verify;
 
@@ -20,7 +25,6 @@ public class GeneralServiceImpl implements GeneralService {
     private final UserDao userDao;
     private final CategoryDao categoryDao;
     private final Converter converter;
-
 
     public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao) {
         this.courseDao = courseDao;

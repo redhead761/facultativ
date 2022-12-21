@@ -105,13 +105,14 @@ class MySqlUserDaoTest {
         assertEquals(1, userDao.getAll().size());
     }
 
-//    @Test
-//    void testGetUserByRole() throws DAOException {
-//        userDao.add(testUser);
-//        List<User> users = userDao.getByRole(testUser.getRole().getId());
-//        assertEquals(testUser, users.get(0));
-//        userDao.delete(testUser.getId());
-//    }
+    @Disabled
+    @Test
+    void testGetUserByRole() throws DAOException {
+        userDao.add(testUser);
+        List<User> users = userDao.getByRole(testUser.getRole().getId());
+        assertEquals(testUser, users.get(0));
+        userDao.delete(testUser.getId());
+    }
 
     @Test
     void testGetUserByCourse() throws DAOException {

@@ -102,21 +102,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-    private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
+    private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            List<User> users;
-            try {
-                users = userDao.getUsersByCourse(course.getId());
-                for (User user : users) {
-                    if (user.getRole().equals(Role.TEACHER)) {
-                        UserDTO teacher = converter.userToDTO(user);
-                        coursesDTO.add(converter.courseToDTO(course, teacher));
-                    }
-                }
-            } catch (DAOException e) {
-                throw new ServiceException(e);
-            }
+            coursesDTO.add(converter.courseToDTO(course));
         }
         return coursesDTO;
     }

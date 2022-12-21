@@ -199,7 +199,7 @@ public class AdminServiceImpl implements AdminService {
     public CourseDTO getCourse(int id) throws ServiceException {
         try {
             Course course = courseDao.getById(id);
-            return converter.courseToDTO(course, null);
+            return converter.courseToDTO(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

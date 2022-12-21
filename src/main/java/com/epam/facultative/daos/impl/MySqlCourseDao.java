@@ -274,9 +274,9 @@ public class MySqlCourseDao implements CourseDao {
     private Category mapRowCategory(ResultSet rs) throws DAOException {
         try {
             Category category = new Category();
-            category.setId(rs.getInt(COURSE_CATEGORY_ID));
-            category.setTitle(rs.getString(COURSE_CATEGORY));
-            category.setDescription(rs.getString(COURSE_CATEGORY_DESCRIPTION));
+            category.setId(rs.getInt(Fields.CATEGORY_ID));
+            category.setTitle(rs.getString(CATEGORY_TITLE));
+            category.setDescription(rs.getString(Fields.CATEGORY_DESCRIPTION));
             return category;
         } catch (SQLException e) {
             throw new DAOException(e);

@@ -11,7 +11,6 @@ public class ServiceFactory {
     private final TeacherService teacherService;
     private final StudentService studentService;
 
-
     public ServiceFactory() {
         this.generalService = new GeneralServiceImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getUserDao(),

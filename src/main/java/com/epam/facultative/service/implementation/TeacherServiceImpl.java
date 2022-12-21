@@ -59,7 +59,7 @@ public class TeacherServiceImpl implements TeacherService {
         try {
             courses = courseDao.getByUser(teacherId, offset, numberOfRows);
             for (Course course : courses) {
-                coursesDTO.add(converter.courseToDTO(course, null));
+                coursesDTO.add(converter.courseToDTO(course));
             }
         } catch (DAOException e) {
             throw new ServiceException(e);

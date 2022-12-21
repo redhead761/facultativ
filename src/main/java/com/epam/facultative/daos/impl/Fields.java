@@ -9,25 +9,23 @@ package com.epam.facultative.daos.impl;
 class Fields {
 
     //Category fields
-    static final String CATEGORY_ID = "id";
-    static final String CATEGORY_TITLE = "title";
-    static final String CATEGORY_DESCRIPTION = "description";
+    static final String CATEGORY_ID = "category.id";
+    static final String CATEGORY_TITLE = "category.title";
+    static final String CATEGORY_DESCRIPTION = "category.description";
 
     //Course fields
-    static final String COURSE_ID = "id";
-    static final String COURSE_TITLE = "title";
-    static final String COURSE_DURATION = "duration";
-    static final String COURSE_START_DATE = "start_date";
-    static final String COURSE_AMOUNT_STUDENTS = "amount_students";
-    static final String COURSE_DESCRIPTION = "description";
-    static final String COURSE_CATEGORY_ID = "category_id";
-    static final String COURSE_STATUS = "course_status";
-    static final String COURSE_CATEGORY = "course_category";
-    static final String COURSE_CATEGORY_DESCRIPTION = "category_description";
+    static final String COURSE_ID = "course.id";
+    static final String COURSE_TITLE = "course.title";
+    static final String COURSE_DURATION = "course.duration";
+    static final String COURSE_START_DATE = "course.start_date";
+    static final String COURSE_AMOUNT_STUDENTS = "course.amount_students";
+    static final String COURSE_DESCRIPTION = "course.description";
+    static final String CATEGORY_ID = "category.id";
+    static final String COURSE_STATUS = "status.title";
     static final String COURSE_GRADE = "grade";
 
     //User fields
-    static final String USER_ID = "id";
+    static final String USER_ID = "user.id";
     static final String USER_LOGIN = "login";
     static final String USER_PASSWORD = "password";
     static final String USER_FIRST_NAME = "name";

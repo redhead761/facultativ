@@ -114,15 +114,15 @@ class MySqlUserDaoTest {
         userDao.delete(testUser.getId());
     }
 
-    @Test
-    void testGetUserByCourse() throws DAOException {
-        userDao.add(testUser);
-        categoryDao.add(testCategory);
-        testCourse.setCategory(testCategory);
-        courseDao.add(testCourse);
-
-        courseDao.addUserToCourse(testCourse.getId(), testUser.getId());
-        List<User> user = userDao.getUsersByCourse(testCourse.getId());
-        assertEquals(testUser, user.get(0));
-    }
+//    @Test
+//    void testGetUserByCourse() throws DAOException {
+//        userDao.add(testUser);
+//        categoryDao.add(testCategory);
+//        testCourse.setCategory(testCategory);
+//        courseDao.add(testCourse);
+//
+//        courseDao.addUserToCourse(testCourse.getId(), testUser.getId());
+//        List<User> user = userDao.getUsersByCourse(testCourse.getId());
+//        assertEquals(testUser, user.get(0));
+//    }
 }

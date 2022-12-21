@@ -16,18 +16,18 @@ public class Converter {
         return userDTO;
     }
 
-    public CourseDTO courseToDTO(Course course, UserDTO userDTO) {
-        CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setId(course.getId());
-        courseDTO.setTitle(course.getTitle());
-        courseDTO.setDuration(course.getDuration());
-        courseDTO.setStartDate(course.getStartDate());
-        courseDTO.setAmountStudents(course.getAmountStudents());
-        courseDTO.setDescription(course.getDescription());
-        courseDTO.setCategory(course.getCategory());
-        courseDTO.setStatus(course.getStatus());
-        courseDTO.setTeacher(userDTO);
-        return courseDTO;
+    public CourseDTO courseToDTO(Course course) {
+        return CourseDTO.builder()
+                .id(course.getId())
+                .title(course.getTitle())
+                .duration(course.getDuration())
+                .startDate(course.getStartDate())
+                .amountStudents(course.getAmountStudents())
+                .description(course.getDescription())
+                .category(course.getCategory())
+                .status(course.getStatus())
+                .teacher(userToDTO(course.getTeacher()))
+                .build();
     }
 
     public UserDTO userToStudent(User user, CourseDTO courseDTO, int grade) {

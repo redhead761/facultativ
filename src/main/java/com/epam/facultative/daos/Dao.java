@@ -16,5 +16,9 @@ public interface Dao<T> {
     void update(T t) throws DAOException;
 
     void delete(int id) throws DAOException;
+
+    List<T> getAllPagination(int offset, int numberOfRows) throws DAOException;
+
+    int getNoOfRecords();
 }
 

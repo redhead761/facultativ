@@ -67,15 +67,14 @@ CREATE TABLE IF NOT EXISTS `user` (
 DROP TABLE IF EXISTS `student` ;
 
 CREATE TABLE IF NOT EXISTS `student` (
-                                         `id` INT NOT NULL AUTO_INCREMENT,
+                                         `user_id` INT NOT NULL ,
                                          `course_number` INT UNSIGNED NULL,
                                          `block` TINYINT NOT NULL DEFAULT 0,
-                                         `user_id` INT NOT NULL,
-                                         PRIMARY KEY (`id`),
+                                         PRIMARY KEY (`user_id`),
     INDEX `fk_student_user_idx` (`user_id` ASC) VISIBLE,
     CONSTRAINT `fk_student_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `facultative`.`user` (`id`)
+    REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -86,14 +85,13 @@ CREATE TABLE IF NOT EXISTS `student` (
 DROP TABLE IF EXISTS `teacher` ;
 
 CREATE TABLE IF NOT EXISTS `teacher` (
-                                         `id` INT NOT NULL AUTO_INCREMENT,
-                                         `rank` VARCHAR(45) NULL,
-    `user_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
+                                         `user_id` INT NOT NULL,
+                                         `degree` VARCHAR(45) NULL,
+    PRIMARY KEY (`user_id`),
     INDEX `fk_teacher_user1_idx` (`user_id` ASC) VISIBLE,
     CONSTRAINT `fk_teacher_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `facultative`.`user` (`id`)
+    REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 

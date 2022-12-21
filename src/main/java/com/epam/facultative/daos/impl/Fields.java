@@ -30,11 +30,11 @@ class Fields {
     static final String USER_EMAIL = "user.email";
 
     //Teacher fields
-    static final String TEACHER_ID = "teacher.id";
-    static final String TEACHER_RANK = "teacher.rank";
+    static final String TEACHER_ID = "user_id";
+    static final String TEACHER_DEGREE = "teacher.degree";
 
     //Student fields
-    static final String STUDENT_ID = "student.id";
+    static final String STUDENT_ID = "user_id";
     static final String STUDENT_COURSE_NUMBER = "student.course_number";
     static final String STUDENT_BLOCK = "student.block";
 

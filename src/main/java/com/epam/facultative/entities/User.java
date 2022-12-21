@@ -3,13 +3,14 @@ package com.epam.facultative.entities;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode(of = {"id", "login"})
-@Builder
+@SuperBuilder
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -3,6 +3,7 @@ package com.epam.facultative.daos.impl;
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.entities.Role;
+import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.DAOException;
 
@@ -97,73 +98,8 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public List<User> getByRole(int roleId) throws DAOException {
-        List<User> users = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE)) {
-            stmt.setInt(1, roleId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users.add(mapRow(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return users;
-    }
-
-    @Override
-    public List<User> getByRolePagination(int roleId, int offset, int numberOfRows) throws DAOException {
-        List<User> users = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_USERS_BY_ROLE_PAGINATION)) {
-            int k = 0;
-            stmt.setInt(++k, roleId);
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users.add(mapRow(rs));
-            }
-            rs.close();
-
-            rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
-
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return users;
-    }
-
-    @Override
-    public List<User> getUsersByCourse(int courseId) throws DAOException {
-        List<User> users = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_USERS_COURSE)) {
-            stmt.setInt(1, courseId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users.add(mapRow(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return users;
-    }
-
-    @Override
-    public void blockUnblockStudent(int userId, boolean block) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(BLOCK_UNBLOCK_USER)) {
-            int k = 0;
-            stmt.setBoolean(++k, block);
-            stmt.setInt(++k, userId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
+    public List<User> getAllPagination(int offset, int numberOfRows) throws DAOException {
+        return null;
     }
 
     @Override
@@ -175,21 +111,15 @@ public class MySqlUserDao implements UserDao {
      * Helping methods
      */
 
-    private User mapRow(ResultSet rs) throws DAOException {
-        try {
-            User user = new User();
-            user.setId(rs.getInt(USER_ID));
-            user.setLogin(rs.getString(USER_LOGIN));
-            user.setPassword(rs.getString(USER_PASSWORD));
-            user.setName(rs.getString(USER_FIRST_NAME));
-            user.setSurname(rs.getString(USER_FAMILY_NAME));
-            user.setEmail(rs.getString(USER_EMAIL));
-            user.setBlock(rs.getBoolean(USER_IS_BLOCK));
-            user.setRole(Role.valueOf(rs.getString(USER_ROLE_NAME)));
-            return user;
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
+    private User mapRow(ResultSet rs) throws SQLException {
+        return User.builder()
+                .id(rs.getInt(TEACHER_ID))
+                .login(rs.getString(USER_LOGIN))
+                .password(rs.getString(USER_PASSWORD))
+                .name(rs.getString(USER_FIRST_NAME))
+                .surname(rs.getString(USER_FAMILY_NAME))
+                .email(rs.getString(USER_EMAIL))
+                .build();
     }
 
     private int setStatementFields(User user, PreparedStatement stmt) throws SQLException {
@@ -199,7 +129,6 @@ public class MySqlUserDao implements UserDao {
         stmt.setString(++k, user.getName());
         stmt.setString(++k, user.getSurname());
         stmt.setString(++k, user.getEmail());
-        stmt.setBoolean(++k, user.isBlock());
         stmt.setInt(++k, user.getRole().getId());
         return ++k;
     }

@@ -23,7 +23,7 @@ public class MySqlCourseDao implements CourseDao {
              Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery(SELECT_All_COURSES);
             while (rs.next()) {
-                courses.add(mapRow(rs));
+                courses.add(mapRowCourse(rs));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -39,7 +39,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                course = mapRow(rs);
+                course = mapRowCourse(rs);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -55,7 +55,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                course = mapRow(rs);
+                course = mapRowCourse(rs);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -107,7 +107,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(++k, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                courses.add(mapRow(rs));
+                courses.add(mapRowCourse(rs));
             }
             setFoundRows(rs, stmt);
         } catch (SQLException e) {
@@ -127,7 +127,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(++k, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                courses.add(mapRow(rs));
+                courses.add(mapRowCourse(rs));
             }
             setFoundRows(rs, stmt);
         } catch (SQLException e) {
@@ -172,7 +172,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(++k, userId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(COURSE_GRADE);
+                return rs.getInt(GRADE);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -192,7 +192,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(++k, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                courses.add(mapRow(rs));
+                courses.add(mapRowCourse(rs));
             }
             setFoundRows(rs, stmt);
         } catch (SQLException e) {
@@ -220,7 +220,7 @@ public class MySqlCourseDao implements CourseDao {
             setLimitRows(stmt, offset, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                courses.add(mapRow(rs));
+                courses.add(mapRowCourse(rs));
             }
             setFoundRows(rs, stmt);
         } catch (SQLException e) {
@@ -242,7 +242,7 @@ public class MySqlCourseDao implements CourseDao {
             setLimitRows(stmt, offset, numberOfRows);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                courses.add(mapRow(rs));
+                courses.add(mapRowCourse(rs));
             }
             setFoundRows(rs, stmt);
         } catch (SQLException e) {
@@ -254,33 +254,38 @@ public class MySqlCourseDao implements CourseDao {
     /**
      * Helping methods
      */
-    private Course mapRow(ResultSet rs) throws DAOException {
-        try {
-            Course course = new Course();
-            course.setId(rs.getInt(COURSE_ID));
-            course.setTitle(rs.getString(COURSE_TITLE));
-            course.setDuration(rs.getInt(COURSE_DURATION));
-            course.setStartDate(rs.getDate(COURSE_START_DATE).toLocalDate());
-            course.setAmountStudents(rs.getInt(COURSE_AMOUNT_STUDENTS));
-            course.setDescription(rs.getString(COURSE_DESCRIPTION));
-            course.setCategory(mapRowCategory(rs));
-            course.setStatus(Status.valueOf(rs.getString(COURSE_STATUS)));
-            return course;
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
+    private Course mapRowCourse(ResultSet rs) throws SQLException {
+        return Course.builder()
+                .id(rs.getInt(COURSE_ID))
+                .title(rs.getString(COURSE_TITLE))
+                .duration(rs.getInt(COURSE_DURATION))
+                .startDate(rs.getDate(COURSE_START_DATE).toLocalDate())
+                .amountStudents(rs.getInt(COURSE_AMOUNT_STUDENTS))
+                .description(rs.getString(COURSE_DESCRIPTION))
+                .category(mapRowCategory(rs))
+                .teacher(mapRowTeacher(rs))
+                .build();
     }
 
-    private Category mapRowCategory(ResultSet rs) throws DAOException {
-        try {
-            Category category = new Category();
-            category.setId(rs.getInt(Fields.CATEGORY_ID));
-            category.setTitle(rs.getString(CATEGORY_TITLE));
-            category.setDescription(rs.getString(Fields.CATEGORY_DESCRIPTION));
-            return category;
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
+    private Category mapRowCategory(ResultSet rs) throws SQLException {
+        return Category.builder()
+                .id(rs.getInt(CATEGORY_ID))
+                .title(rs.getString(CATEGORY_TITLE))
+                .description(rs.getString(CATEGORY_DESCRIPTION))
+                .build();
+    }
+
+    private Teacher mapRowTeacher(ResultSet rs) throws SQLException {
+        return Teacher.builder()
+                .id(rs.getInt(TEACHER_ID))
+                .login(rs.getString(USER_LOGIN))
+                .password(rs.getString(USER_PASSWORD))
+                .name(rs.getString(USER_FIRST_NAME))
+                .surname(rs.getString(USER_FAMILY_NAME))
+                .email(rs.getString(USER_EMAIL))
+                .role(Role.TEACHER)
+                .degree(rs.getString(TEACHER_DEGREE))
+                .build();
     }
 
     private String getQuery(String sortBy) {

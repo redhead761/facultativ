@@ -127,11 +127,11 @@ public class MySqlCategoryDao implements CategoryDao {
      * Helping methods
      */
     private Category mapRow(ResultSet rs) throws SQLException {
-        Category category = new Category();
-        category.setId(rs.getInt(CATEGORY_ID));
-        category.setTitle(rs.getString(CATEGORY_TITLE));
-        category.setDescription(rs.getString(CATEGORY_DESCRIPTION));
-        return category;
+        return Category.builder()
+                .id(rs.getInt(CATEGORY_ID))
+                .title(rs.getString(CATEGORY_TITLE))
+                .description(rs.getString(CATEGORY_DESCRIPTION))
+                .build();
     }
 
     private int setStatementFields(Category category, PreparedStatement stmt) throws SQLException {

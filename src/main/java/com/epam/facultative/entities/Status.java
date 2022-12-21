@@ -1,6 +1,4 @@
-package com.epam.facultative.entity;
-
-import java.util.Arrays;
+package com.epam.facultative.entities;
 
 public enum Status {
 

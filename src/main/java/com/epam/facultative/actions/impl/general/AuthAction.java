@@ -2,7 +2,7 @@ package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entity.Status;
+import com.epam.facultative.entities.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;

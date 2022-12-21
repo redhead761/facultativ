@@ -1,6 +1,6 @@
 package com.epam.facultative.daos.impl;
 
-import com.epam.facultative.entity.*;
+import com.epam.facultative.entities.*;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.BufferedReader;

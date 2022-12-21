@@ -2,7 +2,7 @@ package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.entity.*;
+import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.DAOException;
 
 import java.sql.*;

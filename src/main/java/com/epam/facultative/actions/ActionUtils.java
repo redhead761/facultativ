@@ -1,7 +1,7 @@
 package com.epam.facultative.actions;
 
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.entity.Role;
+import com.epam.facultative.entities.Role;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.GeneralService;

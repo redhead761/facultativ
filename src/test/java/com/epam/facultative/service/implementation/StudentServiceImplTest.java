@@ -2,7 +2,7 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.daos.CourseDao;
 import com.epam.facultative.daos.UserDao;
-import com.epam.facultative.entity.User;
+import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;

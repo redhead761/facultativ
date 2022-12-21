@@ -1,6 +1,6 @@
 package com.epam.facultative.daos;
 
-import com.epam.facultative.entity.Category;
+import com.epam.facultative.entities.Category;
 import com.epam.facultative.exception.DAOException;
 
 import java.util.List;

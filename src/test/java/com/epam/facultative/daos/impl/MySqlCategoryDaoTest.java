@@ -1,7 +1,7 @@
 package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.*;
-import com.epam.facultative.entity.Category;
+import com.epam.facultative.entities.Category;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;

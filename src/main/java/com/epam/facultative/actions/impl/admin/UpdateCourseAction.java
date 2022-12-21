@@ -1,9 +1,9 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.entity.Category;
-import com.epam.facultative.entity.Course;
-import com.epam.facultative.entity.Status;
+import com.epam.facultative.entities.Category;
+import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;

@@ -1,7 +1,7 @@
 package com.epam.facultative.dto;
 
-import com.epam.facultative.entity.Course;
-import com.epam.facultative.entity.User;
+import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.User;
 
 public class Converter {
     public UserDTO userToDTO(User user) {

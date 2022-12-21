@@ -1,7 +1,7 @@
 package com.epam.facultative.daos;
 
-import com.epam.facultative.entity.Course;
-import com.epam.facultative.entity.Status;
+import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.Status;
 import com.epam.facultative.exception.DAOException;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.epam.facultative.filters;
 
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entity.Role;
+import com.epam.facultative.entities.Role;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,19 +1,14 @@
 package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entity.User;
+import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.actions.Constants.*;
 

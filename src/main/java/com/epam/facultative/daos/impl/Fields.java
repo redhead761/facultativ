@@ -18,6 +18,7 @@ class Fields {
     static final String COURSE_TITLE = "course.title";
     static final String COURSE_DURATION = "course.duration";
     static final String COURSE_START_DATE = "course.start_date";
+    static final String COURSE_AMOUNT_STUDENTS = "course.amount_students";
     static final String COURSE_DESCRIPTION = "course.description";
 
     //User fields

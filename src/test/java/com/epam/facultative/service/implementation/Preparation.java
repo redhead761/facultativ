@@ -1,6 +1,6 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.entity.*;
+import com.epam.facultative.entities.*;
 
 import java.time.LocalDate;
 

@@ -2,10 +2,9 @@ package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entity.Category;
-import com.epam.facultative.entity.Course;
-import com.epam.facultative.entity.User;
-import com.epam.facultative.exception.DAOException;
+import com.epam.facultative.entities.Category;
+import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 

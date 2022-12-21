@@ -1,4 +1,4 @@
-package com.epam.facultative.entity;
+package com.epam.facultative.entities;
 
 public enum Role {
     ADMIN(1),

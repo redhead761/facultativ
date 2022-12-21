@@ -2,7 +2,7 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.daos.*;
 import com.epam.facultative.dto.*;
-import com.epam.facultative.entity.*;
+import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.*;
 import com.epam.facultative.service.AdminService;
 

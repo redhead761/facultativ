@@ -1,6 +1,6 @@
 package com.epam.facultative.dto;
 
-import com.epam.facultative.entity.Role;
+import com.epam.facultative.entities.Role;
 
 import java.util.Objects;
 

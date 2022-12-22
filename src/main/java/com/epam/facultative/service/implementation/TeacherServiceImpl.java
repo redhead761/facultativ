@@ -1,46 +1,44 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entities.Course;
 import com.epam.facultative.entities.Role;
+import com.epam.facultative.entities.Student;
 import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.repositories.TeacherRepository;
 import com.epam.facultative.service.TeacherService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherServiceImpl implements TeacherService {
-    private final CourseDao courseDao;
-    private final UserDao userDao;
+    private final TeacherRepository teacherRepository;
     private final Converter converter;
 
-    public TeacherServiceImpl(CourseDao courseDao, UserDao userDao) {
-        this.courseDao = courseDao;
-        this.userDao = userDao;
+    public TeacherServiceImpl(TeacherRepository teacherRepository) {
+        this.teacherRepository = teacherRepository;
         this.converter = new Converter();
     }
 
     @Override
     public void grading(int courseId, int userId, int grade) throws ServiceException {
         try {
-            courseDao.updateUsersCourse(courseId, userId, grade);
+            teacherRepository.grading(courseId, userId, grade);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<UserDTO> getStudentsByCourse(int courseId) throws ServiceException {
+    public List<UserDTO> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws ServiceException {
         List<UserDTO> students = new ArrayList<>();
-        List<User> users;
+        List<Student> users;
         try {
-            users = userDao.getUsersByCourse(courseId);
+            users = teacherRepository.getStudentsByCourse(courseId, offset, numberOfRows);
             for (User user : users) {
                 if (user.getRole().equals(Role.STUDENT))
                     students.add(converter.userToDTO(user));
@@ -57,7 +55,7 @@ public class TeacherServiceImpl implements TeacherService {
         List<Course> courses;
 
         try {
-            courses = courseDao.getByUser(teacherId, offset, numberOfRows);
+            courses = teacherRepository.getTeacherCourses(teacherId, offset, numberOfRows);
             for (Course course : courses) {
                 coursesDTO.add(converter.courseToDTO(course));
             }
@@ -69,6 +67,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public int getNoOfRecordsCourses() {
-        return courseDao.getNoOfRecords();
+        return teacherRepository.getNoOfRecordsCourses();
     }
 }

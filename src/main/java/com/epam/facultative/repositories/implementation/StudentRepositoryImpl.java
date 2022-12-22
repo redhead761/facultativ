@@ -61,6 +61,11 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
+    public Student getByLogin(String login) throws DAOException {
+        return studentDao.getByName(login);
+    }
+
+    @Override
     public int getNoOfRecordsCourses() {
         return courseDao.getNoOfRecords();
     }

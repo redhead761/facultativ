@@ -15,6 +15,8 @@ public interface AdminRepository {
 
     Course getCourse(int id) throws DAOException;
 
+    Course getCourseByTitle(String title) throws DAOException;
+
     //Category
     void addCategory(Category category) throws DAOException;
 
@@ -25,6 +27,8 @@ public interface AdminRepository {
     List<Category> getAllCategoriesPagination(int offset, int numberOfRows) throws DAOException;
 
     Category getCategory(int id) throws DAOException;
+
+    Category getCategoryByTitle(String title) throws DAOException;
 
     int getNoOfRecordsCategories();
 
@@ -42,6 +46,8 @@ public interface AdminRepository {
     List<Teacher> getAllTeachersPagination(int offset, int noOfRecords) throws DAOException;
 
     Teacher getTeacher(int id) throws DAOException;
+
+    User getUserByLogin(String login) throws DAOException;
 
     int getNoOfRecordsTeachers();
 

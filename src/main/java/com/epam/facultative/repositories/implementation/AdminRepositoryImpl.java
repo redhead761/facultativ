@@ -43,6 +43,11 @@ public class AdminRepositoryImpl implements AdminRepository {
     }
 
     @Override
+    public Course getCourseByTitle(String title) throws DAOException {
+        return courseDao.getByName(title);
+    }
+
+    @Override
     public void addCategory(Category category) throws DAOException {
         categoryDao.add(category);
     }
@@ -65,6 +70,11 @@ public class AdminRepositoryImpl implements AdminRepository {
     @Override
     public Category getCategory(int id) throws DAOException {
         return categoryDao.getById(id);
+    }
+
+    @Override
+    public Category getCategoryByTitle(String title) throws DAOException {
+        return categoryDao.getByName(title);
     }
 
     @Override
@@ -115,6 +125,11 @@ public class AdminRepositoryImpl implements AdminRepository {
     @Override
     public Teacher getTeacher(int id) throws DAOException {
         return teacherDao.getById(id);
+    }
+
+    @Override
+    public User getUserByLogin(String login) throws DAOException {
+        return userDao.getByName(login);
     }
 
     @Override

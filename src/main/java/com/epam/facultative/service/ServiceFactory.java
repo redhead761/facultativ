@@ -1,6 +1,7 @@
 package com.epam.facultative.service;
 
 import com.epam.facultative.daos.DaoFactory;
+import com.epam.facultative.repositories.RepositoryFactory;
 import com.epam.facultative.service.implementation.*;
 
 public class ServiceFactory {
@@ -12,16 +13,10 @@ public class ServiceFactory {
     private final StudentService studentService;
 
     public ServiceFactory() {
-        this.generalService = new GeneralServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao(),
-                DaoFactory.getInstance().getCategoryDao());
-        this.adminService = new AdminServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getCategoryDao(),
-                DaoFactory.getInstance().getUserDao());
-        this.teacherService = new TeacherServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao());
-        this.studentService = new StudentServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao());
+        this.generalService = new GeneralServiceImpl(RepositoryFactory.getInstance().getGeneralRepository());
+        this.adminService = new AdminServiceImpl(RepositoryFactory.getInstance().getAdminRepository());
+        this.teacherService = new TeacherServiceImpl(RepositoryFactory.getInstance().getTeacherRepository());
+        this.studentService = new StudentServiceImpl(RepositoryFactory.getInstance().getStudentRepository());
     }
 
     public static ServiceFactory getInstance() {

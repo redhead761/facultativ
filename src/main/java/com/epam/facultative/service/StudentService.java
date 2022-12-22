@@ -15,7 +15,7 @@ public interface StudentService {
 
     List<CourseDTO> getCoursesInProgress(int studentId,int offset,int numberOfRows) throws ServiceException;
 
-    List<UserDTO> getCoursesCompleted(int studentId,int offset,int numberOfRows) throws ServiceException;
+    List<CourseDTO> getCoursesCompleted(int studentId,int offset,int numberOfRows) throws ServiceException;
 
     void enroll(int courseId, int userId) throws ServiceException;
 

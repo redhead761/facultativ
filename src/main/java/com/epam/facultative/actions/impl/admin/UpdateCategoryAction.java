@@ -36,6 +36,10 @@ public class UpdateCategoryAction implements Action {
         int id = (int) req.getSession().getAttribute("category_id");
         String title = req.getParameter("title");
         String description = req.getParameter("description");
-        return new Category(id, title, description);
+        return Category.builder()
+                .id(id)
+                .title(title)
+                .description(description)
+                .build();
     }
 }

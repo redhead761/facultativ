@@ -43,7 +43,14 @@ public class AddCourseAction implements Action {
         Status status = Status.valueOf(req.getParameter("status"));
         int categoryId = Integer.parseInt(req.getParameter("category"));
         Category category = adminService.getCategory(categoryId);
-        return new Course(title, duration, date, description, category, status);
+        return Course.builder()
+                .title(title)
+                .duration(duration)
+                .startDate(date)
+                .description(description)
+                .category(category)
+                .status(status)
+                .build();
     }
 }
 

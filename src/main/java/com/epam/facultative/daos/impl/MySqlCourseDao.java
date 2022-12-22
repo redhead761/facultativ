@@ -218,6 +218,7 @@ public class MySqlCourseDao implements CourseDao {
                 .startDate(rs.getDate(COURSE_START_DATE).toLocalDate())
                 .amountStudents(rs.getInt(COURSE_AMOUNT_STUDENTS))
                 .description(rs.getString(COURSE_DESCRIPTION))
+                .status(Status.valueOf(rs.getString(STATUS_TITLE)))
                 .category(mapRowCategory(rs))
                 .teacher(mapRowTeacher(rs))
                 .build();
@@ -245,11 +246,7 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     private String getQuery(String sortBy) {
-        return "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
-                " category_id,status.title AS course_status, category.title AS course_category," +
-                " category.description AS category_description " +
-                "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
-                "ORDER BY " + sortBy + " LIMIT ?,?";
+        return "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id ORDER BY " + sortBy + " LIMIT ?,?";
     }
 
     private int setStatementFields(Course course, PreparedStatement stmt) throws SQLException {

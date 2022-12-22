@@ -35,6 +35,7 @@ public class Controller extends HttpServlet {
             return action.execute(req, resp);
         } catch (ServiceException e) {
             logger.error(e.getMessage());
+            req.getSession().invalidate();
             return "error.jsp";
         }
     }

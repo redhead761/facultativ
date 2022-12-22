@@ -34,6 +34,9 @@ public class AddCategoryAction implements Action {
     private Category getCategoryFromParameter(HttpServletRequest req) {
         String title = req.getParameter("title");
         String description = req.getParameter("description");
-        return new Category(title, description);
+        return Category.builder()
+                .title(title)
+                .description(description)
+                .build();
     }
 }

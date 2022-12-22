@@ -113,12 +113,13 @@ public class MySqlUserDao implements UserDao {
 
     private User mapRow(ResultSet rs) throws SQLException {
         return User.builder()
-                .id(rs.getInt(TEACHER_ID))
+                .id(rs.getInt(USER_ID))
                 .login(rs.getString(USER_LOGIN))
                 .password(rs.getString(USER_PASSWORD))
                 .name(rs.getString(USER_FIRST_NAME))
                 .surname(rs.getString(USER_FAMILY_NAME))
                 .email(rs.getString(USER_EMAIL))
+                .role(Role.valueOf(rs.getString(ROLE_NAME)))
                 .build();
     }
 

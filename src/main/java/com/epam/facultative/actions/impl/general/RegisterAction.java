@@ -1,7 +1,7 @@
 package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.entities.User;
+import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -27,7 +27,7 @@ public class RegisterAction implements Action {
         String type = req.getParameter("type");
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeat_password");
-        User newUser = getUserForAttribute(req);
+        Teacher newUser = getTeacherForAttribute(req);
         if (type.equals("student")) {
             try {
                 checkConfirmPassword(password, repeatPassword);
@@ -53,13 +53,19 @@ public class RegisterAction implements Action {
         return path;
     }
 
-    private User getUserForAttribute(HttpServletRequest req) {
+    private Teacher getTeacherForAttribute(HttpServletRequest req) {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
-        return new User(login, password, name, surname, email);
+        return Teacher.builder()
+                .login(login)
+                .password(password)
+                .name(name)
+                .surname(surname)
+                .email(email)
+                .build();
     }
 
     private void checkConfirmPassword(String password, String repeatPassword) throws ValidateException {

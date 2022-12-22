@@ -11,7 +11,6 @@ public class Converter {
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setEmail(user.getEmail());
-        userDTO.setBlock(user.isBlock());
         userDTO.setRole(user.getRole());
         return userDTO;
     }
@@ -37,7 +36,6 @@ public class Converter {
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setEmail(user.getEmail());
-        userDTO.setBlock(user.isBlock());
         userDTO.setRole(user.getRole());
         userDTO.setCourse(courseDTO);
         userDTO.setGrade(grade);

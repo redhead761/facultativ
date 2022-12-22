@@ -38,12 +38,12 @@ public class GeneralRepositoryImpl implements GeneralRepository {
 
     @Override
     public List<Course> sortCoursesByAlphabet(int offset, int numberOfRows) throws DAOException {
-        return courseDao.getAllSortPagination(offset, numberOfRows, "title");
+        return courseDao.getAllSortPagination(offset, numberOfRows, "course.title");
     }
 
     @Override
     public List<Course> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws DAOException {
-        return courseDao.getAllSortPagination(offset, numberOfRows, "title DESC");
+        return courseDao.getAllSortPagination(offset, numberOfRows, "course.title DESC");
     }
 
     @Override

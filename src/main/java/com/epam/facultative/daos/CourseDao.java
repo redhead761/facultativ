@@ -13,15 +13,9 @@ public interface CourseDao extends Dao<Course> {
 
     List<Course> getByStatus(int id, Status status, int offset, int numberOfRows) throws DAOException;
 
-    int getGrade(int courseId, int userId) throws DAOException;
-
-    void addUserToCourse(int courseId, int userId) throws DAOException;
-
-    void updateUsersCourse(int courseId, int userId, int grade) throws DAOException;
-
-    void addNumberStudentsToCourse(int id) throws DAOException;
-
     int getNoOfRecords();
 
     List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException;
+
+    int getAmountStudentOnCourse(int courseId) throws DAOException;
 }

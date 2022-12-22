@@ -33,6 +33,7 @@ class Constants {
     static final String DELETE_TEACHER = "DELETE FROM teacher WHERE user_id=?";
     static final String SELECT_ALL_TEACHERS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id LIMIT ?,?";
+    static final String UPDATE_JOURNAL = "UPDATE journal SET grade=? WHERE course_id=? AND student_id=?";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -53,6 +54,7 @@ class Constants {
             "SELECT SQL_CALC_FOUND_ROWS * FROM student" +
                     "JOIN user ON user_id = user.id" +
                     "JOIN journal ON student_id = user_id WHERE course_id = ? LIMIT ?,?";
+    static final String INSERT_JOURNAL = "INSERT INTO journal VALUES(?,?,null)";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -60,71 +62,48 @@ class Constants {
      */
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static final String SELECT_All_USERS =
-            "SELECT user.id, user.login, user.password, user.name, user.surname, user.email, user.block, role.name AS role_name " +
-                    "FROM user  JOIN role ON role.id = user.role_id";
-    static final String SELECT_USER_BY_ID =
-            "SELECT user.id, user.login, user.password, user.name, user.surname, user.email, user.block, role.name AS role_name " +
-                    "FROM user  JOIN role ON role.id = user.role_id WHERE user.id = ?";
-    static final String SELECT_USER_BY_LOGIN =
-            "SELECT user.id, user.login, user.password, user.name, user.surname, user.email, user.block, role.name AS role_name " +
-                    "FROM user JOIN role ON role.id = user.role_id WHERE user.login=?";
-
+    static final String SELECT_All_USERS = "SELECT * FROM user  JOIN role ON role.id = user.role_id";
+    static final String SELECT_USER_BY_ID = "SELECT * FROM user  JOIN role ON role.id = user.role_id WHERE user.id = ?";
+    static final String SELECT_USER_BY_LOGIN = "SELECT * FROM user  JOIN role ON role.id = user.role_id WHERE user.login = ?";
     static final String INSERT_USER = "INSERT INTO user VALUES (DEFAULT,?,?,?,?,?,?)";
     static final String DELETE_USER = "DELETE FROM user WHERE id=?";
-    static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?, " +
-            "surname=?, email=?, role_id=? WHERE id=?";
+    static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?,surname=?, email=?, role_id=? WHERE id=?";
     static final String SELECT_FOUND_ROWS = "SELECT FOUND_ROWS()";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * //SQL request for User DAO
+     * //SQL request for Course DAO
      */
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     static final String SELECT_All_COURSES =
-            "SELECT course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id, " +
-                    "status.title AS course_status, category.title AS course_category, category.description AS category_description " +
-                    "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id";
+            "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id" +
+                    " LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id";
     static final String SELECT_COURSE_BY_ID =
-            "SELECT course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
-                    " status.title AS course_status, category.title AS course_category, category.description AS category_description " +
-                    "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id WHERE course.id=?";
+            "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
+                    "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id WHERE course.id=?";
     static final String SELECT_COURSE_BY_TITLE =
-            "SELECT course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
-                    " status.title AS course_status, category.title AS course_category, category.description AS category_description " +
-                    "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id WHERE course.title=?";
-    static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,0,?,?,?)";
+            "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
+                    "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id WHERE course.title=?";
+    static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,?,?,?,DEFAULT)";
     static final String DELETE_COURSE = "DELETE FROM course WHERE id=?";
     static final String SELECT_COURSE_BY_CATEGORY =
-            "SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration , course.start_date, course.amount_students, course.description, course.category_id, " +
-                    "status.title AS course_status, category.title AS course_category, category.description AS category_description " +
-                    "FROM course JOIN category ON course.category_id = category.id " +
-                    "JOIN status ON course.status_id = status.id WHERE course.category_id=? LIMIT ?,?";
-    static final String INSERT_USERS_COURSE = "INSERT INTO users_course VALUES(?,?,null)";
-    static final String UPDATE_USERS_COURSE = "UPDATE users_course SET grade=? WHERE course_id=? AND user_id=?";
-    static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?, " +
-            "start_date=?, description=?, category_id=?, status_id=? WHERE id=?";
+            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
+                    "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
+                    "LEFT JOIN user ON teacher.user_id = user.id WHERE course.category_id=? LIMIT ?,?";
+    static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?," +
+            "start_date=?, description=?, category_id=?, status_id=?, teacher_id=? WHERE id=?";
     static final String SELECT_COURSES_USER =
-            "SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id," +
-                    " status.title AS course_status, category.title AS course_category, category.description AS category_description " +
-                    "FROM course JOIN category ON course.category_id = category.id " +
-                    "JOIN status ON course.status_id = status.id " +
-                    "JOIN users_course ON course.id = users_course.course_id WHERE user_id=? LIMIT ?,?";
-    static final String ADD_NUMBER_STUDENTS_TO_COURSE =
-            "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
+            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
+                    "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
+                    "LEFT JOIN user ON teacher.user_id = user.id WHERE user_id=? LIMIT ?,?";
+    static final String SELECT_COURSE_BY_STATUS =
+            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
+                    "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
+                    "LEFT JOIN user ON teacher.user_id = user.id WHERE user_id=? AND status.id =? LIMIT ?,?";
+    static final String SELECT_ALL_PAGINATION =
+            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id" +
+                    " LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id LIMIT ?,?";
 
-    static final String GET_GRADE = "SELECT grade FROM users_course WHERE course_id=? AND user_id=?";
-    static final String SELECT_COURSE_BY_STATUS = """
-            SELECT SQL_CALC_FOUND_ROWS course.id, course.title, course.duration, course.start_date, course.amount_students, course.description, course.category_id,
-                                 status.title AS course_status, category.title AS course_category, category.description AS category_description
-                                FROM course JOIN category ON course.category_id = category.id
-                                JOIN status ON course.status_id = status.id
-                                JOIN users_course ON course.id = users_course.course_id WHERE user_id=? AND status.id = ? LIMIT ?,?""";
-
-    static final String SELECT_ALL_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS course.id, course.title,duration,start_date,amount_students,course.description," +
-            " category_id,status.title AS course_status, category.title AS course_category," +
-            " category.description AS category_description " +
-            "FROM course JOIN category ON course.category_id = category.id JOIN status ON course.status_id = status.id " +
-            "LIMIT ?,?";
+    static final String COUNT_AMOUNT_STUDENTS = "SELECT count(*) FROM journal WHERE course_id = ?";
 }

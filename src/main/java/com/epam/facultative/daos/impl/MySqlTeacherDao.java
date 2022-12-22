@@ -139,4 +139,18 @@ public class MySqlTeacherDao implements TeacherDao {
                 .degree(rs.getString(TEACHER_DEGREE))
                 .build();
     }
+
+    @Override
+    public void updateJournal(int courseId, int studentId, int grade) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UPDATE_JOURNAL)) {
+            int k = 0;
+            stmt.setInt(++k, grade);
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, studentId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
 }

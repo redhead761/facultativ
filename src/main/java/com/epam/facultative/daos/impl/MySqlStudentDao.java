@@ -146,6 +146,19 @@ public class MySqlStudentDao implements StudentDao {
         return students;
     }
 
+    @Override
+    public void addUserToCourse(int courseId, int userId) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(INSERT_JOURNAL)) {
+            int k = 0;
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
 
     @Override
     public int getNoOfRecords() {

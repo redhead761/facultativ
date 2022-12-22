@@ -137,50 +137,6 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public void addUserToCourse(int courseId, int userId) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(INSERT_USERS_COURSE)) {
-            int k = 0;
-            stmt.setInt(++k, courseId);
-            stmt.setInt(++k, userId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public void updateUsersCourse(int courseId, int userId, int grade) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UPDATE_USERS_COURSE)) {
-            int k = 0;
-            stmt.setInt(++k, grade);
-            stmt.setInt(++k, courseId);
-            stmt.setInt(++k, userId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-    }
-
-    @Override
-    public int getGrade(int courseId, int userId) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(GET_GRADE)) {
-            int k = 0;
-            stmt.setInt(++k, courseId);
-            stmt.setInt(++k, userId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(GRADE);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return 0;
-    }
-
-    @Override
     public List<Course> getByStatus(int userId, Status status, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
@@ -199,17 +155,6 @@ public class MySqlCourseDao implements CourseDao {
             throw new DAOException(e);
         }
         return courses;
-    }
-
-    @Override
-    public void addNumberStudentsToCourse(int id) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
     }
 
     @Override
@@ -249,6 +194,22 @@ public class MySqlCourseDao implements CourseDao {
             throw new DAOException(e);
         }
         return courses;
+    }
+
+    @Override
+    public int getAmountStudentOnCourse(int courseId) throws DAOException {
+        int count = 0;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(COUNT_AMOUNT_STUDENTS)) {
+            stmt.setInt(1, courseId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return count;
     }
 
     /**

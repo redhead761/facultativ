@@ -197,19 +197,14 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public int getAmountStudentOnCourse(int courseId) throws DAOException {
-        int count = 0;
+    public void addNumberStudentsToCourse(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(COUNT_AMOUNT_STUDENTS)) {
-            stmt.setInt(1, courseId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                count = rs.getInt(1);
-            }
+             PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return count;
     }
 
     /**

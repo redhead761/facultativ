@@ -17,5 +17,5 @@ public interface CourseDao extends Dao<Course> {
 
     List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException;
 
-    int getAmountStudentOnCourse(int courseId) throws DAOException;
+    void addNumberStudentsToCourse(int id) throws DAOException;
 }

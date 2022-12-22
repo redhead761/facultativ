@@ -8,4 +8,5 @@ import java.util.List;
 public interface StudentDao extends Dao<Student> {
     List<Student> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws DAOException;
     void addUserToCourse(int courseId, int userId) throws DAOException;
+
 }

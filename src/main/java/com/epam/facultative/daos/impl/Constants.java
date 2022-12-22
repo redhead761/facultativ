@@ -85,7 +85,7 @@ class Constants {
     static final String SELECT_COURSE_BY_TITLE =
             "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
                     "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id WHERE course.title=?";
-    static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,?,?,?,DEFAULT)";
+    static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,DEFAULT,?,?,?,DEFAULT)";
     static final String DELETE_COURSE = "DELETE FROM course WHERE id=?";
     static final String SELECT_COURSE_BY_CATEGORY =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
@@ -105,5 +105,6 @@ class Constants {
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id" +
                     " LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id LIMIT ?,?";
 
-    static final String COUNT_AMOUNT_STUDENTS = "SELECT count(*) FROM journal WHERE course_id = ?";
+    static final String ADD_NUMBER_STUDENTS_TO_COURSE =
+            "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
 }

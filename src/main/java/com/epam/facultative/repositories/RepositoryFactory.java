@@ -17,15 +17,21 @@ public class RepositoryFactory {
     public RepositoryFactory() {
         this.generalRepository = new GeneralRepositoryImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getUserDao(),
-                DaoFactory.getInstance().getCategoryDao());
+                DaoFactory.getInstance().getCategoryDao(),
+                DaoFactory.getInstance().getTeacherDao());
         this.adminRepository = new AdminRepositoryImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getCategoryDao(),
+                DaoFactory.getInstance().getTeacherDao(),
+                DaoFactory.getInstance().getStudentDao(),
                 DaoFactory.getInstance().getUserDao());
         this.teacherRepository = new TeacherRepositoryImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao());
+                DaoFactory.getInstance().getTeacherDao(),
+                DaoFactory.getInstance().getStudentDao());
         this.studentRepository = new StudentRepositoryImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao());
+                DaoFactory.getInstance().getUserDao(),
+                DaoFactory.getInstance().getStudentDao());
     }
+
     public static RepositoryFactory getInstance() {
         return INSTANCE;
     }

@@ -102,8 +102,9 @@ class Constants {
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
                     "LEFT JOIN user ON teacher.user_id = user.id WHERE user_id=? AND status.id =? LIMIT ?,?";
     static final String SELECT_ALL_PAGINATION =
-            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id" +
-                    " LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id LIMIT ?,?";
+            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
+                    "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id" +
+                    " LEFT JOIN user ON teacher.user_id = user.id LIMIT ?,?";
 
     static final String ADD_NUMBER_STUDENTS_TO_COURSE =
             "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";

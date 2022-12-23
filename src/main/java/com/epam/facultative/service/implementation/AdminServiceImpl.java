@@ -1,13 +1,12 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.dto.Converter;
-import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entities.*;
-import com.epam.facultative.exception.DAOException;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.repositories.AdminRepository;
+import com.epam.facultative.daos.*;
+import com.epam.facultative.dto.*;
+import com.epam.facultative.entities.Category;
+import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.Role;
+import com.epam.facultative.entities.User;
+import com.epam.facultative.exception.*;
 import com.epam.facultative.service.AdminService;
 
 import java.util.*;
@@ -16,22 +15,26 @@ import static com.epam.facultative.utils.HashPassword.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
 public class AdminServiceImpl implements AdminService {
-    private final AdminRepository adminRepository;
+    private final CourseDao courseDao;
+    private final CategoryDao categoryDao;
+    private final UserDao userDao;
     private final Converter converter;
 
-    public AdminServiceImpl(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
+    public AdminServiceImpl(CourseDao courseDao, CategoryDao categoryDao, UserDao userDao) {
+        this.courseDao = courseDao;
+        this.categoryDao = categoryDao;
+        this.userDao = userDao;
         this.converter = new Converter();
     }
 
     @Override
     public void addCourse(Course course) throws ServiceException, ValidateException {
         try {
-            if (adminRepository.getCourseByTitle(course.getTitle()) != null) {
+            if (courseDao.getByName(course.getTitle()) != null) {
                 throw new ValidateException("Login not unique");
             }
             if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
-                adminRepository.addCourse(course);
+                courseDao.add(course);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -42,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
     public void updateCourse(Course course) throws ServiceException, ValidateException {
         try {
             if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
-                adminRepository.updateCourse(course);
+                courseDao.update(course);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -52,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteCourse(int courseId) throws ServiceException {
         try {
-            adminRepository.deleteCourse(courseId);
+            courseDao.delete(courseId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -62,11 +65,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (adminRepository.getCategoryByTitle(category.getTitle()) != null) {
+            if (categoryDao.getByName(category.getTitle()) != null) {
                 throw new ValidateException("Login not unique");
             }
             if (validateCategoryData(category.getTitle(), category.getDescription())) {
-                adminRepository.addCategory(category);
+                categoryDao.add(category);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -76,11 +79,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (adminRepository.getCategoryByTitle(category.getTitle()) != null) {
+            if (categoryDao.getByName(category.getTitle()) != null) {
                 throw new ValidateException("Login not unique");
             }
             if (validateCategoryData(category.getTitle(), category.getDescription())) {
-                adminRepository.updateCategory(category);
+                categoryDao.update(category);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -90,7 +93,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteCategory(int categoryId) throws ServiceException {
         try {
-            adminRepository.deleteCategory(categoryId);
+            categoryDao.delete(categoryId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -99,7 +102,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Category> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException {
         try {
-            return adminRepository.getAllCategoriesPagination(offset, numberOfRows);
+            return categoryDao.getAllPagination(offset, numberOfRows);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -107,49 +110,49 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int getNoOfRecordsCategories() {
-        return adminRepository.getNoOfRecordsCategories();
+        return categoryDao.getNoOfRecords();
     }
 
     @Override
-    public void assigned(int courseId, int teacherId) throws ServiceException {
+    public void assigned(int idCourse, int idUser) throws ServiceException {
         try {
-            adminRepository.assigned(courseId, teacherId);
+            courseDao.addUserToCourse(idCourse, idUser);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void blockStudent(int studentId) throws ServiceException {
+    public void blockStudent(int userId) throws ServiceException {
         try {
-            adminRepository.blockStudent(studentId);
+            userDao.blockUnblockStudent(userId, true);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void unblockStudent(int studentId) throws ServiceException {
+    public void unblockStudent(int userId) throws ServiceException {
         try {
-            adminRepository.unblockStudent(studentId);
+            userDao.blockUnblockStudent(userId, false);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void addTeacher(Teacher teacher) throws ServiceException, ValidateException {
+    public void addTeacher(User user) throws ServiceException, ValidateException {
         try {
-            if (adminRepository.getUserByLogin(teacher.getLogin()) != null) {
+            if (userDao.getByName(user.getLogin()) != null) {
                 throw new ValidateException("Login not unique");
             }
-            if (validateLogin(teacher.getLogin())
-                    && validatePassword(teacher.getPassword())
-                    && validateNameAndSurname(teacher.getName(), teacher.getSurname())
-                    && validateEmail(teacher.getEmail())) {
-                teacher.setRole(Role.TEACHER);
-                teacher.setPassword(encode(teacher.getPassword()));
-                adminRepository.addTeacher((Teacher) teacher);
+            if (validateLogin(user.getLogin())
+                    && validatePassword(user.getPassword())
+                    && validateNameAndSurname(user.getName(), user.getSurname())
+                    && validateEmail(user.getEmail())) {
+                user.setRole(Role.TEACHER);
+                user.setPassword(encode(user.getPassword()));
+                userDao.add(user);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -159,7 +162,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<Student> users = adminRepository.getAllStudentsPagination(offset, noOfRecords);
+            List<User> users = userDao.getByRolePagination(Role.STUDENT.getId(), offset, noOfRecords);
             List<UserDTO> students = new ArrayList<>();
             for (User user :
                     users) {
@@ -174,7 +177,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<Teacher> users = adminRepository.getAllTeachersPagination(offset, noOfRecords);
+            List<User> users = userDao.getByRolePagination(Role.TEACHER.getId(), offset, noOfRecords);
             List<UserDTO> teachers = new ArrayList<>();
             for (User user :
                     users) {
@@ -189,7 +192,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Category getCategory(int id) throws ServiceException {
         try {
-            return adminRepository.getCategory(id);
+            return categoryDao.getById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -198,8 +201,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public CourseDTO getCourse(int id) throws ServiceException {
         try {
-            Course course = adminRepository.getCourse(id);
-            return converter.courseToDTO(course);
+            Course course = courseDao.getById(id);
+            return converter.courseToDTO(course, null);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -208,7 +211,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public UserDTO getTeacher(int id) throws ServiceException {
         try {
-            User teacher = adminRepository.getTeacher(id);
+            User teacher = userDao.getById(id);
             return converter.userToDTO(teacher);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -217,11 +220,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int getNoOfRecordsTeachers() {
-        return adminRepository.getNoOfRecordsTeachers();
+        return userDao.getNoOfRecords();
     }
 
     @Override
     public int getNoOfRecordsStudents() {
-        return adminRepository.getNoOfRecordsStudents();
+        return userDao.getNoOfRecords();
     }
 }

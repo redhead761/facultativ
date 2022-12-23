@@ -22,5 +22,5 @@ public class Course implements Serializable {
     private String description;
     private Category category;
     private Status status;
-    private User teacher;
+    private Teacher teacher;
 }

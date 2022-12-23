@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `role` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 4
+    AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     FOREIGN KEY (`role_id`)
     REFERENCES `role` (`id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 34
+    AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `category` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `name_UNIQUE` (`title` ASC) VISIBLE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 39
+    AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `status` (
     PRIMARY KEY (`id`),
     UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 4
+    AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `course` (
     `description` VARCHAR(45) NULL DEFAULT NULL,
     `category_id` INT NOT NULL,
     `status_id` INT NOT NULL,
-    `teacher_id` INT NOT NULL,
+    `teacher_id` INT DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE,
     INDEX `fk_course_category_idx` (`category_id` ASC) VISIBLE,
@@ -155,11 +155,11 @@ CREATE TABLE IF NOT EXISTS `course` (
     REFERENCES `status` (`id`),
     CONSTRAINT `fk_course_teacher1`
     FOREIGN KEY (`teacher_id`)
-    REFERENCES `mydb`.`teacher` (`id`)
+    REFERENCES `teacher` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 43
+    AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `journal` (
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_course_has_student_student1`
     FOREIGN KEY (`student_id`)
-    REFERENCES `mydb`.`student` (`id`)
+    REFERENCES `student` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB

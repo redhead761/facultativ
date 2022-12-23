@@ -1,16 +1,14 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.daos.CategoryDao;
-import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.daos.UserDao;
-import com.epam.facultative.dto.Converter;
-import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entities.*;
+import com.epam.facultative.daos.*;
+import com.epam.facultative.dto.*;
+import com.epam.facultative.entities.Category;
+import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.Role;
+import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.repositories.GeneralRepository;
 import com.epam.facultative.service.GeneralService;
 
 import java.util.ArrayList;
@@ -19,11 +17,16 @@ import java.util.List;
 import static com.epam.facultative.utils.HashPassword.verify;
 
 public class GeneralServiceImpl implements GeneralService {
-    private final GeneralRepository generalRepository;
+    private final CourseDao courseDao;
+    private final UserDao userDao;
+    private final CategoryDao categoryDao;
     private final Converter converter;
 
-    public GeneralServiceImpl(GeneralRepository generalRepository) {
-        this.generalRepository = generalRepository;
+
+    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao) {
+        this.courseDao = courseDao;
+        this.userDao = userDao;
+        this.categoryDao = categoryDao;
         this.converter = new Converter();
 
     }
@@ -31,7 +34,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
         try {
-            User user = generalRepository.authorization(login);
+            User user = userDao.getByName(login);
             if (user == null) {
                 throw new ValidateException("Login not exist");
             }
@@ -47,7 +50,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> getAllCourses(int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(generalRepository.getAllCourses(offset, numberOfRows));
+            return prepareCourses(courseDao.getAllPagination(offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -56,7 +59,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = generalRepository.sortCoursesByAlphabet(offset, numberOfRows);
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "title");
             return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -66,7 +69,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = generalRepository.sortCoursesByAlphabetReverse(offset, numberOfRows);
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "title DESC");
             return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -76,7 +79,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = generalRepository.sortCoursesByDuration(offset, numberOfRows);
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "duration");
             return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -86,7 +89,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> sortCoursesBuAmountOfStudents(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = generalRepository.sortCoursesBuAmountOfStudents(offset, numberOfRows);
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "amount_students");
             return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -96,7 +99,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(generalRepository.getCoursesByCategory(categoryId, offset, numberOfRows));
+            return prepareCourses(courseDao.getByCategory(categoryId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -105,7 +108,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(generalRepository.getCoursesByTeacher(teacherId, offset, numberOfRows));
+            return prepareCourses(courseDao.getByUser(teacherId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -114,7 +117,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<Category> getAllCategories() throws ServiceException {
         try {
-            return generalRepository.getAllCategories();
+            return categoryDao.getAll();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -124,7 +127,7 @@ public class GeneralServiceImpl implements GeneralService {
     public List<UserDTO> getAllTeachers() throws ServiceException {
         List<UserDTO> usersDTO = new ArrayList<>();
         try {
-            List<Teacher> users = generalRepository.getAllTeachers();
+            List<User> users = userDao.getByRole(Role.TEACHER.getId());
             for (User user : users) {
                 usersDTO.add(converter.userToDTO(user));
             }
@@ -136,14 +139,28 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public int getNoOfRecordsCourses() {
-        return generalRepository.getNoOfRecordsCourses();
+        return courseDao.getNoOfRecords();
     }
 
-    private List<CourseDTO> prepareCourses(List<Course> courses) {
+    private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();
-        for (Course course : courses) {
-            coursesDTO.add(converter.courseToDTO(course));
+        try {
+            for (Course course : courses) {
+                List<User> users;
+                UserDTO teacher = null;
+                users = userDao.getUsersByCourse(course.getId());
+                for (User user : users) {
+                    if (user.getRole().equals(Role.TEACHER)) {
+                        teacher = converter.userToDTO(user);
+                    }
+                }
+                coursesDTO.add(converter.courseToDTO(course, teacher));
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
         return coursesDTO;
     }
+
+
 }

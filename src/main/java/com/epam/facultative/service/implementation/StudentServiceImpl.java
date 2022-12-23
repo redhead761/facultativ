@@ -37,25 +37,25 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<CourseDTO> getCoursesComingSoon(int studentId,int offset,int numberOfRows) throws ServiceException {
+    public List<CourseDTO> getCoursesComingSoon(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.COMING_SOON,offset,numberOfRows));
+            return prepareCourses(courseDao.getByStatus(studentId, Status.COMING_SOON, offset, numberOfRows));
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> getCoursesInProgress(int studentId,int offset,int numberOfRows) throws ServiceException {
+    public List<CourseDTO> getCoursesInProgress(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.IN_PROCESS,offset,numberOfRows));
+            return prepareCourses(courseDao.getByStatus(studentId, Status.IN_PROCESS, offset, numberOfRows));
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<UserDTO> getCoursesCompleted(int studentId,int offset,int numberOfRows) throws ServiceException {
+    public List<UserDTO> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException {
 //        try {
 //            User user = userDao.getById(studentId);
 //            List<UserDTO> students = new ArrayList<>();
@@ -73,12 +73,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void enroll(int courseId, int userId) throws ServiceException {
-//        try {
-//            courseDao.addUserToCourse(courseId, userId);
-//            courseDao.addNumberStudentsToCourse(courseId);
-//        } catch (DAOException e) {
-//            throw new ServiceException(e);
-//        }
+        try {
+            courseDao.insertJournal(courseId, userId);
+            courseDao.addNumberStudentsToCourse(courseId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -106,22 +106,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-    private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
+    private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
-//        for (Course course : courses) {
-//            List<User> users;
-//            try {
-//                users = userDao.getUsersByCourse(course.getId());
-//                for (User user : users) {
-//                    if (user.getRole().equals(Role.TEACHER)) {
-//                        UserDTO teacher = converter.userToDTO(user);
-//                        coursesDTO.add(converter.courseToDTO(course, teacher));
-//                    }
-//                }
-//            } catch (DAOException e) {
-//                throw new ServiceException(e);
-//            }
-//        }
+        for (Course course : courses) {
+            coursesDTO.add(converter.courseToDTO(course));
+        }
         return coursesDTO;
     }
 }

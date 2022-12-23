@@ -2,10 +2,7 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.daos.*;
 import com.epam.facultative.dto.*;
-import com.epam.facultative.entities.Category;
-import com.epam.facultative.entities.Course;
-import com.epam.facultative.entities.Role;
-import com.epam.facultative.entities.User;
+import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
@@ -21,12 +18,14 @@ public class GeneralServiceImpl implements GeneralService {
     private final UserDao userDao;
     private final CategoryDao categoryDao;
     private final Converter converter;
+    private final TeacherDao teacherDao;
 
 
-    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao) {
+    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao, TeacherDao teacherDao) {
         this.courseDao = courseDao;
         this.userDao = userDao;
         this.categoryDao = categoryDao;
+        this.teacherDao = teacherDao;
         this.converter = new Converter();
 
     }
@@ -126,14 +125,14 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<UserDTO> getAllTeachers() throws ServiceException {
         List<UserDTO> usersDTO = new ArrayList<>();
-//        try {
-//            List<User> users = userDao.getByRole(Role.TEACHER.getId());
-//            for (User user : users) {
-//                usersDTO.add(converter.userToDTO(user));
-//            }
-//        } catch (DAOException e) {
-//            throw new ServiceException(e);
-//        }
+        try {
+            List<Teacher> users = teacherDao.getAll();
+            for (User user : users) {
+                usersDTO.add(converter.userToDTO(user));
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
         return usersDTO;
     }
 
@@ -142,25 +141,11 @@ public class GeneralServiceImpl implements GeneralService {
         return courseDao.getNoOfRecords();
     }
 
-    private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
+    private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
-//        try {
-//            for (Course course : courses) {
-//                List<User> users;
-//                UserDTO teacher = null;
-//                users = userDao.getUsersByCourse(course.getId());
-//                for (User user : users) {
-//                    if (user.getRole().equals(Role.TEACHER)) {
-//                        teacher = converter.userToDTO(user);
-//                    }
-//                }
-//                coursesDTO.add(converter.courseToDTO(course, teacher));
-//            }
-//        } catch (DAOException e) {
-//            throw new ServiceException(e);
-//        }
+        for (Course course : courses) {
+            coursesDTO.add(converter.courseToDTO(course));
+        }
         return coursesDTO;
     }
-
-
 }

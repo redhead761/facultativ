@@ -15,12 +15,16 @@ public class ServiceFactory {
     public ServiceFactory() {
         this.generalService = new GeneralServiceImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getUserDao(),
-                DaoFactory.getInstance().getCategoryDao());
+                DaoFactory.getInstance().getCategoryDao(),
+                DaoFactory.getInstance().getTeacherDao());
         this.adminService = new AdminServiceImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getCategoryDao(),
-                DaoFactory.getInstance().getUserDao());
+                DaoFactory.getInstance().getUserDao(),
+                DaoFactory.getInstance().getStudentDao(),
+                DaoFactory.getInstance().getTeacherDao());
         this.teacherService = new TeacherServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao());
+                DaoFactory.getInstance().getUserDao(),
+                DaoFactory.getInstance().getStudentDao());
         this.studentService = new StudentServiceImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getUserDao());
     }

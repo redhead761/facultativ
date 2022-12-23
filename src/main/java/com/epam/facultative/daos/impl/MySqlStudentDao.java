@@ -116,7 +116,7 @@ public class MySqlStudentDao implements StudentDao {
             stmt.setString(++k, student.getEmail());
             stmt.setInt(++k, student.getRole().getId());
             stmt.executeUpdate();
-            stmt = con.prepareStatement(UPDATE_TEACHER);
+            stmt = con.prepareStatement(UPDATE_STUDENT);
             k = 0;
             stmt.setInt(++k, student.getCourseNumber());
             stmt.setBoolean(++k, student.isBlock());
@@ -189,6 +189,20 @@ public class MySqlStudentDao implements StudentDao {
             throw new DAOException(e);
         }
         return students;
+    }
+
+    @Override
+    public void updateBlock(int studentId, boolean block) throws DAOException {
+
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UPDATE_BLOCK)) {
+            int k = 0;
+            stmt.setBoolean(++k, block);
+            stmt.setInt(++k, studentId);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
     }
 
     @Override

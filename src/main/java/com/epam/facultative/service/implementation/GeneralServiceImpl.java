@@ -126,14 +126,14 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<UserDTO> getAllTeachers() throws ServiceException {
         List<UserDTO> usersDTO = new ArrayList<>();
-        try {
-            List<User> users = userDao.getByRole(Role.TEACHER.getId());
-            for (User user : users) {
-                usersDTO.add(converter.userToDTO(user));
-            }
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            List<User> users = userDao.getByRole(Role.TEACHER.getId());
+//            for (User user : users) {
+//                usersDTO.add(converter.userToDTO(user));
+//            }
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
         return usersDTO;
     }
 
@@ -144,21 +144,21 @@ public class GeneralServiceImpl implements GeneralService {
 
     private List<CourseDTO> prepareCourses(List<Course> courses) throws ServiceException {
         List<CourseDTO> coursesDTO = new ArrayList<>();
-        try {
-            for (Course course : courses) {
-                List<User> users;
-                UserDTO teacher = null;
-                users = userDao.getUsersByCourse(course.getId());
-                for (User user : users) {
-                    if (user.getRole().equals(Role.TEACHER)) {
-                        teacher = converter.userToDTO(user);
-                    }
-                }
-                coursesDTO.add(converter.courseToDTO(course, teacher));
-            }
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            for (Course course : courses) {
+//                List<User> users;
+//                UserDTO teacher = null;
+//                users = userDao.getUsersByCourse(course.getId());
+//                for (User user : users) {
+//                    if (user.getRole().equals(Role.TEACHER)) {
+//                        teacher = converter.userToDTO(user);
+//                    }
+//                }
+//                coursesDTO.add(converter.courseToDTO(course, teacher));
+//            }
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
         return coursesDTO;
     }
 

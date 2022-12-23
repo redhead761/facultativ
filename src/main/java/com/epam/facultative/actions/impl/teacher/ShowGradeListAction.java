@@ -26,8 +26,8 @@ public class ShowGradeListAction implements Action {
             courseId = Integer.parseInt(req.getParameter("course_id"));
             req.getSession().setAttribute("course_id", courseId);
         }
-        List<UserDTO> students = teacherService.getStudentsByCourse(courseId, 0, 5);
-        req.getSession().setAttribute("students", students);
+//        List<UserDTO> students = teacherService.getStudentsByCourse(courseId, 0, 5);
+//        req.getSession().setAttribute("students", students);
         return GRADE_PAGE;
     }
 }

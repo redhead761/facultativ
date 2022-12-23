@@ -35,8 +35,9 @@ public class MySqlTeacherDao implements TeacherDao {
     public Teacher getById(int id) throws DAOException {
         Teacher teacher = null;
         try (Connection con = DataSource.getConnection();
-             Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SELECT_TEACHER_BY_ID);
+             PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_ID)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 teacher = mapRow(rs);
         } catch (SQLException e) {
@@ -49,8 +50,9 @@ public class MySqlTeacherDao implements TeacherDao {
     public Teacher getByName(String name) throws DAOException {
         Teacher teacher = null;
         try (Connection con = DataSource.getConnection();
-             Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SELECT_TEACHER_BY_NAME);
+             PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_LOGIN)) {
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 teacher = mapRow(rs);
         } catch (SQLException e) {
@@ -61,27 +63,70 @@ public class MySqlTeacherDao implements TeacherDao {
 
     @Override
     public void add(Teacher teacher) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(INSERT_TEACHER)) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = DataSource.getConnection();
+            stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            con.setAutoCommit(false);
             int k = 0;
-            stmt.setString(++k, String.valueOf(teacher.getId()));
+            stmt.setString(++k, teacher.getLogin());
+            stmt.setString(++k, teacher.getPassword());
+            stmt.setString(++k, teacher.getName());
+            stmt.setString(++k, teacher.getSurname());
+            stmt.setString(++k, teacher.getEmail());
+            stmt.setInt(++k, teacher.getRole().getId());
+            int count = stmt.executeUpdate();
+            if (count > 0) {
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        teacher.setId(rs.getInt(1));
+                    }
+                }
+            }
+            stmt = con.prepareStatement(INSERT_TEACHER);
+            k = 0;
+            stmt.setInt(++k, teacher.getId());
             stmt.setString(++k, teacher.getDegree());
             stmt.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
+            rollback(con);
             throw new DAOException(e);
+        } finally {
+            close(stmt);
+            close(con);
         }
     }
 
     @Override
     public void update(Teacher teacher) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UPDATE_TEACHER)) {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = DataSource.getConnection();
+            stmt = con.prepareStatement(UPDATE_USER);
+            con.setAutoCommit(false);
             int k = 0;
-            stmt.setString(++k, teacher.getDegree());
-            stmt.setString(++k, String.valueOf(teacher.getId()));
+            stmt.setString(++k, teacher.getLogin());
+            stmt.setString(++k, teacher.getPassword());
+            stmt.setString(++k, teacher.getName());
+            stmt.setString(++k, teacher.getSurname());
+            stmt.setString(++k, teacher.getEmail());
+            stmt.setInt(++k, teacher.getRole().getId());
             stmt.executeUpdate();
+            stmt = con.prepareStatement(UPDATE_TEACHER);
+            k = 0;
+            stmt.setString(++k, teacher.getDegree());
+            stmt.setInt(++k, teacher.getId());
+            stmt.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
+            rollback(con);
             throw new DAOException(e);
+        } finally {
+            close(stmt);
+            close(con);
         }
     }
 
@@ -124,6 +169,8 @@ public class MySqlTeacherDao implements TeacherDao {
         return noOfRecords;
     }
 
+
+
     /**
      * Helping methods
      */
@@ -140,17 +187,23 @@ public class MySqlTeacherDao implements TeacherDao {
                 .build();
     }
 
-    @Override
-    public void updateJournal(int courseId, int studentId, int grade) throws DAOException {
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(UPDATE_JOURNAL)) {
-            int k = 0;
-            stmt.setInt(++k, grade);
-            stmt.setInt(++k, courseId);
-            stmt.setInt(++k, studentId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
+    private void close(AutoCloseable stmt) throws DAOException {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
+    }
+
+    private void rollback(Connection con) throws DAOException {
+        if (con != null) {
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
     }
 }

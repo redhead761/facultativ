@@ -115,29 +115,29 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void assigned(int idCourse, int idUser) throws ServiceException {
-        try {
-            courseDao.addUserToCourse(idCourse, idUser);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            courseDao.addUserToCourse(idCourse, idUser);
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
     }
 
     @Override
     public void blockStudent(int userId) throws ServiceException {
-        try {
-            userDao.blockUnblockStudent(userId, true);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            userDao.blockUnblockStudent(userId, true);
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
     }
 
     @Override
     public void unblockStudent(int userId) throws ServiceException {
-        try {
-            userDao.blockUnblockStudent(userId, false);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            userDao.blockUnblockStudent(userId, false);
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
     }
 
     @Override
@@ -161,32 +161,34 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
-        try {
-            List<User> users = userDao.getByRolePagination(Role.STUDENT.getId(), offset, noOfRecords);
-            List<UserDTO> students = new ArrayList<>();
-            for (User user :
-                    users) {
-                students.add(converter.userToDTO(user));
-            }
-            return students;
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            List<User> users = userDao.getByRolePagination(Role.STUDENT.getId(), offset, noOfRecords);
+//            List<UserDTO> students = new ArrayList<>();
+//            for (User user :
+//                    users) {
+//                students.add(converter.userToDTO(user));
+//            }
+//            return students;
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
+        return null;
     }
 
     @Override
     public List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
-        try {
-            List<User> users = userDao.getByRolePagination(Role.TEACHER.getId(), offset, noOfRecords);
-            List<UserDTO> teachers = new ArrayList<>();
-            for (User user :
-                    users) {
-                teachers.add(converter.userToDTO(user));
-            }
-            return teachers;
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            List<User> users = userDao.getByRolePagination(Role.TEACHER.getId(), offset, noOfRecords);
+//            List<UserDTO> teachers = new ArrayList<>();
+//            for (User user :
+//                    users) {
+//                teachers.add(converter.userToDTO(user));
+//            }
+//            return teachers;
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
+        return null;
     }
 
     @Override
@@ -200,12 +202,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public CourseDTO getCourse(int id) throws ServiceException {
-        try {
-            Course course = courseDao.getById(id);
-            return converter.courseToDTO(course, null);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
+//        try {
+//            Course course = courseDao.getById(id);
+//            return converter.courseToDTO(course, null);
+//        } catch (DAOException e) {
+//            throw new ServiceException(e);
+//        }
+        return null;
     }
 
     @Override

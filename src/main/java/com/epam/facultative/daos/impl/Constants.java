@@ -28,12 +28,11 @@ class Constants {
     static final String UPDATE_TEACHER = "UPDATE teacher SET degree=? WHERE user_id=?";
     static final String SELECT_ALL_TEACHERS = "SELECT * FROM teacher JOIN user ON user_id = user.id";
     static final String SELECT_TEACHER_BY_ID = "SELECT * FROM teacher JOIN user ON user_id = user.id WHERE user_id=?";
-    static final String SELECT_TEACHER_BY_NAME =
-            "SELECT * FROM teacher JOIN user ON user_id = user.id WHERE user.name =? AND user.surname=?";
+    static final String SELECT_TEACHER_BY_LOGIN =
+            "SELECT * FROM teacher JOIN user ON user_id = user.id WHERE user.login = ?";
     static final String DELETE_TEACHER = "DELETE FROM teacher WHERE user_id=?";
     static final String SELECT_ALL_TEACHERS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id LIMIT ?,?";
-    static final String UPDATE_JOURNAL = "UPDATE journal SET grade=? WHERE course_id=? AND student_id=?";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -45,8 +44,8 @@ class Constants {
     static final String UPDATE_STUDENT = "UPDATE student SET course_number=?, block=? WHERE user_id=?";
     static final String SELECT_ALL_STUDENTS = "SELECT * FROM student JOIN user ON user_id = user.id";
     static final String SELECT_STUDENT_BY_ID = "SELECT * FROM student JOIN user ON user_id = user.id WHERE user_id=?";
-    static final String SELECT_STUDENT_BY_NAME =
-            "SELECT * FROM student JOIN user ON user_id = user.id WHERE user.name =? AND user.surname=?";
+    static final String SELECT_STUDENT_BY_LOGIN =
+            "SELECT * FROM student JOIN user ON user_id = user.id WHERE user.login =?";
     static final String DELETE_STUDENT = "DELETE FROM student WHERE user_id=?";
     static final String SELECT_ALL_STUDENTS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id LIMIT ?,?";
@@ -54,7 +53,6 @@ class Constants {
             "SELECT SQL_CALC_FOUND_ROWS * FROM student" +
                     "JOIN user ON user_id = user.id" +
                     "JOIN journal ON student_id = user_id WHERE course_id = ? LIMIT ?,?";
-    static final String INSERT_JOURNAL = "INSERT INTO journal VALUES(?,?,null)";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -106,6 +104,9 @@ class Constants {
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id" +
                     " LEFT JOIN user ON teacher.user_id = user.id LIMIT ?,?";
 
+    static final String INSERT_JOURNAL = "INSERT INTO journal VALUES(?,?,DEFAULT)";
+    static final String UPDATE_JOURNAL = "UPDATE journal SET grade=? WHERE course_id=? AND student_id=?";
     static final String ADD_NUMBER_STUDENTS_TO_COURSE =
             "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
+
 }

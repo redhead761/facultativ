@@ -197,6 +197,46 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
+    public void insertJournal(int courseId, int studentId) throws DAOException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = DataSource.getConnection();
+            con.setAutoCommit(false);
+            stmt = con.prepareStatement(INSERT_JOURNAL);
+            int k = 0;
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, studentId);
+            stmt.executeUpdate();
+            stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE);
+            stmt.setInt(1, courseId);
+            stmt.executeUpdate();
+            con.commit();
+        } catch (SQLException e) {
+            rollback(con);
+            throw new DAOException(e);
+        } finally {
+            close(stmt);
+            close(con);
+        }
+
+    }
+
+    @Override
+    public void updateJournal(int courseId, int studentId, int grade) throws DAOException {
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(UPDATE_JOURNAL)) {
+            int k = 0;
+            stmt.setInt(++k, grade);
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, studentId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
     public void addNumberStudentsToCourse(int id) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(ADD_NUMBER_STUDENTS_TO_COURSE)) {
@@ -272,5 +312,25 @@ public class MySqlCourseDao implements CourseDao {
         int k = 0;
         stmt.setInt(++k, offset);
         stmt.setInt(++k, numberOfRows);
+    }
+
+    private void close(AutoCloseable stmt) throws DAOException {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+        }
+    }
+
+    private void rollback(Connection con) throws DAOException {
+        if (con != null) {
+            try {
+                con.rollback();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 }

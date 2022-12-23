@@ -3,7 +3,6 @@ package com.epam.facultative.daos.impl;
 import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.entities.Role;
-import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.DAOException;
 

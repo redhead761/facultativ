@@ -16,6 +16,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+<jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
 <div class="table-responsive col-lg-10 mx-auto p-4">

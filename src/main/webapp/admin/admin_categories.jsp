@@ -25,12 +25,12 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button"><fmt:message key="back"/></a>
+<%--<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button"><fmt:message key="back"/></a>--%>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-primary" href="category_form.jsp" role="button"><fmt:message key="admin.add.category"/></a>
+            <a class="btn btn-outline-secondary" href="category_form.jsp" role="button"><fmt:message key="admin.add.category"/></a>
             <fmt:message key="admin.table.category.name"/>
         </caption>
         <thead>

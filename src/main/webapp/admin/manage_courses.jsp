@@ -34,10 +34,10 @@
     </div>
 </c:if>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                 <fmt:message key="admin.sort"/>
@@ -57,7 +57,7 @@
                     students</a></li>
             </ul>
 
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                 <fmt:message key="admin.select.teacher"/>
@@ -70,7 +70,7 @@
                 </c:forEach>
             </ul>
 
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                 <fmt:message key="admin.select.category"/>
@@ -82,7 +82,7 @@
                     </li>
                 </c:forEach>
             </ul>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_course_form"
+            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/controller?action=show_course_form"
                role="button"><fmt:message key="admin.add.course"/></a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <fmt:message key="admin.table.course.name"/>
@@ -106,10 +106,10 @@
             <td><c:out value="${course.getCategory().title}"/></td>
             <td><c:out value="${course.getStatus()}"/></td>
             <td>
-                <c:if test="${course.getTeacher() != null}">
+                <c:if test="${course.getTeacher().getName() != null}">
                     <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
                 </c:if>
-                <c:if test="${course.getTeacher() == null}">
+                <c:if test="${course.getTeacher().getName() == null}">
                     <a href="${pageContext.request.contextPath}/controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
                 </c:if>
             </td>

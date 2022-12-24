@@ -34,7 +34,7 @@ public class AuthAction implements Action {
             req.getSession().setAttribute("role", user.getRole());
             req.getSession().setAttribute("statuses", Status.values());
             switch (user.getRole()) {
-                case ADMIN -> path = MANAGE_COURSES_ACTION;
+                case ADMIN -> path = ADMIN_PROFILE_PAGE;
                 case TEACHER -> path = ALL_COURSES_ACTION;
                 case STUDENT -> path = SHOW_STUDENT_CABINET_ACTION;
             }

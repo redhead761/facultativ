@@ -24,160 +24,77 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+<jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<c:if test="${sessionScope.message != null}">
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${sessionScope.message}!</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<section>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                             alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3">${sessionScope.user.name} ${sessionScope.user.surname}</h5>
+                        <p class="text-muted mb-1">${sessionScope.user.role}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Login</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">${sessionScope.user.login}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">${sessionScope.user.name} ${sessionScope.user.surname}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">${sessionScope.user.email}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Phone</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">(097) 123-45-67</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Address</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</c:if>
-
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
-        <caption>
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <fmt:message key="admin.sort"/>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=alphabet">Alphabetical</a>
-                </li>
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=reverse alphabet">Reverse
-                    alphabetical</a></li>
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=duration">Duration</a>
-                </li>
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=amount students">Amount
-                    students</a></li>
-            </ul>
-
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <fmt:message key="admin.select.teacher"/>
-            </button>
-            <ul class="dropdown-menu">
-                <c:forEach var="teacher" items="${sessionScope.teachers}">
-                    <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <fmt:message key="admin.select.category"/>
-            </button>
-            <ul class="dropdown-menu">
-                <c:forEach var="category" items="${sessionScope.categories}">
-                    <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_course_form"
-               role="button"><fmt:message key="admin.add.course"/></a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <fmt:message key="admin.table.course.name"/>
-
-
-        </caption>
-        <thead>
-        <th scope="col"><fmt:message key="admin.table.course.title"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.duration"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.start.date"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.amount.student"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.category"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.status"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.teacher"/></th>
-        <th scope="col"><fmt:message key="action"/></th>
-        </thead>
-        <c:forEach var="course" items="${sessionScope.courses}">
-            <tbody>
-            <td>${course.title}</td>
-            <td><c:out value="${course.duration}"/></td>
-            <td><c:out value="${course.startDate}"/></td>
-            <td><c:out value="${course.amountStudents}"/></td>
-            <td><c:out value="${course.getCategory().title}"/></td>
-            <td><c:out value="${course.getStatus()}"/></td>
-            <td>
-                <c:if test="${course.getTeacher() != null}">
-                    <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
-                </c:if>
-                <c:if test="${course.getTeacher() == null}">
-                    <a href="${pageContext.request.contextPath}/controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>">Assigned</a>
-                </c:if>
-            </td>
-            <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${course.id}">Edit</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
-            </td>
-            </tbody>
-        </c:forEach>
-    </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <c:if test="${sessionScope.currentPage == 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
-                </li>
-            </c:if>
-
-            <c:if test="${sessionScope.currentPage > 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage-1}">Previous</a>
-                </li>
-            </c:if>
-
-            <li class="page-item active" aria-current="page">
-                <span class="page-link">${sessionScope.currentPage}</span>
-            </li>
-
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+1}</span>
-                </li>
-            </c:if>
-
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
-                </li>
-            </c:if>
-
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
-                <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+2}</span>
-                </li>
-            </c:if>
-
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
-                </li>
-            </c:if>
-
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">Next</span>
-                </li>
-            </c:if>
-
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+1}">Next</a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
-</div>
+    </div>
+</section>
 <jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

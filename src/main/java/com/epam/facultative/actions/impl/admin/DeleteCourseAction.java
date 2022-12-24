@@ -27,7 +27,7 @@ public class DeleteCourseAction implements Action {
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         req.getSession().setAttribute("message", "Successful");
-        return ADMIN_PAGE;
+        return MANAGE_COURSES_PAGE;
     }
 
     private void removeRedundantAttribute(HttpServletRequest req) {

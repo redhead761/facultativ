@@ -26,18 +26,18 @@ public class ManageCoursesAction implements Action {
         removeRedundantAttribute(req);
         if (req.getSession().getAttribute("sort_type") != null) {
             ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
-            return ADMIN_PAGE;
+            return MANAGE_COURSES_PAGE;
         }
         if (req.getSession().getAttribute("select_type") != null) {
             ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
-            return ADMIN_PAGE;
+            return MANAGE_COURSES_PAGE;
         }
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
-        return ADMIN_PAGE;
+        return MANAGE_COURSES_PAGE;
     }
 
     private void removeRedundantAttribute(HttpServletRequest req) {

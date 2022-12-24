@@ -24,7 +24,7 @@
 
 
 <div align="center">
-
+    <jsp:include page="/parts/header.jsp"/>
     <h2><fmt:message key="auth.title"/></h2>
 
     <c:if test="${message != null}">

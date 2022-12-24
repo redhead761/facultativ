@@ -7,7 +7,8 @@ public class Constants {
     public static final String REGISTER_PAGE = "register.jsp";
 
     //ADMIN
-    public static final String ADMIN_PAGE = "admin/admin.jsp";
+    public static final String ADMIN_PROFILE_PAGE = "admin/admin.jsp";
+    public static final String MANAGE_COURSES_PAGE = "admin/manage_courses.jsp";
     public static final String COURSE_FORM_PAGE = "admin/course_form.jsp";
     public static final String CATEGORY_FORM_PAGE = "admin/category_form.jsp";
     public static final String MANAGE_CATEGORIES_PAGE = "admin/admin_categories.jsp";

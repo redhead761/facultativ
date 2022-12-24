@@ -28,7 +28,7 @@ public class ActionUtils {
         String path = null;
         Role role = (Role) req.getSession().getAttribute("role");
         switch (role) {
-            case ADMIN -> path = ADMIN_PAGE;
+            case ADMIN -> path = MANAGE_COURSES_PAGE;
             case STUDENT -> path = STUDENT_PAGE;
             case TEACHER -> path = TEACHER_PAGE;
         }

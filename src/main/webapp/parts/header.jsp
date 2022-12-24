@@ -1,6 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${sessionScope.language}" scope="session"/>
+<fmt:setBundle basename="resources"/>
 
 <html>
 <head>
@@ -13,11 +18,56 @@
     <title> Facultative </title>
 </head>
 <body>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end p-3 mb-2 bg-secondary text-white">
-    <a class="btn btn-primary" href="controller?action=log_out" role="button">Log out</a>
-</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Facultative</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Teachers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contacts</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav justify-content-end">
+                <c:if test="${sessionScope.user == null}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.user != null}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=log_out"><span
+                                class="glyphicon glyphicon-log-in"></span> Logout</a>
+                    </li>
+                </c:if>
+            </ul>
+        </div>
+    </div>
+</nav>
 </body>
 </html>

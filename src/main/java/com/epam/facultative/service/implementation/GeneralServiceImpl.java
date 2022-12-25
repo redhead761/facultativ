@@ -58,7 +58,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "title");
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "course.title");
             return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -68,7 +68,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "title DESC");
+            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, "course.title DESC");
             return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);

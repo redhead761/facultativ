@@ -4,6 +4,7 @@ import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CourseDao;
 import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.DAOException;
+import com.epam.facultative.exception.ValidateException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -64,13 +65,15 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public void add(Course course) throws DAOException {
+    public void add(Course course) throws DAOException, ValidateException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_COURSE)) {
             setStatementFields(course, stmt);
             stmt.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ValidateException(e);
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException();
         }
     }
 
@@ -297,6 +300,7 @@ public class MySqlCourseDao implements CourseDao {
         stmt.setString(++k, course.getDescription());
         stmt.setInt(++k, course.getCategory().getId());
         stmt.setInt(++k, course.getStatus().getId());
+        stmt.setInt(++k, course.getTeacher().getId());
         return ++k;
     }
 

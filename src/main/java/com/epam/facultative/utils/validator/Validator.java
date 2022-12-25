@@ -50,4 +50,10 @@ public final class Validator {
         }
         return true;
     }
+
+//    public static void validateDate(LocalDate date) throws IncorrectFormatException {
+//        if (date == null || !date.isAfter(LocalDate.now())) {
+//            throw new IncorrectFormatException(ENTER_VALID_DATE);
+//        }
+//    }
 }

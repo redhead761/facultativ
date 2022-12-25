@@ -18,11 +18,10 @@ public class AssignAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int courseId = Integer.parseInt(req.getParameter("course_id"));
+        int courseId = (int) req.getSession().getAttribute("course_id");
         int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
         adminService.assigned(courseId, teacherId);
         req.getSession().setAttribute("message", "Successful");
-        req.getSession().removeAttribute("course_id");
-        return MANAGE_COURSES_ACTION;
+        return SHOW_ASSIGN_PAGE_ACTION;
     }
 }

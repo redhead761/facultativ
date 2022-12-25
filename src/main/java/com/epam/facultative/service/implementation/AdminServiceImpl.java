@@ -31,9 +31,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addCourse(Course course) throws ServiceException, ValidateException {
         try {
-            if (courseDao.getByName(course.getTitle()) != null) {
-                throw new ValidateException("Login not unique");
-            }
             if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
                 courseDao.add(course);
             }
@@ -66,9 +63,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (categoryDao.getByName(category.getTitle()) != null) {
-                throw new ValidateException("Login not unique");
-            }
             if (validateCategoryData(category.getTitle(), category.getDescription())) {
                 categoryDao.add(category);
             }
@@ -117,7 +111,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void assigned(int idCourse, int idUser) throws ServiceException {
         try {
-            courseDao.insertJournal(idCourse, idUser);
+            Course course = courseDao.getById(idCourse);
+            Teacher teacher = teacherDao.getById(idUser);
+            course.setTeacher(teacher);
+            courseDao.update(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

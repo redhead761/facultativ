@@ -1,7 +1,9 @@
 package com.epam.facultative.daos;
 
 import com.epam.facultative.exception.DAOException;
+import com.epam.facultative.exception.ValidateException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface Dao<T> {
@@ -11,7 +13,7 @@ public interface Dao<T> {
 
     T getByName(String name) throws DAOException;
 
-    void add(T t) throws DAOException;
+    void add(T t) throws DAOException, ValidateException;
 
     void update(T t) throws DAOException;
 

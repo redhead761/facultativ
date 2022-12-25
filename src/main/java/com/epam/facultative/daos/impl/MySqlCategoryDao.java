@@ -4,6 +4,7 @@ import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CategoryDao;
 import com.epam.facultative.entities.Category;
 import com.epam.facultative.exception.DAOException;
+import com.epam.facultative.exception.ValidateException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,11 +64,13 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public void add(Category category) throws DAOException {
+    public void add(Category category) throws DAOException, ValidateException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_CATEGORY)) {
             setStatementFields(category, stmt);
             stmt.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ValidateException("Login not unique");
         } catch (SQLException e) {
             throw new DAOException(e);
         }

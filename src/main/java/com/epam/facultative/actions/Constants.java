@@ -38,4 +38,5 @@ public class Constants {
     public static final String SHOW_TEACHER_COURSES_ACTION = "controller?action=show_teacher_courses";
     public static final String ALL_COURSES_ACTION = "controller?action=all_courses";
     public static final String SHOW_STUDENT_CABINET_ACTION = "controller?action=show_student_cabinet";
+    public static final String SHOW_ASSIGN_PAGE_ACTION = "controller?action=show_assign_page";
 }

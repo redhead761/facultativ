@@ -17,8 +17,28 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/header.jsp"/>
-<jsp:include page="../parts/admin_header.jsp"/>
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_courses" role="button">Back</a>
+
+<div class="row">
+    <div class="col">
+        <jsp:include page="../parts/admin_header.jsp"/>
+    </div>
+    <div class="col-auto">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses">Back to
+                    courses</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<c:if test="${sessionScope.message != null}">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>${sessionScope.message}!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
 <div class="table-responsive col-lg-10 mx-auto p-4">
     <table class="table table-success table-striped caption-top table-bordered">
         <caption>
@@ -36,7 +56,7 @@
             <td>${teacher.surname}</td>
             <td>${teacher.email}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>&course_id=<c:out value='${sessionScope.course_id}'/>">Assigned</a>
+                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=<c:out value='${teacher.id}'/>">Assigned</a>
             </td>
             </tbody>
         </c:forEach>

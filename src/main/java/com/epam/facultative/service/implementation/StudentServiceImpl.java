@@ -14,6 +14,7 @@ import com.epam.facultative.service.StudentService;
 import static com.epam.facultative.utils.HashPassword.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 public class StudentServiceImpl implements StudentService {

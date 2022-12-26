@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.epam.facultative.filters.FilterConstants.*;
 
-@WebFilter(urlPatterns = "/*")
+@WebFilter(filterName = "AuthFilter")
 public class AuthFilter implements Filter {
 
     @Override
@@ -25,6 +25,7 @@ public class AuthFilter implements Filter {
         System.out.println("User= " + user  );
         System.out.println("Action =" + action);
         System.out.println("URI =" + request.getRequestURI());
+        System.out.println("Query = " + request.getQueryString());
         if (user == null && (action == null || action.equals("auth") || action.equals("register"))) {
             filterChain.doFilter(request, response);
         } else if (user != null && user.getRole().equals(Role.ADMIN) && ADMIN_ACTIONS.contains(action)) {

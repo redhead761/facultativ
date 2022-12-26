@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter(filterName = "LocaleFilter")
 public class LocaleFilter implements Filter {
     private static final String LOCALE = "language";
     private static final String REFERER = "referer";

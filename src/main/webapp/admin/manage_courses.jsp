@@ -34,8 +34,8 @@
     </div>
 </c:if>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
         <caption>
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
                     data-bs-toggle="dropdown"

@@ -7,7 +7,6 @@
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
-
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -15,6 +14,7 @@
           crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/first.css">
 
     <title> Facultative </title>
 </head>
@@ -82,7 +82,8 @@
                     </li>
                 </c:forEach>
             </ul>
-            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/controller?action=show_course_form"
+            <a class="btn btn-outline-secondary"
+               href="${pageContext.request.contextPath}/controller?action=show_add_course"
                role="button"><fmt:message key="admin.add.course"/></a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <fmt:message key="admin.table.course.name"/>
@@ -114,7 +115,7 @@
                 </c:if>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_course_form&course_id=${course.id}">Edit</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_edit_course&course_id=${course.id}">Edit</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="${pageContext.request.contextPath}/controller?action=delete_course&course_id=<c:out value='${course.id}'/>">Delete</a>
             </td>

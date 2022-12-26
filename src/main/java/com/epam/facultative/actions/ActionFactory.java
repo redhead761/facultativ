@@ -28,7 +28,8 @@ public class ActionFactory {
         ACTION_MAP.put("update_category", new UpdateCategoryAction());
         ACTION_MAP.put("delete_category", new DeleteCategoryAction());
 
-        ACTION_MAP.put("show_course_form", new ShowCourseFormAction());
+        ACTION_MAP.put("show_add_course", new ShowAddCourseAction());
+        ACTION_MAP.put("show_edit_course",new ShowEditCourseAction());
         ACTION_MAP.put("add_course", new AddCourseAction());
         ACTION_MAP.put("update_course", new UpdateCourseAction());
         ACTION_MAP.put("delete_course", new DeleteCourseAction());

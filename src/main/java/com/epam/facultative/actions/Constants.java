@@ -9,13 +9,14 @@ public class Constants {
     //ADMIN
     public static final String ADMIN_PROFILE_PAGE = "admin/admin.jsp";
     public static final String MANAGE_COURSES_PAGE = "admin/manage_courses.jsp";
-    public static final String COURSE_FORM_PAGE = "admin/course_form.jsp";
+    public static final String ADD_COURSE_PAGE = "admin/add_course.jsp";
     public static final String CATEGORY_FORM_PAGE = "admin/category_form.jsp";
     public static final String MANAGE_CATEGORIES_PAGE = "admin/admin_categories.jsp";
     public static final String MANAGE_STUDENTS_PAGE = "admin/admin_students.jsp";
     public static final String MANAGE_TEACHERS_PAGE = "admin/admin_teachers.jsp";
     public static final String ADD_TEACHER_PAGE = "admin/add_teacher.jsp";
     public static final String ASSIGN_PAGE = "admin/assign_page.jsp";
+    public static final String EDIT_COURSE_PAGE = "admin/edit_course.jsp";
 
 
     //TEACHER

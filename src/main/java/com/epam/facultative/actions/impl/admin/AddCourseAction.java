@@ -32,7 +32,7 @@ public class AddCourseAction implements Action {
         } catch (ValidateException e) {
             req.getSession().setAttribute("message", e.getMessage());
         }
-        return COURSE_FORM_PAGE;
+        return ADD_COURSE_PAGE;
     }
 
     private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {

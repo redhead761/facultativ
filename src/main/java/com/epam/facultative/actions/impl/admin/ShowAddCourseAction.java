@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.actions.Constants.*;
 
-public class ShowCourseFormAction implements Action {
+public class ShowAddCourseAction implements Action {
     private final GeneralService generalService;
 
-    public ShowCourseFormAction() {
+    public ShowAddCourseAction() {
         generalService = ServiceFactory.getInstance().getGeneralService();
     }
 
@@ -22,7 +22,7 @@ public class ShowCourseFormAction implements Action {
         removeRedundantAttribute(req);
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         req.getSession().setAttribute("course_id", req.getParameter("course_id"));
-        return COURSE_FORM_PAGE;
+        return ADD_COURSE_PAGE;
     }
 
     private void removeRedundantAttribute(HttpServletRequest req) {

@@ -20,15 +20,20 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("In DOGET");
         req.getRequestDispatcher(process(req, resp)).forward(req, resp);
+        System.out.println("Out DOGET");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("In DOPOST");
         resp.sendRedirect(process(req, resp));
+        System.out.println("Out DOPOST");
     }
 
     private String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("In PROCESS");
         String actionName = req.getParameter("action");
         Action action = ACTION_FACTORY.getAction(actionName);
         try {

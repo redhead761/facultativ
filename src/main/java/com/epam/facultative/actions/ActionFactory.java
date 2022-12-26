@@ -15,6 +15,8 @@ public class ActionFactory {
     static {
         ACTION_MAP.put("auth", new AuthAction());
 
+
+ACTION_MAP.put("show_admin_profile", new ShowAdminProfileAction());
         ACTION_MAP.put("manage_courses", new ManageCoursesAction());
         ACTION_MAP.put("manage_categories", new ManageCategoriesAction());
         ACTION_MAP.put("manage_teachers", new ManageTeachersAction());

@@ -11,25 +11,16 @@ import java.io.IOException;
 public class LocaleFilter implements Filter {
     private static final String LOCALE = "language";
     private static final String REFERER = "referer";
-    private String defaultLocale;
 
-    @Override
-    public void init(FilterConfig config) {
-        defaultLocale = config.getInitParameter("defaultLocale");
-    }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String locale = httpRequest.getParameter(LOCALE);
-        if (isNotBlank(locale)) {
-            httpRequest.getSession().setAttribute(LOCALE, locale);
-            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getHeader(REFERER));
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        String locale = req.getParameter(LOCALE);
+        if (!isBlank(locale)) {
+            req.getSession().setAttribute(LOCALE, locale);
+            resp.sendRedirect((req).getHeader(REFERER));
         } else {
-            String sessionLocale = (String) httpRequest.getSession().getAttribute(LOCALE);
-            if (isBlank(sessionLocale)) {
-                httpRequest.getSession().setAttribute(LOCALE, defaultLocale);
-            }
-            chain.doFilter(request, response);
+            filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 
@@ -37,7 +28,4 @@ public class LocaleFilter implements Filter {
         return locale == null || locale.isEmpty();
     }
 
-    private boolean isNotBlank(String locale) {
-        return !isBlank(locale);
-    }
 }

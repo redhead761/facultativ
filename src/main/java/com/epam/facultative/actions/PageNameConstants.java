@@ -1,36 +1,42 @@
 package com.epam.facultative.actions;
 
-public class Constants {
+public class PageNameConstants {
 
+    //Not logged in pages
+    public static final String ABOUT_US_PAGE = "about_us.jsp";
     public static final String AUTH_PAGE = "auth.jsp";
+    public static final String CONTACTS_PAGE = "contacts.jsp";
+    public static final String COURSES_PAGE = "courses.jsp";
     public static final String ERROR_PAGE = "error.jsp";
+    public static final String INDEX_PAGE = "index.jsp";
     public static final String REGISTER_PAGE = "register.jsp";
+    public static final String TEACHERS_PAGE = "teachers.jsp";
 
-    //ADMIN
-    public static final String ADMIN_PROFILE_PAGE = "admin/admin.jsp";
-    public static final String MANAGE_COURSES_PAGE = "admin/manage_courses.jsp";
+    //ADMIN pages
     public static final String ADD_COURSE_PAGE = "admin/add_course.jsp";
-    public static final String CATEGORY_FORM_PAGE = "admin/category_form.jsp";
-    public static final String MANAGE_CATEGORIES_PAGE = "admin/admin_categories.jsp";
-    public static final String MANAGE_STUDENTS_PAGE = "admin/admin_students.jsp";
-    public static final String MANAGE_TEACHERS_PAGE = "admin/admin_teachers.jsp";
     public static final String ADD_TEACHER_PAGE = "admin/add_teacher.jsp";
-    public static final String ASSIGN_PAGE = "admin/assign_page.jsp";
+    public static final String ADMIN_PROFILE_PAGE = "admin/admin_profile.jsp";
+    public static final String ASSIGN_PAGE = "admin/assign.jsp";
+    public static final String CATEGORY_FORM_PAGE = "admin/category_form.jsp";
     public static final String EDIT_COURSE_PAGE = "admin/edit_course.jsp";
+    public static final String MANAGE_CATEGORIES_PAGE = "admin/manage_categories.jsp";
+    public static final String MANAGE_COURSES_PAGE = "admin/manage_courses.jsp";
+    public static final String MANAGE_STUDENTS_PAGE = "admin/manage_students.jsp";
+    public static final String MANAGE_TEACHERS_PAGE = "admin/manage_teachers.jsp";
 
-
-    //TEACHER
+    //TEACHER pages
+    public static final String JOURNAL_PAGE = "teacher/journal.jsp";
     public static final String TEACHER_PAGE = "teacher/teacher.jsp";
-    public static final String GRADE_PAGE = "teacher/grade_list.jsp";
     public static final String TEACHER_COURSES_PAGE = "teacher/teacher_courses.jsp";
+    public static final String TEACHER_PROFILE_PAGE = "teacher/teacher_profile.jsp";
 
-
-    //STUDENT
+    //STUDENT pages
+    public static final String COMING_SOON_COURSES_PAGE = "student/coming_soon_courses.jsp";
+    public static final String COMPLETED_COURSES_PAGE = "student/completed_courses.jsp";
+    public static final String IN_PROGRESS_COURSES_PAGE = "student/in_progress_courses.jsp";
     public static final String STUDENT_PAGE = "student/student.jsp";
     public static final String STUDENT_COURSES_PAGE = "student/student_courses.jsp";
-    public static final String COMING_SOON_COURSES_PAGE = "student/coming_soon_courses.jsp";
-    public static final String IN_PROGRESS_COURSES_PAGE = "student/in_progress_courses.jsp";
-    public static final String COMPLETED_COURSES_PAGE = "student/completed_courses.jsp";
+    public static final String STUDENT_PROFILE_PAGE = "student/student.jsp";
 
 
     public static final String MANAGE_COURSES_ACTION = "controller?action=manage_courses";

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.epam.facultative.actions.Constants.*;
+import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class ShowAdminProfileAction implements Action {
     @Override

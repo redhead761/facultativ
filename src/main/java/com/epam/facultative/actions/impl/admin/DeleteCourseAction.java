@@ -5,7 +5,7 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.*;
 import jakarta.servlet.http.*;
 
-import static com.epam.facultative.actions.Constants.*;
+import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class DeleteCourseAction implements Action {
     private final AdminService adminService;

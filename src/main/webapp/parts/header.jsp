@@ -26,7 +26,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Facultative</a>
+        <a class="navbar-brand" href="index.jsp">Facultative</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,16 +37,16 @@
                     <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Courses</a>
+                    <a class="nav-link" href="courses.jsp">Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Teachers</a>
+                    <a class="nav-link" href="teachers.jsp">Teachers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About us</a>
+                    <a class="nav-link" href="about_us.jsp">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contacts</a>
+                    <a class="nav-link" href="contacts.jsp">Contacts</a>
                 </li>
             </ul>
 
@@ -62,7 +62,11 @@
                 <c:if test="${sessionScope.user != null}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=log_out"><span
-                                class="glyphicon glyphicon-log-in"></span> Logout</a>
+                                class="glyphicon glyphicon-log-in"></span>My cabinet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=log_out"><span
+                                class="glyphicon glyphicon-log-in"></span>Logout</a>
                     </li>
                 </c:if>
             </ul>

@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-import static com.epam.facultative.actions.Constants.*;
+import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class ActionUtils {
     private ActionUtils() {

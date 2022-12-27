@@ -4,7 +4,7 @@ import com.epam.facultative.actions.Action;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static com.epam.facultative.actions.Constants.*;
+import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class LogOutAction implements Action {
     @Override

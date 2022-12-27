@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.LocalDate;
 
-import static com.epam.facultative.actions.Constants.*;
+import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;

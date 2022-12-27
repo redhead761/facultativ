@@ -1,16 +1,13 @@
 package com.epam.facultative.actions.impl.teacher;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
-
-import static com.epam.facultative.actions.Constants.*;
+import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class ShowGradeListAction implements Action {
     private final TeacherService teacherService;
@@ -28,6 +25,6 @@ public class ShowGradeListAction implements Action {
         }
 //        List<UserDTO> students = teacherService.getStudentsByCourse(courseId, 0, 5);
 //        req.getSession().setAttribute("students", students);
-        return GRADE_PAGE;
+        return JOURNAL_PAGE;
     }
 }

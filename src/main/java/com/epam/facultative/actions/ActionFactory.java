@@ -7,55 +7,56 @@ import com.epam.facultative.actions.impl.teacher.*;
 
 import java.util.*;
 
+import static com.epam.facultative.actions.ActionNameConstants.*;
+
 public class ActionFactory {
     private static final ActionFactory ACTION_FACTORY = new ActionFactory();
 
     private static final Map<String, Action> ACTION_MAP = new HashMap<>();
 
     static {
-        ACTION_MAP.put("auth", new AuthAction());
+        ACTION_MAP.put(AUTH_ACTION, new AuthAction());
 
+        ACTION_MAP.put("show_admin_profile", new ShowAdminProfileAction());
+        ACTION_MAP.put(MANAGE_COURSES_ACTION, new ManageCoursesAction());
+        ACTION_MAP.put(MANAGE_CATEGORIES_ACTION, new ManageCategoriesAction());
+        ACTION_MAP.put(MANAGE_TEACHERS_ACTION, new ManageTeachersAction());
+        ACTION_MAP.put(MANAGE_STUDENTS_ACTION, new ManageStudentsAction());
 
-ACTION_MAP.put("show_admin_profile", new ShowAdminProfileAction());
-        ACTION_MAP.put("manage_courses", new ManageCoursesAction());
-        ACTION_MAP.put("manage_categories", new ManageCategoriesAction());
-        ACTION_MAP.put("manage_teachers", new ManageTeachersAction());
-        ACTION_MAP.put("manage_students", new ManageStudentsAction());
+        ACTION_MAP.put(SELECT_COURSES_ACTION, new SelectCoursesAction());
+        ACTION_MAP.put(SORT_ACTION, new SortAction());
 
-        ACTION_MAP.put("select_courses", new SelectCoursesAction());
-        ACTION_MAP.put("sort", new SortAction());
-
-        ACTION_MAP.put("show_category_form", new ShowCategoryFormAction());
-        ACTION_MAP.put("add_category", new AddCategoryAction());
-        ACTION_MAP.put("update_category", new UpdateCategoryAction());
-        ACTION_MAP.put("delete_category", new DeleteCategoryAction());
+        ACTION_MAP.put(SHOW_CATEGORY_FORM_ACTION, new ShowCategoryFormAction());
+        ACTION_MAP.put(ADD_CATEGORY_ACTION, new AddCategoryAction());
+        ACTION_MAP.put(UPDATE_CATEGORY_ACTION, new UpdateCategoryAction());
+        ACTION_MAP.put(DELETE_CATEGORY_ACTION, new DeleteCategoryAction());
 
         ACTION_MAP.put("show_add_course", new ShowAddCourseAction());
-        ACTION_MAP.put("show_edit_course",new ShowEditCourseAction());
-        ACTION_MAP.put("add_course", new AddCourseAction());
-        ACTION_MAP.put("update_course", new UpdateCourseAction());
-        ACTION_MAP.put("delete_course", new DeleteCourseAction());
-        ACTION_MAP.put("show_assign_page", new ShowAssignPageAction());
-        ACTION_MAP.put("assign", new AssignAction());
+        ACTION_MAP.put(SHOW_EDIT_COURSE_ACTION,new ShowEditCourseAction());
+        ACTION_MAP.put(ADD_COURSE_ACTION, new AddCourseAction());
+        ACTION_MAP.put(UPDATE_COURSE_ACTION, new UpdateCourseAction());
+        ACTION_MAP.put(DELETE_COURSE_ACTION, new DeleteCourseAction());
+        ACTION_MAP.put(SHOW_ASSIGN_PAGE_ACTION, new ShowAssignPageAction());
+        ACTION_MAP.put(ASSIGN_ACTION, new AssignAction());
         ACTION_MAP.put("show_add_teacher_form", new ShowAddTeacherFormAction());
 
-        ACTION_MAP.put("block", new BlockStudentAction());
-        ACTION_MAP.put("unblock", new UnblockStudentAction());
+        ACTION_MAP.put(BLOCK_ACTION, new BlockStudentAction());
+        ACTION_MAP.put(UNBLOCK_ACTION, new UnblockStudentAction());
 
-        ACTION_MAP.put("show_teacher_courses", new ShowTeacherCoursesAction());
-        ACTION_MAP.put("show_grade_list", new ShowGradeListAction());
-        ACTION_MAP.put("grade", new GradeAction());
-        ACTION_MAP.put("all_courses", new AllCoursesAction());
+        ACTION_MAP.put(SHOW_TEACHER_COURSES_ACTION, new ShowTeacherCoursesAction());
+        ACTION_MAP.put(SHOW_GRADE_LIST_ACTION, new ShowGradeListAction());
+        ACTION_MAP.put(GRADE_ACTION, new GradeAction());
+        ACTION_MAP.put(ALL_COURSE_ACTION, new AllCoursesAction());
 
-        ACTION_MAP.put("log_out", new LogOutAction());
-        ACTION_MAP.put("register", new RegisterAction());
+        ACTION_MAP.put(LOG_OUT_ACTION, new LogOutAction());
+        ACTION_MAP.put(REGISTER_ACTION, new RegisterAction());
 
-        ACTION_MAP.put("enroll", new EnrollAction());
-        ACTION_MAP.put("show_student_courses", new ShowStudentCoursesAction());
-        ACTION_MAP.put("show_coming_soon_courses", new ShowComingSoonCoursesAction());
-        ACTION_MAP.put("show_progress_courses", new ShowInProgressCourses());
-        ACTION_MAP.put("show_completed_courses", new ShowCompletedCoursesAction());
-        ACTION_MAP.put("show_student_cabinet", new ShowStudentCabinetAction());
+        ACTION_MAP.put(ENROLL_ACTION, new EnrollAction());
+        ACTION_MAP.put(SHOW_STUDENT_COURSES_ACTION, new ShowStudentCoursesAction());
+        ACTION_MAP.put(SHOW_COMING_SOON_COURSES_ACTION, new ShowComingSoonCoursesAction());
+        ACTION_MAP.put(SHOW_PROGRESS_COURSES_ACTION, new ShowInProgressCourses());
+        ACTION_MAP.put(SHOW_COMPLETED_COURSES_ACTION, new ShowCompletedCoursesAction());
+        ACTION_MAP.put(SHOW_STUDENT_CABINET_ACTION, new ShowStudentCabinetAction());
     }
 
     private ActionFactory() {

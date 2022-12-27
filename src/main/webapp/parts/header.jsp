@@ -34,19 +34,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="courses.jsp">Courses</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/courses.jsp">Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="teachers.jsp">Teachers</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/teachers.jsp">Teachers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about_us.jsp">About us</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/about_us.jsp">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contacts.jsp">Contacts</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/contacts.jsp">Contacts</a>
                 </li>
             </ul>
 
@@ -61,7 +61,7 @@
                 </c:if>
                 <c:if test="${sessionScope.user != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=log_out"><span
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=my_cabinet"><span
                                 class="glyphicon glyphicon-log-in"></span>My cabinet</a>
                     </li>
                     <li class="nav-item">

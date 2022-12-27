@@ -15,6 +15,7 @@ public class ActionFactory {
     private static final Map<String, Action> ACTION_MAP = new HashMap<>();
 
     static {
+        ACTION_MAP.put(MY_CABINET_ACTION, new MyCabinetAction());
         ACTION_MAP.put(AUTH_ACTION, new AuthAction());
 
         ACTION_MAP.put("show_admin_profile", new ShowAdminProfileAction());

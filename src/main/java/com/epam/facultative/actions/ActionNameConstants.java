@@ -1,6 +1,7 @@
 package com.epam.facultative.actions;
 
 public class ActionNameConstants {
+    public static String MY_CABINET_ACTION = "my_cabinet";
 
     //NO logged
     public static String AUTH_ACTION = "auth";

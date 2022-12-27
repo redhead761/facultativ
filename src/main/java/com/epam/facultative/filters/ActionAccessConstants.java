@@ -21,6 +21,7 @@ public class ActionAccessConstants {
         GENERAL_ACTION.add(SELECT_COURSES_ACTION);
         GENERAL_ACTION.add(SORT_ACTION);
         GENERAL_ACTION.add(LOG_OUT_ACTION);
+        GENERAL_ACTION.add(MY_CABINET_ACTION);
     }
 
     static {
@@ -61,19 +62,19 @@ public class ActionAccessConstants {
         STUDENT_ACTIONS.add(SHOW_STUDENT_CABINET_ACTION);
     }
 
-    public static Set<String> getNoLoggedUserActions(){
+    public static Set<String> getNoLoggedUserActions() {
         return NO_LOGGED_USER_ACTIONS;
     }
 
-    public static Set<String> getAdminActions(){
+    public static Set<String> getAdminActions() {
         return ADMIN_ACTIONS;
     }
 
-    public static Set<String> getTeacherActions(){
+    public static Set<String> getTeacherActions() {
         return TEACHER_ACTIONS;
     }
 
-    public static Set<String> getStudentActions(){
+    public static Set<String> getStudentActions() {
         return STUDENT_ACTIONS;
     }
 }

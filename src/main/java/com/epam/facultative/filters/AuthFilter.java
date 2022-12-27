@@ -1,15 +1,12 @@
 package com.epam.facultative.filters;
 
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entities.Role;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-
-import static com.epam.facultative.filters.FilterConstants.*;
 
 @WebFilter(filterName = "AuthFilter")
 public class AuthFilter implements Filter {
@@ -23,30 +20,58 @@ public class AuthFilter implements Filter {
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         String action = req.getParameter("action");
         String servletPath = req.getServletPath();
-
-
-
-
-
-
-
-
-        System.out.println("User= " + user  );
+        System.out.println("User= " + user);
         System.out.println("Action =" + action);
-        System.out.println("URI =" + req.getRequestURI());
-        System.out.println("Query = " + req.getQueryString());
+//        System.out.println("URI =" + req.getRequestURI());
+//        System.out.println("Query = " + req.getQueryString());
         System.out.println("Servlet = " + req.getServletPath());
-        if (user == null && (action == null || action.equals("auth") || action.equals("register"))) {
-            filterChain.doFilter(req, resp);
-        } else if (user != null && user.getRole().equals(Role.ADMIN) && ADMIN_ACTIONS.contains(action)) {
-            filterChain.doFilter(req, resp);
-        } else if (user != null && user.getRole().equals(Role.STUDENT) && STUDENT_ACTIONS.contains(action)) {
-            filterChain.doFilter(req, resp);
-        } else if (user != null && user.getRole().equals(Role.TEACHER) && TEACHER_ACTIONS.contains(action)) {
-            filterChain.doFilter(req, resp);
+        System.out.println("COntext = " + req.getContextPath());
+        if (user == null) {
+            if (ActionAccessConstants.getNoLoggedUserActions().contains(action)
+                    || PageAccessConstants.getNoLoggedUserPages().contains(servletPath.substring(1))) {
+                System.out.println("In case null");
+                filterChain.doFilter(req, resp);
+            } else {
+                req.getSession().invalidate();
+                resp.sendRedirect(req.getContextPath() + "/auth.jsp");
+            }
         } else {
-            req.getSession().invalidate();
-            resp.sendRedirect("auth.jsp");
+            System.out.println("IN ELSE");
+            switch (user.getRole()) {
+                case ADMIN -> {
+                    System.out.println("In case ADMIN");
+                    if (ActionAccessConstants.getAdminActions().contains(action)
+                            || PageAccessConstants.getAdminPages().contains(servletPath.substring(1))) {
+                        System.out.println("IN ADMIN");
+                        filterChain.doFilter(req, resp);
+                    } else {
+                        req.getSession().invalidate();
+                        resp.sendRedirect(req.getContextPath() + "/auth.jsp");
+                    }
+                }
+                case TEACHER -> {
+                    System.out.println("In case TEACHER");
+                    if (ActionAccessConstants.getTeacherActions().contains(action)
+                            || PageAccessConstants.getTeacherPages().contains(servletPath.substring(1))) {
+
+                        filterChain.doFilter(req, resp);
+                    } else {
+                        req.getSession().invalidate();
+                        resp.sendRedirect(req.getContextPath() + "/auth.jsp");
+                    }
+                }
+                case STUDENT -> {
+                    System.out.println("In case STUDENT");
+                    if (ActionAccessConstants.getStudentActions().contains(action)
+                            || PageAccessConstants.getStudentPages().contains(servletPath.substring(1))) {
+
+                        filterChain.doFilter(req, resp);
+                    } else {
+                        req.getSession().invalidate();
+                        resp.sendRedirect(req.getContextPath() + "/auth.jsp");
+                    }
+                }
+            }
         }
     }
 }

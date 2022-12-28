@@ -71,7 +71,7 @@ public class MySqlCourseDao implements CourseDao {
             setStatementFields(course, stmt);
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new ValidateException(e);
+            throw new ValidateException("Title not unique");
         } catch (SQLException e) {
             throw new DAOException();
         }
@@ -300,7 +300,6 @@ public class MySqlCourseDao implements CourseDao {
         stmt.setString(++k, course.getDescription());
         stmt.setInt(++k, course.getCategory().getId());
         stmt.setInt(++k, course.getStatus().getId());
-        stmt.setInt(++k, course.getTeacher().getId());
         return ++k;
     }
 

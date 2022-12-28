@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+<%--<c:set var="language"--%>
+<%--       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
+<%--       scope="session"/>--%>
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -53,10 +53,10 @@
             <ul class="navbar-nav justify-content-end">
                 <c:if test="${sessionScope.user == null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/register.jsp"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/auth.jsp"><span class="glyphicon glyphicon-log-in"></span>Login</a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.user != null}">

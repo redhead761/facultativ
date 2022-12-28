@@ -32,7 +32,7 @@ public class ActionFactory {
         ACTION_MAP.put(UPDATE_CATEGORY_ACTION, new UpdateCategoryAction());
         ACTION_MAP.put(DELETE_CATEGORY_ACTION, new DeleteCategoryAction());
 
-        ACTION_MAP.put("show_add_course", new ShowAddCourseAction());
+        ACTION_MAP.put(SHOW_ADD_COURSE_ACTION, new ShowAddCourseAction());
         ACTION_MAP.put(SHOW_EDIT_COURSE_ACTION,new ShowEditCourseAction());
         ACTION_MAP.put(ADD_COURSE_ACTION, new AddCourseAction());
         ACTION_MAP.put(UPDATE_COURSE_ACTION, new UpdateCourseAction());

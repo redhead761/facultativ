@@ -1,6 +1,7 @@
 package com.epam.facultative.actions;
 
 public class ActionNameConstants {
+    public static String CONTROLLER = "controller?action=";
     public static String MY_CABINET_ACTION = "my_cabinet";
 
     //NO logged
@@ -23,6 +24,7 @@ public class ActionNameConstants {
     public static String ASSIGN_ACTION = "assign";
     public static String BLOCK_ACTION = "block";
     public static String UNBLOCK_ACTION = "unblock";
+    public static String SHOW_ADD_COURSE_ACTION = "show_add_course";
 
     //Teacher
     public static String SHOW_TEACHER_COURSES_ACTION = "show_teacher_courses";

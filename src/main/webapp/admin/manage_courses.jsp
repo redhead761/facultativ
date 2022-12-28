@@ -27,9 +27,9 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<c:if test="${sessionScope.message != null}">
+<c:if test="${message != null}">
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${sessionScope.message}!</strong>
+        <strong>${message}!</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </c:if>
@@ -63,7 +63,7 @@
                 <fmt:message key="admin.select.teacher"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="teacher" items="${sessionScope.teachers}">
+                <c:forEach var="teacher" items="${requestScope.teachers}">
                     <li><a class="dropdown-item"
                            href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
@@ -76,7 +76,7 @@
                 <fmt:message key="admin.select.category"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="category" items="${sessionScope.categories}">
+                <c:forEach var="category" items="${requestScope.categories}">
                     <li><a class="dropdown-item"
                            href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
@@ -98,7 +98,7 @@
         <th scope="col"><fmt:message key="admin.table.course.teacher"/></th>
         <th scope="col"><fmt:message key="action"/></th>
         </thead>
-        <c:forEach var="course" items="${sessionScope.courses}">
+        <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>
@@ -124,55 +124,55 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <c:if test="${sessionScope.currentPage == 1}">
+            <c:if test="${requestScope.currentPage == 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Previous</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.currentPage > 1}">
+            <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage-1}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage-1}">Previous</a>
                 </li>
             </c:if>
 
             <li class="page-item active" aria-current="page">
-                <span class="page-link">${sessionScope.currentPage}</span>
+                <span class="page-link">${requestScope.currentPage}</span>
             </li>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+1}</span>
+                    <span class="page-link">${requestScope.currentPage+1}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 2}">
                 <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+2}</span>
+                    <span class="page-link">${requestScope.currentPage+2}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+2}">${sessionScope.currentPage+2}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Next</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${sessionScope.currentPage+1}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}">Next</a>
                 </li>
             </c:if>
         </ul>

@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+<%--<c:set var="language"--%>
+<%--       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
+<%--       scope="session"/>--%>
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 <jsp:useBean id="now" class="java.util.Date"/>
@@ -53,25 +53,25 @@
         <input type="hidden" name="action" value="add_course"/>
         <div class="form-floating mt-4 mb-3 col-lg-3">
             <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                   value="${sessionScope.title}"
+                   value="${requestScope.title}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
                    title="Title must contain 1 to 3 characters" required>
             <label for="floatingInputTitle">Title</label>
         </div>
         <div class="form-floating mt-4 mb-3 col-lg-3">
             <input class="form-control" name="duration" id="floatingInputDuration" placeholder="duration"
-                   value="${sessionScope.duration}"
+                   value="${requestScope.duration}"
                    pattern="^[0-9]{0,3}" title="Duration must contain a value from 1 to 999" required>
             <label for="floatingInputDuration">Duration</label>
         </div>
         <div class="form-floating mt-4 mb-3 col-lg-3">
             <input class="form-control" type="date" name="start_date" id="floatingInputDate" placeholder="date"
-                   value="${sessionScope.start_date}" required min="${nowFormatted}">
+                   value="${requestScope.start_date}" required min="${nowFormatted}">
             <label for="floatingInputDate">Start date</label>
         </div>
         <div class="form-floating mt-4 mb-3 col-lg-3">
             <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
-                   value="${sessionScope.description}"
+                   value="${requestScope.description}"
                    pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
                    title="Description must contain 0 to 200 characters">
             <label for="floatingInputDescription">Description</label>
@@ -79,7 +79,7 @@
         <div class="mt-2 col-lg-3">
             <select name="category" class="form-select form-select-lg mb-3" required>
                 <option disabled selected value="">Select category</option>
-                <c:forEach var="category" items="${sessionScope.categories}">
+                <c:forEach var="category" items="${requestScope.categories}">
                     <option value="${category.id}">${category.title}</option>
                 </c:forEach>
             </select>

@@ -42,6 +42,7 @@ public class ActionAccessConstants {
         ADMIN_ACTIONS.add(ASSIGN_ACTION);
         ADMIN_ACTIONS.add(BLOCK_ACTION);
         ADMIN_ACTIONS.add(UNBLOCK_ACTION);
+        ADMIN_ACTIONS.add(SHOW_ADD_COURSE_ACTION);
     }
 
     static {

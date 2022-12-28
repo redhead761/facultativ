@@ -35,13 +35,13 @@ public class AuthAction implements Action {
             req.getSession().setAttribute("statuses", Status.values());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PROFILE_PAGE;
-                case TEACHER -> path = ALL_COURSES_ACTION;
-                case STUDENT -> path = SHOW_STUDENT_CABINET_ACTION;
+                case TEACHER -> path = TEACHER_PROFILE_PAGE;
+                case STUDENT -> path = STUDENT_PROFILE_PAGE;
             }
         } catch (ValidateException e) {
-            req.getSession().setAttribute("login", login);
-            req.getSession().setAttribute("message", e.getMessage());
-            path = AUTH_PAGE;
+            req.setAttribute("login", login);
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher(AUTH_PAGE).forward(req, resp);
         }
         return path;
     }

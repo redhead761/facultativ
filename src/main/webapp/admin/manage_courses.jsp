@@ -27,9 +27,9 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<c:if test="${message != null}">
+<c:if test="${sessionScope.message != null}">
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${message}!</strong>
+        <strong>${sessionScope.message}!</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </c:if>
@@ -132,7 +132,7 @@
 
             <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage-1}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage-1}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">Previous</a>
                 </li>
             </c:if>
 
@@ -148,7 +148,7 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${requestScope.currentPage+1}</a>
                 </li>
             </c:if>
 
@@ -160,7 +160,7 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+2}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${sessionScope.currentPage+2}</a>
                 </li>
             </c:if>
 
@@ -172,7 +172,7 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">Next</a>
                 </li>
             </c:if>
         </ul>

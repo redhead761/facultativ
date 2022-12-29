@@ -16,6 +16,10 @@ public class ActionUtils {
     private ActionUtils() {
     }
 
+    public static void removeRedundantAttribute(HttpServletRequest req){
+        req.getSession().removeAttribute("message");
+    }
+
     public static int getCurrentPage(HttpServletRequest req) {
         if (req.getParameter("page") != null) {
             return Integer.parseInt(req.getParameter("page"));

@@ -19,20 +19,12 @@ public class ShowAssignPageAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        removeRedundantAttribute(req);
-        int courseId;
-        if (req.getParameter("course_id") != null) {
-            courseId = Integer.parseInt(req.getParameter("course_id"));
-            req.getSession().setAttribute("course_id", courseId);
-        }
+        ActionUtils.removeRedundantAttribute(req);
+        int courseId = Integer.parseInt(req.getParameter("course_id"));
+        req.setAttribute("course_id", courseId);
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         ActionUtils.setUpPaginationForTeachers(req, adminService, currentPage, recordsPerPage);
         return ASSIGN_PAGE;
-    }
-
-    private void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("sort_type");
-        req.getSession().removeAttribute("select_type");
     }
 }

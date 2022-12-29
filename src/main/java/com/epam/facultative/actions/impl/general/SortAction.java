@@ -20,12 +20,9 @@ public class SortAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        removeRedundantAttribute(req);
+        ActionUtils.removeRedundantAttribute(req);
         String sortType = req.getParameter("sort_type");
-        if (sortType == null) {
-            sortType = (String) req.getSession().getAttribute("sort_type");
-        }
-        req.getSession().setAttribute("sort_type", sortType);
+        req.setAttribute("sort_type", sortType);
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         List<CourseDTO> courses = null;
@@ -43,7 +40,4 @@ public class SortAction implements Action {
         return ActionUtils.chooseCabinet(req);
     }
 
-    private void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("select_type");
-    }
 }

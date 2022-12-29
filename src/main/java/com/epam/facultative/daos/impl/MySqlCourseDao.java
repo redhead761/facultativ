@@ -81,7 +81,9 @@ public class MySqlCourseDao implements CourseDao {
     public void update(Course course) throws DAOException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
-            stmt.setString(setStatementFields(course, stmt), String.valueOf(course.getId()));
+            int k = setStatementFields(course, stmt);
+            stmt.setInt(++k, course.getTeacher().getId());
+            stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -289,7 +291,7 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     private String getQuery(String sortBy) {
-        return "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id ORDER BY " + sortBy + " LIMIT ?,?";
+        return "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id ORDER BY " + sortBy + " LIMIT ?,?";
     }
 
     private int setStatementFields(Course course, PreparedStatement stmt) throws SQLException {
@@ -300,7 +302,7 @@ public class MySqlCourseDao implements CourseDao {
         stmt.setString(++k, course.getDescription());
         stmt.setInt(++k, course.getCategory().getId());
         stmt.setInt(++k, course.getStatus().getId());
-        return ++k;
+        return k;
     }
 
 

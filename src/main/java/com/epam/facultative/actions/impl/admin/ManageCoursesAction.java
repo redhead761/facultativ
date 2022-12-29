@@ -23,14 +23,19 @@ public class ManageCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-//        if (req.getSession().getAttribute("sort_type") != null) {
-//            ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
-//            return MANAGE_COURSES_PAGE;
-//        }
-//        if (req.getSession().getAttribute("select_type") != null) {
-//            ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
-//            return MANAGE_COURSES_PAGE;
-//        }
+        ActionUtils.removeRedundantAttribute(req);
+        String sortType = req.getParameter("sort_type");
+        String selectType = req.getParameter("select_type");
+        if (sortType != null && !sortType.isBlank()) {
+            System.out.println("In SORT block");
+            ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
+            return MANAGE_COURSES_PAGE;
+        }
+        if (selectType != null && !selectType.isBlank()) {
+            System.out.println("In SELECT block");
+            ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
+            return MANAGE_COURSES_PAGE;
+        }
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);

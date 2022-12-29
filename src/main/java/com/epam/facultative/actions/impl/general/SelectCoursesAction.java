@@ -20,22 +20,21 @@ public class SelectCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        removeRedundantAttribute(req);
+        ActionUtils.removeRedundantAttribute(req);
         String selectType = req.getParameter("select_type");
-        if (selectType == null) {
-            selectType = (String) req.getSession().getAttribute("select_type");
-        }
-        req.getSession().setAttribute("select_type", selectType);
+        req.setAttribute("select_type", selectType);
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         List<CourseDTO> courses = null;
         switch (selectType) {
             case "by_teacher" -> {
                 int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
+                req.setAttribute("teacher_id", teacherId);
                 courses = generalService.getCoursesByTeacher(teacherId, (currentPage - 1) * recordsPerPage, recordsPerPage);
             }
             case "by_category" -> {
                 int categoryId = Integer.parseInt(req.getParameter("category_id"));
+                req.setAttribute("category_id", categoryId);
                 courses = generalService.getCoursesByCategory(categoryId, (currentPage - 1) * recordsPerPage, recordsPerPage);
             }
 
@@ -44,7 +43,4 @@ public class SelectCoursesAction implements Action {
         return ActionUtils.chooseCabinet(req);
     }
 
-    private void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("sort_type");
-    }
 }

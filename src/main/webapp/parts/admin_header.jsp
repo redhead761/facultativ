@@ -17,7 +17,7 @@
 
 <ul class="nav">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="admin.jsp">Profile</a>
+        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/admin/admin_profile.jsp">Profile</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message

@@ -1,6 +1,7 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
@@ -25,27 +26,17 @@ public class ShowEditCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        removeRedundantAttribute(req);
-        int courseId;
-        if (req.getParameter("course_id") != null) {
-            courseId = Integer.parseInt(req.getParameter("course_id"));
-            req.getSession().setAttribute("course_id", courseId);
-        } else {
-            courseId = (int) req.getSession().getAttribute("course_id");
-        }
+        ActionUtils.removeRedundantAttribute(req);
+        int courseId = Integer.parseInt(req.getParameter("course_id"));
+        req.setAttribute("course_id", courseId);
         CourseDTO course = adminService.getCourse(courseId);
-        req.getSession().setAttribute("title", course.getTitle());
-        req.getSession().setAttribute("duration", course.getDuration());
-        req.getSession().setAttribute("start_date", course.getStartDate());
-        req.getSession().setAttribute("description", course.getDescription());
-        req.getSession().setAttribute("category", course.getCategory().getTitle());
-        req.getSession().setAttribute("status", course.getStatus());
-        req.getSession().setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute("title", course.getTitle());
+        req.setAttribute("duration", course.getDuration());
+        req.setAttribute("start_date", course.getStartDate());
+        req.setAttribute("description", course.getDescription());
+        req.setAttribute("category", course.getCategory().getTitle());
+        req.setAttribute("status", course.getStatus());
+        req.setAttribute("categories", generalService.getAllCategories());
         return EDIT_COURSE_PAGE;
-    }
-
-    private void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("sort_type");
-        req.getSession().removeAttribute("select_type");
     }
 }

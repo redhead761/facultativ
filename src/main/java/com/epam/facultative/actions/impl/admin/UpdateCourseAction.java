@@ -27,18 +27,16 @@ public class UpdateCourseAction implements Action {
         Course course = getCourseFromParameter(req);
         try {
             adminService.updateCourse(course);
-            req.getSession().setAttribute("message", "Successful");
+            req.getSession().setAttribute("message", "Changes saved");
         } catch (ValidateException e) {
             req.getSession().setAttribute("message", e.getMessage());
-            return COURSE_FORM_ACTION;
+            return EDIT_COURSE_PAGE;
         }
-        req.getSession().removeAttribute("course_id");
-        return MANAGE_COURSES_ACTION;
+        return EDIT_COURSE_PAGE;
     }
 
     private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
-        String id = (String) req.getSession().getAttribute("course_id");
-        int courseId = Integer.parseInt(id);
+        int courseId = Integer.parseInt(req.getParameter("course_id"));
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));

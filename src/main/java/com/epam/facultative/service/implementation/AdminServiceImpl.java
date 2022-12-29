@@ -115,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
             Teacher teacher = teacherDao.getById(idUser);
             course.setTeacher(teacher);
             courseDao.update(course);
-        } catch (DAOException e) {
+        } catch (DAOException | ValidateException e) {
             throw new ServiceException(e);
         }
     }

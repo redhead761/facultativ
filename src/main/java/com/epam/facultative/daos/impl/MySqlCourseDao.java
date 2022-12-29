@@ -78,13 +78,20 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public void update(Course course) throws DAOException {
+    public void update(Course course) throws DAOException, ValidateException {
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
             int k = setStatementFields(course, stmt);
-            stmt.setInt(++k, course.getTeacher().getId());
+            if (course.getTeacher() != null) {
+                stmt.setInt(++k, course.getTeacher().getId());
+            } else {
+                stmt.setNull(++k, Types.INTEGER);
+            }
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ValidateException("Title not unique");
         } catch (SQLException e) {
             throw new DAOException(e);
         }

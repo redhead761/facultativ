@@ -15,7 +15,7 @@ public interface Dao<T> {
 
     void add(T t) throws DAOException, ValidateException;
 
-    void update(T t) throws DAOException;
+    void update(T t) throws DAOException, ValidateException;
 
     void delete(int id) throws DAOException;
 

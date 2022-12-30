@@ -42,21 +42,17 @@
         </div>
     </c:if>
 
-    <c:if test="${requestScope.category_id != null}">
-    <form action="${pageContext.request.contextPath}/controller" method="post">
-        <input type="hidden" name="action" value="update_category"/>
-        <input type="hidden" name="category_id" value="${param.category_id}"/>
-        </c:if>
-
-        <c:if test="${requestScope.category_id == null}">
+    <c:if test="${sessionScope.message  == null}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
-            <input type="hidden" name="action" value="add_category"/>
-            </c:if>
+            <input type="hidden" name="action" value="update_category"/>
+            <input type="hidden" name="category_id" value="${requestScope.category_id}"/>
+
 
             <div class="form-floating mt-4 mb-3 col-lg-2 ">
                 <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
                        value="${requestScope.title}"
-                       pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}" title="title must..." required>
+                       pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}" title="title must..."
+                       required>
                 <label for="floatingInputTitle">Title</label>
             </div>
 
@@ -69,7 +65,7 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
+    </c:if>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

@@ -17,12 +17,13 @@ public class PageNameConstants {
     public static final String ADD_TEACHER_PAGE = "admin/add_teacher.jsp";
     public static final String ADMIN_PROFILE_PAGE = "admin/admin_profile.jsp";
     public static final String ASSIGN_PAGE = "admin/assign.jsp";
-    public static final String CATEGORY_FORM_PAGE = "admin/category_form.jsp";
+    public static final String EDIT_CATEGORY_PAGE = "admin/edit_category.jsp";
     public static final String EDIT_COURSE_PAGE = "admin/edit_course.jsp";
     public static final String MANAGE_CATEGORIES_PAGE = "admin/manage_categories.jsp";
     public static final String MANAGE_COURSES_PAGE = "admin/manage_courses.jsp";
     public static final String MANAGE_STUDENTS_PAGE = "admin/manage_students.jsp";
     public static final String MANAGE_TEACHERS_PAGE = "admin/manage_teachers.jsp";
+    public static final String ADD_CATEGORY_PAGE = "admin/add_category.jsp";
 
     //TEACHER pages
     public static final String JOURNAL_PAGE = "teacher/journal.jsp";

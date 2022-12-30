@@ -28,7 +28,7 @@
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/category_form.jsp" role="button"><fmt:message key="admin.add.category"/></a>
+            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/add_category.jsp" role="button"><fmt:message key="admin.add.category"/></a>
             <fmt:message key="admin.table.category.name"/>
         </caption>
         <thead>

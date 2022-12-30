@@ -32,9 +32,9 @@ public class UpdateCategoryAction implements Action {
             req.setAttribute("description", category.getDescription());
             req.setAttribute("category_id", req.getParameter("category_id"));
             req.getSession().setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(CATEGORY_FORM_PAGE).forward(req, resp);
+            req.getRequestDispatcher(EDIT_CATEGORY_PAGE).forward(req, resp);
         }
-        return MANAGE_CATEGORIES_PAGE;
+        return EDIT_CATEGORY_PAGE;
     }
 
     private Category getCategoryFromParameter(HttpServletRequest req) {

@@ -27,6 +27,6 @@ public class ShowCategoryFormAction implements Action {
         req.setAttribute("title", category.getTitle());
         req.setAttribute("description", category.getDescription());
         req.setAttribute("category_id", categoryId);
-        return CATEGORY_FORM_PAGE;
+        return EDIT_CATEGORY_PAGE;
     }
 }

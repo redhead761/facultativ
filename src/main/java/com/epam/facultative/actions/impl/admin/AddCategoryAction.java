@@ -34,9 +34,9 @@ public class AddCategoryAction implements Action {
             req.setAttribute("title", category.getTitle());
             req.setAttribute("description", category.getDescription());
             req.getSession().setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(CATEGORY_FORM_PAGE).forward(req, resp);
+            req.getRequestDispatcher(ADD_CATEGORY_PAGE).forward(req, resp);
         }
-        return CATEGORY_FORM_PAGE;
+        return ADD_CATEGORY_PAGE;
     }
 
     private Category getCategoryFromParameter(HttpServletRequest req) {

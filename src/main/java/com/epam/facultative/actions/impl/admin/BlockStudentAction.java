@@ -1,6 +1,7 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
@@ -19,9 +20,9 @@ public class BlockStudentAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         adminService.blockStudent(Integer.parseInt(req.getParameter("student_id")));
-        int page = (int) req.getSession().getAttribute("currentPage");
+        int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
-        req.getSession().setAttribute("students", adminService.getAllStudentsPagination((page - 1) * recordsPerPage, recordsPerPage));
+        req.setAttribute("students", adminService.getAllStudentsPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
         return MANAGE_STUDENTS_PAGE;
     }
 }

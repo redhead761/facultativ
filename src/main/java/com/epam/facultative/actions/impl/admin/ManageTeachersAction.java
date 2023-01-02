@@ -19,17 +19,10 @@ public class ManageTeachersAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        removeRedundantAttribute(req);
+        ActionUtils.removeRedundantAttribute(req);
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         ActionUtils.setUpPaginationForTeachers(req, adminService, currentPage, recordsPerPage);
         return MANAGE_TEACHERS_PAGE;
-    }
-
-    private void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("sort_type");
-        req.getSession().removeAttribute("select_type");
-        req.getSession().removeAttribute("currentPage");
-        req.getSession().removeAttribute("message");
     }
 }

@@ -18,9 +18,21 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="../parts/header.jsp"/>
-<jsp:include page="../parts/admin_header.jsp"/>
+<div class="row">
+    <div class="col">
+        <jsp:include page="../parts/admin_header.jsp"/>
+    </div>
+    <div class="col-auto">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_teachers">Back
+                    to
+                    teachers</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=manage_teachers" role="button">Back</a>
 <div align="center">
     <h2>Add teacher</h2>
 
@@ -32,8 +44,7 @@
     </c:if>
 
     <form action="${pageContext.request.contextPath}/controller" method="post">
-        <input type="hidden" name="action" value="register"/>
-        <input type="hidden" name="type" value="teacher"/>
+        <input type="hidden" name="action" value="add_teacher"/>
 
         <div class="form-floating mt-4 mb-3 col-lg-2 ">
             <input class="form-control" name="login" id="floatingInputLogin" placeholder="login" value="${login}"
@@ -42,7 +53,8 @@
         </div>
 
         <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control"  type="password" name="password" id="floatingInputPassword" placeholder="password"
+            <input class="form-control" type="password" name="password" id="floatingInputPassword"
+                   placeholder="password"
                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$" title="Password must..." required>
             <label for="floatingInputPassword">Password</label>
         </div>
@@ -73,6 +85,13 @@
                    pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" title="Email must..." required>
             <label for="floatingInputEmail">Email</label>
         </div>
+
+        <div class="form-floating mt-4 mb-3 col-lg-2 ">
+            <input class="form-control" name="name" id="floatingInputDegree" placeholder="name" value="${name}"
+                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Degree must..." required>
+            <label for="floatingInputDegree">Degree</label>
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

@@ -1,12 +1,12 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 import static com.epam.facultative.actions.PageNameConstants.*;
 
@@ -19,12 +19,12 @@ public class DeleteCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int page = (int) req.getSession().getAttribute("currentPage");
+        int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         int id = Integer.parseInt(req.getParameter("category_id"));
         adminService.deleteCategory(id);
-        req.getSession().setAttribute("categories", adminService.getAllCategoriesPagination((page - 1) * recordsPerPage, recordsPerPage));
-        req.getSession().setAttribute("message", "Successful");
+        ActionUtils.setUpPaginationForCategories(req, adminService, currentPage, recordsPerPage);
+        req.setAttribute("message", "Successful");
         return MANAGE_CATEGORIES_PAGE;
     }
 }

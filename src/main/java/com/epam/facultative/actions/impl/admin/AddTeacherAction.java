@@ -1,4 +1,4 @@
-package com.epam.facultative.actions.impl.general;
+package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.entities.Teacher;
@@ -6,38 +6,34 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
-import com.epam.facultative.service.StudentService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static com.epam.facultative.actions.PageNameConstants.*;
+import java.io.IOException;
 
-public class RegisterAction implements Action {
-    private final StudentService studentService;
+import static com.epam.facultative.actions.PageNameConstants.ADD_TEACHER_PAGE;
 
-    public RegisterAction() {
-        studentService = ServiceFactory.getInstance().getStudentService();
+public class AddTeacherAction implements Action {
+    private final AdminService adminService;
+
+    public AddTeacherAction() {
+        adminService = ServiceFactory.getInstance().getAdminService();
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String path = null;
-        String type = req.getParameter("type");
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeat_password");
         Teacher newUser = getTeacherForAttribute(req);
-        if (type.equals("student")) {
-            try {
-                checkConfirmPassword(password, repeatPassword);
-                studentService.addStudent(newUser);
-                path = AUTH_PAGE;
-                req.getSession().setAttribute("message", "Successful");
-            } catch (ValidateException e) {
-                path = REGISTER_PAGE;
-                req.getSession().setAttribute("message", e.getMessage());
-            }
+        try {
+            checkConfirmPassword(password, repeatPassword);
+            adminService.addTeacher(newUser);
+            req.getSession().setAttribute("message", "Successful");
+        } catch (ValidateException e) {
+            req.getSession().setAttribute("message", e.getMessage());
         }
-        return path;
+        return ADD_TEACHER_PAGE;
     }
 
     private Teacher getTeacherForAttribute(HttpServletRequest req) {
@@ -46,12 +42,14 @@ public class RegisterAction implements Action {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
+        String degree = req.getParameter("degree");
         return Teacher.builder()
                 .login(login)
                 .password(password)
                 .name(name)
                 .surname(surname)
                 .email(email)
+                .degree(degree)
                 .build();
     }
 

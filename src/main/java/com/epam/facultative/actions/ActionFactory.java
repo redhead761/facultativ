@@ -33,12 +33,13 @@ public class ActionFactory {
         ACTION_MAP.put(DELETE_CATEGORY_ACTION, new DeleteCategoryAction());
 
         ACTION_MAP.put(SHOW_ADD_COURSE_ACTION, new ShowAddCourseAction());
-        ACTION_MAP.put(SHOW_EDIT_COURSE_ACTION,new ShowEditCourseAction());
+        ACTION_MAP.put(SHOW_EDIT_COURSE_ACTION, new ShowEditCourseAction());
         ACTION_MAP.put(ADD_COURSE_ACTION, new AddCourseAction());
         ACTION_MAP.put(UPDATE_COURSE_ACTION, new UpdateCourseAction());
         ACTION_MAP.put(DELETE_COURSE_ACTION, new DeleteCourseAction());
         ACTION_MAP.put(SHOW_ASSIGN_PAGE_ACTION, new ShowAssignPageAction());
         ACTION_MAP.put(ASSIGN_ACTION, new AssignAction());
+        ACTION_MAP.put(ADD_TEACHER_ACTION, new AddTeacherAction());
         ACTION_MAP.put("show_add_teacher_form", new ShowAddTeacherFormAction());
 
         ACTION_MAP.put(BLOCK_ACTION, new BlockStudentAction());

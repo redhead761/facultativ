@@ -139,18 +139,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addTeacher(User user) throws ServiceException, ValidateException {
+    public void addTeacher(Teacher teacher) throws ServiceException, ValidateException {
         try {
-            if (userDao.getByName(user.getLogin()) != null) {
-                throw new ValidateException("Login not unique");
-            }
-            if (validateLogin(user.getLogin())
-                    && validatePassword(user.getPassword())
-                    && validateNameAndSurname(user.getName(), user.getSurname())
-                    && validateEmail(user.getEmail())) {
-                user.setRole(Role.TEACHER);
-                user.setPassword(encode(user.getPassword()));
-                userDao.add(user);
+            if (validateLogin(teacher.getLogin())
+                    && validatePassword(teacher.getPassword())
+                    && validateNameAndSurname(teacher.getName(), teacher.getSurname())
+                    && validateEmail(teacher.getEmail())) {
+                teacher.setRole(Role.TEACHER);
+                teacher.setPassword(encode(teacher.getPassword()));
+                teacherDao.add(teacher);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);

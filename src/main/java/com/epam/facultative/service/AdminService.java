@@ -4,6 +4,7 @@ import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entities.Category;
 import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
@@ -36,7 +37,7 @@ public interface AdminService {
 
     void unblockStudent(int userId) throws ServiceException;
 
-    void addTeacher(User user) throws ServiceException, ValidateException;
+    void addTeacher(Teacher teacher) throws ServiceException, ValidateException;
 
     List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
 

@@ -5,6 +5,7 @@ import com.epam.facultative.daos.StudentDao;
 import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
+import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entities.Course;
 import com.epam.facultative.entities.Role;
@@ -41,14 +42,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<UserDTO> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws ServiceException {
-        List<UserDTO> students = new ArrayList<>();
+    public List<StudentDTO> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws ServiceException {
+        List<StudentDTO> students = new ArrayList<>();
         List<Student> users;
         try {
             users = studentDao.getStudentsByCourse(courseId, offset, numberOfRows);
-            for (User user : users) {
-                if (user.getRole().equals(Role.STUDENT))
-                    students.add(converter.userToDTO(user));
+            for (Student student : users) {
+                students.add(converter.studentToDTO(student));
             }
         } catch (DAOException e) {
             throw new ServiceException(e);

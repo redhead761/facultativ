@@ -19,40 +19,52 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-<jsp:include page="../parts/teacher_header.jsp"/>
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses" role="button">Back</a>
-
-<div align="center">
-    ${sessionScope.message}
-    <div class="table-responsive col-lg-10 mx-auto p-4">
-        <table class="table table-success table-striped caption-top table-bordered">
-            <caption>
-                All students in facultative
-            </caption>
-            <thead>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
-            </thead>
-            <c:forEach var="student" items="${sessionScope.students}">
-                <tbody>
-                <td>${student.name}</td>
-                <td><c:out value="${student.surname}"/></td>
-                <td><c:out value="${student.isBlock()}"/></td>
-                <td>
-                    <form action="${pageContext.request.contextPath}/controller" method="post">
-                        <input type="hidden" name="action" value="grade"/>
-                        <input type="hidden" name="course_id" value="${sessionScope.course_id}"/>
-                        <input type="hidden" name="student_id" value="${student.id}"/>
-                        Grade: <input name="grade"/>
-                        <input type="submit" value="enter"/>
-                    </form>
-                </td>
-                </tbody>
-            </c:forEach>
-        </table>
+<jsp:include page="../parts/header.jsp"/>
+<div class="row">
+    <div class="col">
+        <jsp:include page="../parts/teacher_header.jsp"/>
     </div>
-    <jsp:include page="/parts/footer.jsp"/>
+    <div class="col-auto">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses">Back
+                    to
+                    my courses</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+${sessionScope.message}
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
+        <caption>
+            All students in course
+        </caption>
+        <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+        </thead>
+        <c:forEach var="student" items="${requestScope.students}">
+            <tbody>
+            <td>${student.name}</td>
+            <td><c:out value="${student.surname}"/></td>
+            <td><c:out value="${student.isBlock()}"/></td>
+            <td>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="action" value="grade"/>
+                    <input type="hidden" name="course_id" value="${requestScope.course_id}"/>
+                    <input type="hidden" name="student_id" value="${student.id}"/>
+                    Grade: <input name="grade"/>
+                    <input type="submit" value="enter"/>
+                </form>
+            </td>
+            </tbody>
+        </c:forEach>
+    </table>
+</div>
+<jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

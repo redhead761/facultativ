@@ -36,7 +36,7 @@
         <th scope="col">Status</th>
         <th scope="col">Action</th>
         </thead>
-        <c:forEach var="course" items="${sessionScope.courses}">
+        <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>
@@ -45,62 +45,62 @@
             <td><c:out value="${course.getCategory().title}"/></td>
             <td><c:out value="${course.getStatus()}"/></td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_grade_list&course_id=${course.id}">Grade</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_grade_list&course_id=${course.id}">Journal</a>
             </td>
             </tbody>
         </c:forEach>
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <c:if test="${sessionScope.currentPage == 1}">
+            <c:if test="${requestScope.currentPage == 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Previous</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.currentPage > 1}">
+            <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${sessionScope.currentPage-1}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${requestScope.currentPage-1}">Previous</a>
                 </li>
             </c:if>
 
             <li class="page-item active" aria-current="page">
-                <span class="page-link">${sessionScope.currentPage}</span>
+                <span class="page-link">${requestScope.currentPage}</span>
             </li>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+1}</span>
+                    <span class="page-link">${requestScope.currentPage+1}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 2}">
                 <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+2}</span>
+                    <span class="page-link">${requestScope.currentPage+2}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${requestScope.currentPage+2}">${requestScope.currentPage+2}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Next</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${sessionScope.currentPage+1}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&page=${requestScope.currentPage+1}">Next</a>
                 </li>
             </c:if>
         </ul>

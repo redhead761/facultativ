@@ -8,7 +8,7 @@ import java.util.List;
 public interface TeacherService {
     void grading(int courseId, int userId, int grade) throws ServiceException;
 
-    List<UserDTO> getStudentsByCourse(int courseId,int offset, int numberOfRows) throws ServiceException;
+    List<StudentDTO> getStudentsByCourse(int courseId,int offset, int numberOfRows) throws ServiceException;
 
     List<CourseDTO> getTeacherCourses(int teacherId, int offset, int numberOfRows) throws ServiceException;
     int getNoOfRecordsCourses();

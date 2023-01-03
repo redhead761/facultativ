@@ -13,4 +13,5 @@ public class StudentDTO extends UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private int courseNumber;
     private boolean block;
+    private int grade;
 }

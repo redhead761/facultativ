@@ -39,6 +39,7 @@ public class Converter {
                 .role(student.getRole())
                 .block(student.isBlock())
                 .courseNumber(student.getCourseNumber())
+                .grade(student.getGrade())
                 .build();
     }
 

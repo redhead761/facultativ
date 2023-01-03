@@ -50,9 +50,7 @@ class Constants {
     static final String SELECT_ALL_STUDENTS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id LIMIT ?,?";
     static final String SELECT_STUDENTS_BY_COURSE =
-            "SELECT SQL_CALC_FOUND_ROWS * FROM student" +
-                    "JOIN user ON user_id = user.id" +
-                    "JOIN journal ON student_id = user_id WHERE course_id = ? LIMIT ?,?";
+            "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id JOIN journal ON student_id = user_id WHERE course_id = ? LIMIT ?,?";
     static final String UPDATE_BLOCK = "UPDATE student SET block=? WHERE user_id=?";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

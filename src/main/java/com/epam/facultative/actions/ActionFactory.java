@@ -46,7 +46,7 @@ public class ActionFactory {
         ACTION_MAP.put(UNBLOCK_ACTION, new UnblockStudentAction());
 
         ACTION_MAP.put(SHOW_TEACHER_COURSES_ACTION, new ShowTeacherCoursesAction());
-        ACTION_MAP.put(SHOW_GRADE_LIST_ACTION, new ShowGradeListAction());
+        ACTION_MAP.put(SHOW_JOURNAL_ACTION, new ShowJournalAction());
         ACTION_MAP.put(GRADE_ACTION, new GradeAction());
         ACTION_MAP.put(ALL_COURSE_ACTION, new AllCoursesAction());
 

@@ -19,13 +19,15 @@ public class GeneralServiceImpl implements GeneralService {
     private final CategoryDao categoryDao;
     private final Converter converter;
     private final TeacherDao teacherDao;
+    private final StudentDao studentDao;
 
 
-    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao, TeacherDao teacherDao) {
+    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao, TeacherDao teacherDao, StudentDao studentDao) {
         this.courseDao = courseDao;
         this.userDao = userDao;
         this.categoryDao = categoryDao;
         this.teacherDao = teacherDao;
+        this.studentDao = studentDao;
         this.converter = new Converter();
 
     }
@@ -40,10 +42,23 @@ public class GeneralServiceImpl implements GeneralService {
             if (!verify(user.getPassword(), password)) {
                 throw new ValidateException("Wrong password");
             }
-            return converter.userToDTO(user);
+            Role role = user.getRole();
+            switch (role) {
+                case ADMIN -> {
+                    return converter.userToDTO(user);
+                }
+                case TEACHER -> {
+                    return converter.teacherToDTO(teacherDao.getById(user.getId()));
+                }
+                case STUDENT -> {
+                    return converter.studentToDTO(studentDao.getById(user.getId()));
+                }
+            }
+
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return null;
     }
 
     @Override

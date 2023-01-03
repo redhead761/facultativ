@@ -19,11 +19,11 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+<jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/teacher_header.jsp"/>
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=all_courses" role="button">Back</a>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
         <caption>
             All courses in facultative
         </caption>

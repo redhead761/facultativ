@@ -1,18 +1,45 @@
 package com.epam.facultative.dto;
 
 import com.epam.facultative.entities.Course;
+import com.epam.facultative.entities.Student;
+import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.entities.User;
 
 public class Converter {
     public UserDTO userToDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setLogin(user.getLogin());
-        userDTO.setName(user.getName());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setRole(user.getRole());
-        return userDTO;
+        return UserDTO.builder()
+                .id(user.getId())
+                .login(user.getLogin())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+    }
+
+    public TeacherDTO teacherToDTO(Teacher teacher) {
+        return TeacherDTO.builder()
+                .id(teacher.getId())
+                .login(teacher.getLogin())
+                .name(teacher.getName())
+                .surname(teacher.getSurname())
+                .email(teacher.getEmail())
+                .role(teacher.getRole())
+                .degree(teacher.getDegree())
+                .build();
+    }
+
+    public StudentDTO studentToDTO(Student student) {
+        return StudentDTO.builder()
+                .id(student.getId())
+                .login(student.getLogin())
+                .name(student.getName())
+                .surname(student.getSurname())
+                .email(student.getEmail())
+                .role(student.getRole())
+                .block(student.isBlock())
+                .courseNumber(student.getCourseNumber())
+                .build();
     }
 
     public CourseDTO courseToDTO(Course course) {
@@ -27,18 +54,5 @@ public class Converter {
                 .status(course.getStatus())
                 .teacher(userToDTO(course.getTeacher()))
                 .build();
-    }
-
-    public UserDTO userToStudent(User user, CourseDTO courseDTO, int grade) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setLogin(user.getLogin());
-        userDTO.setName(user.getName());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setRole(user.getRole());
-        userDTO.setCourse(courseDTO);
-        userDTO.setGrade(grade);
-        return userDTO;
     }
 }

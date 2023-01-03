@@ -16,7 +16,8 @@ public class ServiceFactory {
         this.generalService = new GeneralServiceImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getUserDao(),
                 DaoFactory.getInstance().getCategoryDao(),
-                DaoFactory.getInstance().getTeacherDao());
+                DaoFactory.getInstance().getTeacherDao(),
+                DaoFactory.getInstance().getStudentDao());
         this.adminService = new AdminServiceImpl(DaoFactory.getInstance().getCourseDao(),
                 DaoFactory.getInstance().getCategoryDao(),
                 DaoFactory.getInstance().getUserDao(),

@@ -5,6 +5,7 @@ import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.entities.Role;
 import com.epam.facultative.entities.Student;
 import com.epam.facultative.exception.DAOException;
+import com.epam.facultative.exception.ValidateException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public void add(Student student) throws DAOException {
+    public void add(Student student) throws DAOException, ValidateException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -91,6 +92,9 @@ public class MySqlStudentDao implements StudentDao {
             stmt.setBoolean(++k, student.isBlock());
             stmt.executeUpdate();
             con.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollback(con);
+            throw new ValidateException("Title or email not unique");
         } catch (SQLException e) {
             rollback(con);
             throw new DAOException(e);

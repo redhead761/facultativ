@@ -17,7 +17,19 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-<a class="btn btn-primary" href="auth.jsp" role="button">Back</a>
+<jsp:include page="/parts/header.jsp"/>
+<div class="row">
+    <div class="col-auto">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="auth.jsp">Back
+                    to
+                    home</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <div align="center">
     <h2>Please, fill in the fields</h2>
 
@@ -30,7 +42,6 @@
 
     <form action="controller" method="post">
         <input type="hidden" name="action" value="register"/>
-        <input type="hidden" name="type" value="student"/>
 
         <div class="form-floating mt-4 mb-3 col-lg-2 ">
             <input class="form-control" name="login" id="floatingInputLogin" placeholder="login" value="${login}"

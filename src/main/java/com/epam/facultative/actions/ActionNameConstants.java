@@ -39,7 +39,7 @@ public class ActionNameConstants {
     public static String SHOW_COMING_SOON_COURSES_ACTION = "show_coming_soon_courses";
     public static String SHOW_PROGRESS_COURSES_ACTION = "show_progress_courses";
     public static String SHOW_COMPLETED_COURSES_ACTION = "show_completed_courses";
-    public static String SHOW_STUDENT_CABINET_ACTION = "show_student_cabinet";
+    public static String SHOW_ALL_COURSES_ACTION = "show_all_courses";
     //General
     public static String SELECT_COURSES_ACTION = "select_courses";
     public static String SORT_ACTION = "sort";

@@ -18,11 +18,11 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+<jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/student_header.jsp"/>
-<a class="btn btn-primary" href="${pageContext.request.contextPath}/controller?action=show_student_cabinet" role="button">Back</a>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
         <caption>
             All courses in facultative
         </caption>
@@ -36,7 +36,7 @@
         <th scope="col">Status</th>
         <th scope="col">Teacher</th>
         </thead>
-        <c:forEach var="course" items="${sessionScope.courses}">
+        <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>

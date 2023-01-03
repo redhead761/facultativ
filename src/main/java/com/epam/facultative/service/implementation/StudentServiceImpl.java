@@ -2,10 +2,7 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.daos.*;
 import com.epam.facultative.dto.*;
-import com.epam.facultative.entities.Course;
-import com.epam.facultative.entities.Role;
-import com.epam.facultative.entities.Status;
-import com.epam.facultative.entities.User;
+import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
@@ -21,10 +18,12 @@ public class StudentServiceImpl implements StudentService {
     private final CourseDao courseDao;
     private final UserDao userDao;
     private final Converter converter;
+    private final StudentDao studentDao;
 
-    public StudentServiceImpl(CourseDao courseDao, UserDao userDao) {
+    public StudentServiceImpl(CourseDao courseDao, UserDao userDao, StudentDao studentDao) {
         this.courseDao = courseDao;
         this.userDao = userDao;
+        this.studentDao = studentDao;
         this.converter = new Converter();
     }
 
@@ -83,18 +82,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(User user) throws ServiceException, ValidateException {
+    public void addStudent(Student student) throws ServiceException, ValidateException {
         try {
-            if (userDao.getByName(user.getLogin()) != null) {
-                throw new ValidateException("Login not unique");
-            }
-            if (validateLogin(user.getLogin())
-                    && validatePassword(user.getPassword())
-                    && validateNameAndSurname(user.getName(), user.getSurname())
-                    && validateEmail(user.getEmail())) {
-                user.setRole(Role.STUDENT);
-                user.setPassword(encode(user.getPassword()));
-                userDao.add(user);
+            if (validateLogin(student.getLogin())
+                    && validatePassword(student.getPassword())
+                    && validateNameAndSurname(student.getName(), student.getSurname())
+                    && validateEmail(student.getEmail())) {
+                student.setRole(Role.STUDENT);
+                student.setPassword(encode(student.getPassword()));
+                studentDao.add(student);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);

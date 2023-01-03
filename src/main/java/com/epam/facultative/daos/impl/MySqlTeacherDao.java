@@ -92,6 +92,7 @@ public class MySqlTeacherDao implements TeacherDao {
             stmt.executeUpdate();
             con.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
+            rollback(con);
             throw new ValidateException("Title or email not unique");
         } catch (SQLException e) {
             rollback(con);

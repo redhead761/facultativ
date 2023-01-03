@@ -23,12 +23,13 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+<jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/student_header.jsp"/>
 
-<div class="table-responsive col-lg-10 mx-auto p-4">
-    <table class="table table-success table-striped caption-top table-bordered">
+<div class="col-lg-10 mx-auto p-5">
+    <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                 Sort
@@ -48,26 +49,25 @@
                     students</a></li>
             </ul>
 
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                 <fmt:message key="admin.select.teacher"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="teacher" items="${sessionScope.teachers}">
+                <c:forEach var="teacher" items="${requestScope.teachers}">
                     <li><a class="dropdown-item"
                            href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
-
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
                 <fmt:message key="admin.select.category"/>
             </button>
             <ul class="dropdown-menu">
-                <c:forEach var="category" items="${sessionScope.categories}">
+                <c:forEach var="category" items="${requestScope.categories}">
                     <li><a class="dropdown-item"
                            href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
@@ -86,7 +86,7 @@
         <th scope="col">Teacher</th>
         <th scope="col">Action</th>
         </thead>
-        <c:forEach var="course" items="${sessionScope.courses}">
+        <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
             <td>${course.title}</td>
             <td><c:out value="${course.duration}"/></td>
@@ -105,55 +105,55 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <c:if test="${sessionScope.currentPage == 1}">
+            <c:if test="${requestScope.currentPage == 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Previous</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.currentPage > 1}">
+            <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage-1}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_all_courses&page=${requestScope.currentPage-1}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">Previous</a>
                 </li>
             </c:if>
 
             <li class="page-item active" aria-current="page">
-                <span class="page-link">${sessionScope.currentPage}</span>
+                <span class="page-link">${requestScope.currentPage}</span>
             </li>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+1}</span>
+                    <span class="page-link">${requestScope.currentPage+1}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_all_courses&page=${requestScope.currentPage+1}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${requestScope.currentPage+1}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 2}">
                 <li class="page-item disabled">
-                    <span class="page-link">${sessionScope.currentPage+2}</span>
+                    <span class="page-link">${requestScope.currentPage+2}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_all_courses&page=${requestScope.currentPage+2}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${sessionScope.currentPage+2}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Next</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${sessionScope.currentPage+1}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_all_courses&page=${requestScope.currentPage+1}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">Next</a>
                 </li>
             </c:if>
         </ul>

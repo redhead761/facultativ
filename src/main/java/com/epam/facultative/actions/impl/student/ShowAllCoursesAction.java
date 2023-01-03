@@ -14,35 +14,31 @@ import java.io.IOException;
 
 import static com.epam.facultative.actions.PageNameConstants.*;
 
-public class ShowStudentCabinetAction implements Action {
+public class ShowAllCoursesAction implements Action {
     private final GeneralService generalService;
 
-    public ShowStudentCabinetAction() {
+    public ShowAllCoursesAction() {
         generalService = ServiceFactory.getInstance().getGeneralService();
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        removeRedundantAttribute(req);
-        if (req.getSession().getAttribute("sort_type") != null) {
+        String sortType = req.getParameter("sort_type");
+        String selectType = req.getParameter("select_type");
+        if (sortType != null && !sortType.isBlank()) {
             ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
             return STUDENT_PAGE;
         }
-        if (req.getSession().getAttribute("select_type") != null) {
+        if (selectType != null && !selectType.isBlank()) {
             ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
             return STUDENT_PAGE;
         }
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
-        req.getSession().setAttribute("teachers", generalService.getAllTeachers());
-        req.getSession().setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute("teachers", generalService.getAllTeachers());
+        req.setAttribute("categories", generalService.getAllCategories());
         return STUDENT_PAGE;
-    }
-
-    private void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("login");
-        req.getSession().removeAttribute("message");
     }
 }
 

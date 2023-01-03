@@ -58,7 +58,7 @@ public class ActionFactory {
         ACTION_MAP.put(SHOW_COMING_SOON_COURSES_ACTION, new ShowComingSoonCoursesAction());
         ACTION_MAP.put(SHOW_PROGRESS_COURSES_ACTION, new ShowInProgressCourses());
         ACTION_MAP.put(SHOW_COMPLETED_COURSES_ACTION, new ShowCompletedCoursesAction());
-        ACTION_MAP.put(SHOW_STUDENT_CABINET_ACTION, new ShowStudentCabinetAction());
+        ACTION_MAP.put(SHOW_ALL_COURSES_ACTION, new ShowAllCoursesAction());
     }
 
     private ActionFactory() {

@@ -202,6 +202,7 @@ public class MySqlStudentDao implements StudentDao {
             int k = 0;
             stmt.setBoolean(++k, block);
             stmt.setInt(++k, studentId);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
         }

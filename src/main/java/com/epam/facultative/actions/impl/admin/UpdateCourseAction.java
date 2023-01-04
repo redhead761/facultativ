@@ -1,9 +1,9 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
-import com.epam.facultative.entities.Category;
-import com.epam.facultative.entities.Course;
-import com.epam.facultative.entities.Status;
+import com.epam.facultative.dto.TeacherDTO;
+import com.epam.facultative.dto.UserDTO;
+import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -27,6 +27,11 @@ public class UpdateCourseAction implements Action {
         Course course = getCourseFromParameter(req);
         try {
             adminService.updateCourse(course);
+            if (req.getParameter("teacher") != null) {
+                int courseId = Integer.parseInt(req.getParameter("course_id"));
+                int teacherId = Integer.parseInt(req.getParameter("teacher"));
+                adminService.assigned(courseId, teacherId);
+            }
             req.getSession().setAttribute("message", "Changes saved");
         } catch (ValidateException e) {
             req.getSession().setAttribute("message", e.getMessage());

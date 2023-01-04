@@ -74,9 +74,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (categoryDao.getByName(category.getTitle()) != null) {
-                throw new ValidateException("Login not unique");
-            }
             if (validateCategoryData(category.getTitle(), category.getDescription())) {
                 categoryDao.update(category);
             }

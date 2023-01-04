@@ -88,7 +88,7 @@
             </div>
             <div class="mt-2 col-lg-3">
                 <select name="status" class="form-select form-select-lg mb-3" required>
-                    <option selected value="${requestScope.course.status.id}">${requestScope.course.status.valueOf(requestScope.course.status)}</option>
+                    <option selected value="${requestScope.course.status.valueOf(requestScope.course.status)}">${requestScope.course.status.valueOf(requestScope.course.status)}</option>
                     <c:forEach var="status" items="${sessionScope.statuses}">
                         <option>${status.valueOf(status)}</option>
                     </c:forEach>

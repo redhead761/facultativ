@@ -38,6 +38,7 @@ public class PageNameConstants {
     public static final String STUDENT_PAGE = "student/student.jsp";
     public static final String STUDENT_COURSES_PAGE = "student/student_courses.jsp";
     public static final String STUDENT_PROFILE_PAGE = "student/student_profile.jsp";
+    public static final String RESULT_PAGE = "student/result.jsp";
 
 
     public static final String MANAGE_COURSES_ACTION = "controller?action=manage_courses";

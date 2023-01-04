@@ -66,7 +66,6 @@ public class StudentServiceImpl implements StudentService {
     public void enroll(int courseId, int userId) throws ServiceException {
         try {
             courseDao.insertJournal(courseId, userId);
-            courseDao.addNumberStudentsToCourse(courseId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -83,6 +82,15 @@ public class StudentServiceImpl implements StudentService {
                 student.setPassword(encode(student.getPassword()));
                 studentDao.add(student);
             }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getGrade(int courseId, int userId) throws ServiceException {
+        try {
+            return studentDao.getGrade(courseId, userId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

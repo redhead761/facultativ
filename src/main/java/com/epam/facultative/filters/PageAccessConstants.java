@@ -59,6 +59,7 @@ public final class PageAccessConstants {
         STUDENT_PAGES.add(STUDENT_PAGE);
         STUDENT_PAGES.add(STUDENT_COURSES_PAGE);
         STUDENT_PAGES.add(STUDENT_PROFILE_PAGE);
+        STUDENT_PAGES.add(RESULT_PAGE);
     }
 
     public static Set<String> getNoLoggedUserPages() {

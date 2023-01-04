@@ -10,4 +10,6 @@ public interface StudentDao extends Dao<Student> {
 
     void updateBlock(int studentId, boolean block) throws DAOException;
 
+    int getGrade(int courseId, int studentId) throws DAOException;
+
 }

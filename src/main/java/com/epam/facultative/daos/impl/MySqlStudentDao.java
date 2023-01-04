@@ -197,7 +197,6 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public void updateBlock(int studentId, boolean block) throws DAOException {
-
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_BLOCK)) {
             int k = 0;
@@ -207,6 +206,23 @@ public class MySqlStudentDao implements StudentDao {
             throw new DAOException(e);
         }
 
+    }
+
+    @Override
+    public int getGrade(int courseId, int studentId) throws DAOException {
+        int grade = -1;
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_GRADE)) {
+            int k = 0;
+            stmt.setInt(++k, courseId);
+            stmt.setInt(++k, studentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                grade = rs.getInt(GRADE);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return grade;
     }
 
     @Override

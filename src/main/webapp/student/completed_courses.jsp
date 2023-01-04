@@ -35,6 +35,7 @@
         <th scope="col">Category</th>
         <th scope="col">Status</th>
         <th scope="col">Teacher</th>
+        <th scope="col">Action</th>
         </thead>
         <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
@@ -46,6 +47,9 @@
             <td><c:out value="${course.getStatus()}"/></td>
             <td>
                 <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/controller?action=show_result&course_id=${course.id}">Show result</a>
             </td>
             </tbody>
         </c:forEach>

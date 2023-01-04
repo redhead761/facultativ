@@ -62,6 +62,7 @@ public class ActionAccessConstants {
         STUDENT_ACTIONS.add(SHOW_PROGRESS_COURSES_ACTION);
         STUDENT_ACTIONS.add(SHOW_COMPLETED_COURSES_ACTION);
         STUDENT_ACTIONS.add(SHOW_ALL_COURSES_ACTION);
+        STUDENT_ACTIONS.add(SHOW_RESULT_ACTION);
     }
 
     public static Set<String> getNoLoggedUserActions() {

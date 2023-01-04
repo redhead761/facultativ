@@ -30,13 +30,9 @@ public class ShowEditCourseAction implements Action {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         req.setAttribute("course_id", courseId);
         CourseDTO course = adminService.getCourse(courseId);
-        req.setAttribute("title", course.getTitle());
-        req.setAttribute("duration", course.getDuration());
-        req.setAttribute("start_date", course.getStartDate());
-        req.setAttribute("description", course.getDescription());
-        req.setAttribute("category", course.getCategory().getTitle());
-        req.setAttribute("status", course.getStatus());
+        req.setAttribute("course", course);
         req.setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute("teachers", generalService.getAllTeachers());
         return EDIT_COURSE_PAGE;
     }
 }

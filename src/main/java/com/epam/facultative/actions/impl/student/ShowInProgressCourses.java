@@ -25,7 +25,7 @@ public class ShowInProgressCourses implements Action {
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-        req.getSession().setAttribute("courses", studentService.getCoursesInProgress(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
+        req.setAttribute("courses", studentService.getCoursesInProgress(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
         ActionUtils.setUpPaginationStudent(req, studentService, currentPage, recordsPerPage);
         return IN_PROGRESS_COURSES_PAGE;
     }

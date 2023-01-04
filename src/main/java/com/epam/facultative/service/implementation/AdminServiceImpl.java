@@ -155,13 +155,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
+    public List<StudentDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
         try {
             List<Student> users = studentDao.getAllPagination(offset, noOfRecords);
-            List<UserDTO> students = new ArrayList<>();
-            for (User user :
+            List<StudentDTO> students = new ArrayList<>();
+            for (Student student :
                     users) {
-                students.add(converter.userToDTO(user));
+                students.add(converter.studentToDTO(student));
             }
             return students;
         } catch (DAOException e) {

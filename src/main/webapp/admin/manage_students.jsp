@@ -37,7 +37,7 @@
             <tbody>
             <td>${student.name}</td>
             <td>${student.surname}</td>
-            <td>${student.isBlock()}</td>
+            <td>${student.block}</td>
             <td>
                 <a href="${pageContext.request.contextPath}/controller?action=block&student_id=${student.id}">Block</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;

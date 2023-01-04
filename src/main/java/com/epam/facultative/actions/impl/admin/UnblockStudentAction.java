@@ -22,7 +22,7 @@ public class UnblockStudentAction implements Action {
         adminService.unblockStudent(Integer.parseInt(req.getParameter("student_id")));
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
-        req.setAttribute("students", adminService.getAllStudentsPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
+        ActionUtils.setUpPaginationForStudents(req, adminService, currentPage, recordsPerPage);
         return MANAGE_STUDENTS_PAGE;
     }
 }

@@ -20,13 +20,11 @@ public class ShowStudentCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-        req.getSession().setAttribute("courses", studentService.getCoursesByStudent(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
+        req.setAttribute("courses", studentService.getCoursesByStudent(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
         ActionUtils.setUpPaginationStudent(req, studentService, currentPage, recordsPerPage);
         return STUDENT_COURSES_PAGE;
-
     }
 }

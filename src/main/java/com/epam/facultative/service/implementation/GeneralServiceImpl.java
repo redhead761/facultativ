@@ -122,7 +122,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByUser(teacherId, offset, numberOfRows));
+            return prepareCourses(courseDao.getByTeacher(teacherId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

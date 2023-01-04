@@ -6,14 +6,10 @@ import com.epam.facultative.daos.UserDao;
 import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
-import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entities.Course;
-import com.epam.facultative.entities.Role;
 import com.epam.facultative.entities.Student;
-import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.StudentService;
 import com.epam.facultative.service.TeacherService;
 
 import java.util.ArrayList;
@@ -61,7 +57,7 @@ public class TeacherServiceImpl implements TeacherService {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         List<Course> courses;
         try {
-            courses = courseDao.getByUser(teacherId, offset, numberOfRows);
+            courses = courseDao.getByTeacher(teacherId, offset, numberOfRows);
             for (Course course : courses) {
                 coursesDTO.add(converter.courseToDTO(course));
             }

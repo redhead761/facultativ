@@ -90,14 +90,21 @@ class Constants {
                     "LEFT JOIN user ON teacher.user_id = user.id WHERE course.category_id=? LIMIT ?,?";
     static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?," +
             "start_date=?, description=?, category_id=?, status_id=?, teacher_id=? WHERE id=?";
-    static final String SELECT_COURSES_USER =
+    static final String SELECT_COURSES_TEACHER =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
                     "LEFT JOIN user ON teacher.user_id = user.id WHERE user_id=? LIMIT ?,?";
+    static final String SELECT_COURSES_STUDENT =
+            "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
+                    "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
+                    "LEFT JOIN user ON teacher.user_id = user.id JOIN journal ON course.id = journal.course_id " +
+                    "JOIN student ON journal.student_id = student.user_id WHERE student.user_id=? LIMIT ?,?";
+
     static final String SELECT_COURSE_BY_STATUS =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
-                    "LEFT JOIN user ON teacher.user_id = user.id WHERE user_id=? AND status.id =? LIMIT ?,?";
+                    "LEFT JOIN user ON teacher.user_id = user.id JOIN journal ON course.id = journal.course_id " +
+                    "JOIN student ON journal.student_id = student.user_id WHERE student.user_id=? AND status.id=? LIMIT ?,?";
     static final String SELECT_ALL_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id" +

@@ -11,7 +11,6 @@ import com.epam.facultative.service.StudentService;
 import static com.epam.facultative.utils.HashPassword.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 public class StudentServiceImpl implements StudentService {
@@ -30,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<CourseDTO> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByUser(studentId, offset, numberOfRows));
+            return prepareCourses(courseDao.getByStudent(studentId, offset, numberOfRows));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -55,20 +54,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<UserDTO> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException {
-//        try {
-//            User user = userDao.getById(studentId);
-//            List<UserDTO> students = new ArrayList<>();
-//            List<CourseDTO> courses = prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED,offset,numberOfRows));
-//            for (CourseDTO course : courses) {
-//                int grade = courseDao.getGrade(course.getId(), studentId);
-//                students.add(converter.userToStudent(user, course, grade));
-//            }
-//            return students;
-//        } catch (DAOException e) {
-//            throw new RuntimeException(e);
-//        }
-        return null;
+    public List<CourseDTO> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException {
+        try {
+            return prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED, offset, numberOfRows));
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

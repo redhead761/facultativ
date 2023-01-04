@@ -2,6 +2,7 @@ package com.epam.facultative.actions.impl.student;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
@@ -24,17 +25,18 @@ public class EnrollAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
-        UserDTO user = (UserDTO) req.getSession().getAttribute("user");
-        int currentPage = (int) req.getSession().getAttribute("currentPage");
+        StudentDTO student = (StudentDTO) req.getSession().getAttribute("user");
+        int id = student.getId();
+        int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = 5;
         try {
-            studentService.enroll(courseId, user.getId());
             ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
+            studentService.enroll(courseId, id);
+            req.getSession().setAttribute("message", "Successful");
         } catch (ServiceException e) {
             req.getSession().setAttribute("message", "You already on course");
             return STUDENT_PAGE;
         }
-        req.getSession().setAttribute("message", "Successful");
         return STUDENT_PAGE;
     }
 }

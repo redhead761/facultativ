@@ -1,6 +1,7 @@
 package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CourseDTO;
+import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entities.Category;
 import com.epam.facultative.entities.Course;
@@ -39,7 +40,7 @@ public interface AdminService {
 
     void addTeacher(Teacher teacher) throws ServiceException, ValidateException;
 
-    List<UserDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
+    List<StudentDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
 
     List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
 

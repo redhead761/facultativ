@@ -35,20 +35,18 @@
         <th scope="col">Category</th>
         <th scope="col">Status</th>
         <th scope="col">Teacher</th>
-        <th scope="col">Grade</th>
         </thead>
         <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
-            <td>${course.getCourse().getTitle()}</td>
-            <td><c:out value="${course.getCourse().duration}"/></td>
-            <td><c:out value="${course.getCourse().startDate}"/></td>
-            <td><c:out value="${course.getCourse().amountStudents}"/></td>
-            <td><c:out value="${course.getCourse().getCategory().title}"/></td>
-            <td><c:out value="${course.getCourse().getStatus()}"/></td>
+            <td>${course.title}</td>
+            <td><c:out value="${course.duration}"/></td>
+            <td><c:out value="${course.startDate}"/></td>
+            <td><c:out value="${course.amountStudents}"/></td>
+            <td><c:out value="${course.getCategory().title}"/></td>
+            <td><c:out value="${course.getStatus()}"/></td>
             <td>
-                <c:out value="${course.getCourse().getTeacher().getName()} ${course.getCourse().getTeacher().getSurname()}"/>
+                <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
             </td>
-            <td><c:out value="${course.getGrade()}"/></td>
             </tbody>
         </c:forEach>
     </table>
@@ -62,7 +60,7 @@
 
             <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage-1}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${requestScope.currentPage-1}">Previous</a>
                 </li>
             </c:if>
 
@@ -78,7 +76,7 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
                 </li>
             </c:if>
 
@@ -90,11 +88,11 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage+2}">${requestScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${requestScope.currentPage+2}">${requestScope.currentPage+2}</a>
                 </li>
             </c:if>
 
-            <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage < 1}">
+            <c:if test="${requestScope.noOfCoursesPages - sessionScope.currentPage < 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Next</span>
                 </li>
@@ -102,12 +100,11 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage+1}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_student_cabinet&page=${requestScope.currentPage+1}">Next</a>
                 </li>
             </c:if>
         </ul>
     </nav>
-</div>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

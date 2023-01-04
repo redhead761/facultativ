@@ -109,10 +109,30 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public List<Course> getByUser(int userId, int offset, int numberOfRows) throws DAOException {
+    public List<Course> getByTeacher(int userId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_USER)) {
+             PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_TEACHER)) {
+            int k = 0;
+            stmt.setInt(++k, userId);
+            stmt.setInt(++k, offset);
+            stmt.setInt(++k, numberOfRows);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                courses.add(mapRowCourse(rs));
+            }
+            setFoundRows(rs, stmt);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return courses;
+    }
+
+    @Override
+    public List<Course> getByStudent(int userId, int offset, int numberOfRows) throws DAOException {
+        List<Course> courses = new ArrayList<>();
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_STUDENT)) {
             int k = 0;
             stmt.setInt(++k, userId);
             stmt.setInt(++k, offset);

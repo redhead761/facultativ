@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.daos.impl.FieldsConstants.*;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class MySqlCourseDao implements CourseDao {
 
@@ -71,7 +72,7 @@ public class MySqlCourseDao implements CourseDao {
             setStatementFields(course, stmt);
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new ValidateException("Title not unique");
+            throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             throw new DAOException();
         }
@@ -90,7 +91,7 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new ValidateException("Title not unique");
+            throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

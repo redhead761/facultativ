@@ -13,6 +13,7 @@ import java.util.List;
 
 import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.daos.impl.FieldsConstants.*;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlStudentDao implements StudentDao {
     private int noOfRecords;
@@ -85,7 +86,7 @@ public class MySqlStudentDao implements StudentDao {
             con.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
-            throw new ValidateException("Title or email not unique");
+            throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
             throw new DAOException(e);

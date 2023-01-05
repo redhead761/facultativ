@@ -44,7 +44,7 @@ public class GeneralServiceImpl implements GeneralService {
                 throw new ValidateException(LOGIN_NOT_EXIST_MESSAGE);
             }
             if (!verify(user.getPassword(), password)) {
-                throw new ValidateException(WRONG_PASSWORD);
+                throw new ValidateException(WRONG_PASSWORD_MESSAGE);
             }
             Role role = user.getRole();
             switch (role) {

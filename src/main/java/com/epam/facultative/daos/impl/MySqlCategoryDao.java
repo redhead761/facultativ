@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.daos.impl.FieldsConstants.*;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class MySqlCategoryDao implements CategoryDao {
     private int noOfRecords;
@@ -70,7 +71,7 @@ public class MySqlCategoryDao implements CategoryDao {
             setStatementFields(category, stmt);
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new ValidateException("Login not unique");
+            throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

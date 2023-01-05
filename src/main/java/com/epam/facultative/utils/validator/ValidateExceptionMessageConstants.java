@@ -8,5 +8,8 @@ public class ValidateExceptionMessageConstants {
     static final String CATEGORY_DATA_EXCEPTION_MESSAGE = "You entered incorrect category data";
     static final String COURSE_DATA_EXCEPTION_MESSAGE = "You entered incorrect course data";
     public static final String LOGIN_NOT_EXIST_MESSAGE = "Login not exist";
-    public static final String WRONG_PASSWORD = "Wrong password";
+    public static final String WRONG_PASSWORD_MESSAGE = "Wrong password";
+    public static final String LOGIN_NOT_UNIQUE_MESSAGE = "Login not unique";
+    public static final String TITLE_NOT_UNIQUE_MESSAGE = "Title not unique";
+    public static final String LOE_NOT_UNIQUE_MESSAGE = "Login or email not unique";
 }

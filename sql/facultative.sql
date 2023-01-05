@@ -24,13 +24,28 @@ USE
 -- -----------------------------------------------------
 -- Table `role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `role` ;
+DROP TABLE IF EXISTS `role`;
 
-CREATE TABLE IF NOT EXISTS `role` (
-                                      `id` INT NOT NULL AUTO_INCREMENT,
-                                      `name` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `role`
+(
+    `id`
+    INT
+    NOT
+    NULL
+    AUTO_INCREMENT,
+    `name`
+    VARCHAR
+(
+    255
+) NOT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    UNIQUE INDEX `name_UNIQUE`
+(
+    `name` ASC
+) VISIBLE)
     ENGINE = InnoDB
     AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
@@ -39,23 +54,62 @@ CREATE TABLE IF NOT EXISTS `role` (
 -- -----------------------------------------------------
 -- Table `user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user` ;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE IF NOT EXISTS `user` (
-                                      `id` INT NOT NULL AUTO_INCREMENT,
-                                      `login` VARCHAR(16) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    `name` VARCHAR(32) NOT NULL,
-    `surname` VARCHAR(45) NOT NULL,
-    `email` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user`
+(
+    `id`
+    INT
+    NOT
+    NULL
+    AUTO_INCREMENT,
+    `login`
+    VARCHAR
+(
+    16
+) NOT NULL,
+    `password` VARCHAR
+(
+    255
+) NOT NULL,
+    `name` VARCHAR
+(
+    32
+) NOT NULL,
+    `surname` VARCHAR
+(
+    45
+) NOT NULL,
+    `email` VARCHAR
+(
+    45
+) NOT NULL,
     `role_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
-    UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-    INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
+    PRIMARY KEY
+(
+    `id`
+),
+    UNIQUE INDEX `login_UNIQUE`
+(
+    `login` ASC
+) VISIBLE,
+    UNIQUE INDEX `email_UNIQUE`
+(
+    `email` ASC
+) VISIBLE,
+    INDEX `fk_user_role1_idx`
+(
+    `role_id` ASC
+) VISIBLE,
     CONSTRAINT `fk_user_role1`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `role` (`id`))
+    FOREIGN KEY
+(
+    `role_id`
+)
+    REFERENCES `role`
+(
+    `id`
+))
     ENGINE = InnoDB
     AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
@@ -64,17 +118,42 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- -----------------------------------------------------
 -- Table `student`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `student` ;
+DROP TABLE IF EXISTS `student`;
 
-CREATE TABLE IF NOT EXISTS `student` (
-                                         `user_id` INT NOT NULL ,
-                                         `course_number` INT UNSIGNED NULL,
-                                         `block` TINYINT NOT NULL DEFAULT 0,
-                                         PRIMARY KEY (`user_id`),
-    INDEX `fk_student_user_idx` (`user_id` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `student`
+(
+    `user_id`
+    INT
+    NOT
+    NULL,
+    `course_number`
+    INT
+    UNSIGNED
+    NULL,
+    `block`
+    TINYINT
+    NOT
+    NULL
+    DEFAULT
+    0,
+    PRIMARY
+    KEY
+(
+    `user_id`
+),
+    INDEX `fk_student_user_idx`
+(
+    `user_id` ASC
+) VISIBLE,
     CONSTRAINT `fk_student_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
+    FOREIGN KEY
+(
+    `user_id`
+)
+    REFERENCES `user`
+(
+    `id`
+)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -82,16 +161,36 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- -----------------------------------------------------
 -- Table `teacher`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `teacher` ;
+DROP TABLE IF EXISTS `teacher`;
 
-CREATE TABLE IF NOT EXISTS `teacher` (
-                                         `user_id` INT NOT NULL,
-                                         `degree` VARCHAR(45) NULL,
-    PRIMARY KEY (`user_id`),
-    INDEX `fk_teacher_user1_idx` (`user_id` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `teacher`
+(
+    `user_id`
+    INT
+    NOT
+    NULL,
+    `degree`
+    VARCHAR
+(
+    45
+) NULL,
+    PRIMARY KEY
+(
+    `user_id`
+),
+    INDEX `fk_teacher_user1_idx`
+(
+    `user_id` ASC
+) VISIBLE,
     CONSTRAINT `fk_teacher_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
+    FOREIGN KEY
+(
+    `user_id`
+)
+    REFERENCES `user`
+(
+    `id`
+)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
@@ -99,14 +198,32 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 -- -----------------------------------------------------
 -- Table `category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `category` ;
+DROP TABLE IF EXISTS `category`;
 
-CREATE TABLE IF NOT EXISTS `category` (
-                                          `id` INT NOT NULL AUTO_INCREMENT,
-                                          `title` VARCHAR(255) NOT NULL,
-    `description` VARCHAR(255) NULL DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `name_UNIQUE` (`title` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `category`
+(
+    `id`
+    INT
+    NOT
+    NULL
+    AUTO_INCREMENT,
+    `title`
+    VARCHAR
+(
+    255
+) NOT NULL,
+    `description` VARCHAR
+(
+    255
+) NULL DEFAULT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    UNIQUE INDEX `name_UNIQUE`
+(
+    `title` ASC
+) VISIBLE)
     ENGINE = InnoDB
     AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
@@ -115,13 +232,28 @@ CREATE TABLE IF NOT EXISTS `category` (
 -- -----------------------------------------------------
 -- Table `status`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `status` ;
+DROP TABLE IF EXISTS `status`;
 
-CREATE TABLE IF NOT EXISTS `status` (
-                                        `id` INT NOT NULL AUTO_INCREMENT,
-                                        `title` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `status`
+(
+    `id`
+    INT
+    NOT
+    NULL
+    AUTO_INCREMENT,
+    `title`
+    VARCHAR
+(
+    45
+) NOT NULL,
+    PRIMARY KEY
+(
+    `id`
+),
+    UNIQUE INDEX `title_UNIQUE`
+(
+    `title` ASC
+) VISIBLE)
     ENGINE = InnoDB
     AUTO_INCREMENT = 0
     DEFAULT CHARACTER SET = utf8mb3;
@@ -130,32 +262,77 @@ CREATE TABLE IF NOT EXISTS `status` (
 -- -----------------------------------------------------
 -- Table `course`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `course` ;
+DROP TABLE IF EXISTS `course`;
 
-CREATE TABLE IF NOT EXISTS `course` (
-                                        `id` INT NOT NULL AUTO_INCREMENT,
-                                        `title` VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS `course`
+(
+    `id`
+    INT
+    NOT
+    NULL
+    AUTO_INCREMENT,
+    `title`
+    VARCHAR
+(
+    255
+) NOT NULL,
     `duration` INT UNSIGNED NOT NULL,
     `start_date` DATETIME NOT NULL,
     `amount_students` INT DEFAULT 0,
-    `description` VARCHAR(45) NULL DEFAULT NULL,
+    `description` VARCHAR
+(
+    45
+) NULL DEFAULT NULL,
     `category_id` INT NOT NULL,
     `status_id` INT NOT NULL,
     `teacher_id` INT DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE,
-    INDEX `fk_course_category_idx` (`category_id` ASC) VISIBLE,
-    INDEX `fk_course_course_status1_idx` (`status_id` ASC) VISIBLE,
-    INDEX `fk_course_teacher1_idx` (`teacher_id` ASC) VISIBLE,
+    PRIMARY KEY
+(
+    `id`
+),
+    UNIQUE INDEX `title_UNIQUE`
+(
+    `title` ASC
+) VISIBLE,
+    INDEX `fk_course_category_idx`
+(
+    `category_id` ASC
+) VISIBLE,
+    INDEX `fk_course_course_status1_idx`
+(
+    `status_id` ASC
+) VISIBLE,
+    INDEX `fk_course_teacher1_idx`
+(
+    `teacher_id` ASC
+) VISIBLE,
     CONSTRAINT `fk_course_category`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `category` (`id`),
+    FOREIGN KEY
+(
+    `category_id`
+)
+    REFERENCES `category`
+(
+    `id`
+),
     CONSTRAINT `fk_course_course_status1`
-    FOREIGN KEY (`status_id`)
-    REFERENCES `status` (`id`),
+    FOREIGN KEY
+(
+    `status_id`
+)
+    REFERENCES `status`
+(
+    `id`
+),
     CONSTRAINT `fk_course_teacher1`
-    FOREIGN KEY (`teacher_id`)
-    REFERENCES `teacher` (`user_id`)
+    FOREIGN KEY
+(
+    `teacher_id`
+)
+    REFERENCES `teacher`
+(
+    `user_id`
+)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB
@@ -166,37 +343,66 @@ CREATE TABLE IF NOT EXISTS `course` (
 -- -----------------------------------------------------
 -- Table `journal`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `journal` ;
+DROP TABLE IF EXISTS `journal`;
 
-CREATE TABLE IF NOT EXISTS `journal` (
-                                         `course_id` INT NOT NULL,
-                                         `student_id` INT NOT NULL,
-                                         `grade` INT NULL,
-                                         PRIMARY KEY (`course_id`, `student_id`),
-    INDEX `fk_course_has_student_student1_idx` (`student_id` ASC) VISIBLE,
-    INDEX `fk_course_has_student_course1_idx` (`course_id` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `journal`
+(
+    `course_id`
+    INT
+    NOT
+    NULL,
+    `student_id`
+    INT
+    NOT
+    NULL,
+    `grade`
+    INT
+    NULL,
+    PRIMARY
+    KEY
+(
+    `course_id`,
+    `student_id`
+),
+    INDEX `fk_course_has_student_student1_idx`
+(
+    `student_id` ASC
+) VISIBLE,
+    INDEX `fk_course_has_student_course1_idx`
+(
+    `course_id` ASC
+) VISIBLE,
     CONSTRAINT `fk_course_has_student_course1`
-    FOREIGN KEY (`course_id`)
-    REFERENCES `course` (`id`)
+    FOREIGN KEY
+(
+    `course_id`
+)
+    REFERENCES `course`
+(
+    `id`
+)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
     CONSTRAINT `fk_course_has_student_student1`
-    FOREIGN KEY (`student_id`)
-    REFERENCES `student` (`user_id`)
+    FOREIGN KEY
+(
+    `student_id`
+)
+    REFERENCES `student`
+(
+    `user_id`
+)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
-    -- -----------------------------------------------------
-    -- Inserts
-    -- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Inserts
+-- -----------------------------------------------------
 
-    -- roles
-    INSERT INTO role VALUES
-(
-    1,
-    'ADMIN'
-);
+-- roles
+INSERT INTO role
+VALUES (1, 'ADMIN');
 INSERT INTO role
 VALUES (2, 'TEACHER');
 INSERT INTO role
@@ -212,11 +418,11 @@ VALUES (3, "COMPLETED");
 
 -- categories
 INSERT INTO category
-VALUES (DEFAULT, 'PROGRAMMING', null);
+VALUES (DEFAULT, 'Programming', null);
 INSERT INTO category
-VALUES (DEFAULT, 'FOREIGN_LANGUAGE', null);
+VALUES (DEFAULT, 'Foreign language', null);
 INSERT INTO category
-VALUES (DEFAULT, 'MATH', null);
+VALUES (DEFAULT, 'Math', null);
 
 -- --user
 -- --admin

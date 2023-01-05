@@ -87,7 +87,7 @@
         </div>
 
         <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="name" id="floatingInputDegree" placeholder="name" value="${name}"
+            <input class="form-control" name="degree" id="floatingInputDegree" placeholder="name" value="${name}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Degree must..." required>
             <label for="floatingInputDegree">Degree</label>
         </div>

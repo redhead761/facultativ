@@ -25,6 +25,6 @@ public class GradeAction implements Action {
         int grade = Integer.parseInt(req.getParameter("grade"));
         teacherService.grading(courseId, studentId, grade);
         req.setAttribute("message", "Successful");
-        return "controller?action=" + SHOW_JOURNAL_ACTION;
+        return "controller?action=" + SHOW_JOURNAL_ACTION + "&course_id=" + courseId;
     }
 }

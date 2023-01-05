@@ -141,7 +141,7 @@
 
             <c:if test="${requestScope.noOfCoursesPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_all_courses&page=${requestScope.currentPage+2}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${sessionScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_all_courses&page=${requestScope.currentPage+2}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${requestScope.currentPage+2}</a>
                 </li>
             </c:if>
 

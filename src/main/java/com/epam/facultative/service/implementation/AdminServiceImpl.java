@@ -212,11 +212,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int getNoOfRecordsTeachers() {
-        return userDao.getNoOfRecords();
+        return teacherDao.getNoOfRecords();
     }
 
     @Override
     public int getNoOfRecordsStudents() {
-        return userDao.getNoOfRecords();
+        return studentDao.getNoOfRecords();
     }
 }

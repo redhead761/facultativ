@@ -3,7 +3,9 @@ package com.epam.facultative.service.implementation;
 import com.epam.facultative.daos.*;
 import com.epam.facultative.dto.*;
 import com.epam.facultative.entities.*;
-import com.epam.facultative.exception.*;
+import com.epam.facultative.exception.DAOException;
+import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 
 import java.util.*;
@@ -31,9 +33,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addCourse(Course course) throws ServiceException, ValidateException {
         try {
-            if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
-                courseDao.add(course);
-            }
+            validateCourseData(course.getTitle(), course.getDescription(), course.getDuration());
+            courseDao.add(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -42,9 +43,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateCourse(Course course) throws ServiceException, ValidateException {
         try {
-            if (validateCourseData(course.getTitle(), course.getDescription(), course.getDuration())) {
-                courseDao.update(course);
-            }
+            validateCourseData(course.getTitle(), course.getDescription(), course.getDuration());
+            courseDao.update(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -59,13 +59,11 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-
     @Override
     public void addCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (validateCategoryData(category.getTitle(), category.getDescription())) {
-                categoryDao.add(category);
-            }
+            validateCategoryData(category.getTitle(), category.getDescription());
+            categoryDao.add(category);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -74,9 +72,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateCategory(Category category) throws ServiceException, ValidateException {
         try {
-            if (validateCategoryData(category.getTitle(), category.getDescription())) {
-                categoryDao.update(category);
-            }
+            validateCategoryData(category.getTitle(), category.getDescription());
+            categoryDao.update(category);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -106,13 +103,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void assigned(int idCourse, int idUser) throws ServiceException {
+    public void assigned(int idCourse, int idUser) throws ServiceException, ValidateException {
         try {
             Course course = courseDao.getById(idCourse);
             Teacher teacher = teacherDao.getById(idUser);
             course.setTeacher(teacher);
             courseDao.update(course);
-        } catch (DAOException | ValidateException e) {
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
@@ -138,14 +135,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addTeacher(Teacher teacher) throws ServiceException, ValidateException {
         try {
-            if (validateLogin(teacher.getLogin())
-                    && validatePassword(teacher.getPassword())
-                    && validateNameAndSurname(teacher.getName(), teacher.getSurname())
-                    && validateEmail(teacher.getEmail())) {
-                teacher.setRole(Role.TEACHER);
-                teacher.setPassword(encode(teacher.getPassword()));
-                teacherDao.add(teacher);
-            }
+            validateLogin(teacher.getLogin());
+            validatePassword(teacher.getPassword());
+            validateNameAndSurname(teacher.getName(), teacher.getSurname());
+            validateEmail(teacher.getEmail());
+            teacher.setRole(Role.TEACHER);
+            teacher.setPassword(encode(teacher.getPassword()));
+            teacherDao.add(teacher);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -154,28 +150,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<StudentDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<Student> users = studentDao.getAllPagination(offset, noOfRecords);
-            List<StudentDTO> students = new ArrayList<>();
-            for (Student student :
-                    users) {
-                students.add(converter.studentToDTO(student));
-            }
-            return students;
+            return prepareStudent(studentDao.getAllPagination(offset, noOfRecords));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
+    public List<TeacherDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<Teacher> users = teacherDao.getAllPagination(offset, noOfRecords);
-            List<UserDTO> teachers = new ArrayList<>();
-            for (User user :
-                    users) {
-                teachers.add(converter.userToDTO(user));
-            }
-            return teachers;
+            return prepareTeacher(teacherDao.getAllPagination(offset, noOfRecords));
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -218,5 +202,21 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int getNoOfRecordsStudents() {
         return studentDao.getNoOfRecords();
+    }
+
+    private List<TeacherDTO> prepareTeacher(List<Teacher> teachers) {
+        List<TeacherDTO> result = new ArrayList<>();
+        for (Teacher teacher : teachers) {
+            result.add(converter.teacherToDTO(teacher));
+        }
+        return result;
+    }
+
+    private List<StudentDTO> prepareStudent(List<Student> students) {
+        List<StudentDTO> result = new ArrayList<>();
+        for (Student student : students) {
+            result.add(converter.studentToDTO(student));
+        }
+        return result;
     }
 }

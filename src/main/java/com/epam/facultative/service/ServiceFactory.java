@@ -24,10 +24,8 @@ public class ServiceFactory {
                 DaoFactory.getInstance().getStudentDao(),
                 DaoFactory.getInstance().getTeacherDao());
         this.teacherService = new TeacherServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao(),
                 DaoFactory.getInstance().getStudentDao());
         this.studentService = new StudentServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao(),
                 DaoFactory.getInstance().getStudentDao());
     }
 

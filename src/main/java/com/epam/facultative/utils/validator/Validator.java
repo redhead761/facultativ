@@ -2,7 +2,8 @@ package com.epam.facultative.utils.validator;
 
 import com.epam.facultative.exception.ValidateException;
 
-import static com.epam.facultative.utils.validator.Constants.*;
+import static com.epam.facultative.utils.validator.RegexConstants.*;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public final class Validator {
 
@@ -37,18 +38,16 @@ public final class Validator {
         return true;
     }
 
-    public static boolean validateCategoryData(String title, String description) throws ValidateException {
+    public static void validateCategoryData(String title, String description) throws ValidateException {
         if (!title.matches(TITLE_PATTERN_REGEX) || !description.matches(DESCRIPTION_PATTERN_REGEX)) {
             throw new ValidateException(CATEGORY_DATA_EXCEPTION_MESSAGE);
         }
-        return true;
     }
 
-    public static boolean validateCourseData(String title, String description, int duration) throws ValidateException {
+    public static void validateCourseData(String title, String description, int duration) throws ValidateException {
         if (!title.matches(TITLE_PATTERN_REGEX) || !description.matches(DESCRIPTION_PATTERN_REGEX) || duration <= 0) {
             throw new ValidateException(COURSE_DATA_EXCEPTION_MESSAGE);
         }
-        return true;
     }
 
 //    public static void validateDate(LocalDate date) throws IncorrectFormatException {

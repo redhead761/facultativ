@@ -3,6 +3,7 @@ package com.epam.facultative.actions.impl.admin;
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ public class AssignAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ValidateException {
         ActionUtils.removeRedundantAttribute(req);
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int teacherId = Integer.parseInt(req.getParameter("teacher_id"));

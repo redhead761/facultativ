@@ -2,11 +2,11 @@ package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
+import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.entities.Category;
 import com.epam.facultative.entities.Course;
 import com.epam.facultative.entities.Teacher;
-import com.epam.facultative.entities.User;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
@@ -32,7 +32,7 @@ public interface AdminService {
     int getNoOfRecordsCategories();
 
     //User
-    void assigned(int idCourse, int idUser) throws ServiceException;
+    void assigned(int idCourse, int idUser) throws ServiceException, ValidateException;
 
     void blockStudent(int userId) throws ServiceException;
 
@@ -42,7 +42,7 @@ public interface AdminService {
 
     List<StudentDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
 
-    List<UserDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
+    List<TeacherDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
 
     Category getCategory(int id) throws ServiceException;
 

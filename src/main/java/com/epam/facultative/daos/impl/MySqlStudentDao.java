@@ -11,8 +11,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.impl.Constants.*;
-import static com.epam.facultative.daos.impl.Fields.*;
+import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
+import static com.epam.facultative.daos.impl.FieldsConstants.*;
 
 public class MySqlStudentDao implements StudentDao {
     private int noOfRecords;
@@ -70,13 +70,7 @@ public class MySqlStudentDao implements StudentDao {
             con = DataSource.getConnection();
             stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             con.setAutoCommit(false);
-            int k = 0;
-            stmt.setString(++k, student.getLogin());
-            stmt.setString(++k, student.getPassword());
-            stmt.setString(++k, student.getName());
-            stmt.setString(++k, student.getSurname());
-            stmt.setString(++k, student.getEmail());
-            stmt.setInt(++k, student.getRole().getId());
+            setStatementFieldsUser(student, stmt);
             int count = stmt.executeUpdate();
             if (count > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -86,10 +80,7 @@ public class MySqlStudentDao implements StudentDao {
                 }
             }
             stmt = con.prepareStatement(INSERT_STUDENT);
-            k = 0;
-            stmt.setInt(++k, student.getId());
-            stmt.setInt(++k, student.getCourseNumber());
-            stmt.setBoolean(++k, student.isBlock());
+            setStatementFieldsStudent(student, stmt);
             stmt.executeUpdate();
             con.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -112,13 +103,8 @@ public class MySqlStudentDao implements StudentDao {
             con = DataSource.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(UPDATE_USER);
-            int k = 0;
-            stmt.setString(++k, student.getLogin());
-            stmt.setString(++k, student.getPassword());
-            stmt.setString(++k, student.getName());
-            stmt.setString(++k, student.getSurname());
-            stmt.setString(++k, student.getEmail());
-            stmt.setInt(++k, student.getRole().getId());
+            int k = setStatementFieldsUser(student, stmt);
+            stmt.setInt(++k, student.getId());
             stmt.executeUpdate();
             stmt = con.prepareStatement(UPDATE_STUDENT);
             k = 0;
@@ -153,17 +139,12 @@ public class MySqlStudentDao implements StudentDao {
         List<Student> students = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_STUDENTS_PAGINATION)) {
-            int k = 0;
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, 0);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 students.add(mapRow(rs));
             }
-            rs.close();
-            rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -177,18 +158,14 @@ public class MySqlStudentDao implements StudentDao {
              PreparedStatement stmt = con.prepareStatement(SELECT_STUDENTS_BY_COURSE)) {
             int k = 0;
             stmt.setInt(++k, courseId);
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, k);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Student student = mapRow(rs);
                 student.setGrade(rs.getInt(GRADE));
                 students.add(student);
             }
-            rs.close();
-            rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            setFoundRows(rs, stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -246,6 +223,37 @@ public class MySqlStudentDao implements StudentDao {
                 .block(rs.getBoolean(STUDENT_BLOCK))
                 .role(Role.STUDENT)
                 .build();
+    }
+
+    private int setStatementFieldsUser(Student student, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setString(++k, student.getLogin());
+        stmt.setString(++k, student.getPassword());
+        stmt.setString(++k, student.getName());
+        stmt.setString(++k, student.getSurname());
+        stmt.setString(++k, student.getEmail());
+        stmt.setInt(++k, student.getRole().getId());
+        return k;
+    }
+
+    private int setStatementFieldsStudent(Student student, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setInt(++k, student.getId());
+        stmt.setInt(++k, student.getCourseNumber());
+        stmt.setBoolean(++k, student.isBlock());
+        return k;
+    }
+
+    private void setFoundRows(ResultSet rs, PreparedStatement stmt) throws SQLException {
+        rs.close();
+        rs = stmt.executeQuery(SELECT_FOUND_ROWS);
+        if (rs.next())
+            this.noOfRecords = rs.getInt(1);
+    }
+
+    private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows, int k) throws SQLException {
+        stmt.setInt(++k, offset);
+        stmt.setInt(++k, numberOfRows);
     }
 
     private void close(AutoCloseable stmt) throws DAOException {

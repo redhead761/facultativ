@@ -11,8 +11,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.impl.Constants.*;
-import static com.epam.facultative.daos.impl.Fields.*;
+import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
+import static com.epam.facultative.daos.impl.FieldsConstants.*;
 
 public class MySqlTeacherDao implements TeacherDao {
     private int noOfRecords;
@@ -70,13 +70,7 @@ public class MySqlTeacherDao implements TeacherDao {
             con = DataSource.getConnection();
             stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             con.setAutoCommit(false);
-            int k = 0;
-            stmt.setString(++k, teacher.getLogin());
-            stmt.setString(++k, teacher.getPassword());
-            stmt.setString(++k, teacher.getName());
-            stmt.setString(++k, teacher.getSurname());
-            stmt.setString(++k, teacher.getEmail());
-            stmt.setInt(++k, teacher.getRole().getId());
+            setStatementFieldsUser(teacher, stmt);
             int count = stmt.executeUpdate();
             if (count > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -86,9 +80,7 @@ public class MySqlTeacherDao implements TeacherDao {
                 }
             }
             stmt = con.prepareStatement(INSERT_TEACHER);
-            k = 0;
-            stmt.setInt(++k, teacher.getId());
-            stmt.setString(++k, teacher.getDegree());
+            setStatementFieldsTeacher(teacher, stmt);
             stmt.executeUpdate();
             con.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -111,13 +103,8 @@ public class MySqlTeacherDao implements TeacherDao {
             con = DataSource.getConnection();
             stmt = con.prepareStatement(UPDATE_USER);
             con.setAutoCommit(false);
-            int k = 0;
-            stmt.setString(++k, teacher.getLogin());
-            stmt.setString(++k, teacher.getPassword());
-            stmt.setString(++k, teacher.getName());
-            stmt.setString(++k, teacher.getSurname());
-            stmt.setString(++k, teacher.getEmail());
-            stmt.setInt(++k, teacher.getRole().getId());
+            int k = setStatementFieldsUser(teacher, stmt);
+            stmt.setInt(++k, teacher.getId());
             stmt.executeUpdate();
             stmt = con.prepareStatement(UPDATE_TEACHER);
             k = 0;
@@ -188,6 +175,23 @@ public class MySqlTeacherDao implements TeacherDao {
                 .role(Role.TEACHER)
                 .degree(rs.getString(TEACHER_DEGREE))
                 .build();
+    }
+
+    private int setStatementFieldsUser(Teacher teacher, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setString(++k, teacher.getLogin());
+        stmt.setString(++k, teacher.getPassword());
+        stmt.setString(++k, teacher.getName());
+        stmt.setString(++k, teacher.getSurname());
+        stmt.setString(++k, teacher.getEmail());
+        stmt.setInt(++k, teacher.getRole().getId());
+        return k;
+    }
+
+    private void setStatementFieldsTeacher(Teacher teacher, PreparedStatement stmt) throws SQLException {
+        int k = 0;
+        stmt.setInt(++k, teacher.getId());
+        stmt.setString(++k, teacher.getDegree());
     }
 
     private void close(AutoCloseable stmt) throws DAOException {

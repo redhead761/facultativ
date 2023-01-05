@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static com.epam.facultative.daos.connection.Constants.*;
+import static com.epam.facultative.daos.connection.ConnectionConstants.*;
 
 public class DataSource {
     private static final Logger logger = LoggerFactory.getLogger(DataSource.class);
@@ -42,7 +42,7 @@ public class DataSource {
         Properties properties = new Properties();
         try (InputStream inputStream = DataSource.class
                 .getClassLoader()
-                .getResourceAsStream(Constants.DB_SETTINGS_FILE)) {
+                .getResourceAsStream(ConnectionConstants.DB_SETTINGS_FILE)) {
             properties.load(inputStream);
         } catch (IOException e) {
             logger.error(e.getMessage());

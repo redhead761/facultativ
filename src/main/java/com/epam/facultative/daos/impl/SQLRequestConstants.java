@@ -6,7 +6,7 @@ package com.epam.facultative.daos.impl;
  * @author O.Panchenko
  */
 
-class Constants {
+class SQLRequestConstants {
     /**
      * //SQL request for Category DAO
      */

@@ -6,7 +6,7 @@ package com.epam.facultative.daos.impl;
  * @author O.Panchenko
  */
 
-class Fields {
+class FieldsConstants {
 
     //Category fields
     static final String CATEGORY_ID = "category.id";

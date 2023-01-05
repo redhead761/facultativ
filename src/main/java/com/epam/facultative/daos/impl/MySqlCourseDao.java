@@ -10,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.impl.Constants.*;
-import static com.epam.facultative.daos.impl.Fields.*;
+import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
+import static com.epam.facultative.daos.impl.FieldsConstants.*;
 
 public class MySqlCourseDao implements CourseDao {
 
@@ -89,7 +89,6 @@ public class MySqlCourseDao implements CourseDao {
             }
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
-
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new ValidateException("Title not unique");
         } catch (SQLException e) {
@@ -115,8 +114,7 @@ public class MySqlCourseDao implements CourseDao {
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_TEACHER)) {
             int k = 0;
             stmt.setInt(++k, userId);
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, k);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRowCourse(rs));
@@ -135,8 +133,7 @@ public class MySqlCourseDao implements CourseDao {
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_STUDENT)) {
             int k = 0;
             stmt.setInt(++k, userId);
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, k);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRowCourse(rs));
@@ -155,8 +152,7 @@ public class MySqlCourseDao implements CourseDao {
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
             int k = 0;
             stmt.setInt(++k, categoryId);
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, k);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRowCourse(rs));
@@ -176,8 +172,7 @@ public class MySqlCourseDao implements CourseDao {
             int k = 0;
             stmt.setInt(++k, userId);
             stmt.setInt(++k, status.getId());
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, k);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRowCourse(rs));
@@ -194,7 +189,7 @@ public class MySqlCourseDao implements CourseDao {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_PAGINATION)) {
-            setLimitRows(stmt, offset, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, 0);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRowCourse(rs));
@@ -216,7 +211,7 @@ public class MySqlCourseDao implements CourseDao {
         List<Course> courses = new ArrayList<>();
         try (Connection con = DataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(getQuery(sortBy))) {
-            setLimitRows(stmt, offset, numberOfRows);
+            setLimitRows(stmt, offset, numberOfRows, 0);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 courses.add(mapRowCourse(rs));
@@ -329,8 +324,7 @@ public class MySqlCourseDao implements CourseDao {
             this.noOfRecords = rs.getInt(1);
     }
 
-    private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows) throws SQLException {
-        int k = 0;
+    private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows, int k) throws SQLException {
         stmt.setInt(++k, offset);
         stmt.setInt(++k, numberOfRows);
     }

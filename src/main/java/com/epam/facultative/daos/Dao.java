@@ -3,7 +3,6 @@ package com.epam.facultative.daos;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface Dao<T> {

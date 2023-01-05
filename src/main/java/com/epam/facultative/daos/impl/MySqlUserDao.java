@@ -10,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.impl.Constants.*;
-import static com.epam.facultative.daos.impl.Fields.*;
+import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
+import static com.epam.facultative.daos.impl.FieldsConstants.*;
 
 public class MySqlUserDao implements UserDao {
     private int noOfRecords;

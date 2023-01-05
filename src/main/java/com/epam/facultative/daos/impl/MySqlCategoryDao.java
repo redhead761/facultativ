@@ -10,8 +10,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.impl.Constants.*;
-import static com.epam.facultative.daos.impl.Fields.*;
+import static com.epam.facultative.daos.impl.SQLRequestConstants.*;
+import static com.epam.facultative.daos.impl.FieldsConstants.*;
 
 public class MySqlCategoryDao implements CategoryDao {
     private int noOfRecords;
@@ -111,7 +111,6 @@ public class MySqlCategoryDao implements CategoryDao {
                 categories.add(mapRow(rs));
             }
             rs.close();
-
             rs = stmt.executeQuery(SELECT_FOUND_ROWS);
             if (rs.next())
                 this.noOfRecords = rs.getInt(1);

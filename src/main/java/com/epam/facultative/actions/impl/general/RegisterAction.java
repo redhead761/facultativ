@@ -1,11 +1,10 @@
 package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.entities.Student;
-import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,13 +14,13 @@ import static com.epam.facultative.actions.PageNameConstants.*;
 public class RegisterAction implements Action {
     private final StudentService studentService;
 
-    public RegisterAction() {
-        studentService = ServiceFactory.getInstance().getStudentService();
+    public RegisterAction(AppContext appContext) {
+        studentService = appContext.getStudentService();
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String path = null;
+        String path;
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeat_password");
         Student newUser = getStudentForAttribute(req);

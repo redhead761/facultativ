@@ -2,11 +2,10 @@ package com.epam.facultative.actions.impl.student;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.StudentDTO;
-import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +16,9 @@ public class EnrollAction implements Action {
     private final StudentService studentService;
     private final GeneralService generalService;
 
-    public EnrollAction() {
-        studentService = ServiceFactory.getInstance().getStudentService();
-        generalService = ServiceFactory.getInstance().getGeneralService();
+    public EnrollAction(AppContext appContext) {
+        studentService = appContext.getStudentService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.StudentDao;
-import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.entities.Role;
 import com.epam.facultative.entities.Student;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +16,17 @@ import static com.epam.facultative.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlStudentDao implements StudentDao {
+    private final DataSource dataSource;
     private int noOfRecords;
+
+    public MySqlStudentDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public List<Student> getAll() throws DAOException {
         List<Student> students = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery(SELECT_ALL_STUDENTS);
             while (rs.next()) {
@@ -36,7 +41,7 @@ public class MySqlStudentDao implements StudentDao {
     @Override
     public Student getById(int id) throws DAOException {
         Student student = null;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_STUDENT_BY_ID)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -51,7 +56,7 @@ public class MySqlStudentDao implements StudentDao {
     @Override
     public Student getByName(String name) throws DAOException {
         Student student = null;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_STUDENT_BY_LOGIN)) {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
@@ -68,7 +73,7 @@ public class MySqlStudentDao implements StudentDao {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
-            con = DataSource.getConnection();
+            con = dataSource.getConnection();
             stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             con.setAutoCommit(false);
             setStatementFieldsUser(student, stmt);
@@ -101,7 +106,7 @@ public class MySqlStudentDao implements StudentDao {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
-            con = DataSource.getConnection();
+            con = dataSource.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(UPDATE_USER);
             int k = setStatementFieldsUser(student, stmt);
@@ -125,7 +130,7 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public void delete(int id) throws DAOException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_STUDENT)) {
             int k = 0;
             stmt.setString(++k, String.valueOf(id));
@@ -138,7 +143,7 @@ public class MySqlStudentDao implements StudentDao {
     @Override
     public List<Student> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Student> students = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_STUDENTS_PAGINATION)) {
             setLimitRows(stmt, offset, numberOfRows, 0);
             ResultSet rs = stmt.executeQuery();
@@ -155,7 +160,7 @@ public class MySqlStudentDao implements StudentDao {
     @Override
     public List<Student> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws DAOException {
         List<Student> students = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_STUDENTS_BY_COURSE)) {
             int k = 0;
             stmt.setInt(++k, courseId);
@@ -175,7 +180,7 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public void updateBlock(int studentId, boolean block) throws DAOException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_BLOCK)) {
             int k = 0;
             stmt.setBoolean(++k, block);
@@ -190,7 +195,7 @@ public class MySqlStudentDao implements StudentDao {
     @Override
     public int getGrade(int courseId, int studentId) throws DAOException {
         int grade = -1;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_GRADE)) {
             int k = 0;
             stmt.setInt(++k, courseId);
@@ -237,12 +242,11 @@ public class MySqlStudentDao implements StudentDao {
         return k;
     }
 
-    private int setStatementFieldsStudent(Student student, PreparedStatement stmt) throws SQLException {
+    private void setStatementFieldsStudent(Student student, PreparedStatement stmt) throws SQLException {
         int k = 0;
         stmt.setInt(++k, student.getId());
         stmt.setInt(++k, student.getCourseNumber());
         stmt.setBoolean(++k, student.isBlock());
-        return k;
     }
 
     private void setFoundRows(ResultSet rs, PreparedStatement stmt) throws SQLException {

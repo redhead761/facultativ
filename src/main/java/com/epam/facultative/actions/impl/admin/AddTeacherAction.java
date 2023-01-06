@@ -1,11 +1,11 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,8 +17,8 @@ import static com.epam.facultative.actions.PageNameConstants.ADD_TEACHER_PAGE;
 public class AddTeacherAction implements Action {
     private final AdminService adminService;
 
-    public AddTeacherAction() {
-        adminService = ServiceFactory.getInstance().getAdminService();
+    public AddTeacherAction(AppContext appContext) {
+        adminService = appContext.getAdminService();
     }
 
     @Override

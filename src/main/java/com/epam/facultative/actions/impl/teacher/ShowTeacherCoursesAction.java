@@ -2,9 +2,9 @@ package com.epam.facultative.actions.impl.teacher;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,8 +14,8 @@ import static com.epam.facultative.actions.PageNameConstants.*;
 public class ShowTeacherCoursesAction implements Action {
     private final TeacherService teacherService;
 
-    public ShowTeacherCoursesAction() {
-        teacherService = ServiceFactory.getInstance().getTeacherService();
+    public ShowTeacherCoursesAction(AppContext appContext) {
+        teacherService = appContext.getTeacherService();
     }
 
     @Override

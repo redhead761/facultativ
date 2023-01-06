@@ -4,33 +4,21 @@ import com.epam.facultative.daos.DaoFactory;
 import com.epam.facultative.service.implementation.*;
 
 public class ServiceFactory {
-
-    private static final ServiceFactory INSTANCE = new ServiceFactory();
     private final GeneralService generalService;
     private final AdminService adminService;
     private final TeacherService teacherService;
     private final StudentService studentService;
 
 
-    public ServiceFactory() {
-        this.generalService = new GeneralServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getUserDao(),
-                DaoFactory.getInstance().getCategoryDao(),
-                DaoFactory.getInstance().getTeacherDao(),
-                DaoFactory.getInstance().getStudentDao());
-        this.adminService = new AdminServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getCategoryDao(),
-                DaoFactory.getInstance().getUserDao(),
-                DaoFactory.getInstance().getStudentDao(),
-                DaoFactory.getInstance().getTeacherDao());
-        this.teacherService = new TeacherServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getStudentDao());
-        this.studentService = new StudentServiceImpl(DaoFactory.getInstance().getCourseDao(),
-                DaoFactory.getInstance().getStudentDao());
+    private ServiceFactory(DaoFactory daoFactory) {
+        this.generalService = new GeneralServiceImpl(daoFactory.getCourseDao(), daoFactory.getUserDao(), daoFactory.getCategoryDao(), daoFactory.getTeacherDao(), daoFactory.getStudentDao());
+        this.adminService = new AdminServiceImpl(daoFactory.getCourseDao(), daoFactory.getCategoryDao(), daoFactory.getUserDao(), daoFactory.getStudentDao(), daoFactory.getTeacherDao());
+        this.teacherService = new TeacherServiceImpl(daoFactory.getCourseDao(), daoFactory.getStudentDao());
+        this.studentService = new StudentServiceImpl(daoFactory.getCourseDao(), daoFactory.getStudentDao());
     }
 
-    public static ServiceFactory getInstance() {
-        return INSTANCE;
+    public static ServiceFactory getInstance(DaoFactory daoFactory) {
+        return new ServiceFactory(daoFactory);
     }
 
     public GeneralService getGeneralService() {

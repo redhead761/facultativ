@@ -2,11 +2,11 @@ package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.entities.Category;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +19,8 @@ public class AddCategoryAction implements Action {
 
     private final AdminService adminService;
 
-    public AddCategoryAction() {
-        adminService = ServiceFactory.getInstance().getAdminService();
+    public AddCategoryAction(AppContext appContext) {
+        adminService = appContext.getAdminService();
     }
 
     @Override

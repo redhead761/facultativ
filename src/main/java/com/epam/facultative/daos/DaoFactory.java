@@ -2,12 +2,14 @@ package com.epam.facultative.daos;
 
 import com.epam.facultative.daos.impl.MySqlDaoFactory;
 
+import javax.sql.DataSource;
+
 public abstract class DaoFactory {
     private static DaoFactory instance;
 
-    public static synchronized DaoFactory getInstance() {
+    public static synchronized DaoFactory getInstance(DataSource dataSource) {
         if (instance == null) {
-            instance = new MySqlDaoFactory();
+            instance = new MySqlDaoFactory(dataSource);
         }
         return instance;
     }

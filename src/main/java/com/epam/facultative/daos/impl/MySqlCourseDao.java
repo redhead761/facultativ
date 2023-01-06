@@ -1,11 +1,11 @@
 package com.epam.facultative.daos.impl;
 
-import com.epam.facultative.daos.connection.DataSource;
 import com.epam.facultative.daos.CourseDao;
 import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,18 @@ import static com.epam.facultative.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class MySqlCourseDao implements CourseDao {
+    private final DataSource dataSource;
 
     private int noOfRecords;
+
+    public MySqlCourseDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public List<Course> getAll() throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery(SELECT_All_COURSES);
             while (rs.next()) {
@@ -36,7 +41,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public Course getById(int id) throws DAOException {
         Course course = null;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_ID)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -52,7 +57,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public Course getByName(String name) throws DAOException {
         Course course = null;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_TITLE)) {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
@@ -67,7 +72,7 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public void add(Course course) throws DAOException, ValidateException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(INSERT_COURSE)) {
             setStatementFields(course, stmt);
             stmt.executeUpdate();
@@ -80,7 +85,7 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public void update(Course course) throws DAOException, ValidateException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
             int k = setStatementFields(course, stmt);
             if (course.getTeacher() != null) {
@@ -99,7 +104,7 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public void delete(int id) throws DAOException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_COURSE)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -111,7 +116,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public List<Course> getByTeacher(int userId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_TEACHER)) {
             int k = 0;
             stmt.setInt(++k, userId);
@@ -130,7 +135,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public List<Course> getByStudent(int userId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_STUDENT)) {
             int k = 0;
             stmt.setInt(++k, userId);
@@ -149,7 +154,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public List<Course> getByCategory(int categoryId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
             int k = 0;
             stmt.setInt(++k, categoryId);
@@ -168,7 +173,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public List<Course> getByStatus(int userId, Status status, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
             int k = 0;
             stmt.setInt(++k, userId);
@@ -188,7 +193,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public List<Course> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_PAGINATION)) {
             setLimitRows(stmt, offset, numberOfRows, 0);
             ResultSet rs = stmt.executeQuery();
@@ -210,7 +215,7 @@ public class MySqlCourseDao implements CourseDao {
     @Override
     public List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
         List<Course> courses = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(getQuery(sortBy))) {
             setLimitRows(stmt, offset, numberOfRows, 0);
             ResultSet rs = stmt.executeQuery();
@@ -229,7 +234,7 @@ public class MySqlCourseDao implements CourseDao {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
-            con = DataSource.getConnection();
+            con = dataSource.getConnection();
             con.setAutoCommit(false);
             stmt = con.prepareStatement(INSERT_JOURNAL);
             int k = 0;
@@ -252,7 +257,7 @@ public class MySqlCourseDao implements CourseDao {
 
     @Override
     public void updateJournal(int courseId, int studentId, int grade) throws DAOException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_JOURNAL)) {
             int k = 0;
             stmt.setInt(++k, grade);

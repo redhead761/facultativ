@@ -1,12 +1,13 @@
 package com.epam.facultative.daos.impl;
 
 import com.epam.facultative.daos.TeacherDao;
-import com.epam.facultative.daos.connection.DataSource;
+import com.epam.facultative.daos.connection.MyDataSource;
 import com.epam.facultative.entities.Role;
 import com.epam.facultative.entities.Teacher;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,17 @@ import static com.epam.facultative.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlTeacherDao implements TeacherDao {
+    private final DataSource dataSource;
     private int noOfRecords;
+
+    public MySqlTeacherDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public List<Teacher> getAll() throws DAOException {
         List<Teacher> teachers = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              Statement stmt = con.createStatement()) {
             ResultSet rs = stmt.executeQuery(SELECT_ALL_TEACHERS);
             while (rs.next()) {
@@ -36,7 +42,7 @@ public class MySqlTeacherDao implements TeacherDao {
     @Override
     public Teacher getById(int id) throws DAOException {
         Teacher teacher = null;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_ID)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -51,7 +57,7 @@ public class MySqlTeacherDao implements TeacherDao {
     @Override
     public Teacher getByName(String name) throws DAOException {
         Teacher teacher = null;
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_LOGIN)) {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
@@ -68,7 +74,7 @@ public class MySqlTeacherDao implements TeacherDao {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
-            con = DataSource.getConnection();
+            con = dataSource.getConnection();
             stmt = con.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             con.setAutoCommit(false);
             setStatementFieldsUser(teacher, stmt);
@@ -101,7 +107,7 @@ public class MySqlTeacherDao implements TeacherDao {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
-            con = DataSource.getConnection();
+            con = dataSource.getConnection();
             stmt = con.prepareStatement(UPDATE_USER);
             con.setAutoCommit(false);
             int k = setStatementFieldsUser(teacher, stmt);
@@ -124,7 +130,7 @@ public class MySqlTeacherDao implements TeacherDao {
 
     @Override
     public void delete(int id) throws DAOException {
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(DELETE_TEACHER)) {
             int k = 0;
             stmt.setString(++k, String.valueOf(id));
@@ -137,7 +143,7 @@ public class MySqlTeacherDao implements TeacherDao {
     @Override
     public List<Teacher> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Teacher> teachers = new ArrayList<>();
-        try (Connection con = DataSource.getConnection();
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_TEACHERS_PAGINATION)) {
             int k = 0;
             stmt.setInt(++k, offset);

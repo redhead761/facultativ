@@ -1,21 +1,19 @@
 package com.epam.facultative.actions.impl.teacher;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
 import static com.epam.facultative.actions.ActionNameConstants.SHOW_JOURNAL_ACTION;
-import static com.epam.facultative.actions.PageNameConstants.*;
 
 public class GradeAction implements Action {
     private final TeacherService teacherService;
 
-    public GradeAction() {
-        teacherService = ServiceFactory.getInstance().getTeacherService();
+    public GradeAction(AppContext appContext) {
+        teacherService = appContext.getTeacherService();
     }
 
     @Override

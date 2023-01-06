@@ -2,6 +2,7 @@ package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.*;
 import jakarta.servlet.http.*;
@@ -12,9 +13,9 @@ public class DeleteCourseAction implements Action {
     private final AdminService adminService;
     private final GeneralService generalService;
 
-    public DeleteCourseAction() {
-        adminService = ServiceFactory.getInstance().getAdminService();
-        generalService = ServiceFactory.getInstance().getGeneralService();
+    public DeleteCourseAction(AppContext appContext) {
+        adminService = appContext.getAdminService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override

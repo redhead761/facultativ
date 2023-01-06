@@ -6,17 +6,14 @@ import org.slf4j.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
 import static com.epam.facultative.daos.connection.ConnectionConstants.*;
 
-public class DataSource {
-    private static final Logger logger = LoggerFactory.getLogger(DataSource.class);
+public class MyDataSource {
+    private static final Logger logger = LoggerFactory.getLogger(MyDataSource.class);
     private static final HikariConfig config = new HikariConfig();
     private static final HikariDataSource ds;
-
 
     static {
         Properties properties = getProperties();
@@ -31,16 +28,16 @@ public class DataSource {
         ds = new HikariDataSource(config);
     }
 
-    private DataSource() {
+    private MyDataSource() {
     }
 
-    public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
+    public static javax.sql.DataSource getDataSource() {
+        return ds;
     }
 
     private static Properties getProperties() {
         Properties properties = new Properties();
-        try (InputStream inputStream = DataSource.class
+        try (InputStream inputStream = MyDataSource.class
                 .getClassLoader()
                 .getResourceAsStream(ConnectionConstants.DB_SETTINGS_FILE)) {
             properties.load(inputStream);

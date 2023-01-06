@@ -2,10 +2,10 @@ package com.epam.facultative.actions.impl.general;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -14,8 +14,8 @@ import java.util.List;
 public class SelectCoursesAction implements Action {
     private final GeneralService generalService;
 
-    public SelectCoursesAction() {
-        generalService = ServiceFactory.getInstance().getGeneralService();
+    public SelectCoursesAction(AppContext appContext) {
+        generalService = appContext.getGeneralService();
     }
 
     @Override

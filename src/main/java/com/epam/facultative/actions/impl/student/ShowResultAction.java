@@ -1,8 +1,8 @@
 package com.epam.facultative.actions.impl.student;
 
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +15,8 @@ import static com.epam.facultative.actions.PageNameConstants.*;
 public class ShowResultAction implements com.epam.facultative.actions.Action {
     private final StudentService studentService;
 
-    public ShowResultAction() {
-        studentService = ServiceFactory.getInstance().getStudentService();
+    public ShowResultAction(AppContext appContext) {
+        studentService = appContext.getStudentService();
     }
 
     @Override

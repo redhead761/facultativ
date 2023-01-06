@@ -2,13 +2,12 @@ package com.epam.facultative.actions.impl.student;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.ServiceFactory;
 import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 import static com.epam.facultative.actions.PageNameConstants.*;
 
@@ -16,8 +15,8 @@ public class ShowInProgressCourses implements Action {
 
     private final StudentService studentService;
 
-    public ShowInProgressCourses() {
-        studentService = ServiceFactory.getInstance().getStudentService();
+    public ShowInProgressCourses(AppContext appContext) {
+        studentService = appContext.getStudentService();
     }
 
     @Override

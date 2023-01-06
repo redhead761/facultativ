@@ -2,11 +2,11 @@ package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
 import com.epam.facultative.actions.ActionUtils;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.service.ServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,9 +19,9 @@ public class ShowEditCourseAction implements Action {
     private final GeneralService generalService;
     private final AdminService adminService;
 
-    public ShowEditCourseAction() {
-        generalService = ServiceFactory.getInstance().getGeneralService();
-        adminService = ServiceFactory.getInstance().getAdminService();
+    public ShowEditCourseAction(AppContext appContext) {
+        generalService = appContext.getGeneralService();
+        adminService = appContext.getAdminService();
     }
 
     @Override

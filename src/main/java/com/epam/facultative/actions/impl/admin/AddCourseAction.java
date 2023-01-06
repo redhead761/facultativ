@@ -1,6 +1,7 @@
 package com.epam.facultative.actions.impl.admin;
 
 import com.epam.facultative.actions.Action;
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.entities.Category;
 import com.epam.facultative.entities.Course;
 import com.epam.facultative.entities.Status;
@@ -25,9 +26,9 @@ public class AddCourseAction implements Action {
     private final AdminService adminService;
     private final GeneralService generalService;
 
-    public AddCourseAction() {
-        adminService = ServiceFactory.getInstance().getAdminService();
-        generalService = ServiceFactory.getInstance().getGeneralService();
+    public AddCourseAction(AppContext appContext) {
+        adminService = appContext.getAdminService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override

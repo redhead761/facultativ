@@ -25,5 +25,4 @@ public class ManageCategoriesAction implements Action {
         ActionUtils.setUpPaginationForCategories(req, adminService, currentPage, recordsPerPage);
         return MANAGE_CATEGORIES_PAGE;
     }
-
 }

@@ -1,12 +1,14 @@
 package com.epam.facultative.data_layer.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
+@EqualsAndHashCode(callSuper=true)
 @SuperBuilder
 public class Student extends User implements Serializable {
     @Serial

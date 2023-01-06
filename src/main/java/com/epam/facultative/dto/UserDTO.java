@@ -1,6 +1,6 @@
 package com.epam.facultative.dto;
 
-import com.epam.facultative.entities.Role;
+import com.epam.facultative.data_layer.entities.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;

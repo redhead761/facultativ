@@ -1,10 +1,10 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.daos.*;
+import com.epam.facultative.data_layer.daos.*;
+import com.epam.facultative.data_layer.entities.*;
 import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entities.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
@@ -13,7 +13,7 @@ import com.epam.facultative.service.GeneralService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.daos.impl.FieldsConstants.*;
+import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.utils.HashPassword.verify;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 

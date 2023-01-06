@@ -1,6 +1,6 @@
 package com.epam.facultative.service;
 
-import com.epam.facultative.daos.DaoFactory;
+import com.epam.facultative.data_layer.daos.DaoFactory;
 import com.epam.facultative.service.implementation.*;
 
 public class ServiceFactory {

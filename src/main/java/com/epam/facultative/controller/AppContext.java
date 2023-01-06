@@ -1,7 +1,7 @@
 package com.epam.facultative.controller;
 
-import com.epam.facultative.daos.DaoFactory;
-import com.epam.facultative.daos.connection.MyDataSource;
+import com.epam.facultative.data_layer.daos.DaoFactory;
+import com.epam.facultative.data_layer.connection.MyDataSource;
 import com.epam.facultative.service.*;
 import lombok.Getter;
 

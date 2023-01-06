@@ -1,7 +1,7 @@
 package com.epam.facultative.dto;
 
-import com.epam.facultative.entities.Category;
-import com.epam.facultative.entities.Status;
+import com.epam.facultative.data_layer.entities.Category;
+import com.epam.facultative.data_layer.entities.Status;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,13 +1,13 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.daos.CourseDao;
-import com.epam.facultative.daos.StudentDao;
+import com.epam.facultative.data_layer.daos.CourseDao;
+import com.epam.facultative.data_layer.daos.StudentDao;
 import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.entities.Course;
-import com.epam.facultative.entities.Role;
-import com.epam.facultative.entities.Status;
-import com.epam.facultative.entities.Student;
+import com.epam.facultative.data_layer.entities.Course;
+import com.epam.facultative.data_layer.entities.Role;
+import com.epam.facultative.data_layer.entities.Status;
+import com.epam.facultative.data_layer.entities.Student;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;

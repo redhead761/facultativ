@@ -1,7 +1,7 @@
 package com.epam.facultative.controller;
 
-import com.epam.facultative.actions.Action;
-import com.epam.facultative.actions.ActionFactory;
+import com.epam.facultative.controller.actions.Action;
+import com.epam.facultative.controller.actions.ActionFactory;
 import com.epam.facultative.exception.ServiceException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

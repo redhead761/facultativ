@@ -2,7 +2,7 @@ package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entities.Category;
+import com.epam.facultative.data_layer.entities.Category;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 

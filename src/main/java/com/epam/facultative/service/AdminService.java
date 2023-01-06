@@ -4,9 +4,9 @@ import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.entities.Category;
-import com.epam.facultative.entities.Course;
-import com.epam.facultative.entities.Teacher;
+import com.epam.facultative.data_layer.entities.Category;
+import com.epam.facultative.data_layer.entities.Course;
+import com.epam.facultative.data_layer.entities.Teacher;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 

@@ -1,10 +1,7 @@
 package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.data_layer.daos.*;
-import com.epam.facultative.data_layer.entities.Category;
-import com.epam.facultative.data_layer.entities.Course;
-import com.epam.facultative.data_layer.entities.Student;
-import com.epam.facultative.data_layer.entities.Teacher;
+import com.epam.facultative.data_layer.entities.*;
 import com.epam.facultative.dto.*;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
@@ -16,11 +13,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
@@ -35,39 +35,95 @@ class AdminServiceImplTest {
     private CourseDTO courseDTO;
     private CategoryDTO categoryDTO;
     private TeacherDTO teacherDTO;
-    private List<Student> students;
-    private List<Teacher> teachers;
-    private List<Category> categories;
-    private List<StudentDTO> studentDTOS;
-    private List<TeacherDTO> teacherDTOS;
+    private StudentDTO studentDTO;
+    private Course course;
+    private Category category;
+    private Teacher teacher;
+    private Student student;
 
     @BeforeEach
     void init() {
-        courseDTO = CourseDTO.builder()
-                .title("Test course")
-                .duration(100)
-                .description("Test desc")
-                .build();
-
         categoryDTO = CategoryDTO.builder()
+                .id(0)
                 .title("Test title")
                 .description("Test desc")
                 .build();
 
         teacherDTO = TeacherDTO.builder()
-                .id(1)
+                .id(0)
                 .login("testlogin")
                 .password("Test1234")
                 .name("Testname")
                 .surname("Testsurname")
                 .email("test@fa.ve")
+                .role(Role.TEACHER)
+                .degree("Prof")
                 .build();
 
-        categories = new ArrayList<>();
-        teachers = new ArrayList<>();
-        students = new ArrayList<>();
-        studentDTOS = new ArrayList<>();
-        teacherDTOS = new ArrayList<>();
+        studentDTO = StudentDTO.builder()
+                .id(0)
+                .login("testlogin")
+                .password("Test1234")
+                .name("Testname")
+                .surname("Testsurname")
+                .email("test@fa.ve")
+                .role(Role.STUDENT)
+                .grade(1)
+                .courseNumber(1)
+                .block(false)
+                .build();
+
+        courseDTO = CourseDTO.builder()
+                .id(0)
+                .title("Test course")
+                .duration(100)
+                .startDate(LocalDate.parse("2013-01-08"))
+                .status(Status.COMING_SOON)
+                .teacher(teacherDTO)
+                .category(categoryDTO)
+                .description("Test desc")
+                .build();
+
+        category = Category.builder()
+                .id(0)
+                .title("Test title")
+                .description("Test desc")
+                .build();
+
+        teacher = Teacher.builder()
+                .id(0)
+                .login("testlogin")
+                .password("Test1234")
+                .name("Testname")
+                .surname("Testsurname")
+                .email("test@fa.ve")
+                .role(Role.TEACHER)
+                .degree("Prof")
+                .build();
+
+        course = Course.builder()
+                .id(0)
+                .title("Test course")
+                .duration(100)
+                .startDate(LocalDate.parse("2013-01-08"))
+                .status(Status.COMING_SOON)
+                .teacher(teacher)
+                .category(category)
+                .description("Test desc")
+                .build();
+
+        student = Student.builder()
+                .id(0)
+                .login("testlogin")
+                .password("Test1234")
+                .name("Testname")
+                .surname("Testsurname")
+                .email("test@fa.ve")
+                .role(Role.STUDENT)
+                .grade(1)
+                .courseNumber(1)
+                .block(false)
+                .build();
     }
 
     @Test
@@ -90,6 +146,12 @@ class AdminServiceImplTest {
     }
 
     @Test
+    void addCourseFailed() throws DAOException, ValidateException {
+        doThrow(DAOException.class).when(courseDao).add(isA(Course.class));
+        assertThrows(ServiceException.class, () -> adminService.addCourse(courseDTO));
+    }
+
+    @Test
     void updateCourse() throws DAOException, ValidateException {
         doNothing().when(courseDao).update(isA(Course.class));
         assertDoesNotThrow(() -> adminService.updateCourse(courseDTO));
@@ -106,6 +168,12 @@ class AdminServiceImplTest {
     void updateCourseWithNotUniqueTitle() throws DAOException, ValidateException {
         doThrow(ValidateException.class).when(courseDao).update(isA(Course.class));
         assertThrows(ValidateException.class, () -> adminService.updateCourse(courseDTO));
+    }
+
+    @Test
+    void updateCourseFailed() throws DAOException, ValidateException {
+        doThrow(DAOException.class).when(courseDao).update(isA(Course.class));
+        assertThrows(ServiceException.class, () -> adminService.updateCourse(courseDTO));
     }
 
     @Test
@@ -140,6 +208,12 @@ class AdminServiceImplTest {
     }
 
     @Test
+    void addCategoryFailed() throws DAOException, ValidateException {
+        doThrow(DAOException.class).when(categoryDao).add(isA(Category.class));
+        assertThrows(ServiceException.class, () -> adminService.addCategory(categoryDTO));
+    }
+
+    @Test
     void updateCategory() throws DAOException, ValidateException {
         doNothing().when(categoryDao).update(isA(Category.class));
         assertDoesNotThrow(() -> adminService.updateCategory(categoryDTO));
@@ -159,6 +233,12 @@ class AdminServiceImplTest {
     }
 
     @Test
+    void updateCategoryFailed() throws DAOException, ValidateException {
+        doThrow(DAOException.class).when(categoryDao).update(isA(Category.class));
+        assertThrows(ServiceException.class, () -> adminService.updateCategory(categoryDTO));
+    }
+
+    @Test
     void deleteCategory() throws DAOException {
         doNothing().when(categoryDao).delete(isA(int.class));
         assertDoesNotThrow(() -> adminService.deleteCategory(1));
@@ -172,8 +252,12 @@ class AdminServiceImplTest {
 
     @Test
     void getAllCategoriesPagination() throws DAOException, ServiceException {
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+        categoryDTOS.add(categoryDTO);
         when(categoryDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(categories);
-        assertEquals(categories, adminService.getAllCategoriesPagination(1, 5));
+        assertIterableEquals(categoryDTOS, adminService.getAllCategoriesPagination(1, 5));
     }
 
 
@@ -189,23 +273,23 @@ class AdminServiceImplTest {
         assertDoesNotThrow(() -> adminService.getNoOfRecordsCategories());
     }
 
-//    @Test
-//    void assigned() throws DAOException, ValidateException {
-//        when(courseDao.getById(1)).thenReturn(courseDTO);
-//        when(teacherDao.getById(1)).thenReturn(teacherDTO);
-//        doNothing().when(courseDao).update(courseDTO);
-//        assertDoesNotThrow(() -> adminService.assigned(1, 1));
-//    }
-//
-//    @ParameterizedTest
-//    @MethodSource("invalidIntValues")
-//    void assignedWithIllegalArgument(int courseId, int teacherId) throws DAOException, ValidateException {
-//        when(courseDao.getById(courseId)).thenReturn(courseDTO);
-//        when(teacherDao.getById(teacherId)).thenReturn(teacherDTO);
-//        doThrow(DAOException.class).when(courseDao).update(courseDTO);
-//        assertThrows(ServiceException.class, () -> adminService.assigned(courseId, teacherId));
-//
-//    }
+    @Test
+    void assigned() throws DAOException, ValidateException {
+        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
+        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+        doNothing().when(courseDao).update(isA(Course.class));
+        assertDoesNotThrow(() -> adminService.assigned(1, 1));
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidIntValues")
+    void assignedWithIllegalArgument(int courseId, int teacherId) throws DAOException, ValidateException {
+        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
+        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+        doThrow(DAOException.class).when(courseDao).update(isA(Course.class));
+        assertThrows(ServiceException.class, () -> adminService.assigned(courseId, teacherId));
+
+    }
 
     @Test
     void blockStudent() throws DAOException {
@@ -259,6 +343,11 @@ class AdminServiceImplTest {
 
     @Test
     void getAllStudentsPagination() throws DAOException, ServiceException {
+        List<Student> students = new ArrayList<>();
+        students.add(student);
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+        studentDTO.setPassword(null);
+        studentDTOS.add(studentDTO);
         when(studentDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(students);
         assertIterableEquals(studentDTOS, adminService.getAllStudentsPagination(1, 5));
     }
@@ -273,6 +362,11 @@ class AdminServiceImplTest {
 
     @Test
     void getAllTeachersPagination() throws DAOException, ServiceException {
+        List<Teacher> teachers = new ArrayList<>();
+        teachers.add(teacher);
+        List<TeacherDTO> teacherDTOS = new ArrayList<>();
+        teacherDTO.setPassword(null);
+        teacherDTOS.add(teacherDTO);
         when(teacherDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(teachers);
         assertIterableEquals(teacherDTOS, adminService.getAllTeachersPagination(1, 5));
     }
@@ -284,50 +378,59 @@ class AdminServiceImplTest {
         assertThrows(ServiceException.class, () -> adminService.getAllTeachersPagination(offset, numberOfRows));
     }
 
-//    @Test
-//    void getCategory() throws DAOException, ServiceException {
-//        when(categoryDao.getById(isA(int.class))).thenReturn(categoryDTO);
-//        assertEquals(categoryDTO, adminService.getCategory(1));
-//    }
+    @Test
+    void getCategory() throws DAOException, ServiceException, ValidateException {
+        when(categoryDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(category));
+        assertEquals(categoryDTO, adminService.getCategory(1));
+    }
 
-//    @Test
-//    void getCategoryWithIllegalArgument() throws DAOException, ServiceException {
-//        when(categoryDao.getById(isA(int.class))).thenReturn(null);
-//        assertNull(adminService.getCategory(-1));
-//    }
+    @Test
+    void getCategoryWithIllegalArgument() throws DAOException {
+        when(categoryDao.getById(isA(int.class))).thenReturn(Optional.empty());
+        assertThrows(ValidateException.class, () -> adminService.getCategory(-1));
+    }
 
+    @Test
+    void getCategoryFailed() throws DAOException {
+        doThrow(DAOException.class).when(categoryDao).getById(isA(int.class));
+        assertThrows(ServiceException.class, () -> adminService.getCategory(-1));
+    }
 
-    //Заглушка, переделать
-//    @Test
-//    void getCourse() throws DAOException {
-//        when(courseDao.getById(isA(int.class))).thenReturn(courseDTO);
-//        assertThrows(NullPointerException.class, () -> adminService.getCourse(1));
-//    }
+    @Test
+    void getCourse() throws DAOException, ValidateException, ServiceException {
+        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
+        assertEquals(courseDTO, adminService.getCourse(1));
+    }
 
     @Test
     void getCourseWithIllegalArgument() throws DAOException {
+        when(courseDao.getById(isA(int.class))).thenReturn(Optional.empty());
+        assertThrows(ValidateException.class, () -> adminService.getCourse(-1));
+    }
+
+    @Test
+    void getCourseFailed() throws DAOException {
         doThrow(DAOException.class).when(courseDao).getById(isA(int.class));
         assertThrows(ServiceException.class, () -> adminService.getCourse(-1));
     }
 
-//    @Test
-//    void getTeacher() throws DAOException, ServiceException {
-//        when(userDao.getById(isA(int.class))).thenReturn(teacherDTO);
-//        UserDTO userDTO = UserDTO.builder()
-//                .id(1)
-//                .login("testlogin")
-//                .name("Testname")
-//                .surname("Testsurname")
-//                .email("test@fa.ve")
-//                .build();
-//        assertEquals(userDTO, adminService.getTeacher(1));
-//    }
+    @Test
+    void getTeacher() throws DAOException, ServiceException, ValidateException {
+        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+        assertEquals(teacherDTO, adminService.getTeacher(1));
+    }
 
-//    @Test
-//    void getTeacherWithIllegalArgument() throws DAOException {
-//        doThrow(DAOException.class).when(userDao).getById(isA(int.class));
-//        assertThrows(ServiceException.class, () -> adminService.getTeacher(-1));
-//    }
+    @Test
+    void getTeacherWithIllegalArgument() throws DAOException {
+        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.empty());
+        assertThrows(ValidateException.class, () -> adminService.getTeacher(-1));
+    }
+
+    @Test
+    void getTeacherFailed() throws DAOException {
+        doThrow(DAOException.class).when(teacherDao).getById(isA(int.class));
+        assertThrows(ServiceException.class, () -> adminService.getTeacher(-1));
+    }
 
     @Test
     void getNoOfRecordsTeachers() {
@@ -336,7 +439,7 @@ class AdminServiceImplTest {
 
     @Test
     void getNoOfRecordsStudents() {
-        assertDoesNotThrow(() -> adminService.getNoOfRecordsTeachers());
+        assertDoesNotThrow(() -> adminService.getNoOfRecordsStudents());
     }
 
     private static Stream<Arguments> invalidIntValues() {

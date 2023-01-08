@@ -2,6 +2,9 @@ package com.epam.facultative.dto;
 
 import com.epam.facultative.data_layer.entities.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Converter {
     public static UserDTO convertUserToDTO(User user) {
         return UserDTO.builder()
@@ -122,5 +125,29 @@ public class Converter {
                 .title(categoryDTO.getTitle())
                 .description(categoryDTO.getDescription())
                 .build();
+    }
+
+    public static List<TeacherDTO> prepareTeachers(List<Teacher> teachers) {
+        List<TeacherDTO> result = new ArrayList<>();
+        for (Teacher teacher : teachers) {
+            result.add(convertTeacherToDTO(teacher));
+        }
+        return result;
+    }
+
+    public static List<StudentDTO> prepareStudents(List<Student> students) {
+        List<StudentDTO> result = new ArrayList<>();
+        for (Student student : students) {
+            result.add(convertStudentToDTO(student));
+        }
+        return result;
+    }
+
+    public static List<CategoryDTO> prepareCategories(List<Category> categories) {
+        List<CategoryDTO> result = new ArrayList<>();
+        for (Category category : categories) {
+            result.add(convertCategoryToDTO(category));
+        }
+        return result;
     }
 }

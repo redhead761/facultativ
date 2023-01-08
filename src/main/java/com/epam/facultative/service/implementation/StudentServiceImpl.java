@@ -108,7 +108,7 @@ public class StudentServiceImpl implements StudentService {
     private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            coursesDTO.add(converter.courseToDTO(course));
+            coursesDTO.add(converter.convertCourseToDTO(course));
         }
         return coursesDTO;
     }

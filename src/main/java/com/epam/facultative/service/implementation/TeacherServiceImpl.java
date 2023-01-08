@@ -60,7 +60,7 @@ public class TeacherServiceImpl implements TeacherService {
     private List<StudentDTO> prepareStudent(List<Student> students) {
         List<StudentDTO> result = new ArrayList<>();
         for (Student student : students) {
-            result.add(converter.studentToDTO(student));
+            result.add(converter.convertStudentToDTO(student));
         }
         return result;
     }
@@ -68,7 +68,7 @@ public class TeacherServiceImpl implements TeacherService {
     private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            coursesDTO.add(converter.courseToDTO(course));
+            coursesDTO.add(converter.convertCourseToDTO(course));
         }
         return coursesDTO;
     }

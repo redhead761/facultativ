@@ -179,7 +179,7 @@ public class AdminServiceImpl implements AdminService {
     public CourseDTO getCourse(int id) throws ServiceException {
         try {
             Course course = courseDao.getById(id);
-            return converter.courseToDTO(course);
+            return converter.convertCourseToDTO(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -189,7 +189,7 @@ public class AdminServiceImpl implements AdminService {
     public UserDTO getTeacher(int id) throws ServiceException {
         try {
             User teacher = userDao.getById(id);
-            return converter.userToDTO(teacher);
+            return converter.convertUserToDTO(teacher);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -208,7 +208,7 @@ public class AdminServiceImpl implements AdminService {
     private List<TeacherDTO> prepareTeacher(List<Teacher> teachers) {
         List<TeacherDTO> result = new ArrayList<>();
         for (Teacher teacher : teachers) {
-            result.add(converter.teacherToDTO(teacher));
+            result.add(converter.convertTeacherToDTO(teacher));
         }
         return result;
     }
@@ -216,7 +216,7 @@ public class AdminServiceImpl implements AdminService {
     private List<StudentDTO> prepareStudent(List<Student> students) {
         List<StudentDTO> result = new ArrayList<>();
         for (Student student : students) {
-            result.add(converter.studentToDTO(student));
+            result.add(converter.convertStudentToDTO(student));
         }
         return result;
     }

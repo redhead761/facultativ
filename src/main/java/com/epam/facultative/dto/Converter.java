@@ -1,12 +1,9 @@
 package com.epam.facultative.dto;
 
-import com.epam.facultative.data_layer.entities.Course;
-import com.epam.facultative.data_layer.entities.Student;
-import com.epam.facultative.data_layer.entities.Teacher;
-import com.epam.facultative.data_layer.entities.User;
+import com.epam.facultative.data_layer.entities.*;
 
 public class Converter {
-    public UserDTO userToDTO(User user) {
+    public static UserDTO convertUserToDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())
                 .login(user.getLogin())
@@ -17,7 +14,7 @@ public class Converter {
                 .build();
     }
 
-    public TeacherDTO teacherToDTO(Teacher teacher) {
+    public static TeacherDTO convertTeacherToDTO(Teacher teacher) {
         return TeacherDTO.builder()
                 .id(teacher.getId())
                 .login(teacher.getLogin())
@@ -29,7 +26,7 @@ public class Converter {
                 .build();
     }
 
-    public StudentDTO studentToDTO(Student student) {
+    public static StudentDTO convertStudentToDTO(Student student) {
         return StudentDTO.builder()
                 .id(student.getId())
                 .login(student.getLogin())
@@ -43,7 +40,7 @@ public class Converter {
                 .build();
     }
 
-    public CourseDTO courseToDTO(Course course) {
+    public static CourseDTO convertCourseToDTO(Course course) {
         return CourseDTO.builder()
                 .id(course.getId())
                 .title(course.getTitle())
@@ -51,9 +48,79 @@ public class Converter {
                 .startDate(course.getStartDate())
                 .amountStudents(course.getAmountStudents())
                 .description(course.getDescription())
-                .category(course.getCategory())
+                .category(convertCategoryToDTO(course.getCategory()))
                 .status(course.getStatus())
-                .teacher(userToDTO(course.getTeacher()))
+                .teacher(convertTeacherToDTO(course.getTeacher()))
+                .build();
+    }
+
+    public static CategoryDTO convertCategoryToDTO(Category category) {
+        return CategoryDTO.builder()
+                .id(category.getId())
+                .title(category.getTitle())
+                .description(category.getDescription())
+                .build();
+    }
+
+    public static User convertDTOToUser(UserDTO userDTO) {
+        return User.builder()
+                .id(userDTO.getId())
+                .password(userDTO.getPassword())
+                .login(userDTO.getLogin())
+                .name(userDTO.getName())
+                .surname(userDTO.getSurname())
+                .email(userDTO.getEmail())
+                .role(userDTO.getRole())
+                .build();
+    }
+
+    public static Teacher convertDTOToTeacher(TeacherDTO teacherDTO) {
+        return Teacher.builder()
+                .id(teacherDTO.getId())
+                .password(teacherDTO.getPassword())
+                .login(teacherDTO.getLogin())
+                .name(teacherDTO.getName())
+                .surname(teacherDTO.getSurname())
+                .email(teacherDTO.getEmail())
+                .role(teacherDTO.getRole())
+                .degree(teacherDTO.getDegree())
+                .build();
+    }
+
+    public static Student convertDTOToStudent(StudentDTO studentDTO) {
+        return Student.builder()
+                .id(studentDTO.getId())
+                .login(studentDTO.getLogin())
+                .password(studentDTO.getPassword())
+                .name(studentDTO.getName())
+                .surname(studentDTO.getSurname())
+                .email(studentDTO.getEmail())
+                .role(studentDTO.getRole())
+                .block(studentDTO.isBlock())
+                .courseNumber(studentDTO.getCourseNumber())
+                .grade(studentDTO.getGrade())
+                .build();
+    }
+
+    public static Course convertDTOToCourse(CourseDTO courseDTO) {
+        return Course.builder()
+                .id(courseDTO.getId())
+                .title(courseDTO.getTitle())
+                .duration(courseDTO.getDuration())
+                .startDate(courseDTO.getStartDate())
+                .amountStudents(courseDTO.getAmountStudents())
+                .description(courseDTO.getDescription())
+                .category(convertDTOToCategory(courseDTO.getCategory()))
+                .status(courseDTO.getStatus())
+                .teacher(convertDTOToTeacher(courseDTO.getTeacher()))
+                .build();
+    }
+
+    public static Category convertDTOToCategory(CategoryDTO categoryDTO) {
+        return Category.builder()
+                .id(categoryDTO.getId())
+                .title(categoryDTO.getTitle())
+                .description(categoryDTO.getDescription())
                 .build();
     }
 }

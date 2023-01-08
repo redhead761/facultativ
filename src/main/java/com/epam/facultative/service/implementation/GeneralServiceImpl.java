@@ -49,13 +49,13 @@ public class GeneralServiceImpl implements GeneralService {
             Role role = user.getRole();
             switch (role) {
                 case ADMIN -> {
-                    return converter.userToDTO(user);
+                    return converter.convertUserToDTO(user);
                 }
                 case TEACHER -> {
-                    return converter.teacherToDTO(teacherDao.getById(user.getId()));
+                    return converter.convertTeacherToDTO(teacherDao.getById(user.getId()));
                 }
                 case STUDENT -> {
-                    return converter.studentToDTO(studentDao.getById(user.getId()));
+                    return converter.convertStudentToDTO(studentDao.getById(user.getId()));
                 }
             }
 
@@ -147,7 +147,7 @@ public class GeneralServiceImpl implements GeneralService {
         try {
             List<Teacher> users = teacherDao.getAll();
             for (User user : users) {
-                usersDTO.add(converter.userToDTO(user));
+                usersDTO.add(converter.convertUserToDTO(user));
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -163,7 +163,7 @@ public class GeneralServiceImpl implements GeneralService {
     private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            coursesDTO.add(converter.courseToDTO(course));
+            coursesDTO.add(converter.convertCourseToDTO(course));
         }
         return coursesDTO;
     }

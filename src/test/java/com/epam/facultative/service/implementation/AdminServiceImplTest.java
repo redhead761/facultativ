@@ -352,7 +352,6 @@ class AdminServiceImplTest {
         assertIterableEquals(studentDTOS, adminService.getAllStudentsPagination(1, 5));
     }
 
-
     @ParameterizedTest
     @MethodSource("invalidIntValues")
     void getAllStudentsPaginationWithIllegalArgument(int offset, int numberOfRows) throws DAOException {

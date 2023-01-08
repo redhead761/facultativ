@@ -13,8 +13,7 @@ import com.epam.facultative.service.TeacherService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.dto.Converter.convertCourseToDTO;
-import static com.epam.facultative.dto.Converter.convertStudentToDTO;
+import static com.epam.facultative.dto.Converter.*;
 
 public class TeacherServiceImpl implements TeacherService {
     private final CourseDao courseDao;
@@ -37,7 +36,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<StudentDTO> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareStudent(studentDao.getStudentsByCourse(courseId, offset, numberOfRows));
+            List<Student> students = studentDao.getStudentsByCourse(courseId, offset, numberOfRows);
+            return prepareStudents(students);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -46,7 +46,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<CourseDTO> getTeacherCourses(int teacherId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByTeacher(teacherId, offset, numberOfRows));
+            List<Course> courses = courseDao.getByTeacher(teacherId, offset, numberOfRows);
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -57,19 +58,5 @@ public class TeacherServiceImpl implements TeacherService {
         return courseDao.getNoOfRecords();
     }
 
-    private List<StudentDTO> prepareStudent(List<Student> students) {
-        List<StudentDTO> result = new ArrayList<>();
-        for (Student student : students) {
-            result.add(convertStudentToDTO(student));
-        }
-        return result;
-    }
 
-    private List<CourseDTO> prepareCourses(List<Course> courses) {
-        List<CourseDTO> coursesDTO = new ArrayList<>();
-        for (Course course : courses) {
-            coursesDTO.add(convertCourseToDTO(course));
-        }
-        return coursesDTO;
-    }
 }

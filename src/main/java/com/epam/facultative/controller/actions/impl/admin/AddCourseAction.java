@@ -29,8 +29,8 @@ public class AddCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        CourseDTO course = getCourseFromParameter(req);
         try {
+            CourseDTO course = getCourseFromParameter(req);
             adminService.addCourse(course);
             req.getSession().setAttribute("message", "Successful");
         } catch (ValidateException e) {
@@ -47,7 +47,7 @@ public class AddCourseAction implements Action {
         return ActionNameConstants.CONTROLLER + ActionNameConstants.SHOW_ADD_COURSE_ACTION;
     }
 
-    private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException {
+    private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException, ValidateException {
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));

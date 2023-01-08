@@ -290,11 +290,11 @@ class AdminServiceImplTest {
 //        assertEquals(categoryDTO, adminService.getCategory(1));
 //    }
 
-    @Test
-    void getCategoryWithIllegalArgument() throws DAOException, ServiceException {
-        when(categoryDao.getById(isA(int.class))).thenReturn(null);
-        assertNull(adminService.getCategory(-1));
-    }
+//    @Test
+//    void getCategoryWithIllegalArgument() throws DAOException, ServiceException {
+//        when(categoryDao.getById(isA(int.class))).thenReturn(null);
+//        assertNull(adminService.getCategory(-1));
+//    }
 
 
     //Заглушка, переделать

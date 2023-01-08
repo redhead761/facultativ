@@ -5,6 +5,7 @@ import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +23,13 @@ public class ShowCategoryFormAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         ActionUtils.removeRedundantAttribute(req);
         int categoryId = Integer.parseInt(req.getParameter("category_id"));
-        CategoryDTO category = adminService.getCategory(categoryId);
+        CategoryDTO category;
+        try {
+            category = adminService.getCategory(categoryId);
+        } catch (ValidateException e) {
+            req.setAttribute("message", e.getMessage());
+            return EDIT_COURSE_PAGE;
+        }
         req.setAttribute("title", category.getTitle());
         req.setAttribute("description", category.getDescription());
         req.setAttribute("category_id", categoryId);

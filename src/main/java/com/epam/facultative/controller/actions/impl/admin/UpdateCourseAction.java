@@ -24,8 +24,8 @@ public class UpdateCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        CourseDTO course = getCourseFromParameter(req);
         try {
+            CourseDTO course = getCourseFromParameter(req);
             adminService.updateCourse(course);
             if (req.getParameter("teacher") != null) {
                 int courseId = Integer.parseInt(req.getParameter("course_id"));
@@ -40,7 +40,7 @@ public class UpdateCourseAction implements Action {
         return EDIT_COURSE_PAGE;
     }
 
-    private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException {
+    private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException, ValidateException {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));

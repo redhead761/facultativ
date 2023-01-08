@@ -71,7 +71,7 @@
 
             <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}&course_id=${requestScope.course_id}">Previous</a>
                 </li>
             </c:if>
 
@@ -87,7 +87,7 @@
 
             <c:if test="${requestScope.noOfTeachersPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}">${requestScope.currentPage+1}</a>
                 </li>
             </c:if>
 
@@ -99,7 +99,7 @@
 
             <c:if test="${requestScope.noOfTeachersPages - requestScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+2}">${requestScope.currentPage+2}</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+2}&course_id=${requestScope.course_id}">${requestScope.currentPage+2}</a>
                 </li>
             </c:if>
 
@@ -111,7 +111,7 @@
 
             <c:if test="${requestScope.noOfTeachersPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}">Next</a>
                 </li>
             </c:if>
         </ul>

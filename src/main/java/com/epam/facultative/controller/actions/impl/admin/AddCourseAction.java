@@ -56,6 +56,7 @@ public class AddCourseAction implements Action {
         int categoryId = Integer.parseInt(req.getParameter("category"));
         CategoryDTO categoryDTO = adminService.getCategory(categoryId);
         return CourseDTO.builder()
+                .id(0)
                 .title(title)
                 .duration(duration)
                 .startDate(date)

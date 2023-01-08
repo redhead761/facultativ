@@ -44,6 +44,7 @@ public class AddTeacherAction implements Action {
         String email = req.getParameter("email");
         String degree = req.getParameter("degree");
         return TeacherDTO.builder()
+                .id(0)
                 .login(login)
                 .password(password)
                 .name(name)

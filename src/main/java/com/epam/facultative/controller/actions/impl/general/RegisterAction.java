@@ -43,6 +43,7 @@ public class RegisterAction implements Action {
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
         return StudentDTO.builder()
+                .id(0)
                 .login(login)
                 .password(password)
                 .name(name)

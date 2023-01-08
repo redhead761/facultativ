@@ -43,6 +43,7 @@ public class AddCategoryAction implements Action {
         String title = req.getParameter("title");
         String description = req.getParameter("description");
         return CategoryDTO.builder()
+                .id(0)
                 .title(title)
                 .description(description)
                 .build();

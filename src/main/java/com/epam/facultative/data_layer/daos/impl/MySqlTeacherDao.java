@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
@@ -39,7 +40,7 @@ public class MySqlTeacherDao implements TeacherDao {
     }
 
     @Override
-    public Teacher getById(int id) throws DAOException {
+    public Optional<Teacher> getById(int id) throws DAOException {
         Teacher teacher = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_ID)) {
@@ -50,11 +51,11 @@ public class MySqlTeacherDao implements TeacherDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return teacher;
+        return Optional.ofNullable(teacher);
     }
 
     @Override
-    public Teacher getByName(String name) throws DAOException {
+    public Optional<Teacher> getByName(String name) throws DAOException {
         Teacher teacher = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_LOGIN)) {
@@ -65,7 +66,7 @@ public class MySqlTeacherDao implements TeacherDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return teacher;
+        return Optional.ofNullable(teacher);
     }
 
     @Override

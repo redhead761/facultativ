@@ -106,8 +106,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void assigned(int idCourse, int idUser) throws ServiceException, ValidateException {
         try {
-            Course course = courseDao.getById(idCourse);
-            Teacher teacher = teacherDao.getById(idUser);
+            Course course = courseDao.getById(idCourse).orElseThrow(() -> new ValidateException("Course not found"));
+            Teacher teacher = teacherDao.getById(idUser).orElseThrow(() -> new ValidateException("Teacher not found"));
             course.setTeacher(teacher);
             courseDao.update(course);
         } catch (DAOException e) {
@@ -167,18 +167,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public CategoryDTO getCategory(int id) throws ServiceException {
+    public CategoryDTO getCategory(int id) throws ServiceException, ValidateException {
         try {
-            return convertCategoryToDTO(categoryDao.getById(id));
+            Category category = categoryDao.getById(id).orElseThrow(() -> new ValidateException("Category not found"));
+            return convertCategoryToDTO(category);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public CourseDTO getCourse(int id) throws ServiceException {
+    public CourseDTO getCourse(int id) throws ServiceException, ValidateException {
         try {
-            Course course = courseDao.getById(id);
+            Course course = courseDao.getById(id).orElseThrow(() -> new ValidateException("Course not found"));
             return convertCourseToDTO(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -186,9 +187,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public TeacherDTO getTeacher(int id) throws ServiceException {
+    public TeacherDTO getTeacher(int id) throws ServiceException, ValidateException {
         try {
-            return convertTeacherToDTO(teacherDao.getById(id));
+            Teacher teacher = teacherDao.getById(id).orElseThrow(() -> new ValidateException("Teacher not found"));
+            return convertTeacherToDTO(teacher);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

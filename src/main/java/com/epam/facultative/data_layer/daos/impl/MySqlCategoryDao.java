@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
@@ -36,7 +37,7 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public Category getById(int id) throws DAOException {
+    public Optional<Category> getById(int id) throws DAOException {
         Category category = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_CATEGORY_BY_ID)) {
@@ -48,11 +49,11 @@ public class MySqlCategoryDao implements CategoryDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return category;
+        return Optional.ofNullable(category);
     }
 
     @Override
-    public Category getByName(String name) throws DAOException {
+    public Optional<Category> getByName(String name) throws DAOException {
         Category category = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_CATEGORY_BY_TITLE)) {
@@ -64,7 +65,7 @@ public class MySqlCategoryDao implements CategoryDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return category;
+        return Optional.ofNullable(category);
     }
 
     @Override

@@ -37,23 +37,26 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
         try {
-            User user = userDao.getByName(login);
-            if (user == null) {
-                throw new ValidateException(LOGIN_NOT_EXIST_MESSAGE);
-            }
+            User user = userDao.getByName(login)
+                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             if (!verify(user.getPassword(), password)) {
                 throw new ValidateException(WRONG_PASSWORD_MESSAGE);
             }
+            int id = user.getId();
             Role role = user.getRole();
             switch (role) {
                 case ADMIN -> {
                     return convertUserToDTO(user);
                 }
                 case TEACHER -> {
-                    return convertTeacherToDTO(teacherDao.getById(user.getId()));
+                    Teacher teacher = teacherDao.getById(id)
+                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    return convertTeacherToDTO(teacher);
                 }
                 case STUDENT -> {
-                    return convertStudentToDTO(studentDao.getById(user.getId()));
+                    Student student = studentDao.getById(id)
+                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    return convertStudentToDTO(student);
                 }
             }
 

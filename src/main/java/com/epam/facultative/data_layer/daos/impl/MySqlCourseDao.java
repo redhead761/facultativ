@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
@@ -39,7 +40,7 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public Course getById(int id) throws DAOException {
+    public Optional<Course> getById(int id) throws DAOException {
         Course course = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_ID)) {
@@ -51,11 +52,11 @@ public class MySqlCourseDao implements CourseDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return course;
+        return Optional.ofNullable(course);
     }
 
     @Override
-    public Course getByName(String name) throws DAOException {
+    public Optional<Course> getByName(String name) throws DAOException {
         Course course = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_TITLE)) {
@@ -67,7 +68,7 @@ public class MySqlCourseDao implements CourseDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return course;
+        return Optional.ofNullable(course);
     }
 
     @Override

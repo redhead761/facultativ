@@ -41,11 +41,11 @@ public interface AdminService {
 
     List<TeacherDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
 
-    CategoryDTO getCategory(int id) throws ServiceException;
+    CategoryDTO getCategory(int id) throws ServiceException, ValidateException;
 
-    CourseDTO getCourse(int id) throws ServiceException;
+    CourseDTO getCourse(int id) throws ServiceException, ValidateException;
 
-    TeacherDTO getTeacher(int id) throws ServiceException;
+    TeacherDTO getTeacher(int id) throws ServiceException, ValidateException;
 
     int getNoOfRecordsTeachers();
 

@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MySqlUserDao implements UserDao {
     private final DataSource dataSource;
@@ -34,7 +35,7 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public User getById(int id) throws DAOException {
+    public Optional<User> getById(int id) throws DAOException {
         User user = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_USER_BY_ID)) {
@@ -46,11 +47,11 @@ public class MySqlUserDao implements UserDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override
-    public User getByName(String name) throws DAOException {
+    public Optional<User> getByName(String name) throws DAOException {
         User user = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_USER_BY_LOGIN)) {
@@ -62,7 +63,7 @@ public class MySqlUserDao implements UserDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override

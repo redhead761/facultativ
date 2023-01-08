@@ -2,17 +2,18 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.data_layer.daos.CourseDao;
 import com.epam.facultative.data_layer.daos.StudentDao;
-import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.data_layer.entities.Role;
 import com.epam.facultative.data_layer.entities.Status;
-import com.epam.facultative.data_layer.entities.Student;
+import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
 
+import static com.epam.facultative.dto.Converter.convertCourseToDTO;
+import static com.epam.facultative.dto.Converter.convertDTOToStudent;
 import static com.epam.facultative.utils.HashPassword.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -20,13 +21,11 @@ import java.util.*;
 
 public class StudentServiceImpl implements StudentService {
     private final CourseDao courseDao;
-    private final Converter converter;
     private final StudentDao studentDao;
 
     public StudentServiceImpl(CourseDao courseDao, StudentDao studentDao) {
         this.courseDao = courseDao;
         this.studentDao = studentDao;
-        this.converter = new Converter();
     }
 
     @Override
@@ -75,15 +74,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(Student student) throws ServiceException, ValidateException {
+    public void addStudent(StudentDTO studentDTO) throws ServiceException, ValidateException {
         try {
-            validateLogin(student.getLogin());
-            validatePassword(student.getPassword());
-            validateNameAndSurname(student.getName(), student.getSurname());
-            validateEmail(student.getEmail());
-            student.setRole(Role.STUDENT);
-            student.setPassword(encode(student.getPassword()));
-            studentDao.add(student);
+            validateLogin(studentDTO.getLogin());
+            validatePassword(studentDTO.getPassword());
+            validateNameAndSurname(studentDTO.getName(), studentDTO.getSurname());
+            validateEmail(studentDTO.getEmail());
+            studentDTO.setRole(Role.STUDENT);
+            studentDTO.setPassword(encode(studentDTO.getPassword()));
+            studentDao.add(convertDTOToStudent(studentDTO));
 
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -108,7 +107,7 @@ public class StudentServiceImpl implements StudentService {
     private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            coursesDTO.add(converter.convertCourseToDTO(course));
+            coursesDTO.add(convertCourseToDTO(course));
         }
         return coursesDTO;
     }

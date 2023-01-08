@@ -2,7 +2,7 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.data_layer.daos.*;
 import com.epam.facultative.data_layer.entities.*;
-import com.epam.facultative.dto.Converter;
+import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.DAOException;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
+import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.HashPassword.verify;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
@@ -21,7 +22,6 @@ public class GeneralServiceImpl implements GeneralService {
     private final CourseDao courseDao;
     private final UserDao userDao;
     private final CategoryDao categoryDao;
-    private final Converter converter;
     private final TeacherDao teacherDao;
     private final StudentDao studentDao;
 
@@ -32,8 +32,6 @@ public class GeneralServiceImpl implements GeneralService {
         this.categoryDao = categoryDao;
         this.teacherDao = teacherDao;
         this.studentDao = studentDao;
-        this.converter = new Converter();
-
     }
 
     @Override
@@ -49,13 +47,13 @@ public class GeneralServiceImpl implements GeneralService {
             Role role = user.getRole();
             switch (role) {
                 case ADMIN -> {
-                    return converter.convertUserToDTO(user);
+                    return convertUserToDTO(user);
                 }
                 case TEACHER -> {
-                    return converter.convertTeacherToDTO(teacherDao.getById(user.getId()));
+                    return convertTeacherToDTO(teacherDao.getById(user.getId()));
                 }
                 case STUDENT -> {
-                    return converter.convertStudentToDTO(studentDao.getById(user.getId()));
+                    return convertStudentToDTO(studentDao.getById(user.getId()));
                 }
             }
 
@@ -133,9 +131,13 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<Category> getAllCategories() throws ServiceException {
+    public List<CategoryDTO> getAllCategories() throws ServiceException {
         try {
-            return categoryDao.getAll();
+            List<CategoryDTO> categories = new ArrayList<>();
+            for (Category category : categoryDao.getAll()) {
+                categories.add(convertCategoryToDTO(category));
+            }
+            return categories;
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -147,7 +149,7 @@ public class GeneralServiceImpl implements GeneralService {
         try {
             List<Teacher> users = teacherDao.getAll();
             for (User user : users) {
-                usersDTO.add(converter.convertUserToDTO(user));
+                usersDTO.add(convertUserToDTO(user));
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -163,7 +165,7 @@ public class GeneralServiceImpl implements GeneralService {
     private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            coursesDTO.add(converter.convertCourseToDTO(course));
+            coursesDTO.add(convertCourseToDTO(course));
         }
         return coursesDTO;
     }

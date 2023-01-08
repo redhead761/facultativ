@@ -2,6 +2,7 @@ package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.data_layer.entities.Student;
+import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
@@ -18,7 +19,7 @@ public interface StudentService {
 
     void enroll(int courseId, int userId) throws ServiceException;
 
-    void addStudent(Student student) throws ServiceException, ValidateException;
+    void addStudent(StudentDTO student) throws ServiceException, ValidateException;
 
     int getGrade(int courseId, int userId) throws ServiceException;
 

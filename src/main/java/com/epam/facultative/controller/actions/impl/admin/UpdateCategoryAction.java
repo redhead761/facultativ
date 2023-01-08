@@ -3,6 +3,7 @@ package com.epam.facultative.controller.actions.impl.admin;
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.data_layer.entities.Category;
+import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -23,7 +24,7 @@ public class UpdateCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        Category category = getCategoryFromParameter(req);
+        CategoryDTO category = getCategoryFromParameter(req);
         try {
             adminService.updateCategory(category);
             req.getSession().setAttribute("message", "Changes saved");
@@ -37,11 +38,11 @@ public class UpdateCategoryAction implements Action {
         return EDIT_CATEGORY_PAGE;
     }
 
-    private Category getCategoryFromParameter(HttpServletRequest req) {
+    private CategoryDTO getCategoryFromParameter(HttpServletRequest req) {
         int id = Integer.parseInt(req.getParameter("category_id"));
         String title = req.getParameter("title");
         String description = req.getParameter("description");
-        return Category.builder()
+        return CategoryDTO.builder()
                 .id(id)
                 .title(title)
                 .description(description)

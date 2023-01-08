@@ -2,9 +2,9 @@ package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.data_layer.entities.Category;
-import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.data_layer.entities.Status;
+import com.epam.facultative.dto.CategoryDTO;
+import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -24,7 +24,7 @@ public class UpdateCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        Course course = getCourseFromParameter(req);
+        CourseDTO course = getCourseFromParameter(req);
         try {
             adminService.updateCourse(course);
             if (req.getParameter("teacher") != null) {
@@ -40,7 +40,7 @@ public class UpdateCourseAction implements Action {
         return EDIT_COURSE_PAGE;
     }
 
-    private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
+    private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
@@ -48,8 +48,8 @@ public class UpdateCourseAction implements Action {
         String description = req.getParameter("description");
         Status status = Status.valueOf(req.getParameter("status"));
         int categoryId = Integer.parseInt(req.getParameter("category"));
-        Category category = adminService.getCategory(categoryId);
-        return Course.builder()
+        CategoryDTO category = adminService.getCategory(categoryId);
+        return CourseDTO.builder()
                 .id(courseId)
                 .title(title)
                 .duration(duration)

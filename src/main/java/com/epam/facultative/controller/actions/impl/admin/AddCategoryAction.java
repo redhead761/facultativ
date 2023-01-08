@@ -3,7 +3,7 @@ package com.epam.facultative.controller.actions.impl.admin;
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.data_layer.entities.Category;
+import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -26,7 +26,7 @@ public class AddCategoryAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
         ActionUtils.removeRedundantAttribute(req);
-        Category category = getCategoryFromParameter(req);
+        CategoryDTO category = getCategoryFromParameter(req);
         try {
             adminService.addCategory(category);
             req.getSession().setAttribute("message", "Successful");
@@ -39,10 +39,10 @@ public class AddCategoryAction implements Action {
         return ADD_CATEGORY_PAGE;
     }
 
-    private Category getCategoryFromParameter(HttpServletRequest req) {
+    private CategoryDTO getCategoryFromParameter(HttpServletRequest req) {
         String title = req.getParameter("title");
         String description = req.getParameter("description");
-        return Category.builder()
+        return CategoryDTO.builder()
                 .title(title)
                 .description(description)
                 .build();

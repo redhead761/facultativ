@@ -3,9 +3,9 @@ package com.epam.facultative.controller.actions.impl.admin;
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.controller.actions.ActionNameConstants;
-import com.epam.facultative.data_layer.entities.Category;
-import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.data_layer.entities.Status;
+import com.epam.facultative.dto.CategoryDTO;
+import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
@@ -29,7 +29,7 @@ public class AddCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        Course course = getCourseFromParameter(req);
+        CourseDTO course = getCourseFromParameter(req);
         try {
             adminService.addCourse(course);
             req.getSession().setAttribute("message", "Successful");
@@ -47,20 +47,20 @@ public class AddCourseAction implements Action {
         return ActionNameConstants.CONTROLLER + ActionNameConstants.SHOW_ADD_COURSE_ACTION;
     }
 
-    private Course getCourseFromParameter(HttpServletRequest req) throws ServiceException {
+    private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException {
         String title = req.getParameter("title");
         int duration = Integer.parseInt(req.getParameter("duration"));
         LocalDate date = LocalDate.parse(req.getParameter("start_date"));
         String description = req.getParameter("description");
         Status status = Status.valueOf(req.getParameter("status"));
         int categoryId = Integer.parseInt(req.getParameter("category"));
-        Category category = adminService.getCategory(categoryId);
-        return Course.builder()
+        CategoryDTO categoryDTO = adminService.getCategory(categoryId);
+        return CourseDTO.builder()
                 .title(title)
                 .duration(duration)
                 .startDate(date)
                 .description(description)
-                .category(category)
+                .category(categoryDTO)
                 .status(status)
                 .build();
     }

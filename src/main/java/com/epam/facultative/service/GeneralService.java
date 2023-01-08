@@ -1,5 +1,6 @@
 package com.epam.facultative.service;
 
+import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.data_layer.entities.Category;
@@ -26,7 +27,7 @@ public interface GeneralService {
 
     List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException;
 
-    List<Category> getAllCategories() throws ServiceException;
+    List<CategoryDTO> getAllCategories() throws ServiceException;
 
     List<UserDTO> getAllTeachers() throws ServiceException;
 

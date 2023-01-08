@@ -1,12 +1,9 @@
 package com.epam.facultative.service;
 
+import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.TeacherDTO;
-import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.data_layer.entities.Category;
-import com.epam.facultative.data_layer.entities.Course;
-import com.epam.facultative.data_layer.entities.Teacher;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
@@ -14,20 +11,20 @@ import java.util.List;
 
 public interface AdminService {
     //Course
-    void addCourse(Course course) throws ServiceException, ValidateException;
+    void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;
 
-    void updateCourse(Course course) throws ServiceException, ValidateException;
+    void updateCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;
 
     void deleteCourse(int courseId) throws ServiceException;
 
     //Category
-    void addCategory(Category category) throws ServiceException, ValidateException;
+    void addCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException;
 
-    void updateCategory(Category category) throws ServiceException, ValidateException;
+    void updateCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException;
 
     void deleteCategory(int categoryId) throws ServiceException;
 
-    List<Category> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException;
+    List<CategoryDTO> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException;
 
     int getNoOfRecordsCategories();
 
@@ -38,17 +35,17 @@ public interface AdminService {
 
     void unblockStudent(int userId) throws ServiceException;
 
-    void addTeacher(Teacher teacher) throws ServiceException, ValidateException;
+    void addTeacher(TeacherDTO teacherDTO) throws ServiceException, ValidateException;
 
     List<StudentDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
 
     List<TeacherDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
 
-    Category getCategory(int id) throws ServiceException;
+    CategoryDTO getCategory(int id) throws ServiceException;
 
     CourseDTO getCourse(int id) throws ServiceException;
 
-    UserDTO getTeacher(int id) throws ServiceException;
+    TeacherDTO getTeacher(int id) throws ServiceException;
 
     int getNoOfRecordsTeachers();
 

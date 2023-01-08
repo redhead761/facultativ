@@ -2,7 +2,6 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.data_layer.daos.CourseDao;
 import com.epam.facultative.data_layer.daos.StudentDao;
-import com.epam.facultative.dto.Converter;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.data_layer.entities.Course;
@@ -14,15 +13,16 @@ import com.epam.facultative.service.TeacherService;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultative.dto.Converter.convertCourseToDTO;
+import static com.epam.facultative.dto.Converter.convertStudentToDTO;
+
 public class TeacherServiceImpl implements TeacherService {
     private final CourseDao courseDao;
-    private final Converter converter;
     private final StudentDao studentDao;
 
     public TeacherServiceImpl(CourseDao courseDao, StudentDao studentDao) {
         this.courseDao = courseDao;
         this.studentDao = studentDao;
-        this.converter = new Converter();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TeacherServiceImpl implements TeacherService {
     private List<StudentDTO> prepareStudent(List<Student> students) {
         List<StudentDTO> result = new ArrayList<>();
         for (Student student : students) {
-            result.add(converter.convertStudentToDTO(student));
+            result.add(convertStudentToDTO(student));
         }
         return result;
     }
@@ -68,7 +68,7 @@ public class TeacherServiceImpl implements TeacherService {
     private List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {
-            coursesDTO.add(converter.convertCourseToDTO(course));
+            coursesDTO.add(convertCourseToDTO(course));
         }
         return coursesDTO;
     }

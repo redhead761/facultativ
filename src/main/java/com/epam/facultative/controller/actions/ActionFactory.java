@@ -1,6 +1,5 @@
 package com.epam.facultative.controller.actions;
 
-
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.controller.actions.impl.admin.*;
 import com.epam.facultative.controller.actions.impl.general.*;
@@ -16,7 +15,6 @@ import static com.epam.facultative.controller.actions.ActionNameConstants.*;
 
 public class ActionFactory {
     private static final ActionFactory ACTION_FACTORY = new ActionFactory();
-
     private static final Map<String, Action> ACTION_MAP = new HashMap<>();
     private static final AppContext APP_CONTEXT = AppContext.getAppContext();
 

@@ -12,8 +12,7 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
 
-import static com.epam.facultative.dto.Converter.convertCourseToDTO;
-import static com.epam.facultative.dto.Converter.convertDTOToStudent;
+import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.HashPassword.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -31,7 +30,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<CourseDTO> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStudent(studentId, offset, numberOfRows));
+            List<Course> courses = courseDao.getByStudent(studentId, offset, numberOfRows);
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -40,7 +40,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<CourseDTO> getCoursesComingSoon(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.COMING_SOON, offset, numberOfRows));
+            List<Course> courses = courseDao.getByStatus(studentId, Status.COMING_SOON, offset, numberOfRows);
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -49,7 +50,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<CourseDTO> getCoursesInProgress(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.IN_PROCESS, offset, numberOfRows));
+            List<Course> courses = courseDao.getByStatus(studentId, Status.IN_PROCESS, offset, numberOfRows);
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -58,7 +60,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<CourseDTO> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException {
         try {
-            return prepareCourses(courseDao.getByStatus(studentId, Status.COMPLETED, offset, numberOfRows));
+            List<Course> courses = courseDao.getByStatus(studentId, Status.COMPLETED, offset, numberOfRows);
+            return prepareCourses(courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -75,15 +78,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void addStudent(StudentDTO studentDTO) throws ServiceException, ValidateException {
+        validateLogin(studentDTO.getLogin());
+        validatePassword(studentDTO.getPassword());
+        validateNameAndSurname(studentDTO.getName(), studentDTO.getSurname());
+        validateEmail(studentDTO.getEmail());
+        studentDTO.setRole(Role.STUDENT);
+        studentDTO.setPassword(encode(studentDTO.getPassword()));
         try {
-            validateLogin(studentDTO.getLogin());
-            validatePassword(studentDTO.getPassword());
-            validateNameAndSurname(studentDTO.getName(), studentDTO.getSurname());
-            validateEmail(studentDTO.getEmail());
-            studentDTO.setRole(Role.STUDENT);
-            studentDTO.setPassword(encode(studentDTO.getPassword()));
             studentDao.add(convertDTOToStudent(studentDTO));
-
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -101,14 +103,5 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int getNoOfRecordsCourses() {
         return courseDao.getNoOfRecords();
-    }
-
-
-    private List<CourseDTO> prepareCourses(List<Course> courses) {
-        List<CourseDTO> coursesDTO = new ArrayList<>();
-        for (Course course : courses) {
-            coursesDTO.add(convertCourseToDTO(course));
-        }
-        return coursesDTO;
     }
 }

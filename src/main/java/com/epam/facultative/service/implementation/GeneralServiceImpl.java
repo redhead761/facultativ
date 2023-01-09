@@ -25,7 +25,6 @@ public class GeneralServiceImpl implements GeneralService {
     private final TeacherDao teacherDao;
     private final StudentDao studentDao;
 
-
     public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao, TeacherDao teacherDao, StudentDao studentDao) {
         this.courseDao = courseDao;
         this.userDao = userDao;

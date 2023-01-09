@@ -22,13 +22,19 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-
-<div align="center">
-    <jsp:include page="/parts/header.jsp"/>
-    <h2>Welcome!</h2>
-    <hr>
-    Do you have account? <a href="auth.jsp"> Auth </a>
-    Don't have account? <a href="register.jsp"> Register </a>
+<jsp:include page="/parts/header.jsp"/>
+<div id="intro-example" class="text-center">
+    <div class="mask">
+        <div class="d-flex justify-content-center align-items-center h-50">
+            <div class="text-black-50">
+                <h1 class="mb-3">Welcome to "Facultative"</h1>
+                <h5 class="mb-4">Find your perfect course</h5>
+                <a class="btn btn-outline-secondary btn-lg m-2" href="auth.jsp" role="button">Log in</a>
+                <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button">Registration</a
+                >
+            </div>
+        </div>
+    </div>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

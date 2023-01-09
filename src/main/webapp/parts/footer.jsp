@@ -21,17 +21,19 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-<div class="container justify-content-center" align="center">
-    <footer class="py-3 my-4 justify-content-center">
-        <p class="text-muted">Powered by O.P</p>
+<footer class="bg-white text-center text-lg-start bottom text-muted">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         <form>
             <select id="language" name="language" onchange="submit()">
                 <option value="en" ${sessionScope.language == 'en' ? 'selected' : ''}>English</option>
                 <option value="ua" ${sessionScope.language == 'ua' ? 'selected' : ''}>Українська</option>
             </select>
         </form>
-    </footer>
-
-</div>
+        © 2020 Copyright:
+        <a class="text-dark"> O.P.</a>
+    </div>
+    <!-- Copyright -->
+</footer>
 </body>
 </html>

@@ -34,7 +34,7 @@ public class SortAction implements Action {
             case "duration" ->
                     courses = generalService.sortCoursesByDuration((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "amount students" ->
-                    courses = generalService.sortCoursesBuAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
+                    courses = generalService.sortCoursesByAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
         }
         ActionUtils.setUpPagination(req, generalService, currentPage, recordsPerPage, courses);
         return ActionUtils.chooseCabinet(req);

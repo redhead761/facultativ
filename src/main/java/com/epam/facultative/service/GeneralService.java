@@ -2,8 +2,8 @@ package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
+import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.data_layer.entities.Category;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
@@ -21,7 +21,7 @@ public interface GeneralService {
 
     List<CourseDTO> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> sortCoursesBuAmountOfStudents(int offset, int numberOfRows) throws ServiceException;
+    List<CourseDTO> sortCoursesByAmountOfStudents(int offset, int numberOfRows) throws ServiceException;
 
     List<CourseDTO> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException;
 
@@ -29,7 +29,7 @@ public interface GeneralService {
 
     List<CategoryDTO> getAllCategories() throws ServiceException;
 
-    List<UserDTO> getAllTeachers() throws ServiceException;
+    List<TeacherDTO> getAllTeachers() throws ServiceException;
 
     int getNoOfRecordsCourses();
 }

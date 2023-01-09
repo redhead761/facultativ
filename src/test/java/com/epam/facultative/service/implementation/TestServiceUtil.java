@@ -7,7 +7,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.facultative.utils.HashPassword.encode;
+
 public class TestServiceUtil {
+    public User getAdmin() {
+        return User.builder()
+                .login("admin")
+                .password(encode("Admin1234"))
+                .name("Admin")
+                .surname("Admin")
+                .email("admin@admin.com")
+                .role(Role.ADMIN)
+                .build();
+    }
+
     public UserDTO getAdminDTO() {
         return UserDTO.builder()
                 .login("admin")
@@ -93,7 +106,7 @@ public class TestServiceUtil {
         return Teacher.builder()
                 .id(0)
                 .login("testlogin")
-                .password("Test1234")
+                .password(encode("Test1234"))
                 .name("Testname")
                 .surname("Testsurname")
                 .email("test@fa.ve")
@@ -106,7 +119,7 @@ public class TestServiceUtil {
         return Student.builder()
                 .id(0)
                 .login("testlogin")
-                .password("Test1234")
+                .password(encode("Test1234"))
                 .name("Testname")
                 .surname("Testsurname")
                 .email("test@fa.ve")

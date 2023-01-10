@@ -24,7 +24,7 @@ public class SelectCoursesAction implements Action {
         String selectType = req.getParameter("select_type");
         req.setAttribute("select_type", selectType);
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         List<CourseDTO> courses = null;
         switch (selectType) {
             case "by_teacher" -> {

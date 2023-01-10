@@ -24,7 +24,7 @@ public class SortAction implements Action {
         String sortType = req.getParameter("sort_type");
         req.setAttribute("sort_type", sortType);
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         List<CourseDTO> courses = null;
         switch (sortType) {
             case "alphabet" ->
@@ -39,5 +39,4 @@ public class SortAction implements Action {
         ActionUtils.setUpPagination(req, generalService, currentPage, recordsPerPage, courses);
         return ActionUtils.chooseCabinet(req);
     }
-
 }

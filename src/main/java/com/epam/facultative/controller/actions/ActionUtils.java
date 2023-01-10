@@ -16,7 +16,7 @@ public class ActionUtils {
     private ActionUtils() {
     }
 
-    public static void removeRedundantAttribute(HttpServletRequest req){
+    public static void removeRedundantAttribute(HttpServletRequest req) {
         req.getSession().removeAttribute("message");
     }
 
@@ -27,6 +27,15 @@ public class ActionUtils {
             return 1;
         }
     }
+
+    public static int getRecordsPerPage(HttpServletRequest req) {
+        if (req.getParameter("records_per_page") != null) {
+            return Integer.parseInt(req.getParameter("records_per_page"));
+        } else {
+            return 5;
+        }
+    }
+
 
     public static String chooseCabinet(HttpServletRequest req) {
         String path = null;
@@ -39,12 +48,14 @@ public class ActionUtils {
         return path;
     }
 
+
     public static void setUpPaginationForCategories(HttpServletRequest req, AdminService adminService, int currentPage, int recordsPerPage) throws ServiceException {
         req.setAttribute("categories", adminService.getAllCategoriesPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
         int noOfRecords = adminService.getNoOfRecordsCategories();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.setAttribute("noOfCategoriesPages", noOfPages);
         req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
     }
 
     public static void setUpPaginationForCourses(HttpServletRequest req, GeneralService generalService, int currentPage, int recordsPerPage) throws ServiceException {
@@ -53,6 +64,7 @@ public class ActionUtils {
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.setAttribute("noOfCoursesPages", noOfPages);
         req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
     }
 
     public static void setUpPaginationForStudents(HttpServletRequest req, AdminService adminService, int currentPage, int recordsPerPage) throws ServiceException {
@@ -61,6 +73,7 @@ public class ActionUtils {
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.setAttribute("noOfStudentsPages", noOfPages);
         req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
     }
 
     public static void setUpPaginationForTeachers(HttpServletRequest req, AdminService adminService, int currentPage, int recordsPerPage) throws ServiceException {
@@ -69,6 +82,7 @@ public class ActionUtils {
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.setAttribute("noOfTeachersPages", noOfPages);
         req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
     }
 
     public static void setUpPagination(HttpServletRequest req, GeneralService generalService, int currentPage, int recordsPerPage, List<CourseDTO> courses) throws ServiceException {
@@ -77,6 +91,7 @@ public class ActionUtils {
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.setAttribute("noOfCoursesPages", noOfPages);
         req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());
     }
@@ -86,6 +101,7 @@ public class ActionUtils {
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         req.setAttribute("noOfCoursesPages", noOfPages);
         req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
     }
 
 }

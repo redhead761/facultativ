@@ -21,7 +21,7 @@ public class BlockStudentAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         adminService.blockStudent(Integer.parseInt(req.getParameter("student_id")));
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         ActionUtils.setUpPaginationForStudents(req, adminService, currentPage, recordsPerPage);
         return MANAGE_STUDENTS_PAGE;
     }

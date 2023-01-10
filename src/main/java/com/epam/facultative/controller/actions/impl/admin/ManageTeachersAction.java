@@ -21,7 +21,7 @@ public class ManageTeachersAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         ActionUtils.removeRedundantAttribute(req);
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         ActionUtils.setUpPaginationForTeachers(req, adminService, currentPage, recordsPerPage);
         return MANAGE_TEACHERS_PAGE;
     }

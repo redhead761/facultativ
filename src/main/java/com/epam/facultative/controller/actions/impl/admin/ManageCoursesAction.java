@@ -27,17 +27,15 @@ public class ManageCoursesAction implements Action {
         String sortType = req.getParameter("sort_type");
         String selectType = req.getParameter("select_type");
         if (sortType != null && !sortType.isBlank()) {
-            System.out.println("In SORT block");
             ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
             return MANAGE_COURSES_PAGE;
         }
         if (selectType != null && !selectType.isBlank()) {
-            System.out.println("In SELECT block");
             ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
             return MANAGE_COURSES_PAGE;
         }
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());

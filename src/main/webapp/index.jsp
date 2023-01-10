@@ -30,7 +30,7 @@
                 <h1 class="mb-3">Welcome to "Facultative"</h1>
                 <h5 class="mb-4">Find your perfect course</h5>
                 <a class="btn btn-outline-secondary btn-lg m-2" href="auth.jsp" role="button">Log in</a>
-                <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button">Registration</a
+                <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button">Sign up</a
                 >
             </div>
         </div>

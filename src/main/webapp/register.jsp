@@ -22,7 +22,7 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="auth.jsp">Back
+                <a class="nav-link" href="index.jsp">Back
                     to
                     home</a>
             </li>
@@ -30,61 +30,98 @@
     </div>
 </div>
 
-<div align="center">
-    <h2>Please, fill in the fields</h2>
+<c:if test="${message != null}">
+    <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
+        <strong>${message}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
 
-    <c:if test="${message != null}">
-        <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-            <strong>${message}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+<section class="vh-80">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                            <p class="text-center h1 fw-bold mb-3 mx-1 mx-md-4">Sign up</p>
+
+                            <form class="mx-1 mx-md-4" action="controller" method="post">
+                                <input type="hidden" name="action" value="register"/>
+
+                                <div class="form-floating d-flex flex-row align-items-center mb-4">
+                                    <input class="form-control" name="login" id="floatingInputLogin"
+                                           placeholder="login" value="${login}"
+                                           pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$"
+                                           title="Login must..." required>
+                                    <label for="floatingInputLogin">Login</label>
+                                </div>
+
+                                <div class="form-floating d-flex flex-row align-items-center mb-4">
+                                    <input class="form-control" name="password" type="password"
+                                           id="floatingInputPassword"
+                                           placeholder="password"
+                                           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
+                                           title="Password must..." required>
+                                    <label for="floatingInputPassword">Password</label>
+                                </div>
+
+                                <div class="form-floating d-flex flex-row align-items-center mb-4">
+                                    <input class="form-control" name="repeat_password" type="password"
+                                           id="floatingInputConfirmPassword"
+                                           placeholder="confirm password"
+                                           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
+                                           title="Password must..." required>
+                                    <label for="floatingInputConfirmPassword">Confirm password</label>
+                                </div>
+
+                                <div class="form-floating d-flex flex-row align-items-center mb-4 ">
+                                    <input class="form-control" name="name" id="floatingInputName"
+                                           placeholder="name" value="${name}"
+                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Name must..."
+                                           required>
+                                    <label for="floatingInputName">Name</label>
+                                </div>
+
+                                <div class="form-floating d-flex flex-row align-items-center mb-4">
+                                    <input class="form-control" name="surname" id="floatingInputSurname"
+                                           placeholder="surname"
+                                           value="${surname}"
+                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Surname must..."
+                                           required>
+                                    <label for="floatingInputSurname">Surname</label>
+                                </div>
+
+                                <div class="form-floating d-flex flex-row align-items-center mb-4">
+                                    <input type="email" class="form-control" name="email" id="floatingInputEmail"
+                                           placeholder="email"
+                                           value="${email}"
+                                           pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" title="Email must..."
+                                           required>
+                                    <label for="floatingInputEmail">Email</label>
+                                </div>
+
+                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                 class="img-fluid" alt="Sample image">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </c:if>
-
-    <form action="controller" method="post">
-        <input type="hidden" name="action" value="register"/>
-
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="login" id="floatingInputLogin" placeholder="login" value="${login}"
-                   pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$" title="Login must..." required>
-            <label for="floatingInputLogin">Login</label>
-        </div>
-
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="password" type="password" id="floatingInputPassword"
-                   placeholder="password"
-                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$" title="Password must..." required>
-            <label for="floatingInputPassword">Password</label>
-        </div>
-
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="repeat_password" type="password" id="floatingInputConfirmPassword"
-                   placeholder="confirm password"
-                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$" title="Password must..." required>
-            <label for="floatingInputConfirmPassword">Confirm password</label>
-        </div>
-
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="name" id="floatingInputName" placeholder="name" value="${name}"
-                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Name must..." required>
-            <label for="floatingInputName">Name</label>
-        </div>
-
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input class="form-control" name="surname" id="floatingInputSurname" placeholder="surname"
-                   value="${surname}"
-                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Surname must..." required>
-            <label for="floatingInputSurname">Surname</label>
-        </div>
-
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
-            <input type="email" class="form-control" name="email" id="floatingInputEmail" placeholder="email"
-                   value="${email}"
-                   pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" title="Email must..." required>
-            <label for="floatingInputEmail">Email</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
-<jsp:include page="/parts/footer.jsp"/>
+    </div>
+    <jsp:include page="/parts/footer.jsp"/>
+</section>
 </body>
 </html>

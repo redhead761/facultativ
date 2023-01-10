@@ -9,12 +9,12 @@
 
 <html lang="${sessionScope.language}">
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Facultative </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Facultative </title>
 </head>
 
 <body>
@@ -24,10 +24,12 @@
 
 
 <div align="center">
-  <jsp:include page="/parts/header.jsp"/>
-  <h2>Welcome!</h2>
-  <hr>
-  ABOUT ASS
+    <jsp:include page="/parts/header.jsp"/>
+    <h2>About us</h2>
+    <hr>
+    Facultative is all about helping students realise their study dreams. We’re here for everything from initial
+    research through to application. Our tailored advice, guidance and unrivalled search tools mean students get the
+    best chance of finding their perfect course.
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

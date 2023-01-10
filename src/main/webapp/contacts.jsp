@@ -25,9 +25,13 @@
 
 <div align="center">
     <jsp:include page="/parts/header.jsp"/>
-    <h2>Welcome!</h2>
+    <h2>Contacts</h2>
     <hr>
-    CONTACTS
+    We are always looking for ways to improve. If you have any comments (good or bad) please let us know
+    at: facultative@facultative.com. We can also answer any questions or queries you have. We'll do our best to respond as
+    soon as quickly as possible.
+
+    Phone: +38 (050) 123-45-67
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

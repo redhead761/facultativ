@@ -33,7 +33,7 @@
 </div>
 <div align="center">
 
-    <h2>Please fill in the fields</h2>
+    <h2>Add Category Form</h2>
 
     <c:if test="${sessionScope.message != null}">
         <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">

@@ -1,11 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<c:set var="language"--%>
-<%--       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
-<%--       scope="session"/>--%>
-<fmt:setLocale value="${sessionScope.language}" scope="session"/>
-<fmt:setBundle basename="resources"/>
 <jsp:useBean id="now" class="java.util.Date"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowFormatted"/>
 
@@ -39,63 +34,119 @@
     </div>
 </div>
 
-<div align="center">
-    <h2>Please fill in the fields</h2>
+<c:if test="${sessionScope.message != null}">
+    <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
+        <strong>${sessionScope.message}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
 
-    <c:if test="${sessionScope.message != null}">
-        <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-            <strong>${sessionScope.message}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </c:if>
+<section class="vh-60">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Course Form</h3>
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="add_course"/>
 
-    <form action="${pageContext.request.contextPath}/controller" method="post">
-        <input type="hidden" name="action" value="add_course"/>
-        <div class="form-floating mt-4 mb-3 col-lg-3">
-            <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                   value="${requestScope.title}"
-                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
-                   title="Title must contain 1 to 3 characters" required>
-            <label for="floatingInputTitle">Title</label>
-        </div>
-        <div class="form-floating mt-4 mb-3 col-lg-3">
-            <input class="form-control" name="duration" id="floatingInputDuration" placeholder="duration"
-                   value="${requestScope.duration}"
-                   pattern="^[0-9]{0,3}" title="Duration must contain a value from 1 to 999" required>
-            <label for="floatingInputDuration">Duration</label>
-        </div>
-        <div class="form-floating mt-4 mb-3 col-lg-3">
-            <input class="form-control" type="date" name="start_date" id="floatingInputDate" placeholder="date"
-                   value="${requestScope.start_date}" required min="${nowFormatted}">
-            <label for="floatingInputDate">Start date</label>
-        </div>
-        <div class="form-floating mt-4 mb-3 col-lg-3">
-            <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
-                   value="${requestScope.description}"
-                   pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
-                   title="Description must contain 0 to 200 characters">
-            <label for="floatingInputDescription">Description</label>
-        </div>
-        <div class="mt-2 col-lg-3">
-            <select name="category" class="form-select form-select-lg mb-3" required>
-                <option disabled selected value="">Select category</option>
-                <c:forEach var="category" items="${requestScope.categories}">
-                    <option value="${category.id}">${category.title}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <div class="mt-2 col-lg-3">
-            <select name="status" class="form-select form-select-lg mb-3" required>
-                <option disabled selected value="">Select status</option>
-                <c:forEach var="status" items="${sessionScope.statuses}">
-                    <option>${status.valueOf(status)}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
 
-<jsp:include page="/parts/footer.jsp"/>
+                                    <div class="form-floating">
+                                        <input type="text" id="title" class="form-control form-control-lg"
+                                               value="${requestScope.title}"
+                                               pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
+                                               title="Title must contain 1 to 3 characters" required name="title"/>
+                                        <label class="form-label" for="title">Title</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-floating">
+                                        <input type="number" id="duration" class="form-control form-control-lg"
+                                               name="duration"
+                                               value="${requestScope.duration}"
+                                               min="1" max="999" title="Duration must contain a value from 1 to 999" required/>
+                                        <label class="form-label" for="duration">Duration</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-floating ">
+                                        <input type="date" class="form-control form-control-lg" id="start_date"
+                                               name="start_date" value="${requestScope.start_date}" required
+                                               min="${nowFormatted}"/>
+                                        <label for="start_date" class="form-label">Start date</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+
+                                    <h6 class="mb-2 pb-1">Status: </h6>
+
+                                    <c:forEach var="status" items="${sessionScope.statuses}">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status"
+                                                   id="status"
+                                                   value="${status.valueOf(status)}" checked/>
+                                            <label class="form-check-label"
+                                                   for="status">${status.valueOf(status)}</label>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <select name="category" class="form-select form-select-lg mb-3" required>
+                                        <option disabled selected value="">Select category</option>
+                                        <c:forEach var="category" items="${requestScope.categories}">
+                                            <option value="${category.id}">${category.title}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="form-floating">
+                                        <input type="text" id="description" class="form-control form-control-lg"
+                                               name="description"
+                                               value="${requestScope.description}"
+                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
+                                               title="Description must contain 0 to 200 characters"/>
+                                        <label class="form-label" for="description">Description</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <jsp:include page="/parts/footer.jsp"/>
+</section>
+
+
 </body>
 </html>

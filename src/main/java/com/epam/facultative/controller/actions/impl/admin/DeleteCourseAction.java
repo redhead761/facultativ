@@ -23,13 +23,7 @@ public class DeleteCourseAction implements Action {
         ActionUtils.removeRedundantAttribute(req);
         int id = Integer.parseInt(req.getParameter("course_id"));
         adminService.deleteCourse(id);
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
-        req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = generalService.getNoOfRecordsCourses();
-        ActionUtils.setUpPaginationForCourses(req, noOfRecords, currentPage, recordsPerPage);
-        req.setAttribute("teachers", generalService.getAllTeachers());
-        req.setAttribute("categories", generalService.getAllCategories());
+        ActionUtils.setUpPaginationForAllCourses(req, generalService);
         return MANAGE_COURSES_PAGE;
     }
 }

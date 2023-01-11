@@ -19,13 +19,9 @@ public class DeleteCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
         int id = Integer.parseInt(req.getParameter("category_id"));
         adminService.deleteCategory(id);
-        req.setAttribute("categories", adminService.getAllCategoriesPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsCategories();
-        ActionUtils.setUpPaginationForCategories(req, noOfRecords, currentPage, recordsPerPage);
+        ActionUtils.setUpPaginationForAllCategories(req, adminService);
         req.setAttribute("message", "Successful");
         return MANAGE_CATEGORIES_PAGE;
     }

@@ -25,7 +25,7 @@ public class ShowStudentCoursesAction implements Action {
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         req.setAttribute("courses", studentService.getCoursesByStudent(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
         int noOfRecords = studentService.getNoOfRecordsCourses();
-        ActionUtils.setUpPaginationStudent(req, noOfRecords, currentPage, recordsPerPage);
+        ActionUtils.setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
         return STUDENT_COURSES_PAGE;
     }
 }

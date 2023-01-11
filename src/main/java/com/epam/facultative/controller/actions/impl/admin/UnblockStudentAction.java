@@ -20,11 +20,7 @@ public class UnblockStudentAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         adminService.unblockStudent(Integer.parseInt(req.getParameter("student_id")));
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
-        req.setAttribute("students", adminService.getAllStudentsPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsStudents();
-        ActionUtils.setUpPaginationForStudents(req, noOfRecords, currentPage, recordsPerPage);
+        ActionUtils.setUpPaginationForAllStudents(req, adminService);
         return MANAGE_STUDENTS_PAGE;
     }
 }

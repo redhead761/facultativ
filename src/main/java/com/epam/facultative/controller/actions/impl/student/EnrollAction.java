@@ -22,16 +22,12 @@ public class EnrollAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         StudentDTO student = (StudentDTO) req.getSession().getAttribute("user");
         int id = student.getId();
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
+        ActionUtils.setUpPaginationForAllCourses(req, generalService);
         try {
-            req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
-            int noOfRecords = generalService.getNoOfRecordsCourses();
-            ActionUtils.setUpPaginationForCourses(req, noOfRecords, currentPage, recordsPerPage);
             studentService.enroll(courseId, id);
             req.getSession().setAttribute("message", "Successful");
         } catch (ServiceException e) {

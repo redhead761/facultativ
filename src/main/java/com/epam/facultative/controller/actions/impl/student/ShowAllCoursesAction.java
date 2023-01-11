@@ -33,13 +33,7 @@ public class ShowAllCoursesAction implements Action {
             ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
             return STUDENT_PAGE;
         }
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
-        req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = generalService.getNoOfRecordsCourses();
-        ActionUtils.setUpPaginationForCourses(req, noOfRecords, currentPage, recordsPerPage);
-        req.setAttribute("teachers", generalService.getAllTeachers());
-        req.setAttribute("categories", generalService.getAllCategories());
+        ActionUtils.setUpPaginationForAllCourses(req, generalService);
         return STUDENT_PAGE;
     }
 }

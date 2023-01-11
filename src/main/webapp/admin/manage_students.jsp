@@ -39,9 +39,9 @@
             <td>${student.surname}</td>
             <td>${student.block}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=block&student_id=${student.id}">Block</a>
+                <a href="${pageContext.request.contextPath}/controller?action=block&student_id=${student.id}&records_per_page=${requestScope.records_per_page}">Block</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=unblock&student_id=${student.id}">Unblock</a>
+                <a href="${pageContext.request.contextPath}/controller?action=unblock&student_id=${student.id}&records_per_page=${requestScope.records_per_page}">Unblock</a>
             </td>
             </tbody>
         </c:forEach>

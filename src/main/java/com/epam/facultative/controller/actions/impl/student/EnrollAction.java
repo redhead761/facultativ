@@ -27,9 +27,11 @@ public class EnrollAction implements Action {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute("user");
         int id = student.getId();
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         try {
-            ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
+            req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
+            int noOfRecords = generalService.getNoOfRecordsCourses();
+            ActionUtils.setUpPaginationForCourses(req, noOfRecords, currentPage, recordsPerPage);
             studentService.enroll(courseId, id);
             req.getSession().setAttribute("message", "Successful");
         } catch (ServiceException e) {

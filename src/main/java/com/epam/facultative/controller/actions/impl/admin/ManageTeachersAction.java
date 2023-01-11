@@ -22,7 +22,9 @@ public class ManageTeachersAction implements Action {
         ActionUtils.removeRedundantAttribute(req);
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = ActionUtils.getRecordsPerPage(req);
-        ActionUtils.setUpPaginationForTeachers(req, adminService, currentPage, recordsPerPage);
+        req.setAttribute("teachers", adminService.getAllTeachersPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
+        int noOfRecords = adminService.getNoOfRecordsTeachers();
+        ActionUtils.setUpPaginationForTeachers(req, noOfRecords, currentPage, recordsPerPage);
         return MANAGE_TEACHERS_PAGE;
     }
 }

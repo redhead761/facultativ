@@ -121,37 +121,37 @@
                 <span class="page-link">${sessionScope.currentPage}</span>
             </li>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${sessionScope.noOfPages - sessionScope.currentPage < 1}">
                 <li class="page-item disabled">
                     <span class="page-link">${sessionScope.currentPage+1}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${sessionScope.noOfPages - sessionScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
                                          href="${pageContext.request.contextPath}/controller?action=all_courses&page=${sessionScope.currentPage+1}">${sessionScope.currentPage+1}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 2}">
+            <c:if test="${sessionScope.noOfPages - sessionScope.currentPage < 2}">
                 <li class="page-item disabled">
                     <span class="page-link">${sessionScope.currentPage+2}</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 2}">
+            <c:if test="${sessionScope.noOfPages - sessionScope.currentPage >= 2}">
                 <li class="page-item"><a class="page-link"
                                          href="${pageContext.request.contextPath}/controller?action=all_courses&page=${sessionScope.currentPage+2}">${sessionScope.currentPage+2}</a>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage < 1}">
+            <c:if test="${sessionScope.noOfPages - sessionScope.currentPage < 1}">
                 <li class="page-item disabled">
                     <span class="page-link">Next</span>
                 </li>
             </c:if>
 
-            <c:if test="${sessionScope.noOfCoursesPages - sessionScope.currentPage >= 1}">
+            <c:if test="${sessionScope.noOfPages - sessionScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
                                          href="${pageContext.request.contextPath}/controller?action=all_courses&page=${sessionScope.currentPage+1}">Next</a>
                 </li>

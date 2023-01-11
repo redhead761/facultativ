@@ -36,7 +36,9 @@ public class ManageCoursesAction implements Action {
         }
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = ActionUtils.getRecordsPerPage(req);
-        ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
+        req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
+        int noOfRecords = generalService.getNoOfRecordsCourses();
+        ActionUtils.setUpPaginationForCourses(req, noOfRecords, currentPage, recordsPerPage);
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());
         return MANAGE_COURSES_PAGE;

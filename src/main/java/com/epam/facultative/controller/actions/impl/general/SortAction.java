@@ -36,7 +36,11 @@ public class SortAction implements Action {
             case "amount students" ->
                     courses = generalService.sortCoursesByAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
         }
-        ActionUtils.setUpPagination(req, generalService, currentPage, recordsPerPage, courses);
+        req.setAttribute("courses", courses);
+        int noOfRecords = generalService.getNoOfRecordsCourses();
+        ActionUtils.setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
+        req.setAttribute("teachers", generalService.getAllTeachers());
+        req.setAttribute("categories", generalService.getAllCategories());
         return ActionUtils.chooseCabinet(req);
     }
 }

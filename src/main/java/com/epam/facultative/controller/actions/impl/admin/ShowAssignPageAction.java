@@ -23,8 +23,10 @@ public class ShowAssignPageAction implements Action {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         req.setAttribute("course_id", courseId);
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
-        ActionUtils.setUpPaginationForTeachers(req, adminService, currentPage, recordsPerPage);
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
+        req.setAttribute("teachers", adminService.getAllTeachersPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
+        int noOfRecords = adminService.getNoOfRecordsTeachers();
+        ActionUtils.setUpPaginationForTeachers(req, noOfRecords, currentPage, recordsPerPage);
         return ASSIGN_PAGE;
     }
 }

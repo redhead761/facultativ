@@ -36,6 +36,48 @@ public class ActionUtils {
         }
     }
 
+    public static void setUpPaginationForCategories(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+    }
+
+    public static void setUpPaginationForCourses(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+    }
+
+    public static void setUpPaginationForStudents(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+    }
+
+    public static void setUpPaginationForTeachers(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+    }
+
+    public static void setUpPagination(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+
+    }
+
+    public static void setUpPaginationStudent(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+    }
 
     public static String chooseCabinet(HttpServletRequest req) {
         String path = null;
@@ -47,61 +89,4 @@ public class ActionUtils {
         }
         return path;
     }
-
-
-    public static void setUpPaginationForCategories(HttpServletRequest req, AdminService adminService, int currentPage, int recordsPerPage) throws ServiceException {
-        req.setAttribute("categories", adminService.getAllCategoriesPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsCategories();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfCategoriesPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-    }
-
-    public static void setUpPaginationForCourses(HttpServletRequest req, GeneralService generalService, int currentPage, int recordsPerPage) throws ServiceException {
-        req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = generalService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfCoursesPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-    }
-
-    public static void setUpPaginationForStudents(HttpServletRequest req, AdminService adminService, int currentPage, int recordsPerPage) throws ServiceException {
-        req.setAttribute("students", adminService.getAllStudentsPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsStudents();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfStudentsPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-    }
-
-    public static void setUpPaginationForTeachers(HttpServletRequest req, AdminService adminService, int currentPage, int recordsPerPage) throws ServiceException {
-        req.setAttribute("teachers", adminService.getAllTeachersPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsTeachers();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfTeachersPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-    }
-
-    public static void setUpPagination(HttpServletRequest req, GeneralService generalService, int currentPage, int recordsPerPage, List<CourseDTO> courses) throws ServiceException {
-        req.setAttribute("courses", courses);
-        int noOfRecords = generalService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfCoursesPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-        req.setAttribute("teachers", generalService.getAllTeachers());
-        req.setAttribute("categories", generalService.getAllCategories());
-    }
-
-    public static void setUpPaginationStudent(HttpServletRequest req, StudentService studentService, int currentPage, int recordsPerPage) {
-        int noOfRecords = studentService.getNoOfRecordsCourses();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfCoursesPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-    }
-
 }

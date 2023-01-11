@@ -22,7 +22,9 @@ public class ManageCategoriesAction implements Action {
         ActionUtils.removeRedundantAttribute(req);
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = ActionUtils.getRecordsPerPage(req);
-        ActionUtils.setUpPaginationForCategories(req, adminService, currentPage, recordsPerPage);
+        req.setAttribute("categories", adminService.getAllCategoriesPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
+        int noOfRecords = adminService.getNoOfRecordsCategories();
+        ActionUtils.setUpPaginationForCategories(req, noOfRecords, currentPage, recordsPerPage);
         return MANAGE_CATEGORIES_PAGE;
     }
 }

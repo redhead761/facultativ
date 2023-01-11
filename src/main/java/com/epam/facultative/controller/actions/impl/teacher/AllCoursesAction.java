@@ -33,8 +33,10 @@ public class AllCoursesAction implements Action {
             return TEACHER_PAGE;
         }
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
-        ActionUtils.setUpPaginationForCourses(req, generalService, currentPage, recordsPerPage);
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
+        req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
+        int noOfRecords = generalService.getNoOfRecordsCourses();
+        ActionUtils.setUpPaginationForCourses(req, noOfRecords, currentPage, recordsPerPage);
         req.getSession().setAttribute("teachers", generalService.getAllTeachers());
         req.getSession().setAttribute("categories", generalService.getAllCategories());
         return TEACHER_PAGE;

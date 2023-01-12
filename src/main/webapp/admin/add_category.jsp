@@ -46,7 +46,7 @@
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="action" value="add_category"/>
 
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
+        <div class="form-floating mt-4 mb-3 col-lg-4 ">
             <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
                    value="${requestScope.title}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,100}" title="Title must contains 1 to 100 characters"
@@ -54,7 +54,7 @@
             <label for="floatingInputTitle">Title</label>
         </div>
 
-        <div class="form-floating mt-4 mb-3 col-lg-2 ">
+        <div class="form-floating mt-4 mb-3 col-lg-4 ">
             <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
                    value="${requestScope.description}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''`\'\'#№?!]{0,500}" title="Description must contains 0 to 500 characters">

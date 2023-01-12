@@ -14,4 +14,5 @@ public interface TeacherService {
     List<CourseDTO> getTeacherCourses(int teacherId, int offset, int numberOfRows) throws ServiceException;
 
     int getNoOfRecordsCourses();
+    int getNoOfRecordsStudents();
 }

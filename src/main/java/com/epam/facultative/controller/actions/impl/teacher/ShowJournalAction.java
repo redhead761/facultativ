@@ -23,11 +23,12 @@ public class ShowJournalAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = 5;
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         req.setAttribute("course_id", courseId);
-        List<StudentDTO> students = teacherService.getStudentsByCourse(courseId, (currentPage - 1) * recordsPerPage, recordsPerPage);
-        req.setAttribute("students", students);
+        req.setAttribute("students", teacherService.getStudentsByCourse(courseId, (currentPage - 1) * recordsPerPage, recordsPerPage));
+        int noOfRecords = teacherService.getNoOfRecordsStudents();
+        ActionUtils.setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
         return JOURNAL_PAGE;
     }
 }

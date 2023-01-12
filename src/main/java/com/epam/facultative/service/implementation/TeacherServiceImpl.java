@@ -58,5 +58,10 @@ public class TeacherServiceImpl implements TeacherService {
         return courseDao.getNoOfRecords();
     }
 
+    @Override
+    public int getNoOfRecordsStudents() {
+        return studentDao.getNoOfRecords();
+    }
+
 
 }

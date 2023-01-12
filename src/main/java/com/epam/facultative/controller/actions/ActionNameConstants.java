@@ -29,7 +29,7 @@ public class ActionNameConstants {
 
     //Teacher
     public static String SHOW_TEACHER_COURSES_ACTION = "show_teacher_courses";
-    public static String SHOW_JOURNAL_ACTION = "show_grade_list";
+    public static String SHOW_JOURNAL_ACTION = "show_journal";
     public static String GRADE_ACTION = "grade";
     public static String ALL_COURSE_ACTION = "all_courses";
 

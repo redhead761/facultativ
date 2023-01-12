@@ -21,7 +21,7 @@ public class ShowStudentCoursesAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getCurrentPage(req);
+        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         req.setAttribute("courses", studentService.getCoursesByStudent(user.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage));
         int noOfRecords = studentService.getNoOfRecordsCourses();

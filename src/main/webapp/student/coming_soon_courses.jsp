@@ -50,61 +50,93 @@
             </tbody>
         </c:forEach>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <c:if test="${requestScope.currentPage == 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+    <div class="row  justify-content-md-end">
+        <div class="col col-md-auto">
+            <a>Rows per page:</a>
+        </div>
+        <div class="col col-md-auto">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="records_per_page"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                ${requestScope.records_per_page}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item"
+                       href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&records_per_page=2">2</a>
                 </li>
-            </c:if>
 
-            <c:if test="${requestScope.currentPage > 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage-1}">Previous</a>
+                <li><a class="dropdown-item"
+                       href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&records_per_page=5">5</a>
                 </li>
-            </c:if>
 
-            <li class="page-item active" aria-current="page">
-                <span class="page-link">${requestScope.currentPage}</span>
-            </li>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">${requestScope.currentPage+1}</span>
+                <li><a class="dropdown-item"
+                       href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&records_per_page=10">10</a>
                 </li>
-            </c:if>
 
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage+1}">${requestScope.currentPage+1}</a>
+                <li><a class="dropdown-item"
+                       href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&records_per_page=20">20</a>
                 </li>
-            </c:if>
+            </ul>
+        </div>
+        <div class="col col-md-auto">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${requestScope.currentPage == 1}">
+                        <li class="page-item disabled">
+                            <span class="page-link">Previous</span>
+                        </li>
+                    </c:if>
 
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage < 2}">
-                <li class="page-item disabled">
-                    <span class="page-link">${requestScope.currentPage+2}</span>
-                </li>
-            </c:if>
+                    <c:if test="${requestScope.currentPage > 1}">
+                        <li class="page-item"><a class="page-link"
+                                                 href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">Previous</a>
+                        </li>
+                    </c:if>
 
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 2}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage+2}">${requestScope.currentPage+2}</a>
-                </li>
-            </c:if>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">${requestScope.currentPage}</span>
+                    </li>
 
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">Next</span>
-                </li>
-            </c:if>
+                    <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
+                        <li class="page-item disabled">
+                            <span class="page-link">${requestScope.currentPage+1}</span>
+                        </li>
+                    </c:if>
 
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage+1}">Next</a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
+                    <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
+                        <li class="page-item"><a class="page-link"
+                                                 href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+1}</a>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${requestScope.noOfPages - requestScope.currentPage < 2}">
+                        <li class="page-item disabled">
+                            <span class="page-link">${requestScope.currentPage+2}</span>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 2}">
+                        <li class="page-item"><a class="page-link"
+                                                 href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage+2}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+2}</a>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
+                        <li class="page-item disabled">
+                            <span class="page-link">Next</span>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
+                        <li class="page-item"><a class="page-link"
+                                                 href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">Next</a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

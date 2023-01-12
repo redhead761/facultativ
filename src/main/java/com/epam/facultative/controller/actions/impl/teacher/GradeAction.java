@@ -2,7 +2,6 @@ package com.epam.facultative.controller.actions.impl.teacher;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.controller.actions.ActionNameConstants;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +21,6 @@ public class GradeAction implements Action {
         int grade = Integer.parseInt(req.getParameter("grade"));
         teacherService.grading(courseId, studentId, grade);
         req.setAttribute("message", "Successful");
-        return "controller?action=" + ActionNameConstants.SHOW_JOURNAL_ACTION + "&course_id=" + courseId;
+        return "controller?action=show_journal&page=" + req.getParameter("page") + "&records_per_page=" + req.getParameter("records_per_page") + "&course_id=" + req.getParameter("course_id");
     }
 }

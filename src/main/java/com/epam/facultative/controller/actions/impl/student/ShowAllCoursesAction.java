@@ -1,7 +1,6 @@
 package com.epam.facultative.controller.actions.impl.student;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.actions.ActionFactory;
 import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.exception.ServiceException;
@@ -26,14 +25,12 @@ public class ShowAllCoursesAction implements Action {
         String sortType = req.getParameter("sort_type");
         String selectType = req.getParameter("select_type");
         if (sortType != null && !sortType.isBlank()) {
-            ActionFactory.getActionFactory().getAction("sort").execute(req, resp);
-            return STUDENT_PAGE;
+            ActionUtils.sort(req, generalService);
+        } else if (selectType != null && !selectType.isBlank()) {
+            ActionUtils.select(req, generalService);
+        } else {
+            ActionUtils.setUpPaginationForAllCourses(req, generalService);
         }
-        if (selectType != null && !selectType.isBlank()) {
-            ActionFactory.getActionFactory().getAction("select_courses").execute(req, resp);
-            return STUDENT_PAGE;
-        }
-        ActionUtils.setUpPaginationForAllCourses(req, generalService);
         return STUDENT_PAGE;
     }
 }

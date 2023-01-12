@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -36,16 +34,16 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=alphabet">Alphabetical</a>
+                       href="${pageContext.request.contextPath}/controller?action=show_all_courses&sort_type=alphabet">Alphabetical</a>
                 </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=reverse alphabet">Reverse
+                       href="${pageContext.request.contextPath}/controller?action=show_all_courses&sort_type=reverse alphabet">Reverse
                     alphabetical</a></li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=duration">Duration</a>
+                       href="${pageContext.request.contextPath}/controller?action=show_all_courses&sort_type=duration">Duration</a>
                 </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=sort&sort_type=amount students">Amount
+                       href="${pageContext.request.contextPath}/controller?action=show_all_courses&sort_type=amount students">Amount
                     students</a></li>
             </ul>
 
@@ -57,7 +55,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="teacher" items="${requestScope.teachers}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
+                           href="${pageContext.request.contextPath}/controller?action=show_all_courses&select_type=by_teacher&teacher_id=${teacher.id}">${teacher.name} ${teacher.surname}</a>
                     </li>
                 </c:forEach>
             </ul>
@@ -69,7 +67,7 @@
             <ul class="dropdown-menu">
                 <c:forEach var="category" items="${requestScope.categories}">
                     <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=select_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
+                           href="${pageContext.request.contextPath}/controller?action=show_all_courses&select_type=by_category&category_id=${category.id}">${category.title}</a>
                     </li>
                 </c:forEach>
             </ul>

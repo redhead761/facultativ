@@ -29,9 +29,6 @@ public class ActionFactory {
         ACTION_MAP.put(MANAGE_TEACHERS_ACTION, new ManageTeachersAction(APP_CONTEXT));
         ACTION_MAP.put(MANAGE_STUDENTS_ACTION, new ManageStudentsAction(APP_CONTEXT));
 
-        ACTION_MAP.put(SELECT_COURSES_ACTION, new SelectCoursesAction(APP_CONTEXT));
-        ACTION_MAP.put(SORT_ACTION, new SortAction(APP_CONTEXT));
-
         ACTION_MAP.put(SHOW_CATEGORY_FORM_ACTION, new ShowCategoryFormAction(APP_CONTEXT));
         ACTION_MAP.put(ADD_CATEGORY_ACTION, new AddCategoryAction(APP_CONTEXT));
         ACTION_MAP.put(UPDATE_CATEGORY_ACTION, new UpdateCategoryAction(APP_CONTEXT));

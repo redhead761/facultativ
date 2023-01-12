@@ -1,12 +1,12 @@
 package com.epam.facultative.controller.actions;
 
-import com.epam.facultative.data_layer.entities.Role;
+import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.GeneralService;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import java.util.List;
 
 public class ActionUtils {
     private ActionUtils() {
@@ -73,14 +73,51 @@ public class ActionUtils {
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
-    public static String chooseCabinet(HttpServletRequest req) {
-        String path = null;
-        Role role = (Role) req.getSession().getAttribute("role");
-        switch (role) {
-            case ADMIN -> path = MANAGE_COURSES_PAGE;
-            case STUDENT -> path = STUDENT_PAGE;
-            case TEACHER -> path = TEACHER_PAGE;
+    public static void sort(HttpServletRequest req, GeneralService generalService) throws ServiceException {
+        String sortType = req.getParameter("sort_type");
+        req.setAttribute("sort_type", sortType);
+        int currentPage = getCurrentPage(req);
+        int recordsPerPage = getRecordsPerPage(req);
+        List<CourseDTO> courses = null;
+        switch (sortType) {
+            case "alphabet" ->
+                    courses = generalService.sortCoursesByAlphabet((currentPage - 1) * recordsPerPage, recordsPerPage);
+            case "reverse alphabet" ->
+                    courses = generalService.sortCoursesByAlphabetReverse((currentPage - 1) * recordsPerPage, recordsPerPage);
+            case "duration" ->
+                    courses = generalService.sortCoursesByDuration((currentPage - 1) * recordsPerPage, recordsPerPage);
+            case "amount students" ->
+                    courses = generalService.sortCoursesByAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
         }
-        return path;
+        req.setAttribute("courses", courses);
+        int noOfRecords = generalService.getNoOfRecordsCourses();
+        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
+        req.setAttribute("teachers", generalService.getAllTeachers());
+        req.setAttribute("categories", generalService.getAllCategories());
+    }
+
+    public static void select(HttpServletRequest req, GeneralService generalService) throws ServiceException {
+        String selectType = req.getParameter("select_type");
+        req.setAttribute("select_type", selectType);
+        int currentPage = getCurrentPage(req);
+        int recordsPerPage = getRecordsPerPage(req);
+        List<CourseDTO> courses = null;
+        switch (selectType) {
+            case "by_teacher" -> {
+                int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
+                req.setAttribute("teacher_id", teacherId);
+                courses = generalService.getCoursesByTeacher(teacherId, (currentPage - 1) * recordsPerPage, recordsPerPage);
+            }
+            case "by_category" -> {
+                int categoryId = Integer.parseInt(req.getParameter("category_id"));
+                req.setAttribute("category_id", categoryId);
+                courses = generalService.getCoursesByCategory(categoryId, (currentPage - 1) * recordsPerPage, recordsPerPage);
+            }
+        }
+        req.setAttribute("courses", courses);
+        int noOfRecords = generalService.getNoOfRecordsCourses();
+        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
+        req.setAttribute("teachers", generalService.getAllTeachers());
+        req.setAttribute("categories", generalService.getAllCategories());
     }
 }

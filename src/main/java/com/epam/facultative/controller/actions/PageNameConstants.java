@@ -39,15 +39,4 @@ public class PageNameConstants {
     public static final String STUDENT_COURSES_PAGE = "student/student_courses.jsp";
     public static final String STUDENT_PROFILE_PAGE = "student/student_profile.jsp";
     public static final String RESULT_PAGE = "student/result.jsp";
-
-
-    public static final String MANAGE_COURSES_ACTION = "controller?action=manage_courses";
-    public static final String COURSE_FORM_ACTION = "controller?action=show_course_form";
-    public static final String MANAGE_CATEGORIES_ACTION = "controller?action=manage_categories";
-    public static final String SHOW_TEACHER_COURSES_ACTION = "controller?action=show_teacher_courses";
-    public static final String ALL_COURSES_ACTION = "controller?action=all_courses";
-    public static final String SHOW_STUDENT_CABINET_ACTION = "controller?action=show_student_cabinet";
-    public static final String SHOW_ASSIGN_PAGE_ACTION = "controller?action=show_assign_page";
-    public static final String SHOW_ADMIN_PROFILE_ACTION = "controller?action=show_admin_profile";
-
 }

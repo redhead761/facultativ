@@ -2,7 +2,7 @@ package com.epam.facultative.controller.actions;
 
 public class ActionNameConstants {
     public static String CONTROLLER = "controller?action=";
-    public static String MY_CABINET_ACTION = "my_cabinet";
+
 
     //NO logged
     public static String AUTH_ACTION = "auth";
@@ -44,9 +44,7 @@ public class ActionNameConstants {
     public static String SHOW_ALL_COURSES_ACTION = "show_all_courses";
     public static String SHOW_RESULT_ACTION = "show_result";
     //General
-    public static String SELECT_COURSES_ACTION = "select_courses";
-    public static String SORT_ACTION = "sort";
     public static String LOG_OUT_ACTION = "log_out";
-
+    public static String MY_CABINET_ACTION = "my_cabinet";
 
 }

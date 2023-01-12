@@ -7,6 +7,8 @@ public class ActionNameConstants {
     //NO logged
     public static String AUTH_ACTION = "auth";
     public static String REGISTER_ACTION = "register";
+    public static String COURSES_ACTION = "courses";
+    public static String TEACHERS_ACTION = "teachers";
     //Admin
     public static String MANAGE_COURSES_ACTION = "manage_courses";
     public static String MANAGE_CATEGORIES_ACTION = "manage_categories";

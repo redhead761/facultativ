@@ -21,6 +21,8 @@ public class ActionFactory {
     static {
         ACTION_MAP.put(MY_CABINET_ACTION, new MyCabinetAction());
         ACTION_MAP.put(AUTH_ACTION, new AuthAction(APP_CONTEXT));
+        ACTION_MAP.put(COURSES_ACTION, new CoursesAction(APP_CONTEXT));
+        ACTION_MAP.put(TEACHERS_ACTION, new TeachersAction(APP_CONTEXT));
 
         ACTION_MAP.put(MANAGE_COURSES_ACTION, new ManageCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(MANAGE_CATEGORIES_ACTION, new ManageCategoriesAction(APP_CONTEXT));

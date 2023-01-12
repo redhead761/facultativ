@@ -37,10 +37,10 @@
                     <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/courses.jsp">Courses</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=courses">Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/teachers.jsp">Teachers</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=teachers">Teachers</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/about_us.jsp">About us</a>

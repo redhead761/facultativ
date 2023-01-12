@@ -22,6 +22,8 @@ public class ActionAccessConstants {
         GENERAL_ACTION.add(SORT_ACTION);
         GENERAL_ACTION.add(LOG_OUT_ACTION);
         GENERAL_ACTION.add(MY_CABINET_ACTION);
+        GENERAL_ACTION.add(COURSES_ACTION);
+        GENERAL_ACTION.add(TEACHERS_ACTION);
     }
 
     static {

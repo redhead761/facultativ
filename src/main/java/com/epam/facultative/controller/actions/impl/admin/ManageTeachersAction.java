@@ -19,7 +19,6 @@ public class ManageTeachersAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ActionUtils.removeRedundantAttribute(req);
         ActionUtils.setUpPaginationForTeachers(req, adminService);
         return MANAGE_TEACHERS_PAGE;
     }

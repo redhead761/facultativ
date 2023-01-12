@@ -23,7 +23,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="/parts/header.jsp"/>
-<div id="intro-example" class="text-center">
+<div id="intro-example" class="text-center min-vh-80">
     <div class="mask">
         <div class="d-flex justify-content-center align-items-center h-50">
             <div class="text-black-50">

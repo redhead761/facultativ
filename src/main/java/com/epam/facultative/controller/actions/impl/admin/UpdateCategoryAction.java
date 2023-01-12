@@ -2,7 +2,6 @@ package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.data_layer.entities.Category;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
@@ -29,9 +28,7 @@ public class UpdateCategoryAction implements Action {
             adminService.updateCategory(category);
             req.getSession().setAttribute("message", "Changes saved");
         } catch (ValidateException e) {
-            req.setAttribute("title", category.getTitle());
-            req.setAttribute("description", category.getDescription());
-            req.setAttribute("category_id", req.getParameter("category_id"));
+            req.setAttribute("category", category);
             req.getSession().setAttribute("message", e.getMessage());
             req.getRequestDispatcher(EDIT_CATEGORY_PAGE).forward(req, resp);
         }

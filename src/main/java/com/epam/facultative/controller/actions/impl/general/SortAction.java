@@ -20,10 +20,8 @@ public class SortAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ActionUtils.removeRedundantAttribute(req);
         String sortType = req.getParameter("sort_type");
         req.setAttribute("sort_type", sortType);
-
         int currentPage = ActionUtils.getCurrentPage(req);
         int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         List<CourseDTO> courses = null;

@@ -48,14 +48,14 @@ public class UpdateCourseAction implements Action {
         String description = req.getParameter("description");
         Status status = Status.valueOf(req.getParameter("status"));
         int categoryId = Integer.parseInt(req.getParameter("category"));
-        CategoryDTO category = adminService.getCategory(categoryId);
+        CategoryDTO categoryDTO = adminService.getCategory(categoryId);
         return CourseDTO.builder()
                 .id(courseId)
                 .title(title)
                 .duration(duration)
                 .startDate(date)
                 .description(description)
-                .category(category)
+                .category(categoryDTO)
                 .status(status)
                 .build();
     }

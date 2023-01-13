@@ -19,7 +19,6 @@ public class ManageCategoriesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ActionUtils.removeRedundantAttribute(req);
         ActionUtils.setUpPaginationForAllCategories(req, adminService);
         return MANAGE_CATEGORIES_PAGE;
     }

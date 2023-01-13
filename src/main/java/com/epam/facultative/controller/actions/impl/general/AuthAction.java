@@ -39,9 +39,9 @@ public class AuthAction implements Action {
                 case STUDENT -> path = STUDENT_PROFILE_PAGE;
             }
         } catch (ValidateException e) {
-            req.setAttribute("login", login);
-            req.setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(AUTH_PAGE).forward(req, resp);
+            req.getSession().setAttribute("login", login);
+            req.getSession().setAttribute("message", "TEST MESSAGE");
+            return AUTH_PAGE;
         }
         return path;
     }

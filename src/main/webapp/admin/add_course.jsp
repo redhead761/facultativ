@@ -56,7 +56,7 @@
 
                                     <div class="form-floating">
                                         <input type="text" id="title" class="form-control form-control-lg"
-                                               value="${requestScope.title}"
+                                               value="${sessionScope.course.title}"
                                                pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
                                                title="Title must contain 1 to 3 characters" required name="title"/>
                                         <label class="form-label" for="title">Title</label>
@@ -69,8 +69,9 @@
                                     <div class="form-floating">
                                         <input type="number" id="duration" class="form-control form-control-lg"
                                                name="duration"
-                                               value="${requestScope.duration}"
-                                               min="1" max="999" title="Duration must contain a value from 1 to 999" required/>
+                                               value="${sessionScope.course.duration}"
+                                               min="1" max="999" title="Duration must contain a value from 1 to 999"
+                                               required/>
                                         <label class="form-label" for="duration">Duration</label>
                                     </div>
 
@@ -82,7 +83,7 @@
 
                                     <div class="form-floating ">
                                         <input type="date" class="form-control form-control-lg" id="start_date"
-                                               name="start_date" value="${requestScope.start_date}" required
+                                               name="start_date" value="${sessionScope.course.startDate}" required
                                                min="${nowFormatted}"/>
                                         <label for="start_date" class="form-label">Start date</label>
                                     </div>
@@ -124,7 +125,7 @@
                                     <div class="form-floating">
                                         <input type="text" id="description" class="form-control form-control-lg"
                                                name="description"
-                                               value="${requestScope.description}"
+                                               value="${sessionScope.course.description}"
                                                pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
                                                title="Description must contain 0 to 200 characters"/>
                                         <label class="form-label" for="description">Description</label>
@@ -132,7 +133,6 @@
 
                                 </div>
                             </div>
-
 
                             <div class="mt-4 pt-2">
                                 <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
@@ -146,7 +146,7 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
-
-
+${sessionScope.remove("message")}
+${sessionScope.remove("course")}
 </body>
 </html>

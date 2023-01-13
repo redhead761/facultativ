@@ -1,7 +1,6 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
@@ -10,6 +9,7 @@ import com.epam.facultative.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class ShowCategoryFormAction implements Action {
@@ -21,18 +21,14 @@ public class ShowCategoryFormAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ActionUtils.removeRedundantAttribute(req);
-        int categoryId = Integer.parseInt(req.getParameter("category_id"));
-        CategoryDTO category;
+        int categoryId = Integer.parseInt(req.getParameter(CATEGORY_ID));
+        CategoryDTO category = null;
         try {
             category = adminService.getCategory(categoryId);
         } catch (ValidateException e) {
-            req.setAttribute("message", e.getMessage());
-            return EDIT_COURSE_PAGE;
+            req.setAttribute(MESSAGE, e.getMessage());
         }
-        req.setAttribute("title", category.getTitle());
-        req.setAttribute("description", category.getDescription());
-        req.setAttribute("category_id", categoryId);
+        req.getSession().setAttribute(CATEGORY, category);
         return EDIT_CATEGORY_PAGE;
     }
 }

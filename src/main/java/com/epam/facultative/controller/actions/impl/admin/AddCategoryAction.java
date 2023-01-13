@@ -1,7 +1,6 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
@@ -14,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.controller.AttributeConstants.*;
 
 public class AddCategoryAction implements Action {
 
@@ -25,15 +25,13 @@ public class AddCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        ActionUtils.removeRedundantAttribute(req);
         CategoryDTO category = getCategoryFromParameter(req);
         try {
             adminService.addCategory(category);
-            req.getSession().setAttribute("message", "Successful");
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
-            req.setAttribute("category", category);
-            req.getSession().setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(ADD_CATEGORY_PAGE).forward(req, resp);
+            req.getSession().setAttribute(CATEGORY, category);
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
         return ADD_CATEGORY_PAGE;
     }

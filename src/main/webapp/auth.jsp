@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%--<c:set var="language"--%>
-<%--       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
-<%--       scope="session"/>--%>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -25,9 +23,9 @@
 
 <div align="center">
     <jsp:include page="/parts/header.jsp"/>
-    <c:if test="${requestScope.message != null}">
+    <c:if test="${sessionScope.message != null}">
     <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-        <strong>${requestScope.message}</strong>
+        <strong>${sessionScope.message}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     </c:if>
@@ -46,7 +44,7 @@
                         <div class="form-floating mt-4 mb-3">
                             <input class="form-control form-control-lg" name="login" id="floatingInput"
                                    placeholder="login"
-                                   value="${requestScope.login}"
+                                   value="${sessionScope.login}"
                                    pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$"
                                    title="Login must contains 4 to 16 characters" required>
                             <label class="form-label" for="floatingInput"><fmt:message key="auth.login"/></label>
@@ -71,7 +69,7 @@
 
                         <div class="text-center text-lg-start pt-2">
                             <p class="small fw-bold pt-1 mb-0">Don't have an account? <a href="register.jsp"
-                                                                                              class="link-danger">Register</a>
+                                                                                         class="link-danger">Register</a>
                             </p>
                         </div>
                     </form>
@@ -80,5 +78,7 @@
         </div>
         <jsp:include page="/parts/footer.jsp"/>
     </section>
+    ${sessionScope.remove("message")}
+    ${sessionScope.remove("login")}
 </body>
 </html>

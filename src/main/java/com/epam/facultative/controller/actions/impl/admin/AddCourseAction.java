@@ -2,14 +2,12 @@ package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.controller.actions.ActionNameConstants;
 import com.epam.facultative.data_layer.entities.Status;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.service.GeneralService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,34 +15,28 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import static com.epam.facultative.controller.actions.ActionNameConstants.*;
+import static com.epam.facultative.controller.AttributeConstants.*;
+
 public class AddCourseAction implements Action {
 
     private final AdminService adminService;
-    private final GeneralService generalService;
-
     public AddCourseAction(AppContext appContext) {
         adminService = appContext.getAdminService();
-        generalService = appContext.getGeneralService();
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+        CourseDTO course = null;
         try {
-            CourseDTO course = getCourseFromParameter(req);
+            course = getCourseFromParameter(req);
             adminService.addCourse(course);
-            req.getSession().setAttribute("message", "Successful");
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
-            req.getSession().setAttribute("message", e.getMessage());
-//            req.setAttribute("title", course.getTitle());
-//            req.setAttribute("duration", course.getDuration());
-//            req.setAttribute("start_date", course.getStartDate());
-//            req.setAttribute("description", course.getDescription());
-//            req.setAttribute("category", course.getCategory().getTitle());
-//            req.setAttribute("status", course.getStatus());
-//            req.setAttribute("categories", generalService.getAllCategories());
-//            req.getRequestDispatcher(ADD_COURSE_PAGE).forward(req, resp);
+            req.getSession().setAttribute(COURSE, course);
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
-        return ActionNameConstants.CONTROLLER + ActionNameConstants.SHOW_ADD_COURSE_ACTION;
+        return CONTROLLER + SHOW_ADD_COURSE_ACTION;
     }
 
     private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException, ValidateException {

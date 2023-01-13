@@ -48,7 +48,7 @@
 
         <div class="form-floating mt-4 mb-3 col-lg-4 ">
             <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                   value="${requestScope.category.title}"
+                   value="${sessionScope.category.title}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,100}"
                    title="Title must contains 1 to 100 characters"
                    required>
@@ -57,7 +57,7 @@
 
         <div class="form-floating mt-4 mb-3 col-lg-4 ">
             <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
-                   value="${requestScope.category.description}"
+                   value="${sessionScope.category.description}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''`\'\'#№?!]{0,500}"
                    title="Description must contains 0 to 500 characters">
             <label for="floatingInputDescription">Description</label>
@@ -67,5 +67,7 @@
     </form>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
+${sessionScope.remove("message")}
+${sessionScope.remove("category")}
 </body>
 </html>

@@ -8,6 +8,7 @@ import com.epam.facultative.service.*;
 import jakarta.servlet.http.*;
 
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.controller.AttributeConstants.*;
 
 public class DeleteCourseAction implements Action {
     private final AdminService adminService;
@@ -20,9 +21,9 @@ public class DeleteCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ActionUtils.removeRedundantAttribute(req);
-        int id = Integer.parseInt(req.getParameter("course_id"));
+        int id = Integer.parseInt(req.getParameter(COURSE_ID));
         adminService.deleteCourse(id);
+        req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         ActionUtils.setUpPaginationForAllCourses(req, generalService);
         return MANAGE_COURSES_PAGE;
     }

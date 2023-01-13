@@ -283,7 +283,7 @@ public class MySqlCourseDao implements CourseDao {
                 .description(rs.getString(COURSE_DESCRIPTION))
                 .status(Status.valueOf(rs.getString(STATUS_TITLE)))
                 .category(mapRowCategory(rs))
-                .teacher(mapRowTeacher(rs))
+                .teacher(rs.getString(TEACHER_ID) != null ? mapRowTeacher(rs) : null)
                 .build();
     }
 

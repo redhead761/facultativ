@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.ADD_TEACHER_PAGE;
 
 public class AddTeacherAction implements Action {
@@ -29,9 +30,10 @@ public class AddTeacherAction implements Action {
         try {
             checkConfirmPassword(password, repeatPassword);
             adminService.addTeacher(teacher);
-            req.getSession().setAttribute("message", "Successful");
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
-            req.getSession().setAttribute("message", e.getMessage());
+            req.getSession().setAttribute(TEACHER, teacher);
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
         return ADD_TEACHER_PAGE;
     }

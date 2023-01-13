@@ -82,11 +82,13 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public void update(Category category) throws DAOException {
+    public void update(Category category) throws DAOException, ValidateException {
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.UPDATE_CATEGORY)) {
             stmt.setString(setStatementFields(category, stmt), String.valueOf(category.getId()));
             stmt.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

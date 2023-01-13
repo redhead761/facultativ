@@ -22,6 +22,13 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
+<c:if test="${requestScope.message != null}">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>${requestScope.message}!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
@@ -39,9 +46,9 @@
             <td>${student.surname}</td>
             <td>${student.block}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=block&student_id=${student.id}&records_per_page=${requestScope.records_per_page}">Block</a>
+                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=block&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}">Block</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=unblock&student_id=${student.id}&records_per_page=${requestScope.records_per_page}">Unblock</a>
+                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=unblock&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}">Unblock</a>
             </td>
             </tbody>
         </c:forEach>
@@ -132,9 +139,7 @@
             </nav>
         </div>
     </div>
-
 </div>
 <jsp:include page="/parts/footer.jsp"/>
-
 </body>
 </html>

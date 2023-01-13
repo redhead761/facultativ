@@ -42,33 +42,33 @@
         </div>
     </c:if>
 
-    <c:if test="${sessionScope.message  == null}">
-        <form action="${pageContext.request.contextPath}/controller" method="post">
-            <input type="hidden" name="action" value="update_category"/>
-            <input type="hidden" name="category_id" value="${requestScope.category.id}"/>
+    <form action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="action" value="update_category"/>
+        <input type="hidden" name="category_id" value="${sessionScope.category.id}"/>
 
-            <div class="form-floating mt-4 mb-3 col-lg-4 ">
-                <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
-                       value="${requestScope.category.title}"
-                       pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,100}"
-                       title="Title must contains 1 to 100 characters"
-                       required>
-                <label for="floatingInputTitle">Title</label>
-            </div>
+        <div class="form-floating mt-4 mb-3 col-lg-4 ">
+            <input class="form-control" name="title" id="floatingInputTitle" placeholder="title"
+                   value="${sessionScope.category.title}"
+                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,100}"
+                   title="Title must contains 1 to 100 characters"
+                   required>
+            <label for="floatingInputTitle">Title</label>
+        </div>
 
-            <div class="form-floating mt-4 mb-3 col-lg-4 ">
-                <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
-                       value="${requestScope.category.description}"
-                       pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''`\'\'#№?!]{0,500}"
-                       title="Description must contains 0 to 500 characters">
-                <label for="floatingInputDescription">Description</label>
-            </div>
+        <div class="form-floating mt-4 mb-3 col-lg-4 ">
+            <input class="form-control" name="description" id="floatingInputDescription" placeholder="description"
+                   value="${sessionScope.category.description}"
+                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''`\'\'#№?!]{0,500}"
+                   title="Description must contains 0 to 500 characters">
+            <label for="floatingInputDescription">Description</label>
+        </div>
 
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </c:if>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
+${sessionScope.remove("message")}
+${sessionScope.remove("category")}
 <jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

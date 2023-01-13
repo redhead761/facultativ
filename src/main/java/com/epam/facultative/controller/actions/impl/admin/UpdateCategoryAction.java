@@ -12,7 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.*;
 
 public class UpdateCategoryAction implements Action {
     private final AdminService adminService;
@@ -23,16 +24,15 @@ public class UpdateCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+        int categoryId = Integer.parseInt(req.getParameter(CATEGORY_ID));
         CategoryDTO category = getCategoryFromParameter(req);
         try {
             adminService.updateCategory(category);
-            req.getSession().setAttribute("message", "Changes saved");
+            req.getSession().setAttribute(MESSAGE, CHANGES_SAVED);
         } catch (ValidateException e) {
-            req.setAttribute("category", category);
-            req.getSession().setAttribute("message", e.getMessage());
-            req.getRequestDispatcher(EDIT_CATEGORY_PAGE).forward(req, resp);
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
-        return EDIT_CATEGORY_PAGE;
+        return CONTROLLER + SHOW_CATEGORY_FORM_ACTION + "&" + CATEGORY_ID + "=" + categoryId;
     }
 
     private CategoryDTO getCategoryFromParameter(HttpServletRequest req) {

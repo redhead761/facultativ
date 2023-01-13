@@ -53,7 +53,7 @@ public class Converter {
                 .description(course.getDescription())
                 .category(convertCategoryToDTO(course.getCategory()))
                 .status(course.getStatus())
-                .teacher(convertTeacherToDTO(course.getTeacher()))
+                .teacher(course.getTeacher() != null ? convertTeacherToDTO(course.getTeacher()) : null)
                 .build();
     }
 

@@ -7,6 +7,7 @@ import com.epam.facultative.service.GeneralService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static com.epam.facultative.controller.AttributeConstants.CATEGORIES;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class ShowAddCourseAction implements Action {
@@ -18,7 +19,7 @@ public class ShowAddCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        req.setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute(CATEGORIES, generalService.getAllCategories());
         return ADD_COURSE_PAGE;
     }
 }

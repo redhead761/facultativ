@@ -13,10 +13,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.LocalDate;
 
-import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.*;
+import static com.epam.facultative.controller.AttributeConstants.*;
 
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;
+
 
     public UpdateCourseAction(AppContext appContext) {
         adminService = appContext.getAdminService();
@@ -24,20 +26,20 @@ public class UpdateCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
         try {
             CourseDTO course = getCourseFromParameter(req);
-            adminService.updateCourse(course);
-            if (req.getParameter("teacher") != null) {
-                int courseId = Integer.parseInt(req.getParameter("course_id"));
-                int teacherId = Integer.parseInt(req.getParameter("teacher"));
+            if (req.getParameter(TEACHER_ID) != null && !req.getParameter(TEACHER_ID).isBlank()) {
+                int teacherId = Integer.parseInt(req.getParameter(TEACHER_ID));
                 adminService.assigned(courseId, teacherId);
+                course.setTeacher(adminService.getTeacher(teacherId));
             }
-            req.getSession().setAttribute("message", "Changes saved");
+            adminService.updateCourse(course);
+            req.getSession().setAttribute(MESSAGE, CHANGES_SAVED);
         } catch (ValidateException e) {
-            req.getSession().setAttribute("message", e.getMessage());
-            return EDIT_COURSE_PAGE;
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
-        return EDIT_COURSE_PAGE;
+        return CONTROLLER + SHOW_EDIT_COURSE_ACTION + "&" + COURSE_ID + "=" + courseId;
     }
 
     private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException, ValidateException {

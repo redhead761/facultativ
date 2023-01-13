@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language"
+       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
+       scope="session"/>
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 <jsp:useBean id="now" class="java.util.Date"/>
@@ -43,115 +46,135 @@
     </div>
 </c:if>
 
-<c:if test="${requestScope.course_id != null}">
-    <section class="vh-60">
-        <div class="container py-5 h-100">
-            <div class="row justify-content-center align-items-center h-100">
-                <div class="col-12 col-lg-9 col-xl-7">
-                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                        <div class="card-body p-4 p-md-5">
-                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Course Form</h3>
-                            <form action="${pageContext.request.contextPath}/controller" method="post">
-                                <input type="hidden" name="action" value="update_course"/>
-                                <input type="hidden" name="course_id" value="${requestScope.course_id}"/>
+<section class="vh-60">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Course Form</h3>
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="update_course"/>
+                            <input type="hidden" name="course_id" value="${sessionScope.course.id}"/>
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
 
-                                        <div class="form-floating">
-                                            <input type="text" id="title" class="form-control form-control-lg"
-                                                   value="${requestScope.course.title}"
-                                                   pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
-                                                   title="Title must contain 1 to 3 characters" required
-                                                   name="title"/>
-                                            <label class="form-label" for="title">Title</label>
-                                        </div>
-
+                                    <div class="form-floating">
+                                        <input type="text" id="title" class="form-control form-control-lg"
+                                               value="${sessionScope.course.title}"
+                                               pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
+                                               title="Title must contain 1 to 3 characters" required
+                                               name="title"/>
+                                        <label class="form-label" for="title">Title</label>
                                     </div>
 
-                                    <div class="col-md-6 mb-4">
-
-                                        <div class="form-floating">
-                                            <input type="number" id="duration" class="form-control form-control-lg"
-                                                   name="duration"
-                                                   value="${requestScope.course.duration}"
-                                                   min="1" max="999"
-                                                   title="Duration must contain a value from 1 to 999" required/>
-                                            <label class="form-label" for="duration">Duration</label>
-                                        </div>
-
-                                    </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                <div class="col-md-6 mb-4">
 
-                                        <div class="form-floating ">
-                                            <input type="date" class="form-control form-control-lg" id="start_date"
-                                                   name="start_date" value="${requestScope.course.startDate}"/>
-                                            <label for="start_date" class="form-label">Start date</label>
-                                        </div>
-
+                                    <div class="form-floating">
+                                        <input type="number" id="duration" class="form-control form-control-lg"
+                                               name="duration"
+                                               value="${sessionScope.course.duration}"
+                                               min="1" max="999"
+                                               title="Duration must contain a value from 1 to 999" required/>
+                                        <label class="form-label" for="duration">Duration</label>
                                     </div>
 
-                                    <div class="col-md-6 mb-4">
+                                </div>
+                            </div>
 
-                                        <h6 class="mb-2 pb-1">Status: </h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
 
-                                        <c:forEach var="status" items="${sessionScope.statuses}">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="status"
-                                                       id="status"
-                                                       value="${status.valueOf(status)}" checked/>
-                                                <label class="form-check-label"
-                                                       for="status">${status.valueOf(status)}</label>
-                                            </div>
+                                    <div class="form-floating ">
+                                        <input type="date" class="form-control form-control-lg" id="start_date"
+                                               name="start_date" value="${sessionScope.course.startDate}"/>
+                                        <label for="start_date" class="form-label">Start date</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+
+                                    <h6 class="mb-2 pb-1">Status: </h6>
+
+                                    <c:forEach var="status" items="${sessionScope.statuses}">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status"
+                                                   id="status"
+                                                   value="${status.valueOf(status)}" checked/>
+                                            <label class="form-check-label"
+                                                   for="status">${status.valueOf(status)}</label>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <select name="category" class="form-select form-select-lg mb-3" required>
+                                        <option disabled selected value="">Select category</option>
+                                        <c:if test="${sessionScope.course.category != null}">
+                                            <option selected
+                                                    value="${sessionScope.course.category.id}">${sessionScope.course.category.title}</option>
+                                        </c:if>
+                                        <c:forEach var="category" items="${requestScope.categories}">
+                                            <option value="${category.id}">${category.title}</option>
                                         </c:forEach>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <select name="teacher_id" class="form-select form-select-lg mb-3">
+                                        <option disabled selected value="">Select teacher</option>
+                                        <c:if test="${sessionScope.course.teacher != null}">
+                                            <option selected
+                                                    value="${sessionScope.course.teacher.id}">${sessionScope.course.teacher.name} ${sessionScope.course.teacher.surname}
+                                            </option>
+                                        </c:if>
+                                        <c:forEach var="teacher" items="${requestScope.teachers}">
+                                            <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="form-floating">
+                                        <input type="text" id="description" class="form-control form-control-lg"
+                                               name="description"
+                                               value="${requestScope.course.description}"
+                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
+                                               title="Description must contain 0 to 200 characters"/>
+                                        <label class="form-label" for="description">Description</label>
                                     </div>
+
                                 </div>
+                            </div>
 
-                                <div class="row">
-                                    <div class="col-12">
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                            </div>
 
-                                        <select name="category" class="form-select form-select-lg mb-3" required>
-                                            <option disabled selected value="">Select category</option>
-                                            <c:forEach var="category" items="${requestScope.categories}">
-                                                <option value="${category.id}">${category.title}</option>
-                                            </c:forEach>
-                                        </select>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-12">
-
-                                        <div class="form-floating">
-                                            <input type="text" id="description" class="form-control form-control-lg"
-                                                   name="description"
-                                                   value="${requestScope.course.description}"
-                                                   pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
-                                                   title="Description must contain 0 to 200 characters"/>
-                                            <label class="form-label" for="description">Description</label>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="mt-4 pt-2">
-                                    <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
-                                </div>
-
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <jsp:include page="/parts/footer.jsp"/>
-    </section>
-</c:if>
-
-<jsp:include page="/parts/footer.jsp"/>
+    </div>
+    <jsp:include page="/parts/footer.jsp"/>
+</section>
+${sessionScope.remove("message")}
+${sessionScope.remove("course")}
 </body>
 </html>

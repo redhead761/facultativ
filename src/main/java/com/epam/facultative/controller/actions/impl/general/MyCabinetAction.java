@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.epam.facultative.controller.AttributeConstants.ROLE;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class MyCabinetAction implements Action {
@@ -16,7 +17,7 @@ public class MyCabinetAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String path = null;
-        Role role = (Role) req.getSession().getAttribute("role");
+        Role role = (Role) req.getSession().getAttribute(ROLE);
         switch (role) {
             case ADMIN -> path = ADMIN_PROFILE_PAGE;
             case TEACHER -> path = TEACHER_PROFILE_PAGE;

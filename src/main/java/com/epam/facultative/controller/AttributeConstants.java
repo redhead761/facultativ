@@ -23,4 +23,6 @@ public class AttributeConstants {
     public static String USER = "user";
     public static String STUDENTS = "students";
     public static String ON_COURSE = "You already on course";
+    public static String ROLE = "role";
+    public static String STUDENT = "student";
 }

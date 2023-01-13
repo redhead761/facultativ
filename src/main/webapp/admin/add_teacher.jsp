@@ -132,8 +132,8 @@
         </div>
     </div>
     <jsp:include page="/parts/footer.jsp"/>
-    ${sessionScope.remove("message")}
-    ${sessionScope.remove("teacher")}
 </section>
+${sessionScope.remove("message")}
+${sessionScope.remove("teacher")}
 </body>
 </html>

@@ -9,6 +9,7 @@ import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class RegisterAction implements Action {
@@ -20,20 +21,18 @@ public class RegisterAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String path;
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeat_password");
         StudentDTO student = getStudentForAttribute(req);
         try {
             checkConfirmPassword(password, repeatPassword);
             studentService.addStudent(student);
-            path = REGISTER_PAGE;
-            req.getSession().setAttribute("message", "Successful");
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
-            path = REGISTER_PAGE;
-            req.getSession().setAttribute("message", e.getMessage());
+            req.getSession().setAttribute(STUDENT, student);
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
-        return path;
+        return REGISTER_PAGE;
     }
 
     private StudentDTO getStudentForAttribute(HttpServletRequest req) {
@@ -42,6 +41,7 @@ public class RegisterAction implements Action {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
+        int courseNumber = Integer.parseInt(req.getParameter("course_number"));
         return StudentDTO.builder()
                 .id(0)
                 .login(login)
@@ -49,6 +49,7 @@ public class RegisterAction implements Action {
                 .name(name)
                 .surname(surname)
                 .email(email)
+                .courseNumber(courseNumber)
                 .build();
     }
 

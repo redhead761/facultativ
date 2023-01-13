@@ -37,9 +37,6 @@ public class ActionNameConstants {
     //Student
     public static String ENROLL_ACTION = "enroll";
     public static String SHOW_STUDENT_COURSES_ACTION = "show_student_courses";
-    public static String SHOW_COMING_SOON_COURSES_ACTION = "show_coming_soon_courses";
-    public static String SHOW_PROGRESS_COURSES_ACTION = "show_progress_courses";
-    public static String SHOW_COMPLETED_COURSES_ACTION = "show_completed_courses";
     public static String SHOW_ALL_COURSES_ACTION = "show_all_courses";
     public static String SHOW_RESULT_ACTION = "show_result";
     //General

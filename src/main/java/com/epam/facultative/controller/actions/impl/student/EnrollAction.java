@@ -10,6 +10,7 @@ import com.epam.facultative.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class EnrollAction implements Action {
@@ -23,16 +24,15 @@ public class EnrollAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int courseId = Integer.parseInt(req.getParameter("course_id"));
-        StudentDTO student = (StudentDTO) req.getSession().getAttribute("user");
+        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
+        StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
         int id = student.getId();
         ActionUtils.setUpPaginationForAllCourses(req, generalService);
         try {
             studentService.enroll(courseId, id);
-            req.getSession().setAttribute("message", "Successful");
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ServiceException e) {
-            req.getSession().setAttribute("message", "You already on course");
-            return STUDENT_PAGE;
+            req.getSession().setAttribute(MESSAGE, ON_COURSE);
         }
         return STUDENT_PAGE;
     }

@@ -26,7 +26,7 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_completed_courses">Back
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=completed">Back
                     to
                     completed courses</a>
             </li>

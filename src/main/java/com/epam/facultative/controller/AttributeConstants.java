@@ -2,6 +2,7 @@ package com.epam.facultative.controller;
 
 public class AttributeConstants {
     public static String MESSAGE = "message";
+
     public static String SUCCESSFUL = "Successful";
     public static String COURSE = "course";
     public static String COURSES = "courses";
@@ -21,5 +22,5 @@ public class AttributeConstants {
     public static String RECORDS_PER_PAGE = "records_per_page";
     public static String USER = "user";
     public static String STUDENTS = "students";
-
+    public static String ON_COURSE = "You already on course";
 }

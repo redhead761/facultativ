@@ -53,9 +53,6 @@ public class ActionFactory {
 
         ACTION_MAP.put(ENROLL_ACTION, new EnrollAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_STUDENT_COURSES_ACTION, new ShowStudentCoursesAction(APP_CONTEXT));
-        ACTION_MAP.put(SHOW_COMING_SOON_COURSES_ACTION, new ShowComingSoonCoursesAction(APP_CONTEXT));
-        ACTION_MAP.put(SHOW_PROGRESS_COURSES_ACTION, new ShowInProgressCourses(APP_CONTEXT));
-        ACTION_MAP.put(SHOW_COMPLETED_COURSES_ACTION, new ShowCompletedCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_ALL_COURSES_ACTION, new ShowAllCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_RESULT_ACTION, new ShowResultAction(APP_CONTEXT));
     }

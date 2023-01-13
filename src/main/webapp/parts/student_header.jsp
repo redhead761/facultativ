@@ -25,22 +25,22 @@
     </li>
     <li class="nav-item">
         <a class="nav-link"
-           href="${pageContext.request.contextPath}/controller?action=show_student_courses"
+           href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=all"
            role="button">My courses</a>
     </li>
     <li class="nav-item">
         <a class="nav-link"
-           href="${pageContext.request.contextPath}/controller?action=show_coming_soon_courses"
+           href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=coming_soon"
            role="button">My courses coming soon</a>
     </li>
     <li class="nav-item">
         <a class="nav-link"
-           href="${pageContext.request.contextPath}/controller?action=show_progress_courses"
+           href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=in_progress"
            role="button">My courses in progress</a>
     </li>
     <li class="nav-item">
         <a class="nav-link"
-           href="${pageContext.request.contextPath}/controller?action=show_completed_courses"
+           href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=completed"
            role="button">My courses completed</a>
     </li>
 </ul>

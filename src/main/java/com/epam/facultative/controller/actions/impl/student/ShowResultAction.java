@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class ShowResultAction implements Action {
@@ -22,11 +23,11 @@ public class ShowResultAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        int courseId = Integer.parseInt(req.getParameter("course_id"));
-        StudentDTO student = (StudentDTO) req.getSession().getAttribute("user");
+        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
+        StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
         int studentId = student.getId();
         int grade = studentService.getGrade(courseId, studentId);
-        req.setAttribute("grade", grade);
+        req.setAttribute(GRADE, grade);
         return RESULT_PAGE;
     }
 }

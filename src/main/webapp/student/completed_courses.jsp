@@ -66,19 +66,19 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=show_completed_courses&records_per_page=2">2</a>
+                       href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&records_per_page=2">2</a>
                 </li>
 
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=show_completed_courses&records_per_page=5">5</a>
+                       href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&records_per_page=5">5</a>
                 </li>
 
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=show_completed_courses&records_per_page=10">10</a>
+                       href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&records_per_page=10">10</a>
                 </li>
 
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=show_completed_courses&records_per_page=20">20</a>
+                       href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&records_per_page=20">20</a>
                 </li>
             </ul>
         </div>
@@ -93,7 +93,7 @@
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">Previous</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">Previous</a>
                         </li>
                     </c:if>
 
@@ -109,7 +109,7 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+1}</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+1}</a>
                         </li>
                     </c:if>
 
@@ -121,7 +121,7 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 2}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage+2}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+2}</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&page=${requestScope.currentPage+2}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+2}</a>
                         </li>
                     </c:if>
 
@@ -133,7 +133,7 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_completed_courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">Next</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=complete&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">Next</a>
                         </li>
                     </c:if>
                 </ul>

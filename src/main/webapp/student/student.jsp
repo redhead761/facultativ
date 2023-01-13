@@ -24,6 +24,13 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/student_header.jsp"/>
 
+<c:if test="${sessionScope.message != null}">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>${sessionScope.message}!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
@@ -190,5 +197,6 @@
 
 </div>
 <jsp:include page="/parts/footer.jsp"/>
+${sessionScope.remove("message")}
 </body>
 </html>

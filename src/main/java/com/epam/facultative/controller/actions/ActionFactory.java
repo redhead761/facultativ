@@ -4,7 +4,6 @@ import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.controller.actions.impl.admin.*;
 import com.epam.facultative.controller.actions.impl.general.*;
 import com.epam.facultative.controller.actions.impl.student.*;
-import com.epam.facultative.controller.actions.impl.teacher.AllCoursesAction;
 import com.epam.facultative.controller.actions.impl.teacher.GradeAction;
 import com.epam.facultative.controller.actions.impl.teacher.ShowJournalAction;
 import com.epam.facultative.controller.actions.impl.teacher.ShowTeacherCoursesAction;
@@ -48,7 +47,6 @@ public class ActionFactory {
         ACTION_MAP.put(SHOW_TEACHER_COURSES_ACTION, new ShowTeacherCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_JOURNAL_ACTION, new ShowJournalAction(APP_CONTEXT));
         ACTION_MAP.put(GRADE_ACTION, new GradeAction(APP_CONTEXT));
-        ACTION_MAP.put(ALL_COURSE_ACTION, new AllCoursesAction(APP_CONTEXT));
 
         ACTION_MAP.put(LOG_OUT_ACTION, new LogOutAction());
         ACTION_MAP.put(REGISTER_ACTION, new RegisterAction(APP_CONTEXT));

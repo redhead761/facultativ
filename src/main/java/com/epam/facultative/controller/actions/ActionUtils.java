@@ -7,13 +7,12 @@ import com.epam.facultative.service.GeneralService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.StringJoiner;
+
+import static com.epam.facultative.controller.actions.ActionNameConstants.CONTROLLER;
 
 public class ActionUtils {
     private ActionUtils() {
-    }
-
-    public static void removeRedundantAttribute(HttpServletRequest req) {
-        req.getSession().removeAttribute("message");
     }
 
     public static int getCurrentPage(HttpServletRequest req) {
@@ -133,5 +132,13 @@ public class ActionUtils {
         req.setAttribute("categories", generalService.getAllCategories());
     }
 
+    public static String getGetAction(String action, String... parameters) {
+        String base = CONTROLLER + action;
+        StringJoiner stringJoiner = new StringJoiner("&", "&", "");
+        for (int i = 0; i < parameters.length; i += 2) {
+            stringJoiner.add(parameters[i] + "=" + parameters[i + 1]);
+        }
+        return base + (parameters.length > 0 ? stringJoiner : "");
+    }
 
 }

@@ -53,7 +53,6 @@ public class ActionAccessConstants {
         TEACHER_ACTIONS.add(SHOW_TEACHER_COURSES_ACTION);
         TEACHER_ACTIONS.add(SHOW_JOURNAL_ACTION);
         TEACHER_ACTIONS.add(GRADE_ACTION);
-        TEACHER_ACTIONS.add(ALL_COURSE_ACTION);
     }
 
     static {

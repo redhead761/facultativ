@@ -35,7 +35,12 @@
     </div>
 </div>
 
-${sessionScope.message}
+<c:if test="${sessionScope.message != null}">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>${sessionScope.message}!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
@@ -156,5 +161,6 @@ ${sessionScope.message}
     </div>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
+${sessionScope.remove("message")}
 </body>
 </html>

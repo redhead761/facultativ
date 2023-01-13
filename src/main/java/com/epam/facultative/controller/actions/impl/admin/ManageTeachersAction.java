@@ -19,7 +19,7 @@ public class ManageTeachersAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        ActionUtils.setUpPaginationForTeachers(req, adminService);
+        ActionUtils.setUpPaginationForAllTeachers(req, adminService);
         return MANAGE_TEACHERS_PAGE;
     }
 }

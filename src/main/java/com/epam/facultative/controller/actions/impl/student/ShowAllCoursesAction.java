@@ -22,15 +22,7 @@ public class ShowAllCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        String sortType = req.getParameter("sort_type");
-        String selectType = req.getParameter("select_type");
-        if (sortType != null && !sortType.isBlank()) {
-            ActionUtils.sort(req, generalService);
-        } else if (selectType != null && !selectType.isBlank()) {
-            ActionUtils.select(req, generalService);
-        } else {
-            ActionUtils.setUpPaginationForAllCourses(req, generalService);
-        }
+        ActionUtils.setAllCourses(req, generalService);
         return STUDENT_PAGE;
     }
 }

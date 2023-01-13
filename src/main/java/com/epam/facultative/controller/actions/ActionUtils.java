@@ -65,7 +65,7 @@ public class ActionUtils {
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
-    public static void setUpPaginationForTeachers(HttpServletRequest req, AdminService adminService) throws ServiceException {
+    public static void setUpPaginationForAllTeachers(HttpServletRequest req, AdminService adminService) throws ServiceException {
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
         req.setAttribute("teachers", adminService.getAllTeachersPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
@@ -73,7 +73,19 @@ public class ActionUtils {
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
-    public static void sort(HttpServletRequest req, GeneralService generalService) throws ServiceException {
+    public static void setAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
+        String sortType = req.getParameter("sort_type");
+        String selectType = req.getParameter("select_type");
+        if (sortType != null && !sortType.isBlank()) {
+            sort(req, generalService);
+        } else if (selectType != null && !selectType.isBlank()) {
+            select(req, generalService);
+        } else {
+            setUpPaginationForAllCourses(req, generalService);
+        }
+    }
+
+    private static void sort(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         String sortType = req.getParameter("sort_type");
         req.setAttribute("sort_type", sortType);
         int currentPage = getCurrentPage(req);
@@ -96,7 +108,7 @@ public class ActionUtils {
         req.setAttribute("categories", generalService.getAllCategories());
     }
 
-    public static void select(HttpServletRequest req, GeneralService generalService) throws ServiceException {
+    private static void select(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         String selectType = req.getParameter("select_type");
         req.setAttribute("select_type", selectType);
         int currentPage = getCurrentPage(req);
@@ -120,4 +132,6 @@ public class ActionUtils {
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());
     }
+
+
 }

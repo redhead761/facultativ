@@ -22,7 +22,7 @@ public class TeachersAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        ActionUtils.setUpPaginationForTeachers(req, adminService);
+        ActionUtils.setUpPaginationForAllTeachers(req, adminService);
         return TEACHERS_PAGE;
     }
 }

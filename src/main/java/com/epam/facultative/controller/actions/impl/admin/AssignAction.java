@@ -30,7 +30,7 @@ public class AssignAction implements Action {
         }
         req.getSession().setAttribute("message", "Successful");
         req.setAttribute("course_id", courseId);
-        ActionUtils.setUpPaginationForTeachers(req, adminService);
+        ActionUtils.setUpPaginationForAllTeachers(req, adminService);
         return ASSIGN_PAGE;
     }
 }

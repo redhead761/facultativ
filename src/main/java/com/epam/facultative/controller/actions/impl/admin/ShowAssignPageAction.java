@@ -22,7 +22,7 @@ public class ShowAssignPageAction implements Action {
         ActionUtils.removeRedundantAttribute(req);
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         req.setAttribute("course_id", courseId);
-        ActionUtils.setUpPaginationForTeachers(req, adminService);
+        ActionUtils.setUpPaginationForAllTeachers(req, adminService);
         return ASSIGN_PAGE;
     }
 }

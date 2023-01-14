@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -34,39 +32,39 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp">Home</a>
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="home"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=courses">Courses</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=courses"><fmt:message key="courses"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=teachers">Teachers</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=teachers"><fmt:message key="teachers"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/about_us.jsp">About us</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/about_us.jsp"><fmt:message key="about.us"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/contacts.jsp">Contacts</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/contacts.jsp"><fmt:message key="contacts"/></a>
                 </li>
             </ul>
 
             <ul class="navbar-nav justify-content-end">
                 <c:if test="${sessionScope.user == null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/register.jsp"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/register.jsp"><span class="glyphicon glyphicon-user"></span><fmt:message key="sign.up"/></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/auth.jsp"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/auth.jsp"><span class="glyphicon glyphicon-log-in"></span><fmt:message key="log.in"/></a>
                     </li>
                 </c:if>
                 <c:if test="${sessionScope.user != null}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=my_cabinet"><span
-                                class="glyphicon glyphicon-log-in"></span>My cabinet</a>
+                                class="glyphicon glyphicon-log-in"></span><fmt:message key="my.cabinet"/></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=log_out"><span
-                                class="glyphicon glyphicon-log-in"></span>Logout</a>
+                                class="glyphicon glyphicon-log-in"></span><fmt:message key="logout"/></a>
                     </li>
                 </c:if>
             </ul>

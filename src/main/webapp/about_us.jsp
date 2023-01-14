@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -22,14 +20,11 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-
-<div align="center">
-    <jsp:include page="/parts/header.jsp"/>
-    <h2>About us</h2>
+<jsp:include page="/parts/header.jsp"/>
+<div class="text-center">
+    <h2><fmt:message key="about.us"/></h2>
     <hr>
-    Facultative is all about helping students realise their study dreams. We’re here for everything from initial
-    research through to application. Our tailored advice, guidance and unrivalled search tools mean students get the
-    best chance of finding their perfect course.
+    <fmt:message key="about.us.message"/>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

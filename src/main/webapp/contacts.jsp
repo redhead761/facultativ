@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -22,16 +20,11 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-
-<div align="center">
-    <jsp:include page="/parts/header.jsp"/>
-    <h2>Contacts</h2>
+<jsp:include page="/parts/header.jsp"/>
+<div class="text-center">
+    <h2><fmt:message key="contacts"/></h2>
     <hr>
-    We are always looking for ways to improve. If you have any comments (good or bad) please let us know
-    at: facultative@facultative.com. We can also answer any questions or queries you have. We'll do our best to respond as
-    soon as quickly as possible.
-
-    Phone: +38 (050) 123-45-67
+    <fmt:message key="contacts.message"/>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

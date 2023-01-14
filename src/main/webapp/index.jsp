@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%--<c:set var="language"--%>
-<%--       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
-<%--       scope="session"/>--%>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -27,11 +25,13 @@
     <div class="mask">
         <div class="d-flex justify-content-center align-items-center h-50">
             <div class="text-black-50">
-                <h1 class="mb-3">Welcome to "Facultative"</h1>
-                <h5 class="mb-4">Find your perfect course</h5>
-                <a class="btn btn-outline-secondary btn-lg m-2" href="auth.jsp" role="button">Log in</a>
-                <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button">Sign up</a
-                >
+                <h1 class="mb-3"><fmt:message key="welcome.first"/></h1>
+                <h5 class="mb-4"><fmt:message key="welcome.second"/></h5>
+                <a class="btn btn-outline-secondary btn-lg m-2" href="auth.jsp" role="button"><fmt:message
+                        key="log.in"/></a>
+                    <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button"><fmt:message
+                            key="sign.up"/></a
+                    >
             </div>
         </div>
     </div>

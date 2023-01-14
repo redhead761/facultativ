@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -24,7 +22,7 @@
 <jsp:include page="/parts/header.jsp"/>
 
 <div class="text-center">
-    <h2>All courses in "Facultative"</h2>
+    <h2><fmt:message key="all.course"/></h2>
     <hr>
 </div>
 <div class="col-lg-10 mx-auto p-5">
@@ -33,27 +31,27 @@
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                <fmt:message key="admin.sort"/>
+                <fmt:message key="sort"/>
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=alphabet">Alphabetical</a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=alphabet"><fmt:message key="alphabetical"/></a>
                 </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=reverse alphabet">Reverse
-                    alphabetical</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=reverse alphabet">
+                    <fmt:message key="reverse.alphabetical"/></a></li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=duration">Duration</a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=duration"><fmt:message key="duration"/></a>
                 </li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=amount students">Amount
-                    students</a></li>
+                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=amount students">
+                    <fmt:message key="amount.students"/></a></li>
             </ul>
 
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                <fmt:message key="admin.select.teacher"/>
+                <fmt:message key="select.by.teacher"/>
             </button>
             <ul class="dropdown-menu">
                 <c:forEach var="teacher" items="${requestScope.teachers}">
@@ -66,7 +64,7 @@
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                <fmt:message key="admin.select.category"/>
+                <fmt:message key="select.by.category"/>
             </button>
             <ul class="dropdown-menu">
                 <c:forEach var="category" items="${requestScope.categories}">
@@ -75,26 +73,24 @@
                     </li>
                 </c:forEach>
             </ul>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <fmt:message key="admin.table.course.name"/>
         </caption>
         <thead>
-        <th scope="col"><fmt:message key="admin.table.course.title"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.duration"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.start.date"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.amount.student"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.category"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.status"/></th>
-        <th scope="col"><fmt:message key="admin.table.course.teacher"/></th>
+        <th scope="col"><fmt:message key="title"/></th>
+        <th scope="col"><fmt:message key="duration"/></th>
+        <th scope="col"><fmt:message key="start.date"/></th>
+        <th scope="col"><fmt:message key="amount.students"/></th>
+        <th scope="col"><fmt:message key="category"/></th>
+        <th scope="col"><fmt:message key="status"/></th>
+        <th scope="col"><fmt:message key="teacher"/></th>
         </thead>
         <c:forEach var="course" items="${requestScope.courses}">
             <tbody>
             <td>${course.title}</td>
-            <td><c:out value="${course.duration}"/></td>
-            <td><c:out value="${course.startDate}"/></td>
-            <td><c:out value="${course.amountStudents}"/></td>
-            <td><c:out value="${course.getCategory().title}"/></td>
-            <td><c:out value="${course.getStatus()}"/></td>
+            <td>${course.duration}</td>
+            <td>${course.startDate}</td>
+            <td>${course.amountStudents}</td>
+            <td>${course.getCategory().title}</td>
+            <td>${course.getStatus()}</td>
             <td>
                 <c:if test="${course.getTeacher().getName() != null}">
                     <c:out value="${course.getTeacher().getName()} ${course.getTeacher().getSurname()}"/>
@@ -136,13 +132,14 @@
                 <ul class="pagination">
                     <c:if test="${requestScope.currentPage == 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
+                            <span class="page-link"><fmt:message key="previous"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">Previous</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">
+                            <fmt:message key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -176,13 +173,14 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Next</span>
+                            <span class="page-link"><fmt:message key="next"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">Next</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}"><fmt:message
+                                key="next"/></a>
                         </li>
                     </c:if>
                 </ul>
@@ -190,8 +188,6 @@
         </div>
     </div>
 </div>
-
-
 <jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

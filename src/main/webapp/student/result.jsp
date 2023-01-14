@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<fmt:setLocale value="${sessionScope.language}" scope="session"/>
+<fmt:setBundle basename="resources"/>
 
 <html>
 <head>
@@ -26,15 +29,13 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=completed">Back
-                    to
-                    completed courses</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=completed"><fmt:message key="back.completed"/></a>
             </li>
         </ul>
     </div>
 </div>
 
-Grade: ${requestScope.grade}
+<fmt:message key="grade"/>: ${requestScope.grade}<br>
 Other field or actions
 
 <jsp:include page="/parts/footer.jsp"/>

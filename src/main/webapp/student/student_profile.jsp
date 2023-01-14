@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
-
 
 <html>
 <head>
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Login</p>
+                                <p class="mb-0"><fmt:message key="login"/></p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">${sessionScope.user.login}</p>
@@ -52,7 +52,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Full Name</p>
+                                <p class="mb-0"><fmt:message key="full.name"/></p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">${sessionScope.user.name} ${sessionScope.user.surname}</p>
@@ -61,7 +61,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
+                                <p class="mb-0"><fmt:message key="email"/></p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">${sessionScope.user.email}</p>
@@ -70,7 +70,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Is block</p>
+                                <p class="mb-0"><fmt:message key="is.block"/></p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">${sessionScope.user.block}</p>
@@ -79,7 +79,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="mb-0">Course number</p>
+                                <p class="mb-0"><fmt:message key="course.number"/></p>
                             </div>
                             <div class="col-sm-9">
                                 <p class="text-muted mb-0">${sessionScope.user.courseNumber}</p>

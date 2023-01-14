@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 
@@ -30,8 +31,8 @@ public class AuthAction implements Action {
         String password = req.getParameter("password");
         try {
             UserDTO user = generalService.authorization(login, password);
-            req.getSession().setAttribute("user", user);
-            req.getSession().setAttribute("role", user.getRole());
+            req.getSession().setAttribute(USER, user);
+            req.getSession().setAttribute(ROLE, user.getRole());
             req.getSession().setAttribute("statuses", Status.values());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PROFILE_PAGE;
@@ -40,7 +41,7 @@ public class AuthAction implements Action {
             }
         } catch (ValidateException e) {
             req.getSession().setAttribute("login", login);
-            req.getSession().setAttribute("message", "TEST MESSAGE");
+            req.getSession().setAttribute(MESSAGE, e.getMessage());
             return AUTH_PAGE;
         }
         return path;

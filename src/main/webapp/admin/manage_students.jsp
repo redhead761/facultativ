@@ -31,13 +31,10 @@
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
-        <caption>
-            <fmt:message key="admin.table.student.name"/>
-        </caption>
         <thead>
         <th scope="col"><fmt:message key="name"/></th>
         <th scope="col"><fmt:message key="surname"/></th>
-        <th scope="col"><fmt:message key="admin.table.student.status"/></th>
+        <th scope="col"><fmt:message key="status"/></th>
         <th scope="col"><fmt:message key="action"/></th>
         </thead>
         <c:forEach var="student" items="${requestScope.students}">
@@ -46,16 +43,16 @@
             <td>${student.surname}</td>
             <td>${student.block}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=block&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}">Block</a>
+                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=block&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}"><fmt:message key="block"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=unblock&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}">Unblock</a>
+                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=unblock&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}"><fmt:message key="unblock"/></a>
             </td>
             </tbody>
         </c:forEach>
     </table>
     <div class="row  justify-content-md-end">
         <div class="col col-md-auto">
-            <a>Rows per page:</a>
+            <a><fmt:message key="rows.per.page"/>:</a>
         </div>
         <div class="col col-md-auto">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="records_per_page"
@@ -86,13 +83,13 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${requestScope.currentPage == 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
+                            <span class="page-link"><fmt:message key="previous"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">Previous</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -126,13 +123,13 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Next</span>
+                            <span class="page-link"><fmt:message key="next"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">Next</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="next"/></a>
                         </li>
                     </c:if>
                 </ul>

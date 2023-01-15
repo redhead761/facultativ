@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.language}" scope="session"/>
+<fmt:setBundle basename="resources"/>
 
 <html>
 <head>
@@ -25,8 +29,7 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses">Back to
-                    courses</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message key="back.courses"/></a>
             </li>
         </ul>
     </div>
@@ -41,14 +44,11 @@
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
-        <caption>
-            All teachers in facultative
-        </caption>
         <thead>
-        <th scope="col">Name</th>
-        <th scope="col">Surname</th>
-        <th scope="col">Email</th>
-        <th scope="col">Action</th>
+        <th scope="col"><fmt:message key="name"/></th>
+        <th scope="col"><fmt:message key="surname"/></th>
+        <th scope="col"><fmt:message key="email"/></th>
+        <th scope="col"><fmt:message key="action"/></th>
         </thead>
         <c:forEach var="teacher" items="${requestScope.teachers}">
             <tbody>
@@ -56,7 +56,7 @@
             <td>${teacher.surname}</td>
             <td>${teacher.email}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=${teacher.id}&course_id=${requestScope.course_id}">Assigned</a>
+                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=${teacher.id}&course_id=${requestScope.course_id}"><fmt:message key="assign"/></a>
             </td>
             </tbody>
         </c:forEach>
@@ -65,13 +65,13 @@
         <ul class="pagination justify-content-center">
             <c:if test="${requestScope.currentPage == 1}">
                 <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
+                    <span class="page-link"><fmt:message key="previous"/></span>
                 </li>
             </c:if>
 
             <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}&course_id=${requestScope.course_id}">Previous</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}&course_id=${requestScope.course_id}"><fmt:message key="previous"/></a>
                 </li>
             </c:if>
 
@@ -105,13 +105,13 @@
 
             <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
                 <li class="page-item disabled">
-                    <span class="page-link">Next</span>
+                    <span class="page-link"><fmt:message key="next"/></span>
                 </li>
             </c:if>
 
             <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}">Next</a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}"><fmt:message key="next"/></a>
                 </li>
             </c:if>
         </ul>

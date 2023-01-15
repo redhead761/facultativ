@@ -1,11 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
+
 <jsp:useBean id="now" class="java.util.Date"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowFormatted"/>
 
@@ -32,8 +31,9 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses">Back to
-                    courses</a>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message
+                        key="back.courses"/></a>
             </li>
         </ul>
     </div>
@@ -52,7 +52,7 @@
             <div class="col-12 col-lg-9 col-xl-7">
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Course Form</h3>
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5"><fmt:message key="edit.course.form"/></h3>
                         <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="action" value="update_course"/>
                             <input type="hidden" name="course_id" value="${sessionScope.course.id}"/>
@@ -66,7 +66,7 @@
                                                pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
                                                title="Title must contain 1 to 3 characters" required
                                                name="title"/>
-                                        <label class="form-label" for="title">Title</label>
+                                        <label class="form-label" for="title"><fmt:message key="title"/></label>
                                     </div>
 
                                 </div>
@@ -79,7 +79,7 @@
                                                value="${sessionScope.course.duration}"
                                                min="1" max="999"
                                                title="Duration must contain a value from 1 to 999" required/>
-                                        <label class="form-label" for="duration">Duration</label>
+                                        <label class="form-label" for="duration"><fmt:message key="duration"/></label>
                                     </div>
 
                                 </div>
@@ -91,14 +91,15 @@
                                     <div class="form-floating ">
                                         <input type="date" class="form-control form-control-lg" id="start_date"
                                                name="start_date" value="${sessionScope.course.startDate}"/>
-                                        <label for="start_date" class="form-label">Start date</label>
+                                        <label for="start_date" class="form-label"><fmt:message
+                                                key="start.date"/></label>
                                     </div>
 
                                 </div>
 
                                 <div class="col-md-6 mb-4">
 
-                                    <h6 class="mb-2 pb-1">Status: </h6>
+                                    <h6 class="mb-2 pb-1"><fmt:message key="status"/>:</h6>
 
                                     <c:forEach var="status" items="${sessionScope.statuses}">
                                         <div class="form-check form-check-inline">
@@ -116,7 +117,7 @@
                                 <div class="col-12">
 
                                     <select name="category" class="form-select form-select-lg mb-3" required>
-                                        <option disabled selected value="">Select category</option>
+                                        <option disabled selected value=""><fmt:message key="select.category"/></option>
                                         <c:if test="${sessionScope.course.category != null}">
                                             <option selected
                                                     value="${sessionScope.course.category.id}">${sessionScope.course.category.title}</option>
@@ -133,7 +134,7 @@
                                 <div class="col-12">
 
                                     <select name="teacher_id" class="form-select form-select-lg mb-3">
-                                        <option disabled selected value="">Select teacher</option>
+                                        <option disabled selected value=""><fmt:message key="select.teacher"/></option>
                                         <c:if test="${sessionScope.course.teacher != null}">
                                             <option selected
                                                     value="${sessionScope.course.teacher.id}">${sessionScope.course.teacher.name} ${sessionScope.course.teacher.surname}
@@ -156,14 +157,15 @@
                                                value="${requestScope.course.description}"
                                                pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
                                                title="Description must contain 0 to 200 characters"/>
-                                        <label class="form-label" for="description">Description</label>
+                                        <label class="form-label" for="description"><fmt:message
+                                                key="description"/></label>
                                     </div>
 
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-2">
-                                <input class="btn btn-primary btn-lg" type="submit" value="Submit"/>
+                                <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
                             </div>
 
                         </form>

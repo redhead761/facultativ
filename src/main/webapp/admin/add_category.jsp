@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.language}" scope="session"/>
+<fmt:setBundle basename="resources"/>
 
 <html>
 <head>
@@ -24,16 +28,14 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_categories">Back
-                    to
-                    categories</a>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/controller?action=manage_categories"><fmt:message
+                        key="back.categories"/></a>
             </li>
         </ul>
     </div>
 </div>
 <div align="center">
-
-    <h2>Please fill in the fields</h2>
 
     <c:if test="${sessionScope.message != null}">
         <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
@@ -42,6 +44,7 @@
         </div>
     </c:if>
 
+    <h2><fmt:message key="add.category.form"/></h2>
 
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="action" value="add_category"/>
@@ -52,7 +55,7 @@
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,100}"
                    title="Title must contains 1 to 100 characters"
                    required>
-            <label for="floatingInputTitle">Title</label>
+            <label for="floatingInputTitle"><fmt:message key="title"/></label>
         </div>
 
         <div class="form-floating mt-4 mb-3 col-lg-4 ">
@@ -60,10 +63,10 @@
                    value="${sessionScope.category.description}"
                    pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''`\'\'#№?!]{0,500}"
                    title="Description must contains 0 to 500 characters">
-            <label for="floatingInputDescription">Description</label>
+            <label for="floatingInputDescription"><fmt:message key="description"/></label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
     </form>
 </div>
 <jsp:include page="/parts/footer.jsp"/>

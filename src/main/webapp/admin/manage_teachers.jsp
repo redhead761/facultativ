@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -28,8 +26,7 @@
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/add_teacher.jsp" role="button"><fmt:message key="admin.add.teacher"/></a>
-            <fmt:message key="admin.table.teacher.name"/>
+            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/add_teacher.jsp" role="button"><fmt:message key="add.teacher"/></a>
         </caption>
         <thead>
         <th scope="col"><fmt:message key="name"/></th>
@@ -46,7 +43,7 @@
     </table>
     <div class="row  justify-content-md-end">
         <div class="col col-md-auto">
-            <a>Rows per page:</a>
+            <a><fmt:message key="rows.per.page"/>:</a>
         </div>
         <div class="col col-md-auto">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="records_per_page"
@@ -77,13 +74,13 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${requestScope.currentPage == 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
+                            <span class="page-link"><fmt:message key="previous"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_teachers&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">Previous</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_teachers&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -117,13 +114,13 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Next</span>
+                            <span class="page-link"><fmt:message key="next"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_teachers&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">Next</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_teachers&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="next"/></a>
                         </li>
                     </c:if>
                 </ul>

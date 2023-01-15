@@ -1,9 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -29,12 +27,11 @@
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
             <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/add_category.jsp"
-               role="button"><fmt:message key="admin.add.category"/></a>
-            <fmt:message key="admin.table.category.name"/>
+               role="button"><fmt:message key="add.category"/></a>
         </caption>
         <thead>
-        <th scope="col"><fmt:message key="admin.table.category.title"/></th>
-        <th scope="col"><fmt:message key="admin.table.category.description"/></th>
+        <th scope="col"><fmt:message key="title"/></th>
+        <th scope="col"><fmt:message key="description"/></th>
         <th scope="col"><fmt:message key="action"/></th>
         </thead>
         <c:forEach var="category" items="${requestScope.categories}">
@@ -42,16 +39,16 @@
             <td>${category.title}</td>
             <td>${category.description}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_category_form&category_id=${category.id}">Edit</a>
+                <a href="${pageContext.request.contextPath}/controller?action=show_category_form&category_id=${category.id}"><fmt:message key="edit"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=delete_category&category_id=${category.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/controller?action=delete_category&category_id=${category.id}"><fmt:message key="delete"/></a>
             </td>
             </tbody>
         </c:forEach>
     </table>
     <div class="row  justify-content-md-end">
         <div class="col col-md-auto">
-            <a>Rows per page:</a>
+            <a><fmt:message key="rows.per.page"/>:</a>
         </div>
         <div class="col col-md-auto">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="records_per_page"
@@ -82,13 +79,13 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${requestScope.currentPage == 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
+                            <span class="page-link"><fmt:message key="previous"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">Previous</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -122,13 +119,13 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Next</span>
+                            <span class="page-link"><fmt:message key="next"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">Next</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="next"/></a>
                         </li>
                     </c:if>
                 </ul>

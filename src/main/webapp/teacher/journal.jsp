@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <fmt:setBundle basename="resources"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 
@@ -27,9 +28,7 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses">Back
-                    to
-                    my courses</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses"><fmt:message key="back.my.courses"/></a>
             </li>
         </ul>
     </div>
@@ -43,22 +42,19 @@
 </c:if>
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
-        <caption>
-            All students in course
-        </caption>
         <thead>
-        <th scope="col">Name</th>
-        <th scope="col">Surname</th>
-        <th scope="col">Status</th>
-        <th scope="col">Grade</th>
-        <th scope="col">Action</th>
+        <th scope="col"><fmt:message key="name"/></th>
+        <th scope="col"><fmt:message key="surname"/></th>
+        <th scope="col"><fmt:message key="status"/></th>
+        <th scope="col"><fmt:message key="grade"/></th>
+        <th scope="col"><fmt:message key="action"/></th>
         </thead>
         <c:forEach var="student" items="${requestScope.students}">
             <tbody>
             <td>${student.name}</td>
-            <td><c:out value="${student.surname}"/></td>
-            <td><c:out value="${student.isBlock()}"/></td>
-            <td><c:out value="${student.grade}"/></td>
+            <td>${student.surname}</td>
+            <td>${student.isBlock()}</td>
+            <td>${student.grade}</td>
             <td>
                 <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="action" value="grade"/>
@@ -66,8 +62,8 @@
                     <input type="hidden" name="page" value="${requestScope.currentPage}"/>
                     <input type="hidden" name="course_id" value="${requestScope.course_id}"/>
                     <input type="hidden" name="student_id" value="${student.id}"/>
-                    Grade: <input name="grade" type="number" min="0" max="20"/>
-                    <input type="submit" value="enter"/>
+                    <fmt:message key="grade"/>: <input name="grade" type="number" min="0" max="20"/>
+                    <input type="submit" value="<fmt:message key="submit"/>"/>
                 </form>
             </td>
             </tbody>
@@ -75,7 +71,7 @@
     </table>
     <div class="row  justify-content-md-end">
         <div class="col col-md-auto">
-            <a>Rows per page:</a>
+            <a><fmt:message key="rows.per.page"/>:</a>
         </div>
         <div class="col col-md-auto">
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="records_per_page"
@@ -106,13 +102,13 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${requestScope.currentPage == 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
+                            <span class="page-link"><fmt:message key="previous"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}">Previous</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}"><fmt:message key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -146,13 +142,13 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
                         <li class="page-item disabled">
-                            <span class="page-link">Next</span>
+                            <span class="page-link"><fmt:message key="next"/></span>
                         </li>
                     </c:if>
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}">Next</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}"><fmt:message key="next"/></a>
                         </li>
                     </c:if>
                 </ul>

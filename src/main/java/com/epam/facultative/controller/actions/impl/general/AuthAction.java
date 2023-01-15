@@ -20,9 +20,11 @@ import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class AuthAction implements Action {
     private final GeneralService generalService;
+    private final Recaptcha recaptcha;
 
     public AuthAction(AppContext appContext) {
         generalService = appContext.getGeneralService();
+        recaptcha = appContext.getRecaptcha();
     }
 
     @Override
@@ -33,7 +35,7 @@ public class AuthAction implements Action {
         try {
             String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
             System.out.println(gRecaptchaResponse);
-            boolean verify = Recaptcha.verify(gRecaptchaResponse);
+            boolean verify = recaptcha.verify(gRecaptchaResponse);
             if (!verify) {
                 throw new ValidateException("You missed the Captcha.");
             }

@@ -2,46 +2,38 @@ package com.epam.facultative.data_layer.connection;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.slf4j.*;
 
-import java.io.IOException;
-import java.io.InputStream;
+import javax.sql.DataSource;
 import java.util.Properties;
 
+import static com.epam.facultative.data_layer.connection.ConnectionConstants.*;
+
 public class MyDataSource {
-    private static final Logger logger = LoggerFactory.getLogger(MyDataSource.class);
-    private static final HikariConfig config = new HikariConfig();
-    private static final HikariDataSource ds;
 
-    static {
-        Properties properties = getProperties();
-        config.setJdbcUrl(properties.getProperty(ConnectionConstants.URL_PROPERTY));
-        config.setUsername(properties.getProperty(ConnectionConstants.USER_NAME_PROPERTY));
-        config.setPassword(properties.getProperty(ConnectionConstants.PASSWORD_PROPERTY));
-        config.setDriverClassName(properties.getProperty(ConnectionConstants.DRIVER_PROPERTY));
-
-        config.addDataSourceProperty("cachePrepStmts", properties.getProperty(ConnectionConstants.CACHE_PREPARED_STATEMENT));
-        config.addDataSourceProperty("prepStmtCacheSize", properties.getProperty(ConnectionConstants.CACHE_SIZE));
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", properties.getProperty(ConnectionConstants.CACHE_SQL_LIMIT));
-        ds = new HikariDataSource(config);
-    }
+    private static HikariDataSource ds;
 
     private MyDataSource() {
     }
 
-    public static javax.sql.DataSource getDataSource() {
+    public static DataSource getDataSource(Properties properties) {
+        if (ds == null) {
+            HikariConfig config = getHikariConfig(properties);
+            ds = new HikariDataSource(config);
+        }
         return ds;
     }
 
-    private static Properties getProperties() {
-        Properties properties = new Properties();
-        try (InputStream inputStream = MyDataSource.class
-                .getClassLoader()
-                .getResourceAsStream(ConnectionConstants.DB_SETTINGS_FILE)) {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-        return properties;
+    private static HikariConfig getHikariConfig(Properties properties) {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(properties.getProperty(URL_PROPERTY));
+        config.setUsername(properties.getProperty(USER_NAME_PROPERTY));
+        config.setPassword(properties.getProperty(PASSWORD_PROPERTY));
+        config.setDriverClassName(properties.getProperty(DRIVER_PROPERTY));
+
+        config.addDataSourceProperty("cachePrepStmts", properties.getProperty(CACHE_PREPARED_STATEMENT));
+        config.addDataSourceProperty("prepStmtCacheSize", properties.getProperty(CACHE_SIZE));
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", properties.getProperty(CACHE_SQL_LIMIT));
+        return config;
     }
+
 }

@@ -7,7 +7,6 @@ package com.epam.facultative.data_layer.connection;
  */
 
 class ConnectionConstants {
-    static String DB_SETTINGS_FILE = "db.properties";
     static String URL_PROPERTY = "connection.url";
     static String USER_NAME_PROPERTY = "user.name";
     static String PASSWORD_PROPERTY = "password";

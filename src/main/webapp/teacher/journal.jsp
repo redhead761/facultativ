@@ -28,7 +28,9 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_teacher_courses"><fmt:message key="back.my.courses"/></a>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/controller?action=show_teacher_courses"><fmt:message
+                        key="back.my.courses"/></a>
             </li>
         </ul>
     </div>
@@ -108,7 +110,8 @@
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}"><fmt:message key="previous"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}"><fmt:message
+                                key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -148,7 +151,8 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}"><fmt:message key="next"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=show_journal&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&course_id=${requestScope.course_id}"><fmt:message
+                                key="next"/></a>
                         </li>
                     </c:if>
                 </ul>

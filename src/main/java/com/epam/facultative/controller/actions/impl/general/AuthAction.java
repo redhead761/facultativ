@@ -7,6 +7,7 @@ import com.epam.facultative.data_layer.entities.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.utils.Recaptcha;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +31,12 @@ public class AuthAction implements Action {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         try {
+            String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
+            System.out.println(gRecaptchaResponse);
+            boolean verify = Recaptcha.verify(gRecaptchaResponse);
+            if (!verify) {
+                throw new ValidateException("You missed the Captcha.");
+            }
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute(USER, user);
             req.getSession().setAttribute(ROLE, user.getRole());

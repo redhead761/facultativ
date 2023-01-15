@@ -11,6 +11,7 @@
           crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <title> Facultative </title>
 </head>
 
@@ -55,6 +56,9 @@
                                required>
                         <label class="form-label" for="floatingPassword"><fmt:message key="password.login"/></label>
                     </div>
+
+                    <div class="g-recaptcha"
+                         data-sitekey="6Len5_sjAAAAAMmiw0qgGKANuS-CJT-1vQi1b83Q"></div>
 
                     <div class="d-flex justify-content-between align-items-center">
                         <button type="submit" class="btn btn-primary btn-lg"

@@ -1,5 +1,6 @@
 package com.epam.facultative.service.implementation;
 
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.data_layer.daos.*;
 import com.epam.facultative.data_layer.entities.*;
 import com.epam.facultative.dto.*;
@@ -7,9 +8,11 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
+import com.epam.facultative.utils.EmailSender;
 
 import java.util.*;
 
+import static com.epam.facultative.data_layer.entities.Status.IN_PROCESS;
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.HashPassword.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
@@ -45,8 +48,20 @@ public class AdminServiceImpl implements AdminService {
         Course course = convertDTOToCourse(courseDTO);
         try {
             courseDao.update(course);
+            if (course.getStatus().equals(IN_PROCESS)) {
+                courseLaunchNewsLetter(courseDTO);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    private void courseLaunchNewsLetter(CourseDTO courseDTO) throws DAOException {
+        int courseId = courseDTO.getId();
+        List<Student> students = studentDao.getStudentsByCourse(courseId, 0, Integer.MAX_VALUE);
+        EmailSender emailSender = AppContext.getAppContext().getEmailSender();
+        for (Student student : students) {
+            emailSender.send(student.getEmail(),"Start course", "Hello! Your course:" + courseDTO.getTitle() + " start" + courseDTO.getStartDate());
         }
     }
 

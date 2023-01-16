@@ -20,18 +20,15 @@ public class EmailSender {
         session = getSession(properties, user);
     }
 
-    public void send(String email) {
+    public void send(String email, String subject, String msg) {
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(user));
-            message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("This is my first email using JavaMailer");
-            String msg = "Thank you Dr.Kalin for helping";
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+            message.setSubject(subject);
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
-
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(mimeBodyPart);
@@ -39,8 +36,6 @@ public class EmailSender {
             message.setContent(multipart);
 
             Transport.send(message);
-
-
         } catch (MessagingException e) {
             logger.error(e.getMessage());
         }

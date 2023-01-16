@@ -3,6 +3,7 @@ package com.epam.facultative.controller;
 import com.epam.facultative.data_layer.daos.DaoFactory;
 import com.epam.facultative.data_layer.connection.MyDataSource;
 import com.epam.facultative.service.*;
+import com.epam.facultative.utils.EmailSender;
 import com.epam.facultative.utils.Recaptcha;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -23,10 +24,12 @@ public class AppContext {
     private final StudentService studentService;
     private final TeacherService teacherService;
     private final Recaptcha recaptcha;
+    private final EmailSender emailSender;
 
     private AppContext(String confPropertiesFile) {
         Properties properties = getProperties(confPropertiesFile);
         recaptcha = new Recaptcha(properties);
+        emailSender = new EmailSender(properties);
         DataSource dataSource = MyDataSource.getDataSource(properties);
         DaoFactory daoFactory = DaoFactory.getInstance(dataSource);
         ServiceFactory serviceFactory = ServiceFactory.getInstance(daoFactory);

@@ -11,7 +11,6 @@ public class ValidateExceptionMessageConstants {
     public static final String WRONG_PASSWORD_MESSAGE = "Wrong password";
     public static final String TITLE_NOT_UNIQUE_MESSAGE = "Title not unique";
     public static final String LOE_NOT_UNIQUE_MESSAGE = "Login or email not unique";
-
     public static final String COURSE_NOT_FOUND_MESSAGE = "Course not found";
     public static final String CATEGORY_NOT_FOUND_MESSAGE = "Category not found";
     public static final String TEACHER_NOT_FOUND_MESSAGE = "Teacher not found";

@@ -7,7 +7,7 @@ import com.epam.facultative.data_layer.entities.Status;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.utils.Recaptcha;
+import com.epam.facultative.utils.recaptcha.Recaptcha;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

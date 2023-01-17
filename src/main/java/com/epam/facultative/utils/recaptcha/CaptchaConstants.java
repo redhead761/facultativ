@@ -1,4 +1,4 @@
-package com.epam.facultative.utils;
+package com.epam.facultative.utils.recaptcha;
 
 public class CaptchaConstants {
     public static final String CAPTCHA_URL = "captcha.url";

@@ -1,4 +1,4 @@
-package com.epam.facultative.utils;
+package com.epam.facultative.utils.email_sender;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

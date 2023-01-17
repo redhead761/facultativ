@@ -1,4 +1,4 @@
-package com.epam.facultative.utils;
+package com.epam.facultative.utils.recaptcha;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.net.ssl.HttpsURLConnection;
 
-import static com.epam.facultative.utils.CaptchaConstants.*;
+import static com.epam.facultative.utils.recaptcha.CaptchaConstants.*;
 
 public class Recaptcha {
 

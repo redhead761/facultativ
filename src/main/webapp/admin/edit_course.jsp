@@ -164,6 +164,22 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="form-floating">
+                                        <input type="text" id="description" class="form-control form-control-lg"
+                                               name="description"
+                                               value="${requestScope.course.description}"
+                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
+                                               title="Description must contain 0 to 200 characters"/>
+                                        <label class="form-label" for="description"><fmt:message
+                                                key="description"/></label>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="mt-4 pt-2">
                                 <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
                             </div>

@@ -4,6 +4,7 @@ import com.epam.facultative.data_layer.entities.Status;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,6 +25,14 @@ public class CourseDTO implements Serializable {
     private CategoryDTO category;
     private Status status;
     private TeacherDTO teacher;
-    private int grade;
 
+    @Override
+    public String toString() {
+        return "Title = " + title + "<br>" +
+                "Duration = " + duration + "<br>" +
+                "Start date = " + startDate + "<br>" +
+                "Category " + category + "<br>" +
+                "Status = " + status + "<br>" +
+                "Description = " + description;
+    }
 }

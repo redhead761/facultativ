@@ -14,6 +14,7 @@ import java.util.*;
 
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.HashPassword.*;
+import static com.epam.facultative.utils.email_sender.EmailConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -56,14 +57,15 @@ public class AdminServiceImpl implements AdminService {
     public void courseLaunchNewsLetter(CourseDTO courseDTO) throws ServiceException {
         int courseId = courseDTO.getId();
         List<Student> students;
+        EmailSender emailSender = AppContext.getAppContext().getEmailSender();
         try {
             students = studentDao.getStudentsByCourse(courseId, 0, Integer.MAX_VALUE);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        EmailSender emailSender = AppContext.getAppContext().getEmailSender();
         for (Student student : students) {
-            emailSender.send(student.getEmail(), "Start course", "Hello! Your course:" + courseDTO.getTitle() + " start" + courseDTO.getStartDate());
+            new Thread(() ->
+                    emailSender.send(student.getEmail(), EMAIL_SUBJECT_FOR_CHANGE_COURSE, EMAIL_MESSAGE_FOR_CHANGE_COURSE + courseDTO)).start();
         }
     }
 

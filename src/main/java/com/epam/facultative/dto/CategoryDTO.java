@@ -16,4 +16,10 @@ public class CategoryDTO implements Serializable {
     private int id;
     private String title;
     private String description;
+
+    @Override
+    public String toString() {
+        return "title = " + title + "<br>" +
+                "Category description= " + description;
+    }
 }

@@ -35,6 +35,9 @@ public class UpdateCourseAction implements Action {
                 course.setTeacher(adminService.getTeacher(teacherId));
             }
             adminService.updateCourse(course);
+            if (req.getParameter("email_send") != null) {
+                adminService.courseLaunchNewsLetter(course);
+            }
             req.getSession().setAttribute(MESSAGE, CHANGES_SAVED);
         } catch (ValidateException e) {
             req.getSession().setAttribute(MESSAGE, e.getMessage());

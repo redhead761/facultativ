@@ -167,14 +167,12 @@
                             <div class="row">
                                 <div class="col-12">
 
-                                    <div class="form-floating">
-                                        <input type="text" id="description" class="form-control form-control-lg"
-                                               name="description"
-                                               value="${requestScope.course.description}"
-                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
-                                               title="Description must contain 0 to 200 characters"/>
-                                        <label class="form-label" for="description"><fmt:message
-                                                key="description"/></label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                               name="email_send">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <fmt:message key="email.send"/>
+                                        </label>
                                     </div>
 
                                 </div>

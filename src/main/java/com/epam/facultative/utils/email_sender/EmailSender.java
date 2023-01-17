@@ -39,10 +39,7 @@ public class EmailSender {
         } catch (MessagingException e) {
             logger.error(e.getMessage());
         }
-
-
     }
-
 
     private static Session getSession(Properties properties, String user) {
         return Session.getInstance(properties, new Authenticator() {

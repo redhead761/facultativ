@@ -15,7 +15,7 @@ import java.util.List;
 
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.dto.Converter.*;
-import static com.epam.facultative.utils.HashPassword.verify;
+import static com.epam.facultative.utils.hash_password.HashPassword.verify;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class GeneralServiceImpl implements GeneralService {

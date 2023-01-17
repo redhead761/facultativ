@@ -13,7 +13,7 @@ import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
 
 import static com.epam.facultative.dto.Converter.*;
-import static com.epam.facultative.utils.HashPassword.*;
+import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
 import java.util.*;

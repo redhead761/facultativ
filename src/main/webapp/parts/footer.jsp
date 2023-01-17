@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -27,7 +28,7 @@
         <form>
             <select id="language" name="language" onchange="submit()">
                 <option value="en" ${sessionScope.language == 'en' ? 'selected' : ''}>English</option>
-                <option value="ua" ${sessionScope.language == 'ua' ? 'selected' : ''}>Українська</option>
+                <option value="uk_UA" ${sessionScope.language == 'uk_UA' ? 'selected' : ''}>Українська</option>
             </select>
         </form>
         © 2020 Copyright:

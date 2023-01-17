@@ -55,6 +55,8 @@ public class ActionFactory {
         ACTION_MAP.put(SHOW_STUDENT_COURSES_ACTION, new ShowStudentCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_ALL_COURSES_ACTION, new ShowAllCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_RESULT_ACTION, new ShowResultAction(APP_CONTEXT));
+
+        ACTION_MAP.put(DOWNLOAD_COURSES_ACTION, new DownloadCoursesAction(APP_CONTEXT));
     }
 
     private ActionFactory() {

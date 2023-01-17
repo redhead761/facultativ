@@ -13,7 +13,7 @@ import com.epam.facultative.utils.email_sender.EmailSender;
 import java.util.*;
 
 import static com.epam.facultative.dto.Converter.*;
-import static com.epam.facultative.utils.HashPassword.*;
+import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.email_sender.EmailConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.utils.validator.Validator.*;

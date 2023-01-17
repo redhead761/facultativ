@@ -1,4 +1,4 @@
-package com.epam.facultative.utils;
+package com.epam.facultative.utils.hash_password;
 
 import de.mkammerer.argon2.*;
 

@@ -20,6 +20,10 @@ public class LocaleFilter implements Filter {
             req.getSession().setAttribute(LOCALE, locale);
             resp.sendRedirect((req).getHeader(REFERER));
         } else {
+            String sessionLocale = (String) req.getSession().getAttribute(LOCALE);
+            if (isBlank(sessionLocale)) {
+                req.getSession().setAttribute(LOCALE, "en");
+            }
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

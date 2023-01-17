@@ -73,6 +73,8 @@
                     </li>
                 </c:forEach>
             </ul>
+
+            <a href="${pageContext.request.contextPath}/controller?action=download_courses">Download</a>
         </caption>
         <thead>
         <th scope="col"><fmt:message key="title"/></th>

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.utils.HashPassword.encode;
+import static com.epam.facultative.utils.hash_password.HashPassword.encode;
 
 public class TestServiceUtil {
     public User getAdmin() {

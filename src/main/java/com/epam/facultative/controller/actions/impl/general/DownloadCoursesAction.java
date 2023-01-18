@@ -2,23 +2,18 @@ package com.epam.facultative.controller.actions.impl.general;
 
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.utils.pdf_creator.PdfCreator;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
+
+import static com.epam.facultative.controller.actions.PageNameConstants.INDEX_PAGE;
 
 public class DownloadCoursesAction implements Action {
-    private static final Logger logger = LoggerFactory.getLogger(DownloadCoursesAction.class);
     private final GeneralService generalService;
 
     public DownloadCoursesAction(AppContext appContext) {
@@ -26,24 +21,19 @@ public class DownloadCoursesAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        List<CourseDTO> courses = generalService.getAllCourses(0, Integer.MAX_VALUE);
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServiceException {
         String locale = (String) req.getSession().getAttribute("language");
-        PdfCreator pdfCreator = new PdfCreator();
-        ByteArrayOutputStream usersPdf = pdfCreator.createCoursesPdf(courses, locale);
+        ByteArrayOutputStream usersPdf = generalService.downloadAllCoursesInPdf(locale);
         setResponse(resp, usersPdf);
-        return "index.jsp";
+        return INDEX_PAGE;
     }
 
-    private void setResponse(HttpServletResponse response, ByteArrayOutputStream output) {
+    private void setResponse(HttpServletResponse response, ByteArrayOutputStream output) throws IOException {
         response.setContentType("application/pdf");
         response.setContentLength(output.size());
-        response.setHeader("Content-Disposition", "attachment; filename=\"users.pdf\"");
-        try (OutputStream outputStream = response.getOutputStream()) {
-            output.writeTo(outputStream);
-            outputStream.flush();
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
+        response.setHeader("Content-Disposition", "attachment; filename=\"courses.pdf\"");
+        OutputStream outputStream = response.getOutputStream();
+        output.writeTo(outputStream);
+        outputStream.flush();
     }
 }

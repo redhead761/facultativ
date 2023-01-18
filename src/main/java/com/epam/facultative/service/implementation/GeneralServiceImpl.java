@@ -10,7 +10,9 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.utils.pdf_creator.PdfCreator;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
@@ -148,6 +150,13 @@ public class GeneralServiceImpl implements GeneralService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException {
+        List<CourseDTO> courses = getAllCourses(0, Integer.MAX_VALUE);
+        PdfCreator pdfCreator = new PdfCreator();
+        return pdfCreator.createCoursesPdf(courses, locale);
     }
 
     @Override

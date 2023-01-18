@@ -35,13 +35,15 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=alphabet"><fmt:message key="alphabetical"/></a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=alphabet"><fmt:message
+                        key="alphabetical"/></a>
                 </li>
                 <li><a class="dropdown-item"
                        href="${pageContext.request.contextPath}/controller?action=courses&sort_type=reverse alphabet">
                     <fmt:message key="reverse.alphabetical"/></a></li>
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=duration"><fmt:message key="duration"/></a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=duration"><fmt:message
+                        key="duration"/></a>
                 </li>
                 <li><a class="dropdown-item"
                        href="${pageContext.request.contextPath}/controller?action=courses&sort_type=amount students">
@@ -73,8 +75,9 @@
                     </li>
                 </c:forEach>
             </ul>
-
-            <a href="${pageContext.request.contextPath}/controller?action=download_courses">Download</a>
+            <a class="btn btn-outline-secondary justify-content-end"
+               href="${pageContext.request.contextPath}/controller?action=download_courses"
+               role="button"><fmt:message key="download"/></a>
         </caption>
         <thead>
         <th scope="col"><fmt:message key="title"/></th>

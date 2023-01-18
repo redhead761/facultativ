@@ -7,6 +7,7 @@ import com.epam.facultative.dto.UserDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public interface GeneralService {
@@ -30,6 +31,8 @@ public interface GeneralService {
     List<CategoryDTO> getAllCategories() throws ServiceException;
 
     List<TeacherDTO> getAllTeachers() throws ServiceException;
+
+    ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException;
 
     int getNoOfRecordsCourses();
 }

@@ -57,6 +57,7 @@ public class ActionFactory {
         ACTION_MAP.put(SHOW_RESULT_ACTION, new ShowResultAction(APP_CONTEXT));
 
         ACTION_MAP.put(DOWNLOAD_COURSES_ACTION, new DownloadCoursesAction(APP_CONTEXT));
+        ACTION_MAP.put(DOWNLOAD_CERTIFICATE_ACTION, new DownloadCertificateAction(APP_CONTEXT));
     }
 
     private ActionFactory() {

@@ -11,11 +11,14 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
+import com.epam.facultative.utils.pdf_creator.PdfCreator;
 
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOGIN_NOT_EXIST_MESSAGE;
 import static com.epam.facultative.utils.validator.Validator.*;
 
+import java.io.ByteArrayOutputStream;
 import java.util.*;
 
 public class StudentServiceImpl implements StudentService {
@@ -98,6 +101,22 @@ public class StudentServiceImpl implements StudentService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException {
+        try {
+            Course course = courseDao.getById(courseId).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            PdfCreator pdfCreator = new PdfCreator();
+            return pdfCreator.createCertificate(studentDTO, course, grade);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public ByteArrayOutputStream sendCertificate() {
+        return null;
     }
 
     @Override

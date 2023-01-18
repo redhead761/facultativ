@@ -27,6 +27,7 @@ public class ShowResultAction implements Action {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
         int studentId = student.getId();
         int grade = studentService.getGrade(courseId, studentId);
+        req.setAttribute(COURSE_ID, courseId);
         req.setAttribute(GRADE, grade);
         return RESULT_PAGE;
     }

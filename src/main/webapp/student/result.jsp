@@ -29,14 +29,18 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=completed"><fmt:message key="back.completed"/></a>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/controller?action=show_student_courses&type=completed"><fmt:message
+                        key="back.completed"/></a>
             </li>
         </ul>
     </div>
 </div>
 
 <fmt:message key="grade"/>: ${requestScope.grade}<br>
-Other field or actions
+<a class="btn btn-outline-secondary justify-content-end"
+   href="${pageContext.request.contextPath}/controller?action=download_certificate&course_id=${requestScope.course_id}&grade=${requestScope.grade}"
+   role="button">Download certificate</a>
 
 <jsp:include page="/parts/footer.jsp"/>
 </body>

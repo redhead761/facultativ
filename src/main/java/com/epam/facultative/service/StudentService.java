@@ -6,6 +6,7 @@ import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public interface StudentService {
@@ -22,6 +23,10 @@ public interface StudentService {
     void addStudent(StudentDTO student) throws ServiceException, ValidateException;
 
     int getGrade(int courseId, int userId) throws ServiceException;
+
+    ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException;
+
+    ByteArrayOutputStream sendCertificate();
 
     int getNoOfRecordsCourses();
 }

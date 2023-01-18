@@ -17,10 +17,10 @@ import java.io.OutputStream;
 import static com.epam.facultative.controller.AttributeConstants.MESSAGE;
 import static com.epam.facultative.controller.actions.PageNameConstants.INDEX_PAGE;
 
-public class DownloadCertificateAction implements Action {
+public class CertificateAction implements Action {
     private final StudentService studentService;
 
-    public DownloadCertificateAction(AppContext appContext) {
+    public CertificateAction(AppContext appContext) {
         studentService = appContext.getStudentService();
     }
 
@@ -29,12 +29,23 @@ public class DownloadCertificateAction implements Action {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute("user");
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int grade = Integer.parseInt(req.getParameter("grade"));
-        ByteArrayOutputStream certificate;
-        try {
-            certificate = studentService.downloadCertificate(student, courseId, grade);
-            setResponse(resp, certificate);
-        } catch (ValidateException e) {
-            req.setAttribute(MESSAGE, e.getMessage());
+        String type = req.getParameter("type");
+        switch (type) {
+            case "download" -> {
+                try {
+                    ByteArrayOutputStream certificate = studentService.downloadCertificate(student, courseId, grade);
+                    setResponse(resp, certificate);
+                } catch (ValidateException e) {
+                    req.setAttribute(MESSAGE, e.getMessage());
+                }
+            }
+            case "send" -> {
+                try {
+                    studentService.sendCertificate(student, courseId, grade);
+                } catch (ValidateException e) {
+                    req.setAttribute(MESSAGE, e.getMessage());
+                }
+            }
         }
         return INDEX_PAGE;
     }

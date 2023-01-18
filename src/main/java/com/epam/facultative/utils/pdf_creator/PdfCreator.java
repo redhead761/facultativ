@@ -3,8 +3,6 @@ package com.epam.facultative.utils.pdf_creator;
 import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
@@ -15,18 +13,16 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
-import com.itextpdf.layout.properties.BackgroundImage;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -45,7 +41,8 @@ public class PdfCreator {
     public ByteArrayOutputStream createCoursesPdf(List<CourseDTO> courses, String locale) {
         ResourceBundle currentResourceBundle = getCurrentResourceBundle(locale);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        Document document = getPdfDocument(output);
+        PdfWriter writer = new PdfWriter(output);
+        Document document = getPdfDocument(writer);
         document.add(getTableTitle(currentResourceBundle.getString(COURSE_TITLE).toUpperCase()));
         document.add(LINE_SEPARATOR);
         document.add(getCoursesTable(courses, currentResourceBundle));
@@ -53,14 +50,33 @@ public class PdfCreator {
         return output;
     }
 
-    public ByteArrayOutputStream createCertificate(StudentDTO studentDTO, Course course, int grade) {
+    public ByteArrayOutputStream createCertificateForDownload(StudentDTO studentDTO, Course course, int grade) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        Document document = getPdfDocument(output);
+        PdfWriter writer = new PdfWriter(output);
+        Document document = getPdfDocument(writer);
+        setCertificate(document, studentDTO, course, grade);
+        return output;
+    }
+
+    public String createCertificateForSend(StudentDTO studentDTO, Course course, int grade) {
+        String dest = "C:\\epam\\facultative\\pdf\\certificate_" + studentDTO.getLogin() + course.getTitle() + ".pdf";
+        try {
+            PdfWriter writer = new PdfWriter(dest);
+            Document document = getPdfDocument(writer);
+            setCertificate(document, studentDTO, course, grade);
+            return dest;
+        } catch (FileNotFoundException e) {
+            logger.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setCertificate(Document document, StudentDTO studentDTO, Course course, int grade) {
         document.add(new Paragraph(new Text("Certificate"))
                 .setFontSize(TITLE_SIZE)
                 .setTextAlignment(TextAlignment.CENTER));
         document.add(LINE_SEPARATOR);
-        document.add(new Paragraph(new Text("Congratulation!" + studentDTO.getName() + " " + studentDTO.getSurname())));
+        document.add(new Paragraph(new Text("Congratulation, " + studentDTO.getName() + " " + studentDTO.getSurname() + "!")));
         document.add(LINE_SEPARATOR);
         document.add(new Paragraph(new Text("You have successfully completed the course: " + course.getTitle())));
         document.add(LINE_SEPARATOR);
@@ -68,7 +84,6 @@ public class PdfCreator {
         document.add(LINE_SEPARATOR);
         document.add(new Paragraph(new Text("Hours listened: " + course.getDuration())));
         document.close();
-        return output;
     }
 
     private Table getCoursesTable(List<CourseDTO> courses, ResourceBundle resourceBundle) {
@@ -114,8 +129,7 @@ public class PdfCreator {
                 .setTextAlignment(TextAlignment.CENTER);
     }
 
-    private Document getPdfDocument(ByteArrayOutputStream output) {
-        PdfWriter writer = new PdfWriter(output);
+    private Document getPdfDocument(PdfWriter writer) {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf, PageSize.A4.rotate());
         PdfFont font = getPdfFont();

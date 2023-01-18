@@ -1,5 +1,6 @@
 package com.epam.facultative.service.implementation;
 
+import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.data_layer.daos.CourseDao;
 import com.epam.facultative.data_layer.daos.StudentDao;
 import com.epam.facultative.dto.CourseDTO;
@@ -11,6 +12,7 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.StudentService;
+import com.epam.facultative.utils.email_sender.EmailSender;
 import com.epam.facultative.utils.pdf_creator.PdfCreator;
 
 import static com.epam.facultative.dto.Converter.*;
@@ -108,15 +110,25 @@ public class StudentServiceImpl implements StudentService {
         try {
             Course course = courseDao.getById(courseId).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             PdfCreator pdfCreator = new PdfCreator();
-            return pdfCreator.createCertificate(studentDTO, course, grade);
+            return pdfCreator.createCertificateForDownload(studentDTO, course, grade);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public ByteArrayOutputStream sendCertificate() {
-        return null;
+    public void sendCertificate(StudentDTO studentDTO, int courseId, int grade) throws ValidateException, ServiceException {
+        PdfCreator pdfCreator = new PdfCreator();
+        try {
+            Course course = courseDao.getById(courseId).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            String certificate = pdfCreator.createCertificateForSend(studentDTO, course, grade);
+            AppContext appContext = AppContext.getAppContext();
+            EmailSender emailSender = appContext.getEmailSender();
+            emailSender.sendCertificate(studentDTO.getEmail(), "Certificate", "Your certificate", certificate);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
     }
 
     @Override

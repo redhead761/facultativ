@@ -39,8 +39,11 @@
 
 <fmt:message key="grade"/>: ${requestScope.grade}<br>
 <a class="btn btn-outline-secondary justify-content-end"
-   href="${pageContext.request.contextPath}/controller?action=download_certificate&course_id=${requestScope.course_id}&grade=${requestScope.grade}"
+   href="${pageContext.request.contextPath}/controller?action=certificate&type=download&course_id=${requestScope.course_id}&grade=${requestScope.grade}"
    role="button">Download certificate</a>
+<a class="btn btn-outline-secondary justify-content-end"
+   href="${pageContext.request.contextPath}/controller?action=certificate&type=send&course_id=${requestScope.course_id}&grade=${requestScope.grade}"
+   role="button">Send certificate</a>
 
 <jsp:include page="/parts/footer.jsp"/>
 </body>

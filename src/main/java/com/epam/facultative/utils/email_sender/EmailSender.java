@@ -8,6 +8,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 public class EmailSender {
@@ -37,6 +39,30 @@ public class EmailSender {
 
             Transport.send(message);
         } catch (MessagingException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    public void sendCertificate(String email, String subject, String msg, String pathFile) {
+        Message message = new MimeMessage(session);
+        try {
+            message.setFrom(new InternetAddress(user));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+            message.setSubject(subject);
+
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setContent(msg, "text/html; charset=utf-8");
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeBodyPart);
+
+            MimeBodyPart attachment = new MimeBodyPart();
+            File file = new File(pathFile);
+            attachment.attachFile(file);
+            multipart.addBodyPart(attachment);
+
+            message.setContent(multipart);
+            Transport.send(message);
+        } catch (MessagingException | IOException e) {
             logger.error(e.getMessage());
         }
     }

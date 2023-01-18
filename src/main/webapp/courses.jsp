@@ -77,7 +77,7 @@
             </ul>
             <a class="btn btn-outline-secondary justify-content-end"
                href="${pageContext.request.contextPath}/controller?action=download_courses"
-               role="button"><fmt:message key="download"/></a>
+               role="button"><fmt:message key="download.courses"/></a>
         </caption>
         <thead>
         <th scope="col"><fmt:message key="title"/></th>

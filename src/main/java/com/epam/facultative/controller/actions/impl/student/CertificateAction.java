@@ -14,8 +14,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static com.epam.facultative.controller.AttributeConstants.MESSAGE;
-import static com.epam.facultative.controller.actions.PageNameConstants.INDEX_PAGE;
+import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.*;
 
 public class CertificateAction implements Action {
     private final StudentService studentService;
@@ -30,24 +30,18 @@ public class CertificateAction implements Action {
         int courseId = Integer.parseInt(req.getParameter("course_id"));
         int grade = Integer.parseInt(req.getParameter("grade"));
         String type = req.getParameter("type");
-        switch (type) {
-            case "download" -> {
-                try {
+        try {
+            switch (type) {
+                case "download.courses" -> {
                     ByteArrayOutputStream certificate = studentService.downloadCertificate(student, courseId, grade);
                     setResponse(resp, certificate);
-                } catch (ValidateException e) {
-                    req.setAttribute(MESSAGE, e.getMessage());
                 }
+                case "send" -> studentService.sendCertificate(student, courseId, grade);
             }
-            case "send" -> {
-                try {
-                    studentService.sendCertificate(student, courseId, grade);
-                } catch (ValidateException e) {
-                    req.setAttribute(MESSAGE, e.getMessage());
-                }
-            }
+        } catch (ValidateException e) {
+            req.setAttribute(MESSAGE, e.getMessage());
         }
-        return INDEX_PAGE;
+        return CONTROLLER + SHOW_RESULT_ACTION + "&" + COURSE_ID + "=" + courseId;
     }
 
     private void setResponse(HttpServletResponse response, ByteArrayOutputStream output) throws IOException {

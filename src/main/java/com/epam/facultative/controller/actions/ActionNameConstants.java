@@ -3,7 +3,6 @@ package com.epam.facultative.controller.actions;
 public class ActionNameConstants {
     public static String CONTROLLER = "controller?action=";
 
-
     //NO logged
     public static String AUTH_ACTION = "auth";
     public static String REGISTER_ACTION = "register";

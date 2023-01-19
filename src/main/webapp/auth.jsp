@@ -21,12 +21,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="/parts/header.jsp"/>
-<c:if test="${sessionScope.message != null}">
-    <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-        <strong>${sessionScope.message}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
 
 <section class="vh-100">
     <div class="container-fluid h-custom">

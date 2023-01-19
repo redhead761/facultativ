@@ -31,14 +31,14 @@ public class AddCategoryAction implements Action {
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
             req.getSession().setAttribute(CATEGORY, category);
-            req.getSession().setAttribute(MESSAGE, e.getMessage());
+            req.getSession().setAttribute(ERROR, e.getMessage());
         }
         return ADD_CATEGORY_PAGE;
     }
 
     private CategoryDTO getCategoryFromParameter(HttpServletRequest req) {
-        String title = req.getParameter("title");
-        String description = req.getParameter("description");
+        String title = req.getParameter(TITLE);
+        String description = req.getParameter(DESCRIPTION);
         return CategoryDTO.builder()
                 .id(0)
                 .title(title)

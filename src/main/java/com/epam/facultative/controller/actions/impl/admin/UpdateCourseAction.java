@@ -40,7 +40,7 @@ public class UpdateCourseAction implements Action {
             }
             req.getSession().setAttribute(MESSAGE, CHANGES_SAVED);
         } catch (ValidateException e) {
-            req.getSession().setAttribute(MESSAGE, e.getMessage());
+            req.getSession().setAttribute(ERROR, e.getMessage());
         }
         return CONTROLLER + SHOW_EDIT_COURSE_ACTION + "&" + COURSE_ID + "=" + courseId;
     }

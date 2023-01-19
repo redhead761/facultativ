@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -29,18 +30,15 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message key="back.courses"/></a>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message
+                        key="back.courses"/></a>
             </li>
         </ul>
     </div>
 </div>
 
-<c:if test="${requestScope.message != null}">
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${requestScope.message}!</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
@@ -56,7 +54,16 @@
             <td>${teacher.surname}</td>
             <td>${teacher.email}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=${teacher.id}&course_id=${requestScope.course_id}"><fmt:message key="assign"/></a>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="action" value="add_category"/>
+                    <input type="hidden" name="teacher_id" value="${teacher.id}"/>
+                    <input type="hidden" name="course_id" value="${requestScope.course_id}}"/>
+
+                    <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message key="assign"/></button>
+
+                </form>
+<%--                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=${teacher.id}&course_id=${requestScope.course_id}"><fmt:message--%>
+<%--                        key="assign"/></a>--%>
             </td>
             </tbody>
         </c:forEach>
@@ -71,7 +78,8 @@
 
             <c:if test="${requestScope.currentPage > 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}&course_id=${requestScope.course_id}"><fmt:message key="previous"/></a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}&course_id=${requestScope.course_id}"><fmt:message
+                        key="previous"/></a>
                 </li>
             </c:if>
 
@@ -111,7 +119,8 @@
 
             <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}"><fmt:message key="next"/></a>
+                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}"><fmt:message
+                        key="next"/></a>
                 </li>
             </c:if>
         </ul>
@@ -119,5 +128,6 @@
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 ${sessionScope.remove("message")}
+${sessionScope.remove("error")}
 </body>
 </html>

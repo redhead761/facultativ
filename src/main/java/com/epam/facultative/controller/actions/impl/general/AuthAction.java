@@ -30,27 +30,27 @@ public class AuthAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String path = null;
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
+        String login = req.getParameter(LOGIN);
+        String password = req.getParameter(PASSWORD);
         try {
             String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
             System.out.println(gRecaptchaResponse);
             boolean verify = recaptcha.verify(gRecaptchaResponse);
             if (!verify) {
-                throw new ValidateException("You missed the Captcha.");
+                throw new ValidateException("missed.captcha");
             }
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute(USER, user);
             req.getSession().setAttribute(ROLE, user.getRole());
-            req.getSession().setAttribute("statuses", Status.values());
+            req.getSession().setAttribute(STATUSES, Status.values());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PROFILE_PAGE;
                 case TEACHER -> path = TEACHER_PROFILE_PAGE;
                 case STUDENT -> path = STUDENT_PROFILE_PAGE;
             }
         } catch (ValidateException e) {
-            req.getSession().setAttribute("login", login);
-            req.getSession().setAttribute(MESSAGE, e.getMessage());
+            req.getSession().setAttribute(LOGIN, login);
+            req.getSession().setAttribute(ERROR, e.getMessage());
             return AUTH_PAGE;
         }
         return path;

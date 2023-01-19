@@ -24,8 +24,8 @@ public class AddTeacherAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
-        String password = req.getParameter("password");
-        String repeatPassword = req.getParameter("repeat_password");
+        String password = req.getParameter(PASSWORD);
+        String repeatPassword = req.getParameter(REPEAT_PASSWORD);
         TeacherDTO teacher = getTeacherForAttribute(req);
         try {
             checkConfirmPassword(password, repeatPassword);
@@ -33,18 +33,18 @@ public class AddTeacherAction implements Action {
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
             req.getSession().setAttribute(TEACHER, teacher);
-            req.getSession().setAttribute(MESSAGE, e.getMessage());
+            req.getSession().setAttribute(ERROR, e.getMessage());
         }
         return ADD_TEACHER_PAGE;
     }
 
     private TeacherDTO getTeacherForAttribute(HttpServletRequest req) {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        String email = req.getParameter("email");
-        String degree = req.getParameter("degree");
+        String login = req.getParameter(LOGIN);
+        String password = req.getParameter(PASSWORD);
+        String name = req.getParameter(NAME);
+        String surname = req.getParameter(SURNAME);
+        String email = req.getParameter(EMAIL);
+        String degree = req.getParameter(DEGREE);
         return TeacherDTO.builder()
                 .id(0)
                 .login(login)
@@ -58,7 +58,7 @@ public class AddTeacherAction implements Action {
 
     private void checkConfirmPassword(String password, String repeatPassword) throws ValidateException {
         if (!password.equals(repeatPassword)) {
-            throw new ValidateException("Wrong repeat password");
+            throw new ValidateException(WRONG_REPEAT_PASSWORD);
         }
     }
 }

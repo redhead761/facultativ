@@ -9,7 +9,7 @@ import com.epam.facultative.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.SHOW_ASSIGN_PAGE_ACTION;
 import static com.epam.facultative.controller.AttributeConstants.*;
 
 public class AssignAction implements Action {
@@ -31,6 +31,6 @@ public class AssignAction implements Action {
         req.setAttribute(MESSAGE, SUCCESSFUL);
         req.setAttribute(COURSE_ID, courseId);
         ActionUtils.setUpPaginationForAllTeachers(req, adminService);
-        return ASSIGN_PAGE;
+        return ActionUtils.getGetAction(SHOW_ASSIGN_PAGE_ACTION, COURSE_ID, String.valueOf(courseId));
     }
 }

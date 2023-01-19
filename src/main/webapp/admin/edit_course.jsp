@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -39,12 +40,7 @@
     </div>
 </div>
 
-<c:if test="${sessionScope.message != null}">
-    <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-        <strong>${sessionScope.message}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
 
 <section class="vh-60">
     <div class="container py-5 h-100">
@@ -190,6 +186,7 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
+${sessionScope.remove("error")}
 ${sessionScope.remove("message")}
 ${sessionScope.remove("course")}
 </body>

@@ -55,15 +55,13 @@
             <td>${teacher.email}</td>
             <td>
                 <form action="${pageContext.request.contextPath}/controller" method="post">
-                    <input type="hidden" name="action" value="add_category"/>
+                    <input type="hidden" name="action" value="assign"/>
                     <input type="hidden" name="teacher_id" value="${teacher.id}"/>
-                    <input type="hidden" name="course_id" value="${requestScope.course_id}}"/>
+                    <input type="hidden" name="course_id" value="${requestScope.course_id}"/>
+                    <input type="hidden" name="page" value="${requestScope.currentPage}"/>
 
                     <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message key="assign"/></button>
-
                 </form>
-<%--                <a href="${pageContext.request.contextPath}/controller?action=assign&teacher_id=${teacher.id}&course_id=${requestScope.course_id}"><fmt:message--%>
-<%--                        key="assign"/></a>--%>
             </td>
             </tbody>
         </c:forEach>

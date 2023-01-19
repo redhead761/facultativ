@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.MANAGE_CATEGORIES_ACTION;
 
 public class DeleteCategoryAction implements Action {
     private final AdminService adminService;
@@ -20,10 +20,11 @@ public class DeleteCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int id = Integer.parseInt(req.getParameter(CATEGORY_ID));
-        adminService.deleteCategory(id);
-        ActionUtils.setUpPaginationForAllCategories(req, adminService);
-        req.setAttribute(MESSAGE, SUCCESSFUL);
-        return MANAGE_CATEGORIES_PAGE;
+        String id = req.getParameter(CATEGORY_ID);
+        String currentPage = req.getParameter(CURRENT_PAGE);
+        String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
+        adminService.deleteCategory(Integer.parseInt(id));
+        req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
+        return ActionUtils.getGetAction(MANAGE_CATEGORIES_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage);
     }
 }

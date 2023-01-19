@@ -26,7 +26,7 @@ public class ShowCategoryFormAction implements Action {
         try {
             category = adminService.getCategory(categoryId);
         } catch (ValidateException e) {
-            req.setAttribute(MESSAGE, e.getMessage());
+            req.setAttribute(ERROR, e.getMessage());
         }
         req.getSession().setAttribute(CATEGORY, category);
         return EDIT_CATEGORY_PAGE;

@@ -105,13 +105,35 @@
                     ${course.getTeacher().getName()} ${course.getTeacher().getSurname()}
                 </c:if>
                 <c:if test="${course.getTeacher().getName() == null}">
-                    <a href="${pageContext.request.contextPath}/controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>"><fmt:message key="assign"/></a>
+                    <a href="${pageContext.request.contextPath}/controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>"><fmt:message
+                            key="assign"/></a>
                 </c:if>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_edit_course&course_id=${course.id}"><fmt:message key="edit"/></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=delete_course&course_id=<c:out value='${course.id}'/>"><fmt:message key="delete"/></a>
+                <div class="row">
+                    <div class="col-md-auto">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="show_edit_course"/>
+                            <input type="hidden" name="course_id" value="${course.id}"/>
+
+                            <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                    key="edit"/></button>
+                        </form>
+                    </div>
+                    <div class="col-md-auto">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="delete_course"/>
+                            <input type="hidden" name="course_id" value="${course.id}"/>
+                            <input type="hidden" name="page" value="${requestScope.currentPage}"/>
+                            <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
+                            <input type="hidden" name="sort_type" value="${requestScope.sort_type}"/>
+                            <input type="hidden" name="select_type" value="${requestScope.select_type}"/>
+
+                            <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                    key="delete"/></button>
+                        </form>
+                    </div>
+                </div>
             </td>
             </tbody>
         </c:forEach>
@@ -155,7 +177,8 @@
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}"><fmt:message key="previous"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}"><fmt:message
+                                key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -195,7 +218,8 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}"><fmt:message key="next"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}"><fmt:message
+                                key="next"/></a>
                         </li>
                     </c:if>
                 </ul>
@@ -205,5 +229,6 @@
 </div>
 <jsp:include page="/parts/footer.jsp"/>
 ${sessionScope.remove("message")}
+${sessionScope.remove("error")}
 </body>
 </html>

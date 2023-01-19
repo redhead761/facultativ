@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -23,6 +24,8 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
+<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
+
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
@@ -39,9 +42,28 @@
             <td>${category.title}</td>
             <td>${category.description}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_category_form&category_id=${category.id}"><fmt:message key="edit"/></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=delete_category&category_id=${category.id}"><fmt:message key="delete"/></a>
+                <div class="row">
+                    <div class="col-md-auto">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="show_category_form"/>
+                            <input type="hidden" name="category_id" value="${category.id}"/>
+
+                            <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                    key="edit"/></button>
+                        </form>
+                    </div>
+                    <div class="col-md-auto">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="delete_category"/>
+                            <input type="hidden" name="category_id" value="${category.id}"/>
+                            <input type="hidden" name="page" value="${requestScope.currentPage}"/>
+                            <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
+
+                            <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                    key="delete"/></button>
+                        </form>
+                    </div>
+                </div>
             </td>
             </tbody>
         </c:forEach>
@@ -85,7 +107,8 @@
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="previous"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message
+                                key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -125,7 +148,8 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="next"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_categories&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message
+                                key="next"/></a>
                         </li>
                     </c:if>
                 </ul>
@@ -135,5 +159,7 @@
 
 </div>
 <jsp:include page="/parts/footer.jsp"/>
+${sessionScope.remove("message")}
+${sessionScope.remove("error")}
 </body>
 </html>

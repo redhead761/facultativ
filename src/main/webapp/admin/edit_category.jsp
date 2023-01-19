@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -33,6 +34,9 @@
         </ul>
     </div>
 </div>
+
+<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
+
 <div align="center">
 
     <h2><fmt:message key="edit.category.form"/></h2>
@@ -68,6 +72,7 @@
         <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
     </form>
 </div>
+${sessionScope.remove("error")}
 ${sessionScope.remove("message")}
 ${sessionScope.remove("category")}
 <jsp:include page="/parts/footer.jsp"/>

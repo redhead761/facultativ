@@ -23,14 +23,14 @@ public class AssignAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
         int teacherId = Integer.parseInt(req.getParameter(TEACHER_ID));
+        String currentPage = req.getParameter(CURRENT_PAGE);
         try {
             adminService.assigned(courseId, teacherId);
         } catch (ValidateException e) {
             throw new ServiceException(e);
         }
-        req.setAttribute(MESSAGE, SUCCESSFUL);
-        req.setAttribute(COURSE_ID, courseId);
-        ActionUtils.setUpPaginationForAllTeachers(req, adminService);
-        return ActionUtils.getGetAction(SHOW_ASSIGN_PAGE_ACTION, COURSE_ID, String.valueOf(courseId));
+        req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
+        req.getSession().setAttribute(COURSE_ID, courseId);
+        return ActionUtils.getGetAction(SHOW_ASSIGN_PAGE_ACTION, COURSE_ID, String.valueOf(courseId), CURRENT_PAGE, currentPage);
     }
 }

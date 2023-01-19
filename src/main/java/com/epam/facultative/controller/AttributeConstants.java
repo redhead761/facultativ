@@ -40,4 +40,8 @@ public class AttributeConstants {
     public static String DEGREE = "degree";
     public static String EMAIL = "email";
     public static String WRONG_REPEAT_PASSWORD = "wrong.repeat.password";
+    public static String BLOCK = "block";
+    public static String UNBLOCK = "unblock";
+    public static String SORT_TYPE = "sort_type";
+    public static String SELECT_TYPE = "select_type";
 }

@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
@@ -22,12 +24,7 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<c:if test="${requestScope.message != null}">
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${requestScope.message}!</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
@@ -43,9 +40,32 @@
             <td>${student.surname}</td>
             <td>${student.block}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=block&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}"><fmt:message key="block"/></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="${pageContext.request.contextPath}/controller?action=update_block&type=unblock&student_id=${student.id}&records_per_page=${requestScope.records_per_page}&page=${requestScope.currentPage}"><fmt:message key="unblock"/></a>
+                <div class="row">
+                    <div class="col-md-auto">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="update_block"/>
+                            <input type="hidden" name="type" value="block"/>
+                            <input type="hidden" name="student_id" value="${student.id}"/>
+                            <input type="hidden" name="page" value="${requestScope.currentPage}"/>
+                            <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
+
+                            <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                    key="block"/></button>
+                        </form>
+                    </div>
+                    <div class="col-md-auto">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="action" value="update_block"/>
+                            <input type="hidden" name="type" value="unblock"/>
+                            <input type="hidden" name="student_id" value="${student.id}"/>
+                            <input type="hidden" name="page" value="${requestScope.currentPage}"/>
+                            <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
+
+                            <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                    key="unblock"/></button>
+                        </form>
+                    </div>
+                </div>
             </td>
             </tbody>
         </c:forEach>
@@ -89,7 +109,8 @@
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="previous"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}"><fmt:message
+                                key="previous"/></a>
                         </li>
                     </c:if>
 
@@ -129,7 +150,8 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message key="next"/></a>
+                                                 href="${pageContext.request.contextPath}/controller?action=manage_students&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message
+                                key="next"/></a>
                         </li>
                     </c:if>
                 </ul>
@@ -138,5 +160,7 @@
     </div>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
+${sessionScope.remove("message")}
+${sessionScope.remove("error")}
 </body>
 </html>

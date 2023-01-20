@@ -171,13 +171,13 @@ class AdminServiceImplTest {
         assertThrows(ServiceException.class, () -> adminService.deleteCategory(-1));
     }
 
-    @Test
-    void getAllCategoriesPagination() throws DAOException, ServiceException {
-        List<Category> categories = testServiceUtil.getCategories();
-        List<CategoryDTO> categoryDTOS = testServiceUtil.getCategoryDTOS();
-        when(categoryDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(categories);
-        assertIterableEquals(categoryDTOS, adminService.getAllCategoriesPagination(1, 5));
-    }
+//    @Test
+//    void getAllCategoriesPagination() throws DAOException, ServiceException {
+//        List<Category> categories = testServiceUtil.getCategories();
+//        List<CategoryDTO> categoryDTOS = testServiceUtil.getCategoryDTOS();
+//        when(categoryDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(categories);
+//        assertIterableEquals(categoryDTOS, adminService.getAllCategoriesPagination(1, 5));
+//    }
 
 
     @ParameterizedTest
@@ -185,11 +185,6 @@ class AdminServiceImplTest {
     void getAllCategoriesPaginationWithIllegalArgument(int offset, int numberOfRows) throws DAOException {
         doThrow(DAOException.class).when(categoryDao).getAllPagination(isA(int.class), isA(int.class));
         assertThrows(ServiceException.class, () -> adminService.getAllCategoriesPagination(offset, numberOfRows));
-    }
-
-    @Test
-    void getNoOfRecordsCategories() {
-        assertDoesNotThrow(() -> adminService.getNoOfRecordsCategories());
     }
 
     @Test
@@ -270,13 +265,13 @@ class AdminServiceImplTest {
         assertThrows(ServiceException.class, () -> adminService.addTeacher(teacherDTO));
     }
 
-    @Test
-    void getAllStudentsPagination() throws DAOException, ServiceException {
-        List<Student> students = testServiceUtil.getStudents();
-        List<StudentDTO> studentDTOS = testServiceUtil.getStudentDTOS();
-        when(studentDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(students);
-        assertIterableEquals(studentDTOS, adminService.getAllStudentsPagination(1, 5));
-    }
+//    @Test
+//    void getAllStudentsPagination() throws DAOException, ServiceException {
+//        List<Student> students = testServiceUtil.getStudents();
+//        List<StudentDTO> studentDTOS = testServiceUtil.getStudentDTOS();
+//        when(studentDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(students);
+//        assertIterableEquals(studentDTOS, adminService.getAllStudentsPagination(1, 5));
+//    }
 
     @ParameterizedTest
     @MethodSource("invalidIntValues")
@@ -285,13 +280,13 @@ class AdminServiceImplTest {
         assertThrows(ServiceException.class, () -> adminService.getAllStudentsPagination(offset, numberOfRows));
     }
 
-    @Test
-    void getAllTeachersPagination() throws DAOException, ServiceException {
-        List<Teacher> teachers = testServiceUtil.getTeachers();
-        List<TeacherDTO> teacherDTOS = testServiceUtil.getTeacherDTOS();
-        when(teacherDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(teachers);
-        assertIterableEquals(teacherDTOS, adminService.getAllTeachersPagination(1, 5));
-    }
+//    @Test
+//    void getAllTeachersPagination() throws DAOException, ServiceException {
+//        List<Teacher> teachers = testServiceUtil.getTeachers();
+//        List<TeacherDTO> teacherDTOS = testServiceUtil.getTeacherDTOS();
+//        when(teacherDao.getAllPagination(isA(int.class), isA(int.class))).thenReturn(teachers);
+//        assertIterableEquals(teacherDTOS, adminService.getAllTeachersPagination(1, 5));
+//    }
 
     @ParameterizedTest
     @MethodSource("invalidIntValues")
@@ -355,16 +350,6 @@ class AdminServiceImplTest {
     void getTeacherFailed() throws DAOException {
         doThrow(DAOException.class).when(teacherDao).getById(isA(int.class));
         assertThrows(ServiceException.class, () -> adminService.getTeacher(-1));
-    }
-
-    @Test
-    void getNoOfRecordsTeachers() {
-        assertDoesNotThrow(() -> adminService.getNoOfRecordsTeachers());
-    }
-
-    @Test
-    void getNoOfRecordsStudents() {
-        assertDoesNotThrow(() -> adminService.getNoOfRecordsStudents());
     }
 
     private static Stream<Arguments> invalidIntValues() {

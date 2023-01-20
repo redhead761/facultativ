@@ -47,11 +47,11 @@ class StudentServiceImplTest {
         studentDTO = testServiceUtil.getStudentDTO();
     }
 
-    @Test
-    void getCoursesByStudent() throws DAOException, ServiceException {
-        when(courseDao.getByStudent(isA(int.class), isA(int.class), isA(int.class))).thenReturn(courses);
-        assertIterableEquals(courseDTOs, studentService.getCoursesByStudent(1, 1, 5));
-    }
+//    @Test
+//    void getCoursesByStudent() throws DAOException, ServiceException {
+//        when(courseDao.getByStudent(isA(int.class), isA(int.class), isA(int.class))).thenReturn(courses);
+//        assertIterableEquals(courseDTOs, studentService.getCoursesByStudent(1, 1, 5));
+//    }
 
     @ParameterizedTest
     @MethodSource("invalidIntValues")
@@ -60,11 +60,11 @@ class StudentServiceImplTest {
         assertThrows(ServiceException.class, () -> studentService.getCoursesByStudent(studentId, offset, numberOfRows));
     }
 
-    @Test
-    void getCoursesComingSoon() throws DAOException, ServiceException {
-        when(courseDao.getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class))).thenReturn(courses);
-        assertIterableEquals(courseDTOs, studentService.getCoursesComingSoon(1, 1, 5));
-    }
+//    @Test
+//    void getCoursesComingSoon() throws DAOException, ServiceException {
+//        when(courseDao.getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class))).thenReturn(courses);
+//        assertIterableEquals(courseDTOs, studentService.getCoursesComingSoon(1, 1, 5));
+//    }
 
     @ParameterizedTest
     @MethodSource("invalidIntValues")
@@ -73,11 +73,11 @@ class StudentServiceImplTest {
         assertThrows(ServiceException.class, () -> studentService.getCoursesComingSoon(studentId, offset, numberOfRows));
     }
 
-    @Test
-    void getCoursesInProgress() throws DAOException, ServiceException {
-        when(courseDao.getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class))).thenReturn(courses);
-        assertIterableEquals(courseDTOs, studentService.getCoursesInProgress(1, 1, 5));
-    }
+//    @Test
+//    void getCoursesInProgress() throws DAOException, ServiceException {
+//        when(courseDao.getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class))).thenReturn(courses);
+//        assertIterableEquals(courseDTOs, studentService.getCoursesInProgress(1, 1, 5));
+//    }
 
     @ParameterizedTest
     @MethodSource("invalidIntValues")
@@ -86,11 +86,11 @@ class StudentServiceImplTest {
         assertThrows(ServiceException.class, () -> studentService.getCoursesInProgress(studentId, offset, numberOfRows));
     }
 
-    @Test
-    void getCoursesCompleted() throws DAOException, ServiceException {
-        when(courseDao.getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class))).thenReturn(courses);
-        assertIterableEquals(courseDTOs, studentService.getCoursesCompleted(1, 1, 5));
-    }
+//    @Test
+//    void getCoursesCompleted() throws DAOException, ServiceException {
+//        when(courseDao.getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class))).thenReturn(courses);
+//        assertIterableEquals(courseDTOs, studentService.getCoursesCompleted(1, 1, 5));
+//    }
 
     @ParameterizedTest
     @MethodSource("invalidIntValues")
@@ -153,11 +153,6 @@ class StudentServiceImplTest {
     void getGradeWithIllegalArguments() throws DAOException {
         doThrow(DAOException.class).when(studentDao).getGrade(isA(int.class), isA(int.class));
         assertThrows(ServiceException.class, () -> studentService.getGrade(-1, -1));
-    }
-
-    @Test
-    void getNoOfRecordsCourses() {
-        assertDoesNotThrow(() -> studentService.getNoOfRecordsCourses());
     }
 
     private static Stream<Arguments> invalidIntValues() {

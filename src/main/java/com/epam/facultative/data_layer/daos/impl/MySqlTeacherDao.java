@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
@@ -18,7 +19,6 @@ import static com.epam.facultative.utils.validator.ValidateExceptionMessageConst
 
 public class MySqlTeacherDao implements TeacherDao {
     private final DataSource dataSource;
-    private int noOfRecords;
 
     public MySqlTeacherDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -141,8 +141,9 @@ public class MySqlTeacherDao implements TeacherDao {
     }
 
     @Override
-    public List<Teacher> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Teacher>> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Teacher> teachers = new ArrayList<>();
+        int noOfRecords = 0;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_TEACHERS_PAGINATION)) {
             int k = 0;
@@ -154,19 +155,14 @@ public class MySqlTeacherDao implements TeacherDao {
             }
             rs.close();
             rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            if (rs.next()) {
+                noOfRecords = rs.getInt(1);
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return teachers;
+        return Map.entry(noOfRecords, teachers);
     }
-
-    @Override
-    public int getNoOfRecords() {
-        return noOfRecords;
-    }
-
 
     /**
      * Helping methods

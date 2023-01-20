@@ -14,6 +14,7 @@ import com.epam.facultative.utils.pdf_creator.PdfCreator;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.dto.Converter.*;
@@ -63,70 +64,77 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CourseDTO> getAllCourses(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> getAllCourses(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllPagination(offset, numberOfRows);
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getAllPagination(offset, numberOfRows);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_TITLE);
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_TITLE);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_TITLE + " DESC");
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_TITLE + " DESC");
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_DURATION);
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_DURATION);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> sortCoursesByAmountOfStudents(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> sortCoursesByAmountOfStudents(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_AMOUNT_STUDENTS);
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getAllSortPagination(offset, numberOfRows, COURSE_AMOUNT_STUDENTS);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getByCategory(categoryId, offset, numberOfRows);
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByCategory(categoryId, offset, numberOfRows);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CourseDTO> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Course> courses = courseDao.getByTeacher(teacherId, offset, numberOfRows);
-            return prepareCourses(courses);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByTeacher(teacherId, offset, numberOfRows);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -154,13 +162,9 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException {
-        List<CourseDTO> courses = getAllCourses(0, Integer.MAX_VALUE);
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = getAllCourses(0, Integer.MAX_VALUE);
+        List<CourseDTO> courses = coursesWithRows.getValue();
         PdfCreator pdfCreator = new PdfCreator();
         return pdfCreator.createCoursesPdf(courses, locale);
-    }
-
-    @Override
-    public int getNoOfRecordsCourses() {
-        return courseDao.getNoOfRecords();
     }
 }

@@ -7,9 +7,8 @@ import com.epam.facultative.exception.ValidateException;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Date;
+import java.util.*;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
@@ -17,8 +16,6 @@ import static com.epam.facultative.utils.validator.ValidateExceptionMessageConst
 
 public class MySqlCourseDao implements CourseDao {
     private final DataSource dataSource;
-
-    private int noOfRecords;
 
     public MySqlCourseDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -115,119 +112,126 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public List<Course> getByTeacher(int userId, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getByTeacher(int userId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_TEACHER)) {
             int k = 0;
             stmt.setInt(++k, userId);
             setLimitRows(stmt, offset, numberOfRows, k);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return courses;
+        return Map.entry(noOfRecords, courses);
     }
 
     @Override
-    public List<Course> getByStudent(int userId, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getByStudent(int userId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_STUDENT)) {
             int k = 0;
             stmt.setInt(++k, userId);
             setLimitRows(stmt, offset, numberOfRows, k);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return courses;
+        return Map.entry(noOfRecords, courses);
     }
 
     @Override
-    public List<Course> getByCategory(int categoryId, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getByCategory(int categoryId, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_CATEGORY)) {
             int k = 0;
             stmt.setInt(++k, categoryId);
             setLimitRows(stmt, offset, numberOfRows, k);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return courses;
+        return Map.entry(noOfRecords, courses);
     }
 
     @Override
-    public List<Course> getByStatus(int userId, Status status, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getByStatus(int userId, Status status, int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
             int k = 0;
             stmt.setInt(++k, userId);
             stmt.setInt(++k, status.getId());
             setLimitRows(stmt, offset, numberOfRows, k);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return courses;
+        return Map.entry(noOfRecords, courses);
     }
 
     @Override
-    public List<Course> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Course> courses = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_PAGINATION)) {
             setLimitRows(stmt, offset, numberOfRows, 0);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return courses;
+        return Map.entry(noOfRecords, courses);
     }
 
     @Override
-    public int getNoOfRecords() {
-        return noOfRecords;
-    }
-
-    @Override
-    public List<Course> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
         List<Course> courses = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(getQuery(sortBy))) {
             setLimitRows(stmt, offset, numberOfRows, 0);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return courses;
+        return Map.entry(noOfRecords, courses);
     }
 
     @Override
@@ -324,11 +328,12 @@ public class MySqlCourseDao implements CourseDao {
     }
 
 
-    private void setFoundRows(ResultSet rs, PreparedStatement stmt) throws SQLException {
-        rs.close();
-        rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-        if (rs.next())
-            this.noOfRecords = rs.getInt(1);
+    private Integer setFoundRows(PreparedStatement stmt) throws SQLException {
+        ResultSet rs = stmt.executeQuery(SELECT_FOUND_ROWS);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
     private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows, int k) throws SQLException {

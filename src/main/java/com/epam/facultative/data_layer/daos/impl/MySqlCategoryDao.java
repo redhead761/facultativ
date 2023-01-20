@@ -9,13 +9,13 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class MySqlCategoryDao implements CategoryDao {
     private final DataSource dataSource;
-    private int noOfRecords;
 
     public MySqlCategoryDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -106,8 +106,9 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public List<Category> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Category>> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Category> categories = new ArrayList<>();
+        int noOfRecords = 0;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_ALL_CATEGORIES_PAGINATION)) {
             int k = 0;
@@ -119,17 +120,13 @@ public class MySqlCategoryDao implements CategoryDao {
             }
             rs.close();
             rs = stmt.executeQuery(SQLRequestConstants.SELECT_FOUND_ROWS);
-            if (rs.next())
-                this.noOfRecords = rs.getInt(1);
+            if (rs.next()) {
+                noOfRecords = rs.getInt(1);
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return categories;
-    }
-
-    @Override
-    public int getNoOfRecords() {
-        return noOfRecords;
+        return Map.entry(noOfRecords, categories);
     }
 
     /**

@@ -9,11 +9,11 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class MySqlUserDao implements UserDao {
     private final DataSource dataSource;
-    private int noOfRecords;
 
     public MySqlUserDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -100,13 +100,8 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public List<User> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<User>> getAllPagination(int offset, int numberOfRows) throws DAOException {
         return null;
-    }
-
-    @Override
-    public int getNoOfRecords() {
-        return noOfRecords;
     }
 
     /**

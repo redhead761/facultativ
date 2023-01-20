@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
@@ -18,7 +19,6 @@ import static com.epam.facultative.utils.validator.ValidateExceptionMessageConst
 
 public class MySqlStudentDao implements StudentDao {
     private final DataSource dataSource;
-    private int noOfRecords;
 
     public MySqlStudentDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -142,41 +142,45 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public List<Student> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Student>> getAllPagination(int offset, int numberOfRows) throws DAOException {
         List<Student> students = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_ALL_STUDENTS_PAGINATION)) {
             setLimitRows(stmt, offset, numberOfRows, 0);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                students.add(mapRow(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    students.add(mapRow(rs));
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return students;
+        return Map.entry(noOfRecords, students);
     }
 
     @Override
-    public List<Student> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Student>> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws DAOException {
         List<Student> students = new ArrayList<>();
+        int noOfRecords;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SELECT_STUDENTS_BY_COURSE)) {
             int k = 0;
             stmt.setInt(++k, courseId);
             setLimitRows(stmt, offset, numberOfRows, k);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Student student = mapRow(rs);
-                student.setGrade(rs.getInt(GRADE));
-                students.add(student);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Student student = mapRow(rs);
+                    student.setGrade(rs.getInt(GRADE));
+                    students.add(student);
+                }
             }
-            setFoundRows(rs, stmt);
+            noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-        return students;
+        return Map.entry(noOfRecords, students);
     }
 
     @Override
@@ -208,11 +212,6 @@ public class MySqlStudentDao implements StudentDao {
             throw new DAOException(e);
         }
         return grade;
-    }
-
-    @Override
-    public int getNoOfRecords() {
-        return noOfRecords;
     }
 
     /**
@@ -250,11 +249,12 @@ public class MySqlStudentDao implements StudentDao {
         stmt.setBoolean(++k, student.isBlock());
     }
 
-    private void setFoundRows(ResultSet rs, PreparedStatement stmt) throws SQLException {
-        rs.close();
-        rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-        if (rs.next())
-            this.noOfRecords = rs.getInt(1);
+    private Integer setFoundRows(PreparedStatement stmt) throws SQLException {
+        ResultSet rs = stmt.executeQuery(SELECT_FOUND_ROWS);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
     private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows, int k) throws SQLException {

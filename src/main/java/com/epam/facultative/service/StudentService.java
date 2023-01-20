@@ -8,15 +8,16 @@ import com.epam.facultative.exception.ValidateException;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
-    List<CourseDTO> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CourseDTO>> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> getCoursesComingSoon(int studentId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CourseDTO>> getCoursesComingSoon(int studentId, int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> getCoursesInProgress(int studentId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CourseDTO>> getCoursesInProgress(int studentId, int offset, int numberOfRows) throws ServiceException;
 
-    List<CourseDTO> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CourseDTO>> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException;
 
     void enroll(int courseId, int userId) throws ServiceException;
 
@@ -27,6 +28,4 @@ public interface StudentService {
     ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException;
 
     void sendCertificate(StudentDTO studentDTO, int courseId, int grade) throws ValidateException, ServiceException;
-
-    int getNoOfRecordsCourses();
 }

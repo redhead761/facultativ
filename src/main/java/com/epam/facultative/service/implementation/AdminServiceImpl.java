@@ -59,7 +59,8 @@ public class AdminServiceImpl implements AdminService {
         List<Student> students;
         EmailSender emailSender = AppContext.getAppContext().getEmailSender();
         try {
-            students = studentDao.getStudentsByCourse(courseId, 0, Integer.MAX_VALUE);
+            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getStudentsByCourse(courseId, 0, Integer.MAX_VALUE);
+            students = studentsWithRows.getValue();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -110,18 +111,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<CategoryDTO> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException {
         try {
-            List<Category> categories = categoryDao.getAllPagination(offset, numberOfRows);
-            return prepareCategories(categories);
+            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAllPagination(offset, numberOfRows);
+            List<CategoryDTO> categories = prepareCategories(categoriesWithRows.getValue());
+            return Map.entry(categoriesWithRows.getKey(), categories);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public int getNoOfRecordsCategories() {
-        return categoryDao.getNoOfRecords();
     }
 
     @Override
@@ -171,20 +168,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<StudentDTO> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
+    public Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<Student> students = studentDao.getAllPagination(offset, noOfRecords);
-            return prepareStudents(students);
+            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getAllPagination(offset, noOfRecords);
+            List<StudentDTO> students = prepareStudents(studentsWithRows.getValue());
+            return Map.entry(studentsWithRows.getKey(), students);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<TeacherDTO> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
+    public Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
         try {
-            List<Teacher> teachers = teacherDao.getAllPagination(offset, noOfRecords);
-            return prepareTeachers(teachers);
+            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAllPagination(offset, noOfRecords);
+            List<TeacherDTO> teachers = prepareTeachers(teachersWithRows.getValue());
+            return Map.entry(teachersWithRows.getKey(), teachers);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -218,16 +217,6 @@ public class AdminServiceImpl implements AdminService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public int getNoOfRecordsTeachers() {
-        return teacherDao.getNoOfRecords();
-    }
-
-    @Override
-    public int getNoOfRecordsStudents() {
-        return studentDao.getNoOfRecords();
     }
 
 }

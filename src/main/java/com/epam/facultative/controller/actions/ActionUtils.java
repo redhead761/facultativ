@@ -1,12 +1,17 @@
 package com.epam.facultative.controller.actions;
 
+import com.epam.facultative.data_layer.entities.Category;
+import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
+import com.epam.facultative.dto.StudentDTO;
+import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.GeneralService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import static com.epam.facultative.controller.actions.ActionNameConstants.CONTROLLER;
@@ -41,16 +46,18 @@ public class ActionUtils {
     public static void setUpPaginationForAllCategories(HttpServletRequest req, AdminService adminService) throws ServiceException {
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
-        req.setAttribute("categories", adminService.getAllCategoriesPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsCategories();
+        Map.Entry<Integer, List<CategoryDTO>> categoriesWithRows = adminService.getAllCategoriesPagination((currentPage - 1) * recordsPerPage, recordsPerPage);
+        req.setAttribute("categories", categoriesWithRows.getValue());
+        int noOfRecords = categoriesWithRows.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
     public static void setUpPaginationForAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
-        req.setAttribute("courses", generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = generalService.getNoOfRecordsCourses();
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage);
+        req.setAttribute("courses", coursesWithRows.getValue());
+        int noOfRecords = coursesWithRows.getKey();
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
@@ -59,16 +66,18 @@ public class ActionUtils {
     public static void setUpPaginationForAllStudents(HttpServletRequest req, AdminService adminService) throws ServiceException {
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
-        req.setAttribute("students", adminService.getAllStudentsPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsStudents();
+        Map.Entry<Integer, List<StudentDTO>> studentsWithRows = adminService.getAllStudentsPagination((currentPage - 1) * recordsPerPage, recordsPerPage);
+        req.setAttribute("students", studentsWithRows.getValue());
+        int noOfRecords = studentsWithRows.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
     public static void setUpPaginationForAllTeachers(HttpServletRequest req, AdminService adminService) throws ServiceException {
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
-        req.setAttribute("teachers", adminService.getAllTeachersPagination((currentPage - 1) * recordsPerPage, recordsPerPage));
-        int noOfRecords = adminService.getNoOfRecordsTeachers();
+        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = adminService.getAllTeachersPagination((currentPage - 1) * recordsPerPage, recordsPerPage);
+        req.setAttribute("teachers", teachersWithRows.getValue());
+        int noOfRecords = teachersWithRows.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
@@ -89,19 +98,19 @@ public class ActionUtils {
         req.setAttribute("sort_type", sortType);
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
-        List<CourseDTO> courses = null;
+        Map.Entry<Integer, List<CourseDTO>> coursesWithROws = null;
         switch (sortType) {
             case "alphabet" ->
-                    courses = generalService.sortCoursesByAlphabet((currentPage - 1) * recordsPerPage, recordsPerPage);
+                    coursesWithROws = generalService.sortCoursesByAlphabet((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "reverse alphabet" ->
-                    courses = generalService.sortCoursesByAlphabetReverse((currentPage - 1) * recordsPerPage, recordsPerPage);
+                    coursesWithROws = generalService.sortCoursesByAlphabetReverse((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "duration" ->
-                    courses = generalService.sortCoursesByDuration((currentPage - 1) * recordsPerPage, recordsPerPage);
+                    coursesWithROws = generalService.sortCoursesByDuration((currentPage - 1) * recordsPerPage, recordsPerPage);
             case "amount students" ->
-                    courses = generalService.sortCoursesByAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
+                    coursesWithROws = generalService.sortCoursesByAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
         }
-        req.setAttribute("courses", courses);
-        int noOfRecords = generalService.getNoOfRecordsCourses();
+        req.setAttribute("courses", coursesWithROws.getValue());
+        int noOfRecords = coursesWithROws.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());
@@ -112,21 +121,21 @@ public class ActionUtils {
         req.setAttribute("select_type", selectType);
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
-        List<CourseDTO> courses = null;
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = null;
         switch (selectType) {
             case "by_teacher" -> {
                 int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
                 req.setAttribute("teacher_id", teacherId);
-                courses = generalService.getCoursesByTeacher(teacherId, (currentPage - 1) * recordsPerPage, recordsPerPage);
+                coursesWithRows = generalService.getCoursesByTeacher(teacherId, (currentPage - 1) * recordsPerPage, recordsPerPage);
             }
             case "by_category" -> {
                 int categoryId = Integer.parseInt(req.getParameter("category_id"));
                 req.setAttribute("category_id", categoryId);
-                courses = generalService.getCoursesByCategory(categoryId, (currentPage - 1) * recordsPerPage, recordsPerPage);
+                coursesWithRows = generalService.getCoursesByCategory(categoryId, (currentPage - 1) * recordsPerPage, recordsPerPage);
             }
         }
-        req.setAttribute("courses", courses);
-        int noOfRecords = generalService.getNoOfRecordsCourses();
+        req.setAttribute("courses", coursesWithRows.getValue());
+        int noOfRecords = coursesWithRows.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
         req.setAttribute("teachers", generalService.getAllTeachers());
         req.setAttribute("categories", generalService.getAllCategories());

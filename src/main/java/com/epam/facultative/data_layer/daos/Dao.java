@@ -4,6 +4,7 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface Dao<T> {
@@ -19,8 +20,6 @@ public interface Dao<T> {
 
     void delete(int id) throws DAOException;
 
-    List<T> getAllPagination(int offset, int numberOfRows) throws DAOException;
-
-    int getNoOfRecords();
+    Map.Entry<Integer,List<T>> getAllPagination(int offset, int numberOfRows) throws DAOException;
 }
 

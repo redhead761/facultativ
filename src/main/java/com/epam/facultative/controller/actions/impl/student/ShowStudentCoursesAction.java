@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
@@ -28,28 +29,28 @@ public class ShowStudentCoursesAction implements Action {
         int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
         String type = req.getParameter(TYPE);
-        List<CourseDTO> courses = null;
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = null;
         String path = null;
         switch (type) {
             case "all" -> {
-                courses = studentService.getCoursesByStudent(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                coursesWithRows = studentService.getCoursesByStudent(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
                 path = STUDENT_COURSES_PAGE;
             }
             case "coming_soon" -> {
-                courses = studentService.getCoursesComingSoon(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                coursesWithRows = studentService.getCoursesComingSoon(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
                 path = COMING_SOON_COURSES_PAGE;
             }
             case "completed" -> {
-                courses = studentService.getCoursesCompleted(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                coursesWithRows = studentService.getCoursesCompleted(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
                 path = COMPLETED_COURSES_PAGE;
             }
             case "in_progress" -> {
-                courses = studentService.getCoursesInProgress(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                coursesWithRows = studentService.getCoursesInProgress(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
                 path = IN_PROGRESS_COURSES_PAGE;
             }
         }
-        req.setAttribute(COURSES, courses);
-        int noOfRecords = studentService.getNoOfRecordsCourses();
+        req.setAttribute(COURSES, coursesWithRows.getValue());
+        int noOfRecords = coursesWithRows.getKey();
         ActionUtils.setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
         return path;
     }

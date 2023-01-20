@@ -20,21 +20,6 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public List<User> getAll() throws DAOException {
-        List<User> users = new ArrayList<>();
-        try (Connection con = dataSource.getConnection();
-             Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SQLRequestConstants.SELECT_All_USERS);
-            while (rs.next()) {
-                users.add(mapRow(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return users;
-    }
-
-    @Override
     public Optional<User> getById(int id) throws DAOException {
         User user = null;
         try (Connection con = dataSource.getConnection();

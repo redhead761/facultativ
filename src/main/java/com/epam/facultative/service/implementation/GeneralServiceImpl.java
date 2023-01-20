@@ -141,20 +141,22 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<CategoryDTO> getAllCategories() throws ServiceException {
+    public Map.Entry<Integer, List<CategoryDTO>> getAllCategories() throws ServiceException {
         try {
-            List<Category> categories = categoryDao.getAll();
-            return prepareCategories(categories);
+            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAllPagination(0, Integer.MAX_VALUE);
+            List<CategoryDTO> categoryDTOS = prepareCategories(categoriesWithRows.getValue());
+            return Map.entry(categoriesWithRows.getKey(), categoryDTOS);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<TeacherDTO> getAllTeachers() throws ServiceException {
+    public Map.Entry<Integer, List<TeacherDTO>> getAllTeachers() throws ServiceException {
         try {
-            List<Teacher> teachers = teacherDao.getAll();
-            return prepareTeachers(teachers);
+            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAllPagination(0, Integer.MAX_VALUE);
+            List<TeacherDTO> teacherDTOS = prepareTeachers(teachersWithRows.getValue());
+            return Map.entry(teachersWithRows.getKey(), teacherDTOS);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

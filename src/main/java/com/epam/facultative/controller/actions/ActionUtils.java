@@ -58,8 +58,8 @@ public class ActionUtils {
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses((currentPage - 1) * recordsPerPage, recordsPerPage);
         req.setAttribute("courses", coursesWithRows.getValue());
         int noOfRecords = coursesWithRows.getKey();
-        req.setAttribute("teachers", generalService.getAllTeachers());
-        req.setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
+        req.setAttribute("categories", generalService.getAllCategories().getValue());
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
@@ -112,8 +112,8 @@ public class ActionUtils {
         req.setAttribute("courses", coursesWithROws.getValue());
         int noOfRecords = coursesWithROws.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-        req.setAttribute("teachers", generalService.getAllTeachers());
-        req.setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
+        req.setAttribute("categories", generalService.getAllCategories().getValue());
     }
 
     private static void select(HttpServletRequest req, GeneralService generalService) throws ServiceException {
@@ -137,8 +137,8 @@ public class ActionUtils {
         req.setAttribute("courses", coursesWithRows.getValue());
         int noOfRecords = coursesWithRows.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-        req.setAttribute("teachers", generalService.getAllTeachers());
-        req.setAttribute("categories", generalService.getAllCategories());
+        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
+        req.setAttribute("categories", generalService.getAllCategories().getValue());
     }
 
     public static String getGetAction(String action, String... parameters) {

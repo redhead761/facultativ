@@ -112,7 +112,7 @@
             <td>
                 <div class="row">
                     <div class="col-md-auto">
-                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                        <form action="${pageContext.request.contextPath}/controller" method="get">
                             <input type="hidden" name="action" value="show_edit_course"/>
                             <input type="hidden" name="course_id" value="${course.id}"/>
 

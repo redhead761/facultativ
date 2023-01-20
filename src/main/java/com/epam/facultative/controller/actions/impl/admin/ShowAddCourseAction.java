@@ -19,7 +19,7 @@ public class ShowAddCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        req.setAttribute(CATEGORIES, generalService.getAllCategories());
+        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
         return ADD_COURSE_PAGE;
     }
 }

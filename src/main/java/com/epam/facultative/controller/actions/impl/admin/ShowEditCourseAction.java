@@ -35,8 +35,8 @@ public class ShowEditCourseAction implements Action {
             req.getSession().setAttribute(MESSAGE, e.getMessage());
         }
         req.getSession().setAttribute(COURSE, course);
-        req.setAttribute(CATEGORIES, generalService.getAllCategories());
-        req.setAttribute(TEACHERS, generalService.getAllTeachers());
+        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
+        req.setAttribute(TEACHERS, generalService.getAllTeachers().getValue());
         return EDIT_COURSE_PAGE;
     }
 }

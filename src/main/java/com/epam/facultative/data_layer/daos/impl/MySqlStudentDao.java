@@ -25,21 +25,6 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public List<Student> getAll() throws DAOException {
-        List<Student> students = new ArrayList<>();
-        try (Connection con = dataSource.getConnection();
-             Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SELECT_ALL_STUDENTS);
-            while (rs.next()) {
-                students.add(mapRow(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return students;
-    }
-
-    @Override
     public Optional<Student> getById(int id) throws DAOException {
         Student student = null;
         try (Connection con = dataSource.getConnection();

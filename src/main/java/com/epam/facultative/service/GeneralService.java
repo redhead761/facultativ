@@ -1,5 +1,6 @@
 package com.epam.facultative.service;
 
+import com.epam.facultative.data_layer.entities.Category;
 import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
@@ -30,9 +31,9 @@ public interface GeneralService {
 
     Map.Entry<Integer, List<CourseDTO>> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException;
 
-    List<CategoryDTO> getAllCategories() throws ServiceException;
+    Map.Entry<Integer, List<CategoryDTO>> getAllCategories() throws ServiceException;
 
-    List<TeacherDTO> getAllTeachers() throws ServiceException;
+    Map.Entry<Integer, List<TeacherDTO>> getAllTeachers() throws ServiceException;
 
     ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException;
 

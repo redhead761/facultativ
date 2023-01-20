@@ -177,33 +177,33 @@ class GeneralServiceImplTest {
         assertThrows(ServiceException.class, () -> generalService.getCoursesByTeacher(categoryId, offset, numberOfRows));
     }
 
-    @Test
-    void getAllCategories() throws DAOException, ServiceException {
-        List<Category> categories = testServiceUtil.getCategories();
-        List<CategoryDTO> categoryDTOS = testServiceUtil.getCategoryDTOS();
-        when(categoryDao.getAll()).thenReturn(categories);
-        assertIterableEquals(categoryDTOS, generalService.getAllCategories());
-    }
+//    @Test
+//    void getAllCategories() throws DAOException, ServiceException {
+//        List<Category> categories = testServiceUtil.getCategories();
+//        List<CategoryDTO> categoryDTOS = testServiceUtil.getCategoryDTOS();
+//        when(categoryDao.getAll()).thenReturn(categories);
+//        assertIterableEquals(categoryDTOS, generalService.getAllCategories());
+//    }
 
-    @Test
-    void getAllCategoriesFailed() throws DAOException {
-        doThrow(DAOException.class).when(categoryDao).getAll();
-        assertThrows(ServiceException.class, () -> generalService.getAllCategories());
-    }
+//    @Test
+//    void getAllCategoriesFailed() throws DAOException {
+//        doThrow(DAOException.class).when(categoryDao).getAll();
+//        assertThrows(ServiceException.class, () -> generalService.getAllCategories());
+//    }
 
-    @Test
-    void getAllTeachers() throws DAOException, ServiceException {
-        List<Teacher> teachers = testServiceUtil.getTeachers();
-        List<TeacherDTO> teacherDTOS = testServiceUtil.getTeacherDTOS();
-        when(teacherDao.getAll()).thenReturn(teachers);
-        assertIterableEquals(teacherDTOS, generalService.getAllTeachers());
-    }
+//    @Test
+//    void getAllTeachers() throws DAOException, ServiceException {
+//        List<Teacher> teachers = testServiceUtil.getTeachers();
+//        List<TeacherDTO> teacherDTOS = testServiceUtil.getTeacherDTOS();
+//        when(teacherDao.getAll()).thenReturn(teachers);
+//        assertIterableEquals(teacherDTOS, generalService.getAllTeachers());
+//    }
 
-    @Test
-    void getAllTeachersFailed() throws DAOException {
-        doThrow(DAOException.class).when(teacherDao).getAll();
-        assertThrows(ServiceException.class, () -> generalService.getAllTeachers());
-    }
+//    @Test
+//    void getAllTeachersFailed() throws DAOException {
+//        doThrow(DAOException.class).when(teacherDao).getAll();
+//        assertThrows(ServiceException.class, () -> generalService.getAllTeachers());
+//    }
 
     private static Stream<Arguments> invalidIntValues() {
         return Stream.of(

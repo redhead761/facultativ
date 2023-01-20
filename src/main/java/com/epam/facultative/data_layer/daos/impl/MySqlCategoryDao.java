@@ -22,21 +22,6 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public List<Category> getAll() throws DAOException {
-        List<Category> categories = new ArrayList<>();
-        try (Connection con = dataSource.getConnection();
-             Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SQLRequestConstants.SELECT_All_CATEGORIES);
-            while (rs.next()) {
-                categories.add(mapRow(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return categories;
-    }
-
-    @Override
     public Optional<Category> getById(int id) throws DAOException {
         Category category = null;
         try (Connection con = dataSource.getConnection();

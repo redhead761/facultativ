@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface Dao<T> {
-    List<T> getAll() throws DAOException;
-
     Optional<T> getById(int id) throws DAOException;
 
     Optional<T> getByName(String name) throws DAOException;

@@ -22,21 +22,6 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public List<Course> getAll() throws DAOException {
-        List<Course> courses = new ArrayList<>();
-        try (Connection con = dataSource.getConnection();
-             Statement stmt = con.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SELECT_All_COURSES);
-            while (rs.next()) {
-                courses.add(mapRowCourse(rs));
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return courses;
-    }
-
-    @Override
     public Optional<Course> getById(int id) throws DAOException {
         Course course = null;
         try (Connection con = dataSource.getConnection();

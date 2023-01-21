@@ -116,54 +116,6 @@ public class ActionUtils {
         req.setAttribute("categories", generalService.getAllCategories().getValue());
     }
 
-//    private static void sort(HttpServletRequest req, GeneralService generalService) throws ServiceException {
-//        String sortType = req.getParameter("sort_type");
-//        req.setAttribute("sort_type", sortType);
-//        int currentPage = getCurrentPage(req);
-//        int recordsPerPage = getRecordsPerPage(req);
-//        Map.Entry<Integer, List<CourseDTO>> coursesWithROws = null;
-//        switch (sortType) {
-//            case "alphabet" ->
-//                    coursesWithROws = generalService.sortCoursesByAlphabet((currentPage - 1) * recordsPerPage, recordsPerPage);
-//            case "reverse alphabet" ->
-//                    coursesWithROws = generalService.sortCoursesByAlphabetReverse((currentPage - 1) * recordsPerPage, recordsPerPage);
-//            case "duration" ->
-//                    coursesWithROws = generalService.sortCoursesByDuration((currentPage - 1) * recordsPerPage, recordsPerPage);
-//            case "amount students" ->
-//                    coursesWithROws = generalService.sortCoursesByAmountOfStudents((currentPage - 1) * recordsPerPage, recordsPerPage);
-//        }
-//        req.setAttribute("courses", coursesWithROws.getValue());
-//        int noOfRecords = coursesWithROws.getKey();
-//        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-//        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
-//        req.setAttribute("categories", generalService.getAllCategories().getValue());
-//    }
-
-//    private static void select(HttpServletRequest req, GeneralService generalService) throws ServiceException {
-//        String selectType = req.getParameter("select_type");
-//        req.setAttribute("select_type", selectType);
-//        int currentPage = getCurrentPage(req);
-//        int recordsPerPage = getRecordsPerPage(req);
-//        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = null;
-//        switch (selectType) {
-//            case "by_teacher" -> {
-//                int teacherId = Integer.parseInt(req.getParameter("teacher_id"));
-//                req.setAttribute("teacher_id", teacherId);
-//                coursesWithRows = generalService.getCoursesByTeacher(teacherId, (currentPage - 1) * recordsPerPage, recordsPerPage);
-//            }
-//            case "by_category" -> {
-//                int categoryId = Integer.parseInt(req.getParameter("category_id"));
-//                req.setAttribute("category_id", categoryId);
-//                coursesWithRows = generalService.getCoursesByCategory(categoryId, (currentPage - 1) * recordsPerPage, recordsPerPage);
-//            }
-//        }
-//        req.setAttribute("courses", coursesWithRows.getValue());
-//        int noOfRecords = coursesWithRows.getKey();
-//        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-//        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
-//        req.setAttribute("categories", generalService.getAllCategories().getValue());
-//    }
-
     public static String getGetAction(String action, String... parameters) {
         String base = CONTROLLER + action;
         StringJoiner stringJoiner = new StringJoiner("&", "&", "");

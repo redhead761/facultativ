@@ -18,6 +18,6 @@ public interface Dao<T> {
 
     void delete(int id) throws DAOException;
 
-    Map.Entry<Integer,List<T>> getAllPagination(int offset, int numberOfRows) throws DAOException;
+    Map.Entry<Integer, List<T>> getAll(String param) throws DAOException;
 }
 

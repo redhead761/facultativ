@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class MySqlCategoryDao implements CategoryDao {
@@ -25,7 +26,7 @@ public class MySqlCategoryDao implements CategoryDao {
     public Optional<Category> getById(int id) throws DAOException {
         Category category = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_CATEGORY_BY_ID)) {
+             PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_ID)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -41,7 +42,7 @@ public class MySqlCategoryDao implements CategoryDao {
     public Optional<Category> getByName(String name) throws DAOException {
         Category category = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_CATEGORY_BY_TITLE)) {
+             PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_TITLE)) {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -56,7 +57,7 @@ public class MySqlCategoryDao implements CategoryDao {
     @Override
     public void add(Category category) throws DAOException, ValidateException {
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.INSERT_CATEGORY)) {
+             PreparedStatement stmt = con.prepareStatement(INSERT_CATEGORY)) {
             setStatementFields(category, stmt);
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -69,7 +70,7 @@ public class MySqlCategoryDao implements CategoryDao {
     @Override
     public void update(Category category) throws DAOException, ValidateException {
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.UPDATE_CATEGORY)) {
+             PreparedStatement stmt = con.prepareStatement(UPDATE_CATEGORY)) {
             stmt.setString(setStatementFields(category, stmt), String.valueOf(category.getId()));
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -91,20 +92,17 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public Map.Entry<Integer, List<Category>> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Category>> getAll(String param) throws DAOException {
         List<Category> categories = new ArrayList<>();
         int noOfRecords = 0;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_ALL_CATEGORIES_PAGINATION)) {
-            int k = 0;
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                categories.add(mapRow(rs));
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_CATEGORIES_PAGINATION, param))) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    categories.add(mapRow(rs));
+                }
             }
-            rs.close();
-            rs = stmt.executeQuery(SQLRequestConstants.SELECT_FOUND_ROWS);
+            ResultSet rs = stmt.executeQuery(SELECT_FOUND_ROWS);
             if (rs.next()) {
                 noOfRecords = rs.getInt(1);
             }

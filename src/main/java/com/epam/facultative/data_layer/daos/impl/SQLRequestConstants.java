@@ -16,7 +16,7 @@ class SQLRequestConstants {
     static final String INSERT_CATEGORY = "INSERT INTO category VALUES (DEFAULT,?,?)";
     static final String DELETE_CATEGORY = "DELETE FROM category WHERE id=?";
     static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM category WHERE title=?";
-    static final String SELECT_ALL_CATEGORIES_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM category LIMIT ?,?";
+    static final String SELECT_ALL_CATEGORIES_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM category %s";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -32,7 +32,7 @@ class SQLRequestConstants {
             "SELECT * FROM teacher JOIN user ON user_id = user.id WHERE user.login = ?";
     static final String DELETE_TEACHER = "DELETE FROM teacher WHERE user_id=?";
     static final String SELECT_ALL_TEACHERS_PAGINATION =
-            "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id LIMIT ?,?";
+            "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id %s";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
@@ -48,7 +48,7 @@ class SQLRequestConstants {
             "SELECT * FROM student JOIN user ON user_id = user.id WHERE user.login =?";
     static final String DELETE_STUDENT = "DELETE FROM student WHERE user_id=?";
     static final String SELECT_ALL_STUDENTS_PAGINATION =
-            "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id LIMIT ?,?";
+            "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id %s";
     static final String SELECT_STUDENTS_BY_COURSE =
             "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id JOIN journal ON student_id = user_id WHERE course_id = ? LIMIT ?,?";
     static final String UPDATE_BLOCK = "UPDATE student SET block=? WHERE user_id=?";
@@ -108,7 +108,7 @@ class SQLRequestConstants {
     static final String SELECT_ALL_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id" +
-                    " LEFT JOIN user ON teacher.user_id = user.id LIMIT ?,?";
+                    " LEFT JOIN user ON teacher.user_id = user.id %s";
 
     static final String INSERT_JOURNAL = "INSERT INTO journal VALUES(?,?,DEFAULT)";
     static final String UPDATE_JOURNAL = "UPDATE journal SET grade=? WHERE course_id=? AND student_id=?";

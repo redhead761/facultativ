@@ -27,48 +27,62 @@
 </div>
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
-        <caption>
-            <form action="${pageContext.request.contextPath}/controller" method="get">
-                <input type="hidden" name="action" value="courses"/>
-                <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
+<%--        <caption>--%>
+            <div class="row">
+                <form action="${pageContext.request.contextPath}/controller" method="get">
+                    <input type="hidden" name="action" value="courses"/>
+                    <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
 
+                    <div class="col-md-auto">
+                        <select name="sort" class="form-select form-select-lg mb-3">
+                            <option disabled selected value=""><fmt:message key="sort"/></option>
+                            <option value="course.title"><fmt:message key="alphabetical"/></option>
+                            <option value="course.duration"><fmt:message key="duration"/></option>
+                            <option value="course.amount_students"><fmt:message key="amount.students"/></option>
+                        </select>
+                    </div>
 
-                <select name="sort" class="form-select form-select-lg mb-3">
-                    <option disabled selected value=""><fmt:message key="sort"/></option>
-                    <option value="course.title"><fmt:message key="alphabetical"/></option>
-                    <option value="course.duration"><fmt:message key="duration"/></option>
-                    <option value="course.amount_students"><fmt:message key="amount.students"/></option>
-                </select>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="DESC" id="flexCheckDefault"
-                           name="order">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        <fmt:message key="reverse"/>
-                    </label>
+                    <div class="col-md-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="DESC" id="flexCheckDefault"
+                                   name="order">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                <fmt:message key="reverse"/>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <select name="select_by_teacher" class="form-select form-select-lg mb-3">
+                            <option disabled selected value=""><fmt:message key="select.by.teacher"/></option>
+                            <c:forEach var="teacher" items="${requestScope.teachers}">
+                                <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <select name="select_by_category" class="form-select form-select-lg mb-3">
+                            <option disabled selected value=""><fmt:message key="select.by.category"/></option>
+                            <c:forEach var="category" items="${requestScope.categories}">
+                                <option value="${category.id}">${category.title}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <div class="mt-4 pt-2">
+                            <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-md-auto">
+                    <a class="btn btn-outline-secondary justify-content-end"
+                       href="${pageContext.request.contextPath}/controller?action=download_courses"
+                       role="button"><fmt:message key="download.courses"/></a>
                 </div>
-
-                <select name="select_by_teacher" class="form-select form-select-lg mb-3">
-                    <option disabled selected value=""><fmt:message key="select.by.teacher"/></option>
-                    <c:forEach var="teacher" items="${requestScope.teachers}">
-                        <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
-                    </c:forEach>
-                </select>
-
-                <select name="select_by_category" class="form-select form-select-lg mb-3">
-                    <option disabled selected value=""><fmt:message key="select.by.category"/></option>
-                    <c:forEach var="category" items="${requestScope.categories}">
-                        <option value="${category.id}">${category.title}</option>
-                    </c:forEach>
-                </select>
-
-                <div class="mt-4 pt-2">
-                    <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
-                </div>
-            </form>
-            <a class="btn btn-outline-secondary justify-content-end"
-               href="${pageContext.request.contextPath}/controller?action=download_courses"
-               role="button"><fmt:message key="download.courses"/></a>
-        </caption>
+            </div>
+<%--        </caption>--%>
         <thead>
         <th scope="col"><fmt:message key="title"/></th>
         <th scope="col"><fmt:message key="duration"/></th>

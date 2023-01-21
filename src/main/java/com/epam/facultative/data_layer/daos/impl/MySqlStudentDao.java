@@ -127,12 +127,11 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public Map.Entry<Integer, List<Student>> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Student>> getAll(String param) throws DAOException {
         List<Student> students = new ArrayList<>();
         int noOfRecords;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_ALL_STUDENTS_PAGINATION)) {
-            setLimitRows(stmt, offset, numberOfRows, 0);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_STUDENTS_PAGINATION, param))) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     students.add(mapRow(rs));

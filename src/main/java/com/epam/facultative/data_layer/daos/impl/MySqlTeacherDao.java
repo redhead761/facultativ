@@ -126,20 +126,17 @@ public class MySqlTeacherDao implements TeacherDao {
     }
 
     @Override
-    public Map.Entry<Integer, List<Teacher>> getAllPagination(int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Teacher>> getAll(String param) throws DAOException {
         List<Teacher> teachers = new ArrayList<>();
         int noOfRecords = 0;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_ALL_TEACHERS_PAGINATION)) {
-            int k = 0;
-            stmt.setInt(++k, offset);
-            stmt.setInt(++k, numberOfRows);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                teachers.add(mapRow(rs));
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_TEACHERS_PAGINATION, param))) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    teachers.add(mapRow(rs));
+                }
             }
-            rs.close();
-            rs = stmt.executeQuery(SELECT_FOUND_ROWS);
+            ResultSet rs = stmt.executeQuery(SELECT_FOUND_ROWS);
             if (rs.next()) {
                 noOfRecords = rs.getInt(1);
             }

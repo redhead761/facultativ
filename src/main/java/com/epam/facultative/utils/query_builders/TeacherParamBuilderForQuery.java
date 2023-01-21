@@ -5,7 +5,7 @@ import java.util.Set;
 
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 
-public class TeacherQueryBuilder extends QueryBuilder {
+public class TeacherParamBuilderForQuery extends ParamBuilderForQuery {
     private static final Set<String> TEACHER_SORT_FIELDS = new HashSet<>();
 
     static {

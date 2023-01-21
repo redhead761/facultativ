@@ -17,26 +17,11 @@ public interface GeneralService {
 
     UserDTO authorization(String login, String password) throws ServiceException, ValidateException;
 
-    Map.Entry<Integer, List<CourseDTO>> getAllCourses(int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> sortCoursesByAlphabet(int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> sortCoursesByAlphabetReverse(int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> sortCoursesByDuration(int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> sortCoursesByAmountOfStudents(int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> getCoursesByCategory(int categoryId, int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> getCoursesByTeacher(int teacherId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CourseDTO>> getAllCourses(String param) throws ServiceException;
 
     Map.Entry<Integer, List<CategoryDTO>> getAllCategories() throws ServiceException;
 
     Map.Entry<Integer, List<TeacherDTO>> getAllTeachers() throws ServiceException;
 
     ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException;
-
-    public Map.Entry<Integer, List<CourseDTO>> getTest(String param) throws ServiceException;
-
 }

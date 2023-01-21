@@ -6,7 +6,7 @@ import java.util.Set;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.USER_LOGIN;
 
-public class StudentQueryBuilder extends QueryBuilder {
+public class StudentParamBuilderForQuery extends ParamBuilderForQuery {
     private static final Set<String> STUDENT_SORT_FIELDS = new HashSet<>();
     static {
         STUDENT_SORT_FIELDS.add(STUDENT_COURSE_NUMBER);

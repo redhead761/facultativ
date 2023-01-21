@@ -111,9 +111,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(String param) throws ServiceException {
         try {
-            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAllPagination(offset, numberOfRows);
+            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAll(param);
             List<CategoryDTO> categories = prepareCategories(categoriesWithRows.getValue());
             return Map.entry(categoriesWithRows.getKey(), categories);
         } catch (DAOException e) {
@@ -168,9 +168,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException {
+    public Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(String param) throws ServiceException {
         try {
-            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getAllPagination(offset, noOfRecords);
+            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getAll(param);
             List<StudentDTO> students = prepareStudents(studentsWithRows.getValue());
             return Map.entry(studentsWithRows.getKey(), students);
         } catch (DAOException e) {
@@ -179,9 +179,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException {
+    public Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(String param) throws ServiceException {
         try {
-            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAllPagination(offset, noOfRecords);
+            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAll(param);
             List<TeacherDTO> teachers = prepareTeachers(teachersWithRows.getValue());
             return Map.entry(teachersWithRows.getKey(), teachers);
         } catch (DAOException e) {

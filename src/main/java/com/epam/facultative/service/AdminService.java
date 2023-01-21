@@ -27,7 +27,7 @@ public interface AdminService {
 
     void deleteCategory(int categoryId) throws ServiceException;
 
-    Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(String param) throws ServiceException;
 
     //User
     void assigned(int idCourse, int idUser) throws ServiceException, ValidateException;
@@ -38,9 +38,9 @@ public interface AdminService {
 
     void addTeacher(TeacherDTO teacherDTO) throws ServiceException, ValidateException;
 
-    Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(int offset, int noOfRecords) throws ServiceException;
+    Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(String param) throws ServiceException;
 
-    Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(int offset, int noOfRecords) throws ServiceException;
+    Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(String param) throws ServiceException;
 
     CategoryDTO getCategory(int id) throws ServiceException, ValidateException;
 

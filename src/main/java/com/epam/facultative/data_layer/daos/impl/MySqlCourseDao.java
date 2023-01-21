@@ -200,6 +200,26 @@ public class MySqlCourseDao implements CourseDao {
         return Map.entry(noOfRecords, courses);
     }
 
+    public Map.Entry<Integer, List<Course>> getTest(String param) throws DAOException {
+        String query = "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
+                "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
+                "LEFT JOIN user ON teacher.user_id = user.id %s";
+        List<Course> courses = new ArrayList<>();
+        int noOfRecords;
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(String.format(query, param))) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    courses.add(mapRowCourse(rs));
+                }
+            }
+            noOfRecords = setFoundRows(stmt);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return Map.entry(noOfRecords, courses);
+    }
+
     @Override
     public Map.Entry<Integer, List<Course>> getAllSortPagination(int offset, int numberOfRows, String sortBy) throws DAOException {
         List<Course> courses = new ArrayList<>();

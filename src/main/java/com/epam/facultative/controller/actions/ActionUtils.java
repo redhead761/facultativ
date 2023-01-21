@@ -21,7 +21,7 @@ public class ActionUtils {
     }
 
     public static int getCurrentPage(HttpServletRequest req) {
-        if (req.getParameter("page") != null) {
+        if (req.getParameter("page") != null && !req.getParameter("page").isBlank()) {
             return Integer.parseInt(req.getParameter("page"));
         } else {
             return 1;
@@ -29,7 +29,7 @@ public class ActionUtils {
     }
 
     public static int getRecordsPerPage(HttpServletRequest req) {
-        if (req.getParameter("records_per_page") != null) {
+        if (req.getParameter("records_per_page") != null && !req.getParameter("records_per_page").isBlank()) {
             return Integer.parseInt(req.getParameter("records_per_page"));
         } else {
             return 5;

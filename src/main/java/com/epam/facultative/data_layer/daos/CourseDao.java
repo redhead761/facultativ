@@ -22,4 +22,6 @@ public interface CourseDao extends Dao<Course> {
 
     void updateJournal(int courseId, int studentId, int grade) throws DAOException;
 
+    public Map.Entry<Integer, List<Course>> getTest(String param) throws DAOException;
+
 }

@@ -120,7 +120,6 @@
                                             <option value="${category.id}">${category.title}</option>
                                         </c:forEach>
                                     </select>
-
                                 </div>
                             </div>
 

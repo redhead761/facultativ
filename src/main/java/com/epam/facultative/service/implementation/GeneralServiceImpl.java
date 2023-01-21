@@ -169,4 +169,14 @@ public class GeneralServiceImpl implements GeneralService {
         PdfCreator pdfCreator = new PdfCreator();
         return pdfCreator.createCoursesPdf(courses, locale);
     }
+
+    public Map.Entry<Integer, List<CourseDTO>> getTest(String param) throws ServiceException {
+        try {
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getTest(param);
+            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
+            return Map.entry(coursesWithRows.getKey(), courses);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

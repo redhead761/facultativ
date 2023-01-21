@@ -37,4 +37,6 @@ public interface GeneralService {
 
     ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException;
 
+    public Map.Entry<Integer, List<CourseDTO>> getTest(String param) throws ServiceException;
+
 }

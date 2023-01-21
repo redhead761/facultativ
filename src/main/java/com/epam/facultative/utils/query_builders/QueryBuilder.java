@@ -10,7 +10,7 @@ public abstract class QueryBuilder {
     private final List<String> filters = new ArrayList<>();
     private String sortField;
     private String order = "ASC";
-    private int offset = 0;
+    private int offset = 1;
     private int records = 5;
 
     public QueryBuilder setSortFieldForCourse(String sortField) {
@@ -55,22 +55,21 @@ public abstract class QueryBuilder {
         return this;
     }
 
-    public QueryBuilder setAscOrder() {
-        this.order = "ASC";
-        return this;
-    }
-
-    public QueryBuilder setDescOrder() {
-        this.order = "DESC";
+    public QueryBuilder setOrder(String order) {
+        if (order != null && order.equalsIgnoreCase("DESC")) {
+            this.order = "DESC";
+        }
         return this;
     }
 
     public QueryBuilder setLimits(String offset, String records) {
         if (offset != null && isPositiveInt(offset)) {
             this.offset = Integer.parseInt(offset);
+            System.out.println("Limit in builder =" + offset);
         }
         if (records != null && isPositiveInt(records)) {
             this.records = Integer.parseInt(records);
+            System.out.println("Records in builder =" + records);
         }
         return this;
     }
@@ -80,7 +79,7 @@ public abstract class QueryBuilder {
     }
 
     private String getLimitQuery() {
-        return " LIMIT " + offset + "," + records;
+        return " LIMIT " + (offset - 1) * records + "," + records;
     }
 
     private String getSortQuery() {

@@ -28,53 +28,43 @@
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSort"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <fmt:message key="sort"/>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=alphabet"><fmt:message
-                        key="alphabetical"/></a>
-                </li>
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=reverse alphabet">
-                    <fmt:message key="reverse.alphabetical"/></a></li>
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=duration"><fmt:message
-                        key="duration"/></a>
-                </li>
-                <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&sort_type=amount students">
-                    <fmt:message key="amount.students"/></a></li>
-            </ul>
+            <form action="${pageContext.request.contextPath}/controller" method="get">
+                <input type="hidden" name="action" value="courses"/>
+                <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
 
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByTeacher"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <fmt:message key="select.by.teacher"/>
-            </button>
-            <ul class="dropdown-menu">
-                <c:forEach var="teacher" items="${requestScope.teachers}">
-                    <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=courses&select_type=by_teacher&teacher_id=${teacher.id}&records_per_page=${requestScope.records_per_page}">${teacher.name} ${teacher.surname}</a>
-                    </li>
-                </c:forEach>
-            </ul>
 
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuSelectByCategory"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                <fmt:message key="select.by.category"/>
-            </button>
-            <ul class="dropdown-menu">
-                <c:forEach var="category" items="${requestScope.categories}">
-                    <li><a class="dropdown-item"
-                           href="${pageContext.request.contextPath}/controller?action=courses&select_type=by_category&category_id=${category.id}&records_per_page=${requestScope.records_per_page}">${category.title}</a>
-                    </li>
-                </c:forEach>
-            </ul>
+                <select name="sort" class="form-select form-select-lg mb-3">
+                    <option disabled selected value=""><fmt:message key="sort"/></option>
+                    <option value="course.title"><fmt:message key="alphabetical"/></option>
+                    <option value="course.duration"><fmt:message key="duration"/></option>
+                    <option value="course.amount_students"><fmt:message key="amount.students"/></option>
+                </select>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="DESC" id="flexCheckDefault"
+                           name="order">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <fmt:message key="reverse"/>
+                    </label>
+                </div>
+
+                <select name="select_by_teacher" class="form-select form-select-lg mb-3">
+                    <option disabled selected value=""><fmt:message key="select.by.teacher"/></option>
+                    <c:forEach var="teacher" items="${requestScope.teachers}">
+                        <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
+                    </c:forEach>
+                </select>
+
+                <select name="select_by_category" class="form-select form-select-lg mb-3">
+                    <option disabled selected value=""><fmt:message key="select.by.category"/></option>
+                    <c:forEach var="category" items="${requestScope.categories}">
+                        <option value="${category.id}">${category.title}</option>
+                    </c:forEach>
+                </select>
+
+                <div class="mt-4 pt-2">
+                    <button type="submit" class="btn btn-primary"><fmt:message key="submit"/></button>
+                </div>
+            </form>
             <a class="btn btn-outline-secondary justify-content-end"
                href="${pageContext.request.contextPath}/controller?action=download_courses"
                role="button"><fmt:message key="download.courses"/></a>
@@ -116,19 +106,19 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=2&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">2</a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=2&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">2</a>
                 </li>
 
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=5&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">5</a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=5&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">5</a>
                 </li>
 
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=10&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">10</a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=10&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">10</a>
                 </li>
 
                 <li><a class="dropdown-item"
-                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=20&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">20</a>
+                       href="${pageContext.request.contextPath}/controller?action=courses&records_per_page=20&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">20</a>
                 </li>
             </ul>
         </div>
@@ -143,7 +133,7 @@
 
                     <c:if test="${requestScope.currentPage > 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">
+                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">
                             <fmt:message key="previous"/></a>
                         </li>
                     </c:if>
@@ -160,7 +150,7 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${requestScope.currentPage+1}</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">${requestScope.currentPage+1}</a>
                         </li>
                     </c:if>
 
@@ -172,7 +162,7 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 2}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+2}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}">${requestScope.currentPage+2}</a>
+                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+2}&records_per_page=${requestScope.records_per_page}&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}">${requestScope.currentPage+2}</a>
                         </li>
                     </c:if>
 
@@ -184,7 +174,7 @@
 
                     <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort_type=${requestScope.sort_type}&select_type=${requestScope.select_type}&teacher_id=${requestScope.teacher_id}&category_id=${requestScope.category_id}"><fmt:message
+                                                 href="${pageContext.request.contextPath}/controller?action=courses&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}&sort=${requestScope.sort}&order=${requestScope.order}&select_by_category=${requestScope.select_by_category}&select_by_teacher=${requestScope.select_by_teacher}"><fmt:message
                                 key="next"/></a>
                         </li>
                     </c:if>

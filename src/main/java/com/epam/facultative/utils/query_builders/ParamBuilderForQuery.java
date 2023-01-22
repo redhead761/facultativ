@@ -10,7 +10,7 @@ public abstract class ParamBuilderForQuery {
     private final List<String> filters = new ArrayList<>();
     private String sortField;
     private String order = "ASC";
-    private int offset = 1;
+    private int page = 1;
     private int records = 5;
 
     public ParamBuilderForQuery setSortFieldForCourse(String sortField) {
@@ -21,14 +21,14 @@ public abstract class ParamBuilderForQuery {
     }
 
     public ParamBuilderForQuery setCategoryFilterForCourse(String categoryId) {
-        if (categoryId != null && isPositiveInt(categoryId)) {
+        if (isPositiveInt(categoryId)) {
             filters.add(CATEGORY_ID + "=" + categoryId);
         }
         return this;
     }
 
     public ParamBuilderForQuery setTeacherFilterForCourse(String teacherId) {
-        if (teacherId != null && isPositiveInt(teacherId)) {
+        if (isPositiveInt(teacherId)) {
             filters.add(USER_ID + "=" + teacherId);
         }
         return this;
@@ -36,14 +36,14 @@ public abstract class ParamBuilderForQuery {
 
     public ParamBuilderForQuery setIdFilterForTeacher(String teacherId) {
         if (teacherId != null && isPositiveInt(teacherId)) {
-            filters.add(USER_ID + "+" + teacherId);
+            filters.add(USER_ID + "=" + teacherId);
         }
         return this;
     }
 
     public ParamBuilderForQuery setIdFilterForStudent(String studentId) {
-        if (studentId != null && isPositiveInt(studentId)) {
-            filters.add(USER_ID + "+" + studentId);
+        if (isPositiveInt(studentId)) {
+            filters.add(USER_ID + "=" + studentId);
         }
         return this;
     }
@@ -62,14 +62,12 @@ public abstract class ParamBuilderForQuery {
         return this;
     }
 
-    public ParamBuilderForQuery setLimits(String offset, String records) {
-        if (offset != null && isPositiveInt(offset)) {
-            this.offset = Integer.parseInt(offset);
-            System.out.println("Limit in builder =" + offset);
+    public ParamBuilderForQuery setLimits(String page, String records) {
+        if (isPositiveInt(page)) {
+            this.page = Integer.parseInt(page);
         }
-        if (records != null && isPositiveInt(records)) {
+        if (isPositiveInt(records)) {
             this.records = Integer.parseInt(records);
-            System.out.println("Records in builder =" + records);
         }
         return this;
     }
@@ -79,7 +77,7 @@ public abstract class ParamBuilderForQuery {
     }
 
     private String getLimitParam() {
-        return " LIMIT " + (offset - 1) * records + "," + records;
+        return " LIMIT " + (page - 1) * records + "," + records;
     }
 
     private String getSortParam() {
@@ -98,7 +96,7 @@ public abstract class ParamBuilderForQuery {
     private boolean isPositiveInt(String intString) {
         try {
             int i = Integer.parseInt(intString);
-            if (i < 0) {
+            if (i <= 0) {
                 return false;
             }
         } catch (NumberFormatException e) {

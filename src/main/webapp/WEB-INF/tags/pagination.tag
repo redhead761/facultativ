@@ -36,56 +36,56 @@
     <div class="col col-md-auto">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <c:if test="${requestScope.currentPage == 1}">
+                <c:if test="${requestScope.current_page == 1}">
                     <li class="page-item disabled">
                         <span class="page-link"><fmt:message key="previous"/></span>
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.currentPage > 1}">
+                <c:if test="${requestScope.current_page > 1}">
                     <li class="page-item"><a class="page-link"
-                                             href="${href}&page=${requestScope.currentPage-1}&records_per_page=${requestScope.records_per_page}">
+                                             href="${href}&current_page=${requestScope.current_page-1}&records_per_page=${requestScope.records_per_page}">
                         <fmt:message key="previous"/></a>
                     </li>
                 </c:if>
 
                 <li class="page-item active" aria-current="page">
-                    <span class="page-link">${requestScope.currentPage}</span>
+                    <span class="page-link">${requestScope.current_page}</span>
                 </li>
 
-                <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
+                <c:if test="${requestScope.no_of_pages - requestScope.current_page < 1}">
                     <li class="page-item disabled">
-                        <span class="page-link">${requestScope.currentPage+1}</span>
+                        <span class="page-link">${requestScope.current_page+1}</span>
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
+                <c:if test="${requestScope.no_of_pages - requestScope.current_page >= 1}">
                     <li class="page-item"><a class="page-link"
-                                             href="${href}&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+1}</a>
+                                             href="${href}&current_page=${requestScope.current_page+1}&records_per_page=${requestScope.records_per_page}">${requestScope.current_page+1}</a>
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.noOfPages - requestScope.currentPage < 2}">
+                <c:if test="${requestScope.no_of_pages - requestScope.current_page < 2}">
                     <li class="page-item disabled">
-                        <span class="page-link">${requestScope.currentPage+2}</span>
+                        <span class="page-link">${requestScope.current_page+2}</span>
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 2}">
+                <c:if test="${requestScope.no_of_pages - requestScope.current_page >= 2}">
                     <li class="page-item"><a class="page-link"
-                                             href="${href}&page=${requestScope.currentPage+2}&records_per_page=${requestScope.records_per_page}">${requestScope.currentPage+2}</a>
+                                             href="${href}&current_page=${requestScope.current_page+2}&records_per_page=${requestScope.records_per_page}">${requestScope.current_page+2}</a>
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
+                <c:if test="${requestScope.no_of_pages - requestScope.current_page < 1}">
                     <li class="page-item disabled">
                         <span class="page-link"><fmt:message key="next"/></span>
                     </li>
                 </c:if>
 
-                <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
+                <c:if test="${requestScope.no_of_pages - requestScope.current_page >= 1}">
                     <li class="page-item"><a class="page-link"
-                                             href="${href}&page=${requestScope.currentPage+1}&records_per_page=${requestScope.records_per_page}"><fmt:message
+                                             href="${href}&current_page=${requestScope.current_page+1}&records_per_page=${requestScope.records_per_page}"><fmt:message
                             key="next"/></a>
                     </li>
                 </c:if>

@@ -87,10 +87,8 @@ public class ActionUtils {
     }
 
     public static void setAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
-        String currentPage = String.valueOf(getCurrentPage(req));
-        String recordsPerPage = String.valueOf(getRecordsPerPage(req));
-//        String currentPage = req.getParameter("page");
-//        String recordsPerPage = req.getParameter("records_per_page");
+        String currentPage = req.getParameter("current_page");
+        String recordsPerPage = req.getParameter("records_per_page");
         String sort = req.getParameter("sort");
         String order = req.getParameter("order");
         String selectByCategory = req.getParameter("select_by_category");
@@ -104,7 +102,7 @@ public class ActionUtils {
 
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilderForQuery.getParam());
 
-        setUpPagination(req, coursesWithRows.getKey(), Integer.parseInt(currentPage), Integer.parseInt(recordsPerPage));
+        testSetUp(req, coursesWithRows.getKey());
 
         req.setAttribute("courses", coursesWithRows.getValue());
         req.setAttribute("sort", sort);
@@ -114,6 +112,28 @@ public class ActionUtils {
 
         req.setAttribute("teachers", generalService.getAllTeachers().getValue());
         req.setAttribute("categories", generalService.getAllCategories().getValue());
+    }
+
+    private static void testSetUp(HttpServletRequest req, int noOfRecords) {
+        int currentPage = getCorrectIntValue(req.getParameter("current_page"), 1);
+        int recordsPerPage = getCorrectIntValue(req.getParameter("records_per_page"), 5);
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("no_of_pages", noOfPages);
+        req.setAttribute("current_page", currentPage);
+        req.setAttribute("records_per_page", recordsPerPage);
+
+    }
+
+    private static int getCorrectIntValue(String value, int defaultValue) {
+        try {
+            int i = Integer.parseInt(value);
+            if (i <= 0) {
+                return defaultValue;
+            }
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+        return Integer.parseInt(value);
     }
 
     public static String getGetAction(String action, String... parameters) {

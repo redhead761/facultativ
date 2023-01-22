@@ -145,14 +145,11 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public Map.Entry<Integer, List<Student>> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Student>> getStudentsByCourse(String param) throws DAOException {
         List<Student> students = new ArrayList<>();
         int noOfRecords;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_STUDENTS_BY_COURSE)) {
-            int k = 0;
-            stmt.setInt(++k, courseId);
-            setLimitRows(stmt, offset, numberOfRows, k);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_STUDENTS_BY_COURSE, param))) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Student student = mapRow(rs);

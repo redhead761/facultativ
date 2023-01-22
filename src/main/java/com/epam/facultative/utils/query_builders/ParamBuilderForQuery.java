@@ -48,6 +48,13 @@ public abstract class ParamBuilderForQuery {
         return this;
     }
 
+    public ParamBuilderForQuery setIdFilterForCourse(String courseId) {
+        if (isPositiveInt(courseId)) {
+            filters.add("course_id" + "=" + courseId);
+        }
+        return this;
+    }
+
     public ParamBuilderForQuery setNameFilter(String nameFilter) {
         if (nameFilter != null) {
             filters.add("login=");

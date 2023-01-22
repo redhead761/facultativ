@@ -1,12 +1,12 @@
 package com.epam.facultative.controller.actions.impl.teacher;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.TeacherService;
+import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -14,24 +14,26 @@ import java.util.List;
 import java.util.Map;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
 public class ShowTeacherCoursesAction implements Action {
-    private final TeacherService teacherService;
+    private final GeneralService generalService;
 
     public ShowTeacherCoursesAction(AppContext appContext) {
-        teacherService = appContext.getTeacherService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         TeacherDTO teacher = (TeacherDTO) req.getSession().getAttribute(USER);
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = teacherService.getTeacherCourses(teacher.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+        ParamBuilderForQuery paramBuilder = teacherParamBuilderForQuery()
+                .setTeacherFilterForCourse(String.valueOf(teacher.getId()))
+                .setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilder.getParam());
         req.setAttribute(COURSES, coursesWithRows.getValue());
-        int noOfRecords = coursesWithRows.getKey();
-        ActionUtils.setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
+        testSetUp(req, coursesWithRows.getKey());
         return TEACHER_COURSES_PAGE;
     }
 }

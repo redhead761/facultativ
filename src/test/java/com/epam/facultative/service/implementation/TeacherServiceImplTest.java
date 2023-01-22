@@ -54,12 +54,12 @@ class TeacherServiceImplTest {
 //        assertIterableEquals(studentDTOS, teacherService.getStudentsByCourse(1, 1, 5));
 //    }
 
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void getStudentsByCourseWithIllegalArgument(int courseId, int offset, int numberOfRows) throws DAOException {
-        doThrow(DAOException.class).when(studentDao).getStudentsByCourse(isA(int.class), isA(int.class), isA(int.class));
-        assertThrows(ServiceException.class, () -> teacherService.getStudentsByCourse(courseId, offset, numberOfRows));
-    }
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void getStudentsByCourseWithIllegalArgument(int courseId, int offset, int numberOfRows) throws DAOException {
+//        doThrow(DAOException.class).when(studentDao).getStudentsByCourse(isA(int.class), isA(int.class), isA(int.class));
+//        assertThrows(ServiceException.class, () -> teacherService.getStudentsByCourse(courseId, offset, numberOfRows));
+//    }
 
 //    @Test
 //    void getTeacherCourses() throws DAOException, ServiceException {
@@ -69,12 +69,12 @@ class TeacherServiceImplTest {
 //        assertIterableEquals(courseDTOS, teacherService.getTeacherCourses(1, 1, 5));
 //    }
 
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void getTeacherCoursesWithIllegalArgument(int courseId, int offset, int numberOfRows) throws DAOException {
-        doThrow(DAOException.class).when(courseDao).getByTeacher(isA(int.class), isA(int.class), isA(int.class));
-        assertThrows(ServiceException.class, () -> teacherService.getTeacherCourses(courseId, offset, numberOfRows));
-    }
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void getTeacherCoursesWithIllegalArgument(int courseId, int offset, int numberOfRows) throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).getByTeacher(isA(int.class), isA(int.class), isA(int.class));
+//        assertThrows(ServiceException.class, () -> teacherService.getTeacherCourses(courseId, offset, numberOfRows));
+//    }
 
     private static Stream<Arguments> invalidIntValues() {
         return Stream.of(

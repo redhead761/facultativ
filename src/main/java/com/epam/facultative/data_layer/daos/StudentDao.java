@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudentDao extends Dao<Student> {
-    Map.Entry<Integer, List<Student>> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws DAOException;
+    Map.Entry<Integer, List<Student>> getStudentsByCourse(String param) throws DAOException;
 
     void updateBlock(int studentId, boolean block) throws DAOException;
 

@@ -3,8 +3,6 @@ package com.epam.facultative.service.implementation;
 import com.epam.facultative.data_layer.daos.CourseDao;
 import com.epam.facultative.data_layer.daos.StudentDao;
 import com.epam.facultative.data_layer.entities.Student;
-import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
@@ -34,22 +32,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Map.Entry<Integer, List<StudentDTO>> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<StudentDTO>> getStudentsByCourse(String param) throws ServiceException {
         try {
-            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getStudentsByCourse(courseId, offset, numberOfRows);
+            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getStudentsByCourse(param);
             List<StudentDTO> students = prepareStudents(studentsWithRows.getValue());
             return Map.entry(studentsWithRows.getKey(), students);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Map.Entry<Integer, List<CourseDTO>> getTeacherCourses(int teacherId, int offset, int numberOfRows) throws ServiceException {
-        try {
-            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByTeacher(teacherId, offset, numberOfRows);
-            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
-            return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

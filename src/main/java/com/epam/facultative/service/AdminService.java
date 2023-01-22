@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdminService {
-    public void courseLaunchNewsLetter(CourseDTO courseDTO) throws ServiceException;
+    void courseLaunchNewsLetter(CourseDTO courseDTO) throws ServiceException;
 
     //Course
     void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;

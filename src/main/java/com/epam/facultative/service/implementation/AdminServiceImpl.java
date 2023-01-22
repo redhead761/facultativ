@@ -9,12 +9,14 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.utils.email_sender.EmailSender;
+import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
 
 import java.util.*;
 
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.email_sender.EmailConstants.*;
+import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -58,8 +60,11 @@ public class AdminServiceImpl implements AdminService {
         int courseId = courseDTO.getId();
         List<Student> students;
         EmailSender emailSender = AppContext.getAppContext().getEmailSender();
+        ParamBuilderForQuery paramBuilder = courseParamBuilderForQuery()
+                .setIdFilterForCourse(String.valueOf(courseId))
+                .setLimits("1", String.valueOf(Integer.MAX_VALUE));
         try {
-            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getStudentsByCourse(courseId, 0, Integer.MAX_VALUE);
+            Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getStudentsByCourse(paramBuilder.getParam());
             students = studentsWithRows.getValue();
         } catch (DAOException e) {
             throw new ServiceException(e);

@@ -10,7 +10,5 @@ import java.util.Map;
 public interface TeacherService {
     void grading(int courseId, int userId, int grade) throws ServiceException;
 
-    Map.Entry<Integer, List<StudentDTO>> getStudentsByCourse(int courseId, int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> getTeacherCourses(int teacherId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<StudentDTO>> getStudentsByCourse(String param) throws ServiceException;
 }

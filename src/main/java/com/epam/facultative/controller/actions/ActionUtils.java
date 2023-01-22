@@ -89,6 +89,7 @@ public class ActionUtils {
     public static void setAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         String currentPage = req.getParameter("current_page");
         String recordsPerPage = req.getParameter("records_per_page");
+
         String sort = req.getParameter("sort");
         String order = req.getParameter("order");
         String selectByCategory = req.getParameter("select_by_category");
@@ -105,11 +106,6 @@ public class ActionUtils {
         testSetUp(req, coursesWithRows.getKey());
 
         req.setAttribute("courses", coursesWithRows.getValue());
-        req.setAttribute("sort", sort);
-        req.setAttribute("order", order);
-        req.setAttribute("select_by_category", selectByCategory);
-        req.setAttribute("select_by_teacher", selectByTeacher);
-
         req.setAttribute("teachers", generalService.getAllTeachers().getValue());
         req.setAttribute("categories", generalService.getAllCategories().getValue());
     }

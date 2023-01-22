@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.ADD_TEACHER_ACTION;
+import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.ADD_TEACHER_PAGE;
 
 public class AddTeacherAction implements Action {
@@ -24,6 +26,15 @@ public class AddTeacherAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        return isPostMethod(req) ? executePost(req) : executeGet(req);
+    }
+
+    private String executeGet(HttpServletRequest req) {
+        transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, TEACHER);
+        return ADD_TEACHER_PAGE;
+    }
+
+    private String executePost(HttpServletRequest req) throws ServiceException {
         String password = req.getParameter(PASSWORD);
         String repeatPassword = req.getParameter(REPEAT_PASSWORD);
         TeacherDTO teacher = getTeacherForAttribute(req);
@@ -35,7 +46,7 @@ public class AddTeacherAction implements Action {
             req.getSession().setAttribute(TEACHER, teacher);
             req.getSession().setAttribute(ERROR, e.getMessage());
         }
-        return ADD_TEACHER_PAGE;
+        return getGetAction(ADD_TEACHER_ACTION);
     }
 
     private TeacherDTO getTeacherForAttribute(HttpServletRequest req) {

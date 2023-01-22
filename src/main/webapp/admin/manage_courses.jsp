@@ -26,7 +26,7 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
-<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
@@ -34,7 +34,7 @@
             <tags:param_cap action="manage_courses"/>
             <div class="col-md-auto">
                 <a class="btn btn-outline-secondary btn-sm mt-3"
-                   href="${pageContext.request.contextPath}/controller?action=show_add_course"
+                   href="${pageContext.request.contextPath}/controller?action=add_course"
                    role="button"><fmt:message key="add.course"/></a>
             </div>
         </div>
@@ -61,7 +61,7 @@
                     ${course.getTeacher().getName()} ${course.getTeacher().getSurname()}
                 </c:if>
                 <c:if test="${course.getTeacher().getName() == null}">
-                    <a href="${pageContext.request.contextPath}/controller?action=show_assign_page&course_id=<c:out value='${course.id}'/>"><fmt:message
+                    <a href="${pageContext.request.contextPath}/controller?action=assign&course_id=${course.id}"><fmt:message
                             key="assign"/></a>
                 </c:if>
             </td>
@@ -69,7 +69,7 @@
                 <div class="row">
                     <div class="col-md-auto">
                         <form action="${pageContext.request.contextPath}/controller" method="get">
-                            <input type="hidden" name="action" value="show_edit_course"/>
+                            <input type="hidden" name="action" value="update_course"/>
                             <input type="hidden" name="course_id" value="${course.id}"/>
 
                             <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
@@ -80,10 +80,11 @@
                         <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="action" value="delete_course"/>
                             <input type="hidden" name="course_id" value="${course.id}"/>
-                            <input type="hidden" name="page" value="${requestScope.currentPage}"/>
-                            <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
-                            <input type="hidden" name="sort_type" value="${requestScope.sort_type}"/>
-                            <input type="hidden" name="select_type" value="${requestScope.select_type}"/>
+                            <input type="hidden" name="current_page" value="${param.current_page}"/>
+                            <input type="hidden" name="records_per_page" value="${param.records_per_page}"/>
+                            <input type="hidden" name="sort" value="${param.sort}"/>
+                            <input type="hidden" name="select_by_category" value="${param.select_by_category}"/>
+                            <input type="hidden" name="select_by_teacher" value="${param.select_by_teacher}"/>
 
                             <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
                                     key="delete"/></button>
@@ -98,7 +99,5 @@
             href="${pageContext.request.contextPath}/controller?action=manage_courses&sort=${param.sort}&order=${param.order}&select_by_category=${param.select_by_category}&select_by_teacher=${param.select_by_teacher}"/>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
-${sessionScope.remove("message")}
-${sessionScope.remove("error")}
 </body>
 </html>

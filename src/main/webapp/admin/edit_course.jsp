@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <section class="vh-60">
     <div class="container py-5 h-100">
@@ -51,14 +51,14 @@
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5"><fmt:message key="edit.course.form"/></h3>
                         <form action="${pageContext.request.contextPath}/controller" method="post">
                             <input type="hidden" name="action" value="update_course"/>
-                            <input type="hidden" name="course_id" value="${sessionScope.course.id}"/>
+                            <input type="hidden" name="course_id" value="${requestScope.course.id}"/>
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-floating">
                                         <input type="text" id="title" class="form-control form-control-lg"
-                                               value="${sessionScope.course.title}"
+                                               value="${requestScope.course.title}"
                                                pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
                                                title="Title must contain 1 to 3 characters" required
                                                name="title"/>
@@ -72,7 +72,7 @@
                                     <div class="form-floating">
                                         <input type="number" id="duration" class="form-control form-control-lg"
                                                name="duration"
-                                               value="${sessionScope.course.duration}"
+                                               value="${requestScope.course.duration}"
                                                min="1" max="999"
                                                title="Duration must contain a value from 1 to 999" required/>
                                         <label class="form-label" for="duration"><fmt:message key="duration"/></label>
@@ -86,7 +86,7 @@
 
                                     <div class="form-floating ">
                                         <input type="date" class="form-control form-control-lg" id="start_date"
-                                               name="start_date" value="${sessionScope.course.startDate}"/>
+                                               name="start_date" value="${requestScope.course.startDate}"/>
                                         <label for="start_date" class="form-label"><fmt:message
                                                 key="start.date"/></label>
                                     </div>
@@ -112,16 +112,18 @@
                             <div class="row">
                                 <div class="col-12">
 
-                                    <select name="category" class="form-select form-select-lg mb-3" required>
-                                        <option disabled selected value=""><fmt:message key="select.category"/></option>
-                                        <c:if test="${sessionScope.course.category != null}">
-                                            <option selected
-                                                    value="${sessionScope.course.category.id}">${sessionScope.course.category.title}</option>
-                                        </c:if>
-                                        <c:forEach var="category" items="${requestScope.categories}">
-                                            <option value="${category.id}">${category.title}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <label>
+                                        <select name="category" class="form-select form-select-lg mb-3" required>
+                                            <option disabled selected value=""><fmt:message key="select.category"/></option>
+                                            <c:if test="${requestScope.course.category != null}">
+                                                <option selected
+                                                        value="${requestScope.course.category.id}">${requestScope.course.category.title}</option>
+                                            </c:if>
+                                            <c:forEach var="category" items="${requestScope.categories}">
+                                                <option value="${category.id}">${category.title}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
 
                                 </div>
                             </div>
@@ -129,17 +131,19 @@
                             <div class="row">
                                 <div class="col-12">
 
-                                    <select name="teacher_id" class="form-select form-select-lg mb-3">
-                                        <option disabled selected value=""><fmt:message key="select.teacher"/></option>
-                                        <c:if test="${sessionScope.course.teacher != null}">
-                                            <option selected
-                                                    value="${sessionScope.course.teacher.id}">${sessionScope.course.teacher.name} ${sessionScope.course.teacher.surname}
-                                            </option>
-                                        </c:if>
-                                        <c:forEach var="teacher" items="${requestScope.teachers}">
-                                            <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <label>
+                                        <select name="teacher_id" class="form-select form-select-lg mb-3">
+                                            <option disabled selected value=""><fmt:message key="select.teacher"/></option>
+                                            <c:if test="${requestScope.course.teacher != null}">
+                                                <option selected
+                                                        value="${requestScope.course.teacher.id}">${requestScope.course.teacher.name} ${requestScope.course.teacher.surname}
+                                                </option>
+                                            </c:if>
+                                            <c:forEach var="teacher" items="${requestScope.teachers}">
+                                                <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
 
                                 </div>
                             </div>
@@ -186,8 +190,5 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
-${sessionScope.remove("error")}
-${sessionScope.remove("message")}
-${sessionScope.remove("course")}
 </body>
 </html>

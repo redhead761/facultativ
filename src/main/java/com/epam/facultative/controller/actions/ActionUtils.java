@@ -1,8 +1,6 @@
 package com.epam.facultative.controller.actions;
 
-import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
@@ -44,16 +42,6 @@ public class ActionUtils {
         req.setAttribute("records_per_page", recordsPerPage);
     }
 
-    public static void setUpPaginationForAllCategories(HttpServletRequest req, AdminService adminService) throws ServiceException {
-        int currentPage = getCurrentPage(req);
-        int recordsPerPage = getRecordsPerPage(req);
-        ParamBuilderForQuery paramBuilderForQuery = categoryParamBuilderForQuery().setLimits(req.getParameter("page"), req.getParameter("records_per_page"));
-        Map.Entry<Integer, List<CategoryDTO>> categoriesWithRows = adminService.getAllCategoriesPagination(paramBuilderForQuery.getParam());
-        req.setAttribute("categories", categoriesWithRows.getValue());
-        int noOfRecords = categoriesWithRows.getKey();
-        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-    }
-
     public static void setUpPaginationForAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         int currentPage = getCurrentPage(req);
         int recordsPerPage = getRecordsPerPage(req);
@@ -63,16 +51,6 @@ public class ActionUtils {
         int noOfRecords = coursesWithRows.getKey();
         req.setAttribute("teachers", generalService.getAllTeachers().getValue());
         req.setAttribute("categories", generalService.getAllCategories().getValue());
-        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-    }
-
-    public static void setUpPaginationForAllStudents(HttpServletRequest req, AdminService adminService) throws ServiceException {
-        int currentPage = getCurrentPage(req);
-        int recordsPerPage = getRecordsPerPage(req);
-        ParamBuilderForQuery paramBuilder = studentParamBuilderForQuery().setLimits(req.getParameter("page"), req.getParameter("records_per_page"));
-        Map.Entry<Integer, List<StudentDTO>> studentsWithRows = adminService.getAllStudentsPagination(paramBuilder.getParam());
-        req.setAttribute("students", studentsWithRows.getValue());
-        int noOfRecords = studentsWithRows.getKey();
         setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
     }
 
@@ -110,7 +88,7 @@ public class ActionUtils {
         req.setAttribute("categories", generalService.getAllCategories().getValue());
     }
 
-    private static void testSetUp(HttpServletRequest req, int noOfRecords) {
+    public static void testSetUp(HttpServletRequest req, int noOfRecords) {
         int currentPage = getCorrectIntValue(req.getParameter("current_page"), 1);
         int recordsPerPage = getCorrectIntValue(req.getParameter("records_per_page"), 5);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
@@ -141,4 +119,15 @@ public class ActionUtils {
         return base + (parameters.length > 0 ? stringJoiner : "");
     }
 
+    public static boolean isPostMethod(HttpServletRequest request) {
+        return request.getMethod().equals("POST");
+    }
+
+    public static void transferAttributeFromSessionToRequest(HttpServletRequest req, String... attributeNames) {
+        for (String attributeName : attributeNames) {
+            Object obj = req.getSession().getAttribute(attributeName);
+            req.setAttribute(attributeName, obj);
+            req.getSession().removeAttribute(attributeName);
+        }
+    }
 }

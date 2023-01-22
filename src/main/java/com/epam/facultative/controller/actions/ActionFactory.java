@@ -28,20 +28,16 @@ public class ActionFactory {
         ACTION_MAP.put(MANAGE_TEACHERS_ACTION, new ManageTeachersAction(APP_CONTEXT));
         ACTION_MAP.put(MANAGE_STUDENTS_ACTION, new ManageStudentsAction(APP_CONTEXT));
 
-        ACTION_MAP.put(SHOW_CATEGORY_FORM_ACTION, new ShowCategoryFormAction(APP_CONTEXT));
         ACTION_MAP.put(ADD_CATEGORY_ACTION, new AddCategoryAction(APP_CONTEXT));
         ACTION_MAP.put(UPDATE_CATEGORY_ACTION, new UpdateCategoryAction(APP_CONTEXT));
         ACTION_MAP.put(DELETE_CATEGORY_ACTION, new DeleteCategoryAction(APP_CONTEXT));
 
-        ACTION_MAP.put(SHOW_ADD_COURSE_ACTION, new ShowAddCourseAction(APP_CONTEXT));
-        ACTION_MAP.put(SHOW_EDIT_COURSE_ACTION, new ShowEditCourseAction(APP_CONTEXT));
         ACTION_MAP.put(ADD_COURSE_ACTION, new AddCourseAction(APP_CONTEXT));
         ACTION_MAP.put(UPDATE_COURSE_ACTION, new UpdateCourseAction(APP_CONTEXT));
         ACTION_MAP.put(DELETE_COURSE_ACTION, new DeleteCourseAction(APP_CONTEXT));
-        ACTION_MAP.put(SHOW_ASSIGN_PAGE_ACTION, new ShowAssignPageAction(APP_CONTEXT));
+
         ACTION_MAP.put(ASSIGN_ACTION, new AssignAction(APP_CONTEXT));
         ACTION_MAP.put(ADD_TEACHER_ACTION, new AddTeacherAction(APP_CONTEXT));
-
         ACTION_MAP.put(UPDATE_BLOCK_ACTION, new UpdateBlockAction(APP_CONTEXT));
 
         ACTION_MAP.put(SHOW_TEACHER_COURSES_ACTION, new ShowTeacherCoursesAction(APP_CONTEXT));

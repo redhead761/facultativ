@@ -38,7 +38,7 @@
     </div>
 </div>
 
-<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
@@ -58,7 +58,6 @@
                     <input type="hidden" name="action" value="assign"/>
                     <input type="hidden" name="teacher_id" value="${teacher.id}"/>
                     <input type="hidden" name="course_id" value="${requestScope.course_id}"/>
-                    <input type="hidden" name="page" value="${requestScope.currentPage}"/>
 
                     <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message key="assign"/></button>
                 </form>
@@ -66,66 +65,9 @@
             </tbody>
         </c:forEach>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <c:if test="${requestScope.currentPage == 1}">
-                <li class="page-item disabled">
-                    <span class="page-link"><fmt:message key="previous"/></span>
-                </li>
-            </c:if>
-
-            <c:if test="${requestScope.currentPage > 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage-1}&course_id=${requestScope.course_id}"><fmt:message
-                        key="previous"/></a>
-                </li>
-            </c:if>
-
-            <li class="page-item active" aria-current="page">
-                <span class="page-link">${requestScope.currentPage}</span>
-            </li>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
-                <li class="page-item disabled">
-                    <span class="page-link">${requestScope.currentPage+1}</span>
-                </li>
-            </c:if>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}">${requestScope.currentPage+1}</a>
-                </li>
-            </c:if>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage < 2}">
-                <li class="page-item disabled">
-                    <span class="page-link">${requestScope.currentPage+2}</span>
-                </li>
-            </c:if>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 2}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+2}&course_id=${requestScope.course_id}">${requestScope.currentPage+2}</a>
-                </li>
-            </c:if>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage < 1}">
-                <li class="page-item disabled">
-                    <span class="page-link"><fmt:message key="next"/></span>
-                </li>
-            </c:if>
-
-            <c:if test="${requestScope.noOfPages - requestScope.currentPage >= 1}">
-                <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/controller?action=show_assign_page&page=${requestScope.currentPage+1}&course_id=${requestScope.course_id}"><fmt:message
-                        key="next"/></a>
-                </li>
-            </c:if>
-        </ul>
-    </nav>
+    <tags:pagination
+            href="${pageContext.request.contextPath}/controller?action=assign&course_id=${param.course_id}"/>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
-${sessionScope.remove("message")}
-${sessionScope.remove("error")}
 </body>
 </html>

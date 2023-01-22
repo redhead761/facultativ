@@ -15,19 +15,15 @@ public class ActionNameConstants {
     public static String MANAGE_CATEGORIES_ACTION = "manage_categories";
     public static String MANAGE_TEACHERS_ACTION = "manage_teachers";
     public static String MANAGE_STUDENTS_ACTION = "manage_students";
-    public static String SHOW_CATEGORY_FORM_ACTION = "show_category_form";
     public static String ADD_CATEGORY_ACTION = "add_category";
     public static String UPDATE_CATEGORY_ACTION = "update_category";
     public static String DELETE_CATEGORY_ACTION = "delete_category";
-    public static String SHOW_EDIT_COURSE_ACTION = "show_edit_course";
     public static String ADD_COURSE_ACTION = "add_course";
     public static String UPDATE_COURSE_ACTION = "update_course";
     public static String DELETE_COURSE_ACTION = "delete_course";
-    public static String SHOW_ASSIGN_PAGE_ACTION = "show_assign_page";
     public static String ASSIGN_ACTION = "assign";
     public static String UPDATE_BLOCK_ACTION = "update_block";
     public static String UNBLOCK_ACTION = "unblock";
-    public static String SHOW_ADD_COURSE_ACTION = "show_add_course";
     public static String ADD_TEACHER_ACTION = "add_teacher";
 
     //Teacher

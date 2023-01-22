@@ -19,7 +19,7 @@ public class AttributeConstants {
     public static String CATEGORY = "category";
     public static String TYPE = "type";
     public static String GRADE = "grade";
-    public static String CURRENT_PAGE = "page";
+    public static String CURRENT_PAGE = "current_page";
     public static String RECORDS_PER_PAGE = "records_per_page";
     public static String USER = "user";
     public static String STUDENTS = "students";
@@ -42,6 +42,9 @@ public class AttributeConstants {
     public static String WRONG_REPEAT_PASSWORD = "wrong.repeat.password";
     public static String BLOCK = "block";
     public static String UNBLOCK = "unblock";
-    public static String SORT_TYPE = "sort_type";
+    public static String SORT = "sort";
     public static String SELECT_TYPE = "select_type";
+    public static String SELECT_BY_CATEGORY = "select_by_category";
+    public static String SELECT_BY_TEACHER = "select_by_teacher";
+    public static String EMAIL_SEND = "email_send";
 }

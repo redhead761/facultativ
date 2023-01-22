@@ -72,7 +72,6 @@
             </div>
         </div>
     </div>
-    </div>
 </section>
 <jsp:include page="/parts/footer.jsp"/>
 </body>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -38,13 +39,7 @@
         </ul>
     </div>
 </div>
-
-<c:if test="${sessionScope.message != null}">
-    <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-        <strong>${sessionScope.message}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <section class="vh-60">
     <div class="container py-5 h-100">
@@ -61,7 +56,7 @@
 
                                     <div class="form-floating">
                                         <input type="text" id="title" class="form-control form-control-lg"
-                                               value="${sessionScope.course.title}"
+                                               value="${requestScope.course.title}"
                                                pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
                                                title="Title must contain 1 to 3 characters" required name="title"/>
                                         <label class="form-label" for="title"><fmt:message key="title"/></label>
@@ -74,7 +69,7 @@
                                     <div class="form-floating">
                                         <input type="number" id="duration" class="form-control form-control-lg"
                                                name="duration"
-                                               value="${sessionScope.course.duration}"
+                                               value="${requestScope.course.duration}"
                                                min="1" max="999" title="Duration must contain a value from 1 to 999"
                                                required/>
                                         <label class="form-label" for="duration"><fmt:message key="duration"/></label>
@@ -88,7 +83,7 @@
 
                                     <div class="form-floating ">
                                         <input type="date" class="form-control form-control-lg" id="start_date"
-                                               name="start_date" value="${sessionScope.course.startDate}" required
+                                               name="start_date" value="${requestScope.course.startDate}" required
                                                min="${nowFormatted}"/>
                                         <label for="start_date" class="form-label"><fmt:message
                                                 key="start.date"/></label>
@@ -114,12 +109,15 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <select name="category" class="form-select form-select-lg mb-3" required>
-                                        <option disabled selected value=""><fmt:message key="select.category"/></option>
-                                        <c:forEach var="category" items="${requestScope.categories}">
-                                            <option value="${category.id}">${category.title}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <label>
+                                        <select name="category" class="form-select form-select-lg mb-3" required>
+                                            <option disabled selected value=""><fmt:message
+                                                    key="select.category"/></option>
+                                            <c:forEach var="category" items="${requestScope.categories}">
+                                                <option value="${category.id}">${category.title}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
                                 </div>
                             </div>
 
@@ -129,7 +127,7 @@
                                     <div class="form-floating">
                                         <input type="text" id="description" class="form-control form-control-lg"
                                                name="description"
-                                               value="${sessionScope.course.description}"
+                                               value="${requestScope.course.description}"
                                                pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
                                                title="Description must contain 0 to 200 characters"/>
                                         <label class="form-label" for="description"><fmt:message
@@ -151,7 +149,5 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
-${sessionScope.remove("message")}
-${sessionScope.remove("course")}
 </body>
 </html>

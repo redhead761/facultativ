@@ -11,6 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionUtils.setAllCourses;
+import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class ManageCoursesAction implements Action {
@@ -22,7 +25,8 @@ public class ManageCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
-        ActionUtils.setAllCourses(req, generalService);
+        transferAttributeFromSessionToRequest(req, MESSAGE);
+        setAllCourses(req, generalService);
         return MANAGE_COURSES_PAGE;
     }
 }

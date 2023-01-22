@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.epam.facultative.controller.actions.ActionNameConstants.ADD_CATEGORY_ACTION;
+import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 import static com.epam.facultative.controller.AttributeConstants.*;
 
@@ -25,6 +27,15 @@ public class AddCategoryAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+        return isPostMethod(req) ? executePost(req) : executeGet(req);
+    }
+
+    private String executeGet(HttpServletRequest req) {
+        transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, CATEGORY);
+        return ADD_CATEGORY_PAGE;
+    }
+
+    private String executePost(HttpServletRequest req) throws ServiceException {
         CategoryDTO category = getCategoryFromParameter(req);
         try {
             adminService.addCategory(category);
@@ -33,7 +44,7 @@ public class AddCategoryAction implements Action {
             req.getSession().setAttribute(CATEGORY, category);
             req.getSession().setAttribute(ERROR, e.getMessage());
         }
-        return ADD_CATEGORY_PAGE;
+        return getGetAction(ADD_CATEGORY_ACTION);
     }
 
     private CategoryDTO getCategoryFromParameter(HttpServletRequest req) {

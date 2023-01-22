@@ -2,13 +2,13 @@ package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.data_layer.entities.Status;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
+import com.epam.facultative.service.GeneralService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,17 +18,32 @@ import java.time.LocalDate;
 
 import static com.epam.facultative.controller.actions.ActionNameConstants.*;
 import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionUtils.*;
+import static com.epam.facultative.controller.actions.PageNameConstants.ADD_COURSE_PAGE;
 
 public class AddCourseAction implements Action {
 
     private final AdminService adminService;
+    private final GeneralService generalService;
 
     public AddCourseAction(AppContext appContext) {
         adminService = appContext.getAdminService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+        return isPostMethod(req) ? executePost(req) : executeGet(req);
+
+    }
+
+    private String executeGet(HttpServletRequest req) throws ServiceException {
+        transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, COURSE);
+        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
+        return ADD_COURSE_PAGE;
+    }
+
+    private String executePost(HttpServletRequest req) throws ServiceException {
         CourseDTO course = null;
         try {
             course = getCourseFromParameter(req);
@@ -38,7 +53,7 @@ public class AddCourseAction implements Action {
             req.getSession().setAttribute(COURSE, course);
             req.getSession().setAttribute(ERROR, e.getMessage());
         }
-        return ActionUtils.getGetAction(SHOW_ADD_COURSE_ACTION);
+        return getGetAction(ADD_COURSE_ACTION);
     }
 
     private CourseDTO getCourseFromParameter(HttpServletRequest req) throws ServiceException, ValidateException {

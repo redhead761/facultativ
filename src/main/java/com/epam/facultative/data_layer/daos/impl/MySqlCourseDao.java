@@ -97,48 +97,6 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public Map.Entry<Integer, List<Course>> getByTeacher(int userId, int offset, int numberOfRows) throws DAOException {
-        List<Course> courses = new ArrayList<>();
-        int noOfRecords;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_TEACHER)) {
-            int k = 0;
-            stmt.setInt(++k, userId);
-            setLimitRows(stmt, offset, numberOfRows, k);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    courses.add(mapRowCourse(rs));
-                }
-            }
-            noOfRecords = setFoundRows(stmt);
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Map.entry(noOfRecords, courses);
-    }
-
-    @Override
-    public Map.Entry<Integer, List<Course>> getByStudent(int userId, int offset, int numberOfRows) throws DAOException {
-        List<Course> courses = new ArrayList<>();
-        int noOfRecords;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_COURSES_STUDENT)) {
-            int k = 0;
-            stmt.setInt(++k, userId);
-            setLimitRows(stmt, offset, numberOfRows, k);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    courses.add(mapRowCourse(rs));
-                }
-            }
-            noOfRecords = setFoundRows(stmt);
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Map.entry(noOfRecords, courses);
-    }
-
-    @Override
     public Map.Entry<Integer, List<Course>> getByJournal(String param) throws DAOException {
         List<Course> courses = new ArrayList<>();
         int noOfRecords;
@@ -197,7 +155,6 @@ public class MySqlCourseDao implements CourseDao {
             close(stmt);
             close(con);
         }
-
     }
 
     @Override
@@ -270,11 +227,6 @@ public class MySqlCourseDao implements CourseDao {
             return rs.getInt(1);
         }
         return 0;
-    }
-
-    private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows, int k) throws SQLException {
-        stmt.setInt(++k, offset);
-        stmt.setInt(++k, numberOfRows);
     }
 
     private void close(AutoCloseable stmt) throws DAOException {

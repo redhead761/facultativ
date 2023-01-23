@@ -5,7 +5,7 @@ import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ import java.util.Map;
 import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
 import static com.epam.facultative.controller.actions.PageNameConstants.TEACHERS_PAGE;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
 public class TeachersAction implements Action {
     private final AdminService adminService;

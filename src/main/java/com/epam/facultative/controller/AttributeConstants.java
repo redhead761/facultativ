@@ -19,12 +19,14 @@ public class AttributeConstants {
     public static String CATEGORY = "category";
     public static String TYPE = "type";
     public static String GRADE = "grade";
+
     public static String CURRENT_PAGE = "current_page";
+
     public static String RECORDS_PER_PAGE = "records_per_page";
     public static String USER = "user";
     public static String STUDENTS = "students";
     public static String ON_COURSE = "on.course";
-    public static String ROLE = "role";
+
     public static String STUDENT = "student";
     public static String LOGIN = "login";
     public static String PASSWORD = "password";
@@ -40,14 +42,13 @@ public class AttributeConstants {
     public static String DEGREE = "degree";
     public static String EMAIL = "email";
     public static String WRONG_REPEAT_PASSWORD = "wrong.repeat.password";
-    public static String BLOCK = "block";
-    public static String UNBLOCK = "unblock";
     public static String SORT = "sort";
-    public static String SELECT_TYPE = "select_type";
     public static String SELECT_BY_CATEGORY = "select_by_category";
     public static String SELECT_BY_TEACHER = "select_by_teacher";
     public static String EMAIL_SEND = "email_send";
     public static String MISSED_CAPTCHA = "missed.captcha";
     public static String LANGUAGE = "language";
     public static String COURSE_NUMBER = "course_number";
+    public static String ORDER = "order";
+    public static String NO_OF_PAGES = "no_of_pages";
 }

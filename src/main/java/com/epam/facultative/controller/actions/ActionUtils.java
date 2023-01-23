@@ -1,77 +1,31 @@
 package com.epam.facultative.controller.actions;
 
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.AdminService;
 import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
+import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionNameConstants.CONTROLLER;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.*;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.*;
 
 public class ActionUtils {
     private ActionUtils() {
     }
 
-    public static int getCurrentPage(HttpServletRequest req) {
-        if (req.getParameter("page") != null && !req.getParameter("page").isBlank()) {
-            return Integer.parseInt(req.getParameter("page"));
-        } else {
-            return 1;
-        }
-    }
-
-    public static int getRecordsPerPage(HttpServletRequest req) {
-        if (req.getParameter("records_per_page") != null && !req.getParameter("records_per_page").isBlank()) {
-            return Integer.parseInt(req.getParameter("records_per_page"));
-        } else {
-            return 5;
-        }
-    }
-
-    public static void setUpPagination(HttpServletRequest req, int noOfRecords, int currentPage, int recordsPerPage) {
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("noOfPages", noOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
-    }
-
-    public static void setUpPaginationForAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
-        int currentPage = getCurrentPage(req);
-        int recordsPerPage = getRecordsPerPage(req);
-        ParamBuilderForQuery paramBuilderForQuery = courseParamBuilderForQuery().setLimits(req.getParameter("page"), req.getParameter("records_per_page"));
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilderForQuery.getParam());
-        req.setAttribute("courses", coursesWithRows.getValue());
-        int noOfRecords = coursesWithRows.getKey();
-        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
-        req.setAttribute("categories", generalService.getAllCategories().getValue());
-        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-    }
-
-    public static void setUpPaginationForAllTeachers(HttpServletRequest req, AdminService adminService) throws ServiceException {
-        int currentPage = getCurrentPage(req);
-        int recordsPerPage = getRecordsPerPage(req);
-        ParamBuilderForQuery paramBuilderForQuery = teacherParamBuilderForQuery().setLimits(req.getParameter("page"), req.getParameter("records_per_page"));
-        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = adminService.getAllTeachersPagination(paramBuilderForQuery.getParam());
-        req.setAttribute("teachers", teachersWithRows.getValue());
-        int noOfRecords = teachersWithRows.getKey();
-        setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
-    }
-
     public static void setAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
-        String currentPage = req.getParameter("current_page");
-        String recordsPerPage = req.getParameter("records_per_page");
+        String currentPage = req.getParameter(CURRENT_PAGE);
+        String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
 
-        String sort = req.getParameter("sort");
-        String order = req.getParameter("order");
-        String selectByCategory = req.getParameter("select_by_category");
-        String selectByTeacher = req.getParameter("select_by_teacher");
+        String sort = req.getParameter(SORT);
+        String order = req.getParameter(ORDER);
+        String selectByCategory = req.getParameter(SELECT_BY_CATEGORY);
+        String selectByTeacher = req.getParameter(SELECT_BY_TEACHER);
 
         ParamBuilderForQuery paramBuilderForQuery = courseParamBuilderForQuery().setSortFieldForCourse(sort)
                 .setOrder(order)
@@ -83,18 +37,18 @@ public class ActionUtils {
 
         testSetUp(req, coursesWithRows.getKey());
 
-        req.setAttribute("courses", coursesWithRows.getValue());
-        req.setAttribute("teachers", generalService.getAllTeachers().getValue());
-        req.setAttribute("categories", generalService.getAllCategories().getValue());
+        req.setAttribute(COURSES, coursesWithRows.getValue());
+        req.setAttribute(TEACHERS, generalService.getAllTeachers().getValue());
+        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
     }
 
     public static void testSetUp(HttpServletRequest req, int noOfRecords) {
-        int currentPage = getCorrectIntValue(req.getParameter("current_page"), 1);
-        int recordsPerPage = getCorrectIntValue(req.getParameter("records_per_page"), 5);
+        int currentPage = getCorrectIntValue(req.getParameter(CURRENT_PAGE), 1);
+        int recordsPerPage = getCorrectIntValue(req.getParameter(RECORDS_PER_PAGE), 5);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        req.setAttribute("no_of_pages", noOfPages);
-        req.setAttribute("current_page", currentPage);
-        req.setAttribute("records_per_page", recordsPerPage);
+        req.setAttribute(NO_OF_PAGES, noOfPages);
+        req.setAttribute(CURRENT_PAGE, currentPage);
+        req.setAttribute(RECORDS_PER_PAGE, recordsPerPage);
 
     }
 

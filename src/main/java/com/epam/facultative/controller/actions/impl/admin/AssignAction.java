@@ -6,7 +6,7 @@ import com.epam.facultative.dto.TeacherDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,7 +17,7 @@ import static com.epam.facultative.controller.actions.ActionNameConstants.ASSIGN
 import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.ASSIGN_PAGE;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
 public class AssignAction implements Action {
     private final AdminService adminService;

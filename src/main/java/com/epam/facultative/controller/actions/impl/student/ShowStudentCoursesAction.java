@@ -6,7 +6,7 @@ import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.StudentService;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,7 +17,7 @@ import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 import static com.epam.facultative.data_layer.entities.Status.*;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 
 public class ShowStudentCoursesAction implements Action {
     private final StudentService studentService;

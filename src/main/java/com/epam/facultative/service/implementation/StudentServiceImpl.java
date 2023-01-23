@@ -6,7 +6,6 @@ import com.epam.facultative.data_layer.daos.StudentDao;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.data_layer.entities.Role;
-import com.epam.facultative.data_layer.entities.Status;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
@@ -16,6 +15,7 @@ import com.epam.facultative.utils.email_sender.EmailSender;
 import com.epam.facultative.utils.pdf_creator.PdfCreator;
 
 import static com.epam.facultative.dto.Converter.*;
+import static com.epam.facultative.utils.email_sender.EmailConstants.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOGIN_NOT_EXIST_MESSAGE;
 import static com.epam.facultative.utils.validator.Validator.*;
@@ -96,7 +96,7 @@ public class StudentServiceImpl implements StudentService {
             String certificate = pdfCreator.createCertificateForSend(studentDTO, course, grade);
             AppContext appContext = AppContext.getAppContext();
             EmailSender emailSender = appContext.getEmailSender();
-            emailSender.sendCertificate(studentDTO.getEmail(), "Certificate", "Your certificate", certificate);
+            emailSender.sendCertificate(studentDTO.getEmail(), EMAIL_SUBJECT_FOR_CERTIFICATE, EMAIL_MESSAGE_FOR_CERTIFICATE, certificate);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

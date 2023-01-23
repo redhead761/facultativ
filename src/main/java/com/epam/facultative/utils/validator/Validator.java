@@ -2,6 +2,8 @@ package com.epam.facultative.utils.validator;
 
 import com.epam.facultative.exception.ValidateException;
 
+import java.time.LocalDate;
+
 import static com.epam.facultative.utils.validator.RegexConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
@@ -10,32 +12,28 @@ public final class Validator {
     private Validator() {
     }
 
-    public static boolean validateLogin(String login) throws ValidateException {
+    public static void validateLogin(String login) throws ValidateException {
         if (!login.matches(LOGIN_PATTERN_REGEX)) {
             throw new ValidateException(LOGIN_EXCEPTION_MESSAGE);
         }
-        return true;
     }
 
-    public static boolean validatePassword(String password) throws ValidateException {
+    public static void validatePassword(String password) throws ValidateException {
         if (!password.matches(PASSWORD_PATTERN_REGEX)) {
             throw new ValidateException(PASSWORD_EXCEPTION_MESSAGE);
         }
-        return true;
     }
 
-    public static boolean validateEmail(String email) throws ValidateException {
+    public static void validateEmail(String email) throws ValidateException {
         if (!email.matches(EMAIL_PATTERN_REGEX)) {
             throw new ValidateException(EMAIL_EXCEPTION_MESSAGE);
         }
-        return true;
     }
 
-    public static boolean validateNameAndSurname(String name, String surname) throws ValidateException {
+    public static void validateNameAndSurname(String name, String surname) throws ValidateException {
         if (!name.matches(NAME_PATTERN_REGEX) || !surname.matches(NAME_PATTERN_REGEX)) {
             throw new ValidateException(NAME_EXCEPTION_MESSAGE);
         }
-        return true;
     }
 
     public static void validateCategoryData(String title, String description) throws ValidateException {
@@ -50,9 +48,9 @@ public final class Validator {
         }
     }
 
-//    public static void validateDate(LocalDate date) throws IncorrectFormatException {
-//        if (date == null || !date.isAfter(LocalDate.now())) {
-//            throw new IncorrectFormatException(ENTER_VALID_DATE);
-//        }
-//    }
+    public static void validateDate(LocalDate date) throws ValidateException {
+        if (date == null || !date.isAfter(LocalDate.now())) {
+            throw new ValidateException(DATE_EXCEPTION_MESSAGE);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.epam.facultative.utils.query_builders;
+package com.epam.facultative.utils.param_builders;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -5,6 +5,7 @@ public class ValidateExceptionMessageConstants {
     static final String PASSWORD_EXCEPTION_MESSAGE = "You entered incorrect password, password must contains 8-20 characters";
     static final String NAME_EXCEPTION_MESSAGE = "You entered incorrect name or surname, name or surname must contains 1-30 characters";
     static final String EMAIL_EXCEPTION_MESSAGE = "You entered incorrect email, email must contains @";
+    static final String DATE_EXCEPTION_MESSAGE = "You entered incorrect date";
     static final String CATEGORY_DATA_EXCEPTION_MESSAGE = "incorrect.category.data";
     static final String COURSE_DATA_EXCEPTION_MESSAGE = "incorrect.course.data";
     public static final String LOGIN_NOT_EXIST_MESSAGE = "login.not.exist";
@@ -14,4 +15,5 @@ public class ValidateExceptionMessageConstants {
     public static final String COURSE_NOT_FOUND_MESSAGE = "course.not.found";
     public static final String CATEGORY_NOT_FOUND_MESSAGE = "category.not.found";
     public static final String TEACHER_NOT_FOUND_MESSAGE = "teacher.not.found";
+    public static final String STUDENT_BLOCKED = "student.blocked";
 }

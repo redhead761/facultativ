@@ -238,11 +238,6 @@ public class MySqlStudentDao implements StudentDao {
         return 0;
     }
 
-    private void setLimitRows(PreparedStatement stmt, int offset, int numberOfRows, int k) throws SQLException {
-        stmt.setInt(++k, offset);
-        stmt.setInt(++k, numberOfRows);
-    }
-
     private void close(AutoCloseable stmt) throws DAOException {
         if (stmt != null) {
             try {

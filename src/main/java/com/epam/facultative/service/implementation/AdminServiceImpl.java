@@ -9,14 +9,14 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 import com.epam.facultative.utils.email_sender.EmailSender;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 
 import java.util.*;
 
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.email_sender.EmailConstants.*;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -36,6 +36,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
         validateCourseData(courseDTO.getTitle(), courseDTO.getDescription(), courseDTO.getDuration());
+        validateDate(courseDTO.getStartDate());
         Course course = convertDTOToCourse(courseDTO);
         try {
             courseDao.add(course);

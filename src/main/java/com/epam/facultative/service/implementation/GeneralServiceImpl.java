@@ -11,17 +11,15 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;
 import com.epam.facultative.utils.pdf_creator.PdfCreator;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
-import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.verify;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.*;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class GeneralServiceImpl implements GeneralService {
@@ -57,6 +55,7 @@ public class GeneralServiceImpl implements GeneralService {
                 }
                 case STUDENT -> {
                     Student student = studentDao.getById(id).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    checkBlocStudent(student);
                     result = convertStudentToDTO(student);
                 }
             }
@@ -64,6 +63,10 @@ public class GeneralServiceImpl implements GeneralService {
             throw new ServiceException(e);
         }
         return result;
+    }
+
+    private void checkBlocStudent(Student student) throws ValidateException {
+        if (student.isBlock()) throw new ValidateException(STUDENT_BLOCKED);
     }
 
     @Override

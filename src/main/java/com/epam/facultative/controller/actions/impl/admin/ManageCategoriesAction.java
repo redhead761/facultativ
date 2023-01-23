@@ -1,12 +1,11 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.AdminService;
-import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
+import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,7 +15,7 @@ import java.util.Map;
 import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
-import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
 
 public class ManageCategoriesAction implements Action {
     private final AdminService adminService;

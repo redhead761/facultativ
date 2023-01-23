@@ -43,7 +43,14 @@ public abstract class ParamBuilderForQuery {
 
     public ParamBuilderForQuery setIdFilterForStudent(String studentId) {
         if (isPositiveInt(studentId)) {
-            filters.add(USER_ID + "=" + studentId);
+            filters.add("student_id" + "=" + studentId);
+        }
+        return this;
+    }
+
+    public ParamBuilderForQuery setStatusFilterForCourse(String statusId) {
+        if (isPositiveInt(statusId)) {
+            filters.add(STATUS_ID + "=" + statusId);
         }
         return this;
     }

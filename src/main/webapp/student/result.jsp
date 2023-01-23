@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -36,15 +37,33 @@
         </ul>
     </div>
 </div>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <fmt:message key="grade"/>: ${requestScope.grade}<br>
-<a class="btn btn-outline-secondary justify-content-end"
-   href="${pageContext.request.contextPath}/controller?action=certificate&type=download&course_id=${requestScope.course_id}&grade=${requestScope.grade}"
-   role="button"><fmt:message key="download.certificate"/></a>
-<a class="btn btn-outline-secondary justify-content-end"
-   href="${pageContext.request.contextPath}/controller?action=certificate&type=send&course_id=${requestScope.course_id}&grade=${requestScope.grade}"
-   role="button"><fmt:message key="send.certificate"/></a>
+<div class="row">
+    <div class="col-md-auto">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="action" value="certificate"/>
+            <input type="hidden" name="type" value="download"/>
+            <input type="hidden" name="course_id" value="${param.course_id}"/>
+            <input type="hidden" name="grade" value="${requestScope.grade}"/>
 
+            <button type="submit" class="btn btn-outline-secondary btn-lg"><fmt:message
+                    key="download.certificate"/></button>
+        </form>
+    </div>
+    <div class="col-md-auto">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="action" value="certificate"/>
+            <input type="hidden" name="type" value="send"/>
+            <input type="hidden" name="course_id" value="${param.course_id}"/>
+            <input type="hidden" name="grade" value="${requestScope.grade}"/>
+
+            <button type="submit" class="btn btn-outline-secondary btn-lg"><fmt:message
+                    key="send.certificate"/></button>
+        </form>
+    </div>
+</div>
 <jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

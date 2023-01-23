@@ -1,12 +1,12 @@
 package com.epam.facultative.controller.actions.impl.student;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.actions.ActionUtils;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.service.StudentService;
+import com.epam.facultative.utils.query_builders.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -14,7 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
+import static com.epam.facultative.data_layer.entities.Status.*;
+import static com.epam.facultative.utils.query_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 
 public class ShowStudentCoursesAction implements Action {
     private final StudentService studentService;
@@ -25,33 +28,32 @@ public class ShowStudentCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int currentPage = ActionUtils.getCurrentPage(req);
-        int recordsPerPage = ActionUtils.getRecordsPerPage(req);
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
+        String studentId = String.valueOf(student.getId());
         String type = req.getParameter(TYPE);
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = null;
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows;
         String path = null;
+        ParamBuilderForQuery paramBuilder = courseParamBuilderForQuery()
+                .setIdFilterForStudent(studentId)
+                .setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         switch (type) {
-            case "all" -> {
-                coursesWithRows = studentService.getCoursesByStudent(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
-                path = STUDENT_COURSES_PAGE;
-            }
+            case "all" -> path = STUDENT_COURSES_PAGE;
             case "coming_soon" -> {
-                coursesWithRows = studentService.getCoursesComingSoon(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                paramBuilder.setStatusFilterForCourse(String.valueOf(COMING_SOON.getId()));
                 path = COMING_SOON_COURSES_PAGE;
             }
             case "completed" -> {
-                coursesWithRows = studentService.getCoursesCompleted(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                paramBuilder.setStatusFilterForCourse(String.valueOf(COMPLETED.getId()));
                 path = COMPLETED_COURSES_PAGE;
             }
             case "in_progress" -> {
-                coursesWithRows = studentService.getCoursesInProgress(student.getId(), (currentPage - 1) * recordsPerPage, recordsPerPage);
+                paramBuilder.setStatusFilterForCourse(String.valueOf(IN_PROCESS.getId()));
                 path = IN_PROGRESS_COURSES_PAGE;
             }
         }
+        coursesWithRows = studentService.getCoursesByJournal(paramBuilder.getParam());
         req.setAttribute(COURSES, coursesWithRows.getValue());
-        int noOfRecords = coursesWithRows.getKey();
-        ActionUtils.setUpPagination(req, noOfRecords, currentPage, recordsPerPage);
+        testSetUp(req, coursesWithRows.getKey());
         return path;
     }
 }

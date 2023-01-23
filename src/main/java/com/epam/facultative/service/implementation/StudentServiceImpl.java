@@ -33,9 +33,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Map.Entry<Integer, List<CourseDTO>> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> getCoursesByJournal(String param) throws ServiceException {
         try {
-            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByStudent(studentId, offset, numberOfRows);
+            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByJournal(param);
             List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
             return Map.entry(coursesWithRows.getKey(), courses);
         } catch (DAOException e) {
@@ -43,38 +43,6 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    @Override
-    public Map.Entry<Integer, List<CourseDTO>> getCoursesComingSoon(int studentId, int offset, int numberOfRows) throws ServiceException {
-        try {
-            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByStatus(studentId, Status.COMING_SOON, offset, numberOfRows);
-            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
-            return Map.entry(coursesWithRows.getKey(), courses);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Map.Entry<Integer, List<CourseDTO>> getCoursesInProgress(int studentId, int offset, int numberOfRows) throws ServiceException {
-        try {
-            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByStatus(studentId, Status.IN_PROCESS, offset, numberOfRows);
-            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
-            return Map.entry(coursesWithRows.getKey(), courses);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Map.Entry<Integer, List<CourseDTO>> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException {
-        try {
-            Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getByStatus(studentId, Status.COMPLETED, offset, numberOfRows);
-            List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
-            return Map.entry(coursesWithRows.getKey(), courses);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
 
     @Override
     public void enroll(int courseId, int userId) throws ServiceException {

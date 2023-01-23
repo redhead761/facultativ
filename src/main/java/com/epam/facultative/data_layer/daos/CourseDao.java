@@ -12,7 +12,7 @@ public interface CourseDao extends Dao<Course> {
 
     Map.Entry<Integer, List<Course>> getByStudent(int userId, int offset, int numberOfRows) throws DAOException;
 
-    Map.Entry<Integer, List<Course>> getByStatus(int id, Status status, int offset, int numberOfRows) throws DAOException;
+    Map.Entry<Integer, List<Course>> getByJournal(String param) throws DAOException;
 
     void insertJournal(int courseId, int studentId) throws DAOException;
 

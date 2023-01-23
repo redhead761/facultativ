@@ -100,11 +100,11 @@ class SQLRequestConstants {
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
                     "LEFT JOIN user ON teacher.user_id = user.id JOIN journal ON course.id = journal.course_id " +
                     "JOIN student ON journal.student_id = student.user_id WHERE student.user_id=? LIMIT ?,?";
-    static final String SELECT_COURSE_BY_STATUS =
+    static final String SELECT_COURSE_BY_JOURNAL =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
                     "LEFT JOIN user ON teacher.user_id = user.id JOIN journal ON course.id = journal.course_id " +
-                    "JOIN student ON journal.student_id = student.user_id WHERE student.user_id=? AND status.id=? LIMIT ?,?";
+                    "JOIN student ON journal.student_id = student.user_id %s";
     static final String SELECT_ALL_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id" +

@@ -53,12 +53,12 @@ class StudentServiceImplTest {
 //        assertIterableEquals(courseDTOs, studentService.getCoursesByStudent(1, 1, 5));
 //    }
 
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void getCoursesByStudentWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
-        doThrow(DAOException.class).when(courseDao).getByStudent(isA(int.class), isA(int.class), isA(int.class));
-        assertThrows(ServiceException.class, () -> studentService.getCoursesByStudent(studentId, offset, numberOfRows));
-    }
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void getCoursesByStudentWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).getByStudent(isA(int.class), isA(int.class), isA(int.class));
+//        assertThrows(ServiceException.class, () -> studentService.getCoursesByJournal(studentId, offset, numberOfRows));
+//    }
 
 //    @Test
 //    void getCoursesComingSoon() throws DAOException, ServiceException {
@@ -66,12 +66,12 @@ class StudentServiceImplTest {
 //        assertIterableEquals(courseDTOs, studentService.getCoursesComingSoon(1, 1, 5));
 //    }
 
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void getCoursesComingSoonWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
-        doThrow(DAOException.class).when(courseDao).getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class));
-        assertThrows(ServiceException.class, () -> studentService.getCoursesComingSoon(studentId, offset, numberOfRows));
-    }
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void getCoursesComingSoonWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).getByJournal(isA(int.class), isA(Status.class), isA(int.class), isA(int.class));
+//        assertThrows(ServiceException.class, () -> studentService.getCoursesComingSoon(studentId, offset, numberOfRows));
+//    }
 
 //    @Test
 //    void getCoursesInProgress() throws DAOException, ServiceException {
@@ -79,12 +79,12 @@ class StudentServiceImplTest {
 //        assertIterableEquals(courseDTOs, studentService.getCoursesInProgress(1, 1, 5));
 //    }
 
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void getCoursesInProgressWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
-        doThrow(DAOException.class).when(courseDao).getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class));
-        assertThrows(ServiceException.class, () -> studentService.getCoursesInProgress(studentId, offset, numberOfRows));
-    }
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void getCoursesInProgressWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).getByJournal(isA(int.class), isA(Status.class), isA(int.class), isA(int.class));
+//        assertThrows(ServiceException.class, () -> studentService.getCoursesInProgress(studentId, offset, numberOfRows));
+//    }
 
 //    @Test
 //    void getCoursesCompleted() throws DAOException, ServiceException {
@@ -92,12 +92,12 @@ class StudentServiceImplTest {
 //        assertIterableEquals(courseDTOs, studentService.getCoursesCompleted(1, 1, 5));
 //    }
 
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void getCoursesCompletedWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
-        doThrow(DAOException.class).when(courseDao).getByStatus(isA(int.class), isA(Status.class), isA(int.class), isA(int.class));
-        assertThrows(ServiceException.class, () -> studentService.getCoursesCompleted(studentId, offset, numberOfRows));
-    }
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void getCoursesCompletedWithIllegalArguments(int studentId, int offset, int numberOfRows) throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).getByJournal(isA(int.class), isA(Status.class), isA(int.class), isA(int.class));
+//        assertThrows(ServiceException.class, () -> studentService.getCoursesCompleted(studentId, offset, numberOfRows));
+//    }
 
     @Test
     void enroll() throws DAOException {

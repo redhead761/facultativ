@@ -1,7 +1,6 @@
 package com.epam.facultative.service;
 
 import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.data_layer.entities.Student;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
@@ -11,13 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudentService {
-    Map.Entry<Integer, List<CourseDTO>> getCoursesByStudent(int studentId, int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> getCoursesComingSoon(int studentId, int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> getCoursesInProgress(int studentId, int offset, int numberOfRows) throws ServiceException;
-
-    Map.Entry<Integer, List<CourseDTO>> getCoursesCompleted(int studentId, int offset, int numberOfRows) throws ServiceException;
+    Map.Entry<Integer, List<CourseDTO>> getCoursesByJournal(String param) throws ServiceException;
 
     void enroll(int courseId, int userId) throws ServiceException;
 

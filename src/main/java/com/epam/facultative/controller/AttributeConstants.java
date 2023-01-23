@@ -23,7 +23,7 @@ public class AttributeConstants {
     public static String RECORDS_PER_PAGE = "records_per_page";
     public static String USER = "user";
     public static String STUDENTS = "students";
-    public static String ON_COURSE = "You already on course";
+    public static String ON_COURSE = "on.course";
     public static String ROLE = "role";
     public static String STUDENT = "student";
     public static String LOGIN = "login";

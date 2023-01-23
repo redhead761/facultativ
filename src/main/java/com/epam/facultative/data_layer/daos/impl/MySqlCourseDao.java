@@ -139,15 +139,11 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public Map.Entry<Integer, List<Course>> getByStatus(int userId, Status status, int offset, int numberOfRows) throws DAOException {
+    public Map.Entry<Integer, List<Course>> getByJournal(String param) throws DAOException {
         List<Course> courses = new ArrayList<>();
         int noOfRecords;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_STATUS)) {
-            int k = 0;
-            stmt.setInt(++k, userId);
-            stmt.setInt(++k, status.getId());
-            setLimitRows(stmt, offset, numberOfRows, k);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_COURSE_BY_JOURNAL, param))) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     courses.add(mapRowCourse(rs));

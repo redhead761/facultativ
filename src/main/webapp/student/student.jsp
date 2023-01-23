@@ -25,12 +25,7 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/student_header.jsp"/>
 
-<c:if test="${sessionScope.message != null}">
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>${sessionScope.message}!</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
@@ -56,8 +51,18 @@
             <td>${course.getStatus()}</td>
             <td>${course.getTeacher().getName()} ${course.getTeacher().getSurname()}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=enroll&course_id=${course.id}"><fmt:message
-                        key="enroll"/></a>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="action" value="enroll"/>
+                    <input type="hidden" name="course_id" value="${course.id}"/>
+                    <input type="hidden" name="current_page" value="${param.current_page}"/>
+                    <input type="hidden" name="records_per_page" value="${param.records_per_page}"/>
+                    <input type="hidden" name="sort" value="${param.sort}"/>
+                    <input type="hidden" name="select_by_category" value="${param.select_by_category}"/>
+                    <input type="hidden" name="select_by_teacher" value="${param.select_by_teacher}"/>
+
+                    <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                            key="enroll"/></button>
+                </form>
             </td>
             </tbody>
         </c:forEach>
@@ -66,6 +71,5 @@
             href="${pageContext.request.contextPath}/controller?action=show_all_courses&sort=${param.sort}&order=${param.order}&select_by_category=${param.select_by_category}&select_by_teacher=${param.select_by_teacher}"/>
 </div>
 <jsp:include page="/parts/footer.jsp"/>
-${sessionScope.remove("message")}
 </body>
 </html>

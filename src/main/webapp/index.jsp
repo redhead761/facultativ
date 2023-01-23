@@ -27,11 +27,11 @@
             <div class="text-black-50">
                 <h1 class="mb-3"><fmt:message key="welcome.first"/></h1>
                 <h5 class="mb-4"><fmt:message key="welcome.second"/></h5>
-                <a class="btn btn-outline-secondary btn-lg m-2" href="auth.jsp" role="button"><fmt:message
+                <a class="btn btn-outline-secondary btn-lg m-2" href="${pageContext.request.contextPath}/controller?action=auth" role="button"><fmt:message
                         key="log.in"/></a>
-                    <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button"><fmt:message
-                            key="sign.up"/></a
-                    >
+                <a class="btn btn-outline-secondary btn-lg m-2" href="register.jsp" role="button"><fmt:message
+                        key="sign.up"/></a
+                >
             </div>
         </div>
     </div>

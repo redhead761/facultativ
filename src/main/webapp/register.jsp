@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -31,12 +32,7 @@
     </div>
 </div>
 
-<c:if test="${sessionScope.message != null}">
-    <div class="alert alert-warning alert-dismissible fade show col-lg-2" role="alert">
-        <strong>${sessionScope.message}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <section class="vh-80">
     <div class="container h-100">
@@ -53,7 +49,7 @@
 
                                 <div class="form-floating d-flex flex-row align-items-center mb-4">
                                     <input class="form-control" name="login" id="floatingInputLogin"
-                                           placeholder="login" value="${sessionScope.student.login}"
+                                           placeholder="login" value="${requestScope.student.login}"
                                            pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$"
                                            title="Login must..." required>
                                     <label for="floatingInputLogin"><fmt:message key="login"/></label>
@@ -79,7 +75,7 @@
 
                                 <div class="form-floating d-flex flex-row align-items-center mb-4 ">
                                     <input class="form-control" name="name" id="floatingInputName"
-                                           placeholder="name" value="${sessionScope.student.name}"
+                                           placeholder="name" value="${requestScope.student.name}"
                                            pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Name must..."
                                            required>
                                     <label for="floatingInputName"><fmt:message key="name"/></label>
@@ -88,7 +84,7 @@
                                 <div class="form-floating d-flex flex-row align-items-center mb-4">
                                     <input class="form-control" name="surname" id="floatingInputSurname"
                                            placeholder="surname"
-                                           value="${sessionScope.student.surname}"
+                                           value="${requestScope.student.surname}"
                                            pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Surname must..."
                                            required>
                                     <label for="floatingInputSurname"><fmt:message key="surname"/></label>
@@ -97,7 +93,7 @@
                                 <div class="form-floating d-flex flex-row align-items-center mb-4">
                                     <input type="email" class="form-control" name="email" id="floatingInputEmail"
                                            placeholder="email"
-                                           value="${sessionScope.student.email}"
+                                           value="${requestScope.student.email}"
                                            pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" title="Email must..."
                                            required>
                                     <label for="floatingInputEmail"><fmt:message key="email"/></label>
@@ -107,7 +103,7 @@
                                     <input type="number" class="form-control" name="course_number"
                                            id="floatingInputNumber"
                                            placeholder="Course number"
-                                           value="${sessionScope.student.courseNumber}"
+                                           value="${requestScope.student.courseNumber}"
                                            min="1" max="6"
                                            required>
                                     <label for="floatingInputNumber"><fmt:message key="course.number"/></label>
@@ -133,7 +129,5 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
-${sessionScope.remove("message")}
-${sessionScope.remove("student")}
 </body>
 </html>

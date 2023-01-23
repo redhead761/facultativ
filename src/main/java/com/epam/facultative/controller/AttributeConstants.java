@@ -47,4 +47,7 @@ public class AttributeConstants {
     public static String SELECT_BY_CATEGORY = "select_by_category";
     public static String SELECT_BY_TEACHER = "select_by_teacher";
     public static String EMAIL_SEND = "email_send";
+    public static String MISSED_CAPTCHA = "missed.captcha";
+    public static String LANGUAGE = "language";
+    public static String COURSE_NUMBER = "course_number";
 }

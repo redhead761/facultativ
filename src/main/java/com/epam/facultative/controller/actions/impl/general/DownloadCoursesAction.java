@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static com.epam.facultative.controller.AttributeConstants.LANGUAGE;
 import static com.epam.facultative.controller.actions.PageNameConstants.INDEX_PAGE;
 
 public class DownloadCoursesAction implements Action {
@@ -22,7 +23,7 @@ public class DownloadCoursesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServiceException {
-        String locale = (String) req.getSession().getAttribute("language");
+        String locale = (String) req.getSession().getAttribute(LANGUAGE);
         ByteArrayOutputStream usersPdf = generalService.downloadAllCoursesInPdf(locale);
         setResponse(resp, usersPdf);
         return INDEX_PAGE;

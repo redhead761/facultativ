@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.AUTH_ACTION;
+import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 
@@ -29,19 +31,26 @@ public class AuthAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        return isPostMethod(req) ? executePost(req) : executeGet(req);
+    }
+
+    private String executeGet(HttpServletRequest req) {
+        transferAttributeFromSessionToRequest(req, ERROR, LOGIN);
+        return AUTH_PAGE;
+    }
+
+    private String executePost(HttpServletRequest req) throws ServiceException {
         String path = null;
         String login = req.getParameter(LOGIN);
         String password = req.getParameter(PASSWORD);
+        String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
         try {
-            String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
-            System.out.println(gRecaptchaResponse);
             boolean verify = recaptcha.verify(gRecaptchaResponse);
             if (!verify) {
-                throw new ValidateException("missed.captcha");
+                throw new ValidateException(MISSED_CAPTCHA);
             }
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute(USER, user);
-            req.getSession().setAttribute(ROLE, user.getRole());
             req.getSession().setAttribute(STATUSES, Status.values());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PROFILE_PAGE;
@@ -51,7 +60,7 @@ public class AuthAction implements Action {
         } catch (ValidateException e) {
             req.getSession().setAttribute(LOGIN, login);
             req.getSession().setAttribute(ERROR, e.getMessage());
-            return AUTH_PAGE;
+            return getGetAction(AUTH_ACTION);
         }
         return path;
     }

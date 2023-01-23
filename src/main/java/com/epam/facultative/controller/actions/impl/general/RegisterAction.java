@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.actions.ActionNameConstants.REGISTER_ACTION;
+import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 
 public class RegisterAction implements Action {
@@ -21,8 +23,17 @@ public class RegisterAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        String password = req.getParameter("password");
-        String repeatPassword = req.getParameter("repeat_password");
+        return isPostMethod(req) ? executePost(req) : executeGet(req);
+    }
+
+    private String executeGet(HttpServletRequest req) {
+        transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, STUDENT);
+        return REGISTER_PAGE;
+    }
+
+    private String executePost(HttpServletRequest req) throws ServiceException {
+        String password = req.getParameter(PASSWORD);
+        String repeatPassword = req.getParameter(REPEAT_PASSWORD);
         StudentDTO student = getStudentForAttribute(req);
         try {
             checkConfirmPassword(password, repeatPassword);
@@ -30,18 +41,18 @@ public class RegisterAction implements Action {
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
             req.getSession().setAttribute(STUDENT, student);
-            req.getSession().setAttribute(MESSAGE, e.getMessage());
+            req.getSession().setAttribute(ERROR, e.getMessage());
         }
-        return REGISTER_PAGE;
+        return getGetAction(REGISTER_ACTION);
     }
 
     private StudentDTO getStudentForAttribute(HttpServletRequest req) {
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        String email = req.getParameter("email");
-        int courseNumber = Integer.parseInt(req.getParameter("course_number"));
+        String login = req.getParameter(LOGIN);
+        String password = req.getParameter(PASSWORD);
+        String name = req.getParameter(NAME);
+        String surname = req.getParameter(SURNAME);
+        String email = req.getParameter(EMAIL);
+        int courseNumber = Integer.parseInt(req.getParameter(COURSE_NUMBER));
         return StudentDTO.builder()
                 .id(0)
                 .login(login)
@@ -55,7 +66,7 @@ public class RegisterAction implements Action {
 
     private void checkConfirmPassword(String password, String repeatPassword) throws ValidateException {
         if (!password.equals(repeatPassword)) {
-            throw new ValidateException("Wrong repeat password");
+            throw new ValidateException(WRONG_REPEAT_PASSWORD);
         }
     }
 }

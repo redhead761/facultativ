@@ -22,7 +22,7 @@
         crossorigin="anonymous"></script>
 
 <jsp:include page="/parts/header.jsp"/>
-<tags:notification value_message="${sessionScope.message}" value_error="${sessionScope.error}"></tags:notification>
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
 
 <section class="vh-100">
     <div class="container-fluid h-custom">
@@ -38,7 +38,7 @@
                     <div class="form-floating mt-4 mb-3">
                         <input class="form-control form-control-lg" name="login" id="floatingInput"
                                placeholder="login"
-                               value="${sessionScope.login}"
+                               value="${requestScope.login}"
                                pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$"
                                title="Login must contains 4 to 16 characters" required>
                         <label class="form-label" for="floatingInput"><fmt:message key="login"/></label>
@@ -76,8 +76,5 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
-${sessionScope.remove("error")}
-${sessionScope.remove("message")}
-${sessionScope.remove("login")}
 </body>
 </html>

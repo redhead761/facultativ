@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="custom" uri="/WEB-INF/custom.tld" %>
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
@@ -47,9 +48,9 @@
             <td>${course.getStatus()}</td>
             <td>${course.getTeacher().getName()} ${course.getTeacher().getSurname()}</td>
             <td>
-                <a href="${pageContext.request.contextPath}/controller?action=show_result&course_id=${course.id}"><fmt:message
-                        key="show.result"/>
-                </a>
+                <custom:result
+                        uri="<a href=${pageContext.request.contextPath}/controller?action=show_result&course_id=${course.id}>%s</a>"
+                        courseId="${course.id}" studentId="${sessionScope.user.id}" locale="${sessionScope.language}"/>
             </td>
             </tbody>
         </c:forEach>

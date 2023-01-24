@@ -16,7 +16,7 @@ public interface Dao<T> {
 
     void update(T t) throws DAOException, ValidateException;
 
-    void delete(int id) throws DAOException;
+    void delete(int id) throws DAOException, ValidateException;
 
     Map.Entry<Integer, List<T>> getAll(String param) throws DAOException;
 }

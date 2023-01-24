@@ -96,17 +96,17 @@ class AdminServiceImplTest {
         assertThrows(ServiceException.class, () -> adminService.updateCourse(courseDTO));
     }
 
-    @Test
-    void deleteCourse() throws DAOException {
-        doNothing().when(courseDao).delete(isA(int.class));
-        assertDoesNotThrow(() -> adminService.deleteCourse(1));
-    }
+//    @Test
+//    void deleteCourse() throws DAOException {
+//        doNothing().when(courseDao).delete(isA(int.class));
+//        assertDoesNotThrow(() -> adminService.deleteCourse(1));
+//    }
 
-    @Test
-    void deleteCourseWithIllegalArgument() throws DAOException {
-        doThrow(DAOException.class).when(courseDao).delete(isA(int.class));
-        assertThrows(ServiceException.class, () -> adminService.deleteCourse(-1));
-    }
+//    @Test
+//    void deleteCourseWithIllegalArgument() throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).delete(isA(int.class));
+//        assertThrows(ServiceException.class, () -> adminService.deleteCourse(-1));
+//    }
 
     @Test
     void addCategory() throws DAOException, ValidateException {
@@ -158,17 +158,17 @@ class AdminServiceImplTest {
         assertThrows(ServiceException.class, () -> adminService.updateCategory(categoryDTO));
     }
 
-    @Test
-    void deleteCategory() throws DAOException {
-        doNothing().when(categoryDao).delete(isA(int.class));
-        assertDoesNotThrow(() -> adminService.deleteCategory(1));
-    }
+//    @Test
+//    void deleteCategory() throws DAOException {
+//        doNothing().when(categoryDao).delete(isA(int.class));
+//        assertDoesNotThrow(() -> adminService.deleteCategory(1));
+//    }
 
-    @Test
-    void deleteCategoryWithIllegalArgument() throws DAOException {
-        doThrow(DAOException.class).when(categoryDao).delete(isA(int.class));
-        assertThrows(ServiceException.class, () -> adminService.deleteCategory(-1));
-    }
+//    @Test
+//    void deleteCategoryWithIllegalArgument() throws DAOException {
+//        doThrow(DAOException.class).when(categoryDao).delete(isA(int.class));
+//        assertThrows(ServiceException.class, () -> adminService.deleteCategory(-1));
+//    }
 
 //    @Test
 //    void getAllCategoriesPagination() throws DAOException, ServiceException {

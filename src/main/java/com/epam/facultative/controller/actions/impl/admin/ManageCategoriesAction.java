@@ -26,7 +26,7 @@ public class ManageCategoriesAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        transferAttributeFromSessionToRequest(req, MESSAGE);
+        transferAttributeFromSessionToRequest(req, MESSAGE, ERROR);
         ParamBuilderForQuery paramBuilderForQuery = categoryParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<CategoryDTO>> categoriesWithRows = adminService.getAllCategoriesPagination(paramBuilderForQuery.getParam());
         req.setAttribute(CATEGORIES, categoriesWithRows.getValue());

@@ -18,14 +18,14 @@ public interface AdminService {
 
     void updateCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;
 
-    void deleteCourse(int courseId) throws ServiceException;
+    void deleteCourse(int courseId) throws ServiceException, ValidateException;
 
     //Category
     void addCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException;
 
     void updateCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException;
 
-    void deleteCategory(int categoryId) throws ServiceException;
+    void deleteCategory(int categoryId) throws ServiceException, ValidateException;
 
     Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(String param) throws ServiceException;
 

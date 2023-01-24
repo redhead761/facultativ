@@ -81,11 +81,13 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public void delete(int id) throws DAOException {
+    public void delete(int id) throws DAOException, ValidateException {
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.DELETE_CATEGORY)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ValidateException(CAN_NOT_DELETE_CATEGORY);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

@@ -5,6 +5,8 @@
 
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
+
+<!DOCTYPE html>
 <html lang="${sessionScope.language}">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -13,6 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://www.google.com/recaptcha/api.js"></script>
+
     <title> Facultative </title>
 </head>
 
@@ -46,11 +49,19 @@
 
                     <div class="form-floating mb-1">
                         <input type="password" class="form-control form-control-lg" name="password"
-                               id="floatingPassword" placeholder="Password"
+                               id="password" placeholder="Password"
                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
                                title="Password must be between 8 and 20 characters, capital letter and no special characters"
                                required>
-                        <label class="form-label" for="floatingPassword"><fmt:message key="password.login"/></label>
+                        <label class="form-label" for="password"><fmt:message key="password.login"/></label>
+                    </div>
+
+                    <div class="form-check-inline">
+                        <input class="form-check-input" type="checkbox" onclick="checkPass()"
+                               id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <fmt:message key="show.password"/>
+                        </label>
                     </div>
 
                     <div class="g-recaptcha"
@@ -76,5 +87,15 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
+<script lang="java_script">
+    function checkPass() {
+        let x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 </body>
 </html>

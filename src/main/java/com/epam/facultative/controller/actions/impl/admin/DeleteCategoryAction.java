@@ -3,6 +3,7 @@ package com.epam.facultative.controller.actions.impl.admin;
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.exception.ServiceException;
+import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +24,12 @@ public class DeleteCategoryAction implements Action {
         String id = req.getParameter(CATEGORY_ID);
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
-        adminService.deleteCategory(Integer.parseInt(id));
-        req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
+        try {
+            adminService.deleteCategory(Integer.parseInt(id));
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
+        } catch (ValidateException e) {
+            req.getSession().setAttribute(ERROR, e.getMessage());
+        }
         return getGetAction(MANAGE_CATEGORIES_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage);
     }
 }

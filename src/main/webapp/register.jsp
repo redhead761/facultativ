@@ -57,20 +57,28 @@
 
                                 <div class="form-floating d-flex flex-row align-items-center mb-4">
                                     <input class="form-control" name="password" type="password"
-                                           id="floatingInputPassword"
+                                           id="password"
                                            placeholder="password"
                                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
                                            title="Password must..." required>
-                                    <label for="floatingInputPassword"><fmt:message key="password.login"/></label>
+                                    <label for="password"><fmt:message key="password.login"/></label>
                                 </div>
 
-                                <div class="form-floating d-flex flex-row align-items-center mb-4">
+                                <div class="form-floating d-flex flex-row align-items-center">
                                     <input class="form-control" name="repeat_password" type="password"
-                                           id="floatingInputConfirmPassword"
+                                           id="repeat_password"
                                            placeholder="confirm password"
                                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
                                            title="Password must..." required>
-                                    <label for="floatingInputConfirmPassword"><fmt:message key="confirm.password"/></label>
+                                    <label for="repeat_password"><fmt:message key="confirm.password"/></label>
+                                </div>
+
+                                <div class="form-check-inline mb-2">
+                                    <input class="form-check-input" type="checkbox" onclick="checkPass('password');checkPass('repeat_password')"
+                                           id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <fmt:message key="show.password"/>
+                                    </label>
                                 </div>
 
                                 <div class="form-floating d-flex flex-row align-items-center mb-4 ">
@@ -129,5 +137,15 @@
     </div>
     <jsp:include page="/parts/footer.jsp"/>
 </section>
+<script lang="java_script">
+    function checkPass(p) {
+        let x = document.getElementById(p);
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 </body>
 </html>

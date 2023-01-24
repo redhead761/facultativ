@@ -77,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteCourse(int courseId) throws ServiceException {
+    public void deleteCourse(int courseId) throws ServiceException, ValidateException {
         try {
             courseDao.delete(courseId);
         } catch (DAOException e) {
@@ -108,7 +108,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteCategory(int categoryId) throws ServiceException {
+    public void deleteCategory(int categoryId) throws ServiceException, ValidateException {
         try {
             categoryDao.delete(categoryId);
         } catch (DAOException e) {

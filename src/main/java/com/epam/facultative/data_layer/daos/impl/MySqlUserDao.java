@@ -22,6 +22,7 @@ public class MySqlUserDao implements UserDao {
 
     @Override
     public Optional<User> get(String param) throws DAOException {
+        System.out.println("Int get PARAM =" + param);
         User user = null;
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(String.format(SELECT_USER, param))) {

@@ -30,7 +30,7 @@ public class ActionUtils {
         ParamBuilderForQuery paramBuilderForQuery = courseParamBuilderForQuery().setSortFieldForCourse(sort)
                 .setOrder(order)
                 .setCategoryFilterForCourse(selectByCategory)
-                .setTeacherFilterForCourse(selectByTeacher)
+                .setUserIdFilter(selectByTeacher)
                 .setLimits(currentPage, recordsPerPage);
 
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilderForQuery.getParam());

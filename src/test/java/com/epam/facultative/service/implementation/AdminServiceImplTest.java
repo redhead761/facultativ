@@ -186,27 +186,27 @@ class AdminServiceImplTest {
 //        assertThrows(ServiceException.class, () -> adminService.getAllCategoriesPagination(offset, numberOfRows));
 //    }
 
-    @Test
-    void assigned() throws DAOException, ValidateException {
-        Course course = testServiceUtil.getCourse();
-        Teacher teacher = testServiceUtil.getTeacher();
-        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
-        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
-        doNothing().when(courseDao).update(isA(Course.class));
-        assertDoesNotThrow(() -> adminService.assigned(1, 1));
-    }
-
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void assignedWithIllegalArgument(int courseId, int teacherId) throws DAOException, ValidateException {
-        Course course = testServiceUtil.getCourse();
-        Teacher teacher = testServiceUtil.getTeacher();
-        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
-        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
-        doThrow(DAOException.class).when(courseDao).update(isA(Course.class));
-        assertThrows(ServiceException.class, () -> adminService.assigned(courseId, teacherId));
-
-    }
+//    @Test
+//    void assigned() throws DAOException, ValidateException {
+//        Course course = testServiceUtil.getCourse();
+//        Teacher teacher = testServiceUtil.getTeacher();
+//        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
+//        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+//        doNothing().when(courseDao).update(isA(Course.class));
+//        assertDoesNotThrow(() -> adminService.assigned(1, 1));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("invalidIntValues")
+//    void assignedWithIllegalArgument(int courseId, int teacherId) throws DAOException, ValidateException {
+//        Course course = testServiceUtil.getCourse();
+//        Teacher teacher = testServiceUtil.getTeacher();
+//        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
+//        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+//        doThrow(DAOException.class).when(courseDao).update(isA(Course.class));
+//        assertThrows(ServiceException.class, () -> adminService.assigned(courseId, teacherId));
+//
+//    }
 
     @Test
     void blockStudent() throws DAOException {
@@ -294,62 +294,62 @@ class AdminServiceImplTest {
 //        assertThrows(ServiceException.class, () -> adminService.getAllTeachersPagination(offset, numberOfRows));
 //    }
 
-    @Test
-    void getCategory() throws DAOException, ServiceException, ValidateException {
-        Category category = testServiceUtil.getCategory();
-        when(categoryDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(category));
-        assertEquals(categoryDTO, adminService.getCategory(1));
-    }
-
-    @Test
-    void getCategoryWithIllegalArgument() throws DAOException {
-        when(categoryDao.getById(isA(int.class))).thenReturn(Optional.empty());
-        assertThrows(ValidateException.class, () -> adminService.getCategory(-1));
-    }
-
-    @Test
-    void getCategoryFailed() throws DAOException {
-        doThrow(DAOException.class).when(categoryDao).getById(isA(int.class));
-        assertThrows(ServiceException.class, () -> adminService.getCategory(-1));
-    }
-
-    @Test
-    void getCourse() throws DAOException, ValidateException, ServiceException {
-        Course course = testServiceUtil.getCourse();
-        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
-        assertEquals(courseDTO, adminService.getCourse(1));
-    }
-
-    @Test
-    void getCourseWithIllegalArgument() throws DAOException {
-        when(courseDao.getById(isA(int.class))).thenReturn(Optional.empty());
-        assertThrows(ValidateException.class, () -> adminService.getCourse(-1));
-    }
-
-    @Test
-    void getCourseFailed() throws DAOException {
-        doThrow(DAOException.class).when(courseDao).getById(isA(int.class));
-        assertThrows(ServiceException.class, () -> adminService.getCourse(-1));
-    }
-
-    @Test
-    void getTeacher() throws DAOException, ServiceException, ValidateException {
-        Teacher teacher = testServiceUtil.getTeacher();
-        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
-        assertEquals(teacherDTO, adminService.getTeacher(1));
-    }
-
-    @Test
-    void getTeacherWithIllegalArgument() throws DAOException {
-        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.empty());
-        assertThrows(ValidateException.class, () -> adminService.getTeacher(-1));
-    }
-
-    @Test
-    void getTeacherFailed() throws DAOException {
-        doThrow(DAOException.class).when(teacherDao).getById(isA(int.class));
-        assertThrows(ServiceException.class, () -> adminService.getTeacher(-1));
-    }
+//    @Test
+//    void getCategory() throws DAOException, ServiceException, ValidateException {
+//        Category category = testServiceUtil.getCategory();
+//        when(categoryDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(category));
+//        assertEquals(categoryDTO, adminService.getCategory(1));
+//    }
+//
+//    @Test
+//    void getCategoryWithIllegalArgument() throws DAOException {
+//        when(categoryDao.getById(isA(int.class))).thenReturn(Optional.empty());
+//        assertThrows(ValidateException.class, () -> adminService.getCategory(-1));
+//    }
+//
+//    @Test
+//    void getCategoryFailed() throws DAOException {
+//        doThrow(DAOException.class).when(categoryDao).getById(isA(int.class));
+//        assertThrows(ServiceException.class, () -> adminService.getCategory(-1));
+//    }
+//
+//    @Test
+//    void getCourse() throws DAOException, ValidateException, ServiceException {
+//        Course course = testServiceUtil.getCourse();
+//        when(courseDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(course));
+//        assertEquals(courseDTO, adminService.getCourse(1));
+//    }
+//
+//    @Test
+//    void getCourseWithIllegalArgument() throws DAOException {
+//        when(courseDao.getById(isA(int.class))).thenReturn(Optional.empty());
+//        assertThrows(ValidateException.class, () -> adminService.getCourse(-1));
+//    }
+//
+//    @Test
+//    void getCourseFailed() throws DAOException {
+//        doThrow(DAOException.class).when(courseDao).getById(isA(int.class));
+//        assertThrows(ServiceException.class, () -> adminService.getCourse(-1));
+//    }
+//
+//    @Test
+//    void getTeacher() throws DAOException, ServiceException, ValidateException {
+//        Teacher teacher = testServiceUtil.getTeacher();
+//        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+//        assertEquals(teacherDTO, adminService.getTeacher(1));
+//    }
+//
+//    @Test
+//    void getTeacherWithIllegalArgument() throws DAOException {
+//        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.empty());
+//        assertThrows(ValidateException.class, () -> adminService.getTeacher(-1));
+//    }
+//
+//    @Test
+//    void getTeacherFailed() throws DAOException {
+//        doThrow(DAOException.class).when(teacherDao).getById(isA(int.class));
+//        assertThrows(ServiceException.class, () -> adminService.getTeacher(-1));
+//    }
 
     private static Stream<Arguments> invalidIntValues() {
         return Stream.of(

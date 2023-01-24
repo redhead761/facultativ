@@ -29,7 +29,7 @@ public class ShowTeacherCoursesAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         TeacherDTO teacher = (TeacherDTO) req.getSession().getAttribute(USER);
         ParamBuilderForQuery paramBuilder = teacherParamBuilderForQuery()
-                .setTeacherFilterForCourse(String.valueOf(teacher.getId()))
+                .setUserIdFilter(String.valueOf(teacher.getId()))
                 .setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilder.getParam());
         req.setAttribute(COURSES, coursesWithRows.getValue());

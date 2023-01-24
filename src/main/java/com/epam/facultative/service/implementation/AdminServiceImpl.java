@@ -16,7 +16,7 @@ import java.util.*;
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.email_sender.EmailConstants.*;
-import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -62,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
         List<Student> students;
         EmailSender emailSender = AppContext.getAppContext().getEmailSender();
         ParamBuilderForQuery paramBuilder = courseParamBuilderForQuery()
-                .setIdFilterForCourse(String.valueOf(courseId))
+                .setIdFilterCourseForStudent(String.valueOf(courseId))
                 .setLimits("1", String.valueOf(Integer.MAX_VALUE));
         try {
             Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getStudentsByCourse(paramBuilder.getParam());
@@ -130,8 +130,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void assigned(int idCourse, int idUser) throws ServiceException, ValidateException {
         try {
-            Course course = courseDao.getById(idCourse).orElseThrow(() -> new ValidateException(COURSE_NOT_FOUND_MESSAGE));
-            Teacher teacher = teacherDao.getById(idUser).orElseThrow(() -> new ValidateException(TEACHER_NOT_FOUND_MESSAGE));
+            Course course = courseDao
+                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(idCourse)).getParam())
+                    .orElseThrow(() -> new ValidateException(COURSE_NOT_FOUND_MESSAGE));
+            Teacher teacher = teacherDao
+                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(idUser)).getParam())
+                    .orElseThrow(() -> new ValidateException(TEACHER_NOT_FOUND_MESSAGE));
             course.setTeacher(teacher);
             courseDao.update(course);
         } catch (DAOException e) {
@@ -198,7 +202,9 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public CategoryDTO getCategory(int id) throws ServiceException, ValidateException {
         try {
-            Category category = categoryDao.getById(id).orElseThrow(() -> new ValidateException(CATEGORY_NOT_FOUND_MESSAGE));
+            Category category = categoryDao
+                    .get(categoryParamBuilderForQuery().setIdCategoryFilter(String.valueOf(id)).getParam())
+                    .orElseThrow(() -> new ValidateException(CATEGORY_NOT_FOUND_MESSAGE));
             return convertCategoryToDTO(category);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -208,7 +214,9 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public CourseDTO getCourse(int id) throws ServiceException, ValidateException {
         try {
-            Course course = courseDao.getById(id).orElseThrow(() -> new ValidateException(COURSE_NOT_FOUND_MESSAGE));
+            Course course = courseDao
+                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(id)).getParam())
+                    .orElseThrow(() -> new ValidateException(COURSE_NOT_FOUND_MESSAGE));
             return convertCourseToDTO(course);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -218,7 +226,9 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public TeacherDTO getTeacher(int id) throws ServiceException, ValidateException {
         try {
-            Teacher teacher = teacherDao.getById(id).orElseThrow(() -> new ValidateException(TEACHER_NOT_FOUND_MESSAGE));
+            Teacher teacher = teacherDao
+                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(id)).getParam())
+                    .orElseThrow(() -> new ValidateException(TEACHER_NOT_FOUND_MESSAGE));
             return convertTeacherToDTO(teacher);
         } catch (DAOException e) {
             throw new ServiceException(e);

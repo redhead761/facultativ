@@ -30,7 +30,7 @@ public class ShowJournalAction implements Action {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
         String courseId = req.getParameter(COURSE_ID);
         ParamBuilderForQuery paramBuilder = courseParamBuilderForQuery()
-                .setIdFilterForCourse(courseId)
+                .setIdFilterCourseForStudent(courseId)
                 .setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<StudentDTO>> studentsWithRows = teacherService.getStudentsByCourse(paramBuilder.getParam());
         req.setAttribute(STUDENTS, studentsWithRows.getValue());

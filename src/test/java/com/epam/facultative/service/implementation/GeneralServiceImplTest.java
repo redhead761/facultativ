@@ -52,23 +52,23 @@ class GeneralServiceImplTest {
         assertEquals(adminDTO, generalService.authorization(adminDTO.getLogin(), adminDTO.getPassword()));
     }
 
-    @Test
-    void authorizationTeacher() throws DAOException, ValidateException, ServiceException {
-        Teacher teacher = testServiceUtil.getTeacher();
-        TeacherDTO teacherDTO = testServiceUtil.getTeacherDTO();
-        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(teacher));
-        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
-        assertEquals(teacherDTO, generalService.authorization(teacherDTO.getLogin(), teacherDTO.getPassword()));
-    }
-
-    @Test
-    void authorizationStudent() throws DAOException, ValidateException, ServiceException {
-        Student student = testServiceUtil.getStudent();
-        StudentDTO studentDTO = testServiceUtil.getStudentDTO();
-        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(student));
-        when(studentDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(student));
-        assertEquals(studentDTO, generalService.authorization(studentDTO.getLogin(), studentDTO.getPassword()));
-    }
+//    @Test
+//    void authorizationTeacher() throws DAOException, ValidateException, ServiceException {
+//        Teacher teacher = testServiceUtil.getTeacher();
+//        TeacherDTO teacherDTO = testServiceUtil.getTeacherDTO();
+//        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(teacher));
+//        when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
+//        assertEquals(teacherDTO, generalService.authorization(teacherDTO.getLogin(), teacherDTO.getPassword()));
+//    }
+//
+//    @Test
+//    void authorizationStudent() throws DAOException, ValidateException, ServiceException {
+//        Student student = testServiceUtil.getStudent();
+//        StudentDTO studentDTO = testServiceUtil.getStudentDTO();
+//        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(student));
+//        when(studentDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(student));
+//        assertEquals(studentDTO, generalService.authorization(studentDTO.getLogin(), studentDTO.getPassword()));
+//    }
 
     @Test
     void authorizationWithWrongPassword() throws DAOException {

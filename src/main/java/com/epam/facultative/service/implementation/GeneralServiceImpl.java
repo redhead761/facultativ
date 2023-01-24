@@ -41,20 +41,24 @@ public class GeneralServiceImpl implements GeneralService {
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
         UserDTO result = null;
         try {
-            User user = userDao.get(login).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            ParamBuilderForQuery paramBuilderForQuery = userParamBuilderForQuery().setUserLoginFilter(login);
+            User user = userDao
+                    .get(paramBuilderForQuery.getParam())
+                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             if (!verify(user.getPassword(), password)) {
                 throw new ValidateException(WRONG_PASSWORD_MESSAGE);
             }
             int id = user.getId();
             Role role = user.getRole();
+            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(id));
             switch (role) {
                 case ADMIN -> result = convertUserToDTO(user);
                 case TEACHER -> {
-                    Teacher teacher = teacherDao.getById(id).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    Teacher teacher = teacherDao.get(paramBuilder.getParam()).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
                     result = convertTeacherToDTO(teacher);
                 }
                 case STUDENT -> {
-                    Student student = studentDao.getById(id).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    Student student = studentDao.get(paramBuilder.getParam()).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
                     checkBlocStudent(student);
                     result = convertStudentToDTO(student);
                 }

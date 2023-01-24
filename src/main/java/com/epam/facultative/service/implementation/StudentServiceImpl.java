@@ -17,6 +17,7 @@ import com.epam.facultative.utils.pdf_creator.PdfCreator;
 import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.email_sender.EmailConstants.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOGIN_NOT_EXIST_MESSAGE;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -80,7 +81,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException {
         try {
-            Course course = courseDao.getById(courseId).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            Course course = courseDao
+                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(courseId)).getParam())
+                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             PdfCreator pdfCreator = new PdfCreator();
             return pdfCreator.createCertificateForDownload(studentDTO, course, grade);
         } catch (DAOException e) {
@@ -92,7 +95,9 @@ public class StudentServiceImpl implements StudentService {
     public void sendCertificate(StudentDTO studentDTO, int courseId, int grade) throws ValidateException, ServiceException {
         PdfCreator pdfCreator = new PdfCreator();
         try {
-            Course course = courseDao.getById(courseId).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            Course course = courseDao
+                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(courseId)).getParam())
+                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             String certificate = pdfCreator.createCertificateForSend(studentDTO, course, grade);
             AppContext appContext = AppContext.getAppContext();
             EmailSender emailSender = appContext.getEmailSender();

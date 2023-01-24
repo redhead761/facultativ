@@ -22,7 +22,7 @@ public class ShowResultTag extends SimpleTagSupport {
         this.locale = locale;
     }
 
-    public void uri(String uri) {
+    public void setUri(String uri) {
         this.url = uri;
     }
 

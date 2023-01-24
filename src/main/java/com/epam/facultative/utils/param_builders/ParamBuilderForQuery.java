@@ -27,16 +27,9 @@ public abstract class ParamBuilderForQuery {
         return this;
     }
 
-    public ParamBuilderForQuery setTeacherFilterForCourse(String teacherId) {
-        if (isPositiveInt(teacherId)) {
-            filters.add(USER_ID + "=" + teacherId);
-        }
-        return this;
-    }
-
-    public ParamBuilderForQuery setIdFilterForTeacher(String teacherId) {
-        if (teacherId != null && isPositiveInt(teacherId)) {
-            filters.add(USER_ID + "=" + teacherId);
+    public ParamBuilderForQuery setUserIdFilter(String userId) {
+        if (isPositiveInt(userId)) {
+            filters.add(USER_ID + "=" + userId);
         }
         return this;
     }
@@ -55,19 +48,34 @@ public abstract class ParamBuilderForQuery {
         return this;
     }
 
-    public ParamBuilderForQuery setIdFilterForCourse(String courseId) {
+    public ParamBuilderForQuery setIdFilterCourseForStudent(String courseId) {
         if (isPositiveInt(courseId)) {
             filters.add("course_id" + "=" + courseId);
         }
         return this;
     }
 
-    public ParamBuilderForQuery setNameFilter(String nameFilter) {
-        if (nameFilter != null) {
-            filters.add("login=");
+    public ParamBuilderForQuery setIdCourseFilter(String courseId) {
+        if (isPositiveInt(courseId)) {
+            filters.add(COURSE_ID + "=" + courseId);
         }
         return this;
     }
+
+    public ParamBuilderForQuery setIdCategoryFilter(String categoryId) {
+        if (isPositiveInt(categoryId)) {
+            filters.add(CATEGORY_ID + "=" + categoryId);
+        }
+        return this;
+    }
+
+    public ParamBuilderForQuery setUserLoginFilter(String login) {
+        if (login != null) {
+            filters.add(USER_LOGIN + "=" + "\"" + login + "\"");
+        }
+        return this;
+    }
+
 
     public ParamBuilderForQuery setOrder(String order) {
         if (order != null && order.equalsIgnoreCase("DESC")) {

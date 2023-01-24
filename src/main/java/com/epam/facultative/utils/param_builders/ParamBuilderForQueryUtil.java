@@ -19,4 +19,8 @@ public class ParamBuilderForQueryUtil {
     public static ParamBuilderForQuery studentParamBuilderForQuery() {
         return new StudentParamBuilderForQuery();
     }
+
+    public static ParamBuilderForQuery userParamBuilderForQuery() {
+        return new UserParamBuilderForQuery();
+    }
 }

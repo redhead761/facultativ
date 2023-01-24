@@ -1,6 +1,5 @@
 package com.epam.facultative.service;
 
-import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.exception.ServiceException;
 

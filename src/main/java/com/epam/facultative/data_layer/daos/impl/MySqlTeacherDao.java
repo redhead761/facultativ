@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
-import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.*;
 
 public class MySqlTeacherDao implements TeacherDao {
     private final DataSource dataSource;
@@ -114,14 +114,27 @@ public class MySqlTeacherDao implements TeacherDao {
     }
 
     @Override
-    public void delete(int id) throws DAOException {
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(DELETE_TEACHER)) {
-            int k = 0;
-            stmt.setString(++k, String.valueOf(id));
+    public void delete(int id) throws DAOException, ValidateException {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = dataSource.getConnection();
+            stmt = con.prepareStatement(DELETE_TEACHER);
+            con.setAutoCommit(false);
+            stmt.setInt(1, id);
             stmt.executeUpdate();
+            stmt = con.prepareStatement(DELETE_USER);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            con.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new ValidateException(CAN_NOT_DELETE_TEACHER);
         } catch (SQLException e) {
+            rollback(con);
             throw new DAOException(e);
+        } finally {
+            close(stmt);
+            close(con);
         }
     }
 

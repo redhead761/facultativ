@@ -25,6 +25,7 @@ public class ActionNameConstants {
     public static String UPDATE_BLOCK_ACTION = "update_block";
     public static String UNBLOCK_ACTION = "unblock";
     public static String ADD_TEACHER_ACTION = "add_teacher";
+    public static String DELETE_TEACHER_ACTION = "delete_teacher";
 
     //Teacher
     public static String SHOW_TEACHER_COURSES_ACTION = "show_teacher_courses";

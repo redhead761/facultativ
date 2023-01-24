@@ -24,21 +24,39 @@
 <jsp:include page="../parts/header.jsp"/>
 <jsp:include page="../parts/admin_header.jsp"/>
 
+<tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
+
+
 <div class="col-lg-10 mx-auto p-5">
     <table class="table table-light table-striped caption-top table-bordered">
         <caption>
-            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/add_teacher.jsp" role="button"><fmt:message key="add.teacher"/></a>
+            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/admin/add_teacher.jsp"
+               role="button"><fmt:message key="add.teacher"/></a>
         </caption>
         <thead>
         <th scope="col"><fmt:message key="name"/></th>
         <th scope="col"><fmt:message key="surname"/></th>
         <th scope="col"><fmt:message key="email"/></th>
+        <th scope="col"><fmt:message key="degree"/></th>
+        <th scope="col"><fmt:message key="action"/></th>
         </thead>
         <c:forEach var="teacher" items="${requestScope.teachers}">
             <tbody>
             <td>${teacher.name}</td>
             <td>${teacher.surname}</td>
             <td>${teacher.email}</td>
+            <td>${teacher.degree}</td>
+            <td>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="action" value="delete_teacher"/>
+                    <input type="hidden" name="teacher_id" value="${teacher.id}"/>
+                    <input type="hidden" name="current_page" value="${requestScope.current_page}"/>
+                    <input type="hidden" name="records_per_page" value="${requestScope.records_per_page}"/>
+
+                    <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                            key="delete"/></button>
+                </form>
+            </td>
             </tbody>
         </c:forEach>
     </table>

@@ -39,6 +39,7 @@ public class ActionFactory {
         ACTION_MAP.put(ASSIGN_ACTION, new AssignAction(APP_CONTEXT));
         ACTION_MAP.put(ADD_TEACHER_ACTION, new AddTeacherAction(APP_CONTEXT));
         ACTION_MAP.put(UPDATE_BLOCK_ACTION, new UpdateBlockAction(APP_CONTEXT));
+        ACTION_MAP.put(DELETE_TEACHER_ACTION, new DeleteTeacherAction(APP_CONTEXT));
 
         ACTION_MAP.put(SHOW_TEACHER_COURSES_ACTION, new ShowTeacherCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(SHOW_JOURNAL_ACTION, new ShowJournalAction(APP_CONTEXT));

@@ -17,4 +17,5 @@ public class ValidateExceptionMessageConstants {
     public static final String TEACHER_NOT_FOUND_MESSAGE = "teacher.not.found";
     public static final String STUDENT_BLOCKED = "student.blocked";
     public static final String CAN_NOT_DELETE_CATEGORY = "cant.delete.category";
+    public static final String CAN_NOT_DELETE_TEACHER = "cant.delete.teacher";
 }

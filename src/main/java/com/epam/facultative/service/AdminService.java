@@ -4,6 +4,7 @@ import com.epam.facultative.dto.CategoryDTO;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
 import com.epam.facultative.dto.TeacherDTO;
+import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
@@ -47,4 +48,6 @@ public interface AdminService {
     CourseDTO getCourse(int id) throws ServiceException, ValidateException;
 
     TeacherDTO getTeacher(int id) throws ServiceException, ValidateException;
+
+    void deleteTeacher(int id) throws ValidateException, ServiceException;
 }

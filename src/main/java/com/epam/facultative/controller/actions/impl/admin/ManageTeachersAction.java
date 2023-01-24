@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
+import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
 import static com.epam.facultative.controller.actions.PageNameConstants.*;
 import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
@@ -26,6 +27,7 @@ public class ManageTeachersAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
+        transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
         ParamBuilderForQuery paramBuilderForQuery = teacherParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = adminService.getAllTeachersPagination(paramBuilderForQuery.getParam());
         req.setAttribute(TEACHERS, teachersWithRows.getValue());

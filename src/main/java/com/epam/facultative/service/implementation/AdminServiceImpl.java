@@ -225,4 +225,13 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public void deleteTeacher(int id) throws ValidateException, ServiceException {
+        try {
+            teacherDao.delete(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 }

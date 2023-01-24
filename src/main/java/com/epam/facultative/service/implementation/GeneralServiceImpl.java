@@ -41,7 +41,7 @@ public class GeneralServiceImpl implements GeneralService {
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
         UserDTO result = null;
         try {
-            User user = userDao.getByName(login).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            User user = userDao.get(login).orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             if (!verify(user.getPassword(), password)) {
                 throw new ValidateException(WRONG_PASSWORD_MESSAGE);
             }

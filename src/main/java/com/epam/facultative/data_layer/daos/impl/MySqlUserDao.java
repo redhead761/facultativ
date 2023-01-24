@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
+
 public class MySqlUserDao implements UserDao {
     private final DataSource dataSource;
 
@@ -19,27 +21,10 @@ public class MySqlUserDao implements UserDao {
     }
 
     @Override
-    public Optional<User> getById(int id) throws DAOException {
+    public Optional<User> get(String param) throws DAOException {
         User user = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_USER_BY_ID)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                user = mapRow(rs);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Optional.ofNullable(user);
-    }
-
-    @Override
-    public Optional<User> getByName(String name) throws DAOException {
-        User user = null;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.SELECT_USER_BY_LOGIN)) {
-            stmt.setString(1, name);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_USER, param))) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 user = mapRow(rs);
@@ -53,7 +38,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public void add(User user) throws DAOException {
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.INSERT_USER)) {
+             PreparedStatement stmt = con.prepareStatement(INSERT_USER)) {
             setStatementFields(user, stmt);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -64,7 +49,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public void update(User user) throws DAOException {
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.UPDATE_USER)) {
+             PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
             stmt.setString(setStatementFields(user, stmt), String.valueOf(user.getId()));
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -75,7 +60,7 @@ public class MySqlUserDao implements UserDao {
     @Override
     public void delete(int id) throws DAOException {
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SQLRequestConstants.DELETE_USER)) {
+             PreparedStatement stmt = con.prepareStatement(DELETE_USER)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

@@ -25,26 +25,10 @@ public class MySqlTeacherDao implements TeacherDao {
     }
 
     @Override
-    public Optional<Teacher> getById(int id) throws DAOException {
+    public Optional<Teacher> get(String param) throws DAOException {
         Teacher teacher = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_ID)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-                teacher = mapRow(rs);
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Optional.ofNullable(teacher);
-    }
-
-    @Override
-    public Optional<Teacher> getByName(String name) throws DAOException {
-        Teacher teacher = null;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_TEACHER_BY_LOGIN)) {
-            stmt.setString(1, name);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_TEACHER, param))) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 teacher = mapRow(rs);

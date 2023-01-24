@@ -10,11 +10,10 @@ class SQLRequestConstants {
     /**
      * //SQL request for Category DAO
      */
-    static final String SELECT_CATEGORY_BY_ID = "SELECT * FROM category WHERE id=?";
     static final String UPDATE_CATEGORY = "UPDATE category SET title=?, description=? WHERE id=?";
     static final String INSERT_CATEGORY = "INSERT INTO category VALUES (DEFAULT,?,?)";
     static final String DELETE_CATEGORY = "DELETE FROM category WHERE id=?";
-    static final String SELECT_CATEGORY_BY_TITLE = "SELECT * FROM category WHERE title=?";
+    static final String SELECT_CATEGORY = "SELECT * FROM category %s";
     static final String SELECT_ALL_CATEGORIES_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM category %s";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -25,9 +24,8 @@ class SQLRequestConstants {
 
     static final String INSERT_TEACHER = "INSERT INTO teacher VALUES (?,?)";
     static final String UPDATE_TEACHER = "UPDATE teacher SET degree=? WHERE user_id=?";
-    static final String SELECT_TEACHER_BY_ID = "SELECT * FROM teacher JOIN user ON user_id = user.id WHERE user_id=?";
-    static final String SELECT_TEACHER_BY_LOGIN =
-            "SELECT * FROM teacher JOIN user ON user_id = user.id WHERE user.login = ?";
+    static final String SELECT_TEACHER =
+            "SELECT * FROM teacher JOIN user ON user_id = user.id %s";
     static final String DELETE_TEACHER = "DELETE FROM teacher WHERE user_id=?";
     static final String SELECT_ALL_TEACHERS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id %s";
@@ -40,9 +38,8 @@ class SQLRequestConstants {
 
     static final String INSERT_STUDENT = "INSERT INTO student VALUES (?,?,?)";
     static final String UPDATE_STUDENT = "UPDATE student SET course_number=?, block=? WHERE user_id=?";
-    static final String SELECT_STUDENT_BY_ID = "SELECT * FROM student JOIN user ON user_id = user.id WHERE user_id=?";
-    static final String SELECT_STUDENT_BY_LOGIN =
-            "SELECT * FROM student JOIN user ON user_id = user.id WHERE user.login =?";
+    static final String SELECT_STUDENT =
+            "SELECT * FROM student JOIN user ON user_id = user.id %s";
     static final String DELETE_STUDENT = "DELETE FROM student WHERE user_id=?";
     static final String SELECT_ALL_STUDENTS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id %s";
@@ -57,8 +54,7 @@ class SQLRequestConstants {
      */
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static final String SELECT_USER_BY_ID = "SELECT * FROM user  JOIN role ON role.id = user.role_id WHERE user.id = ?";
-    static final String SELECT_USER_BY_LOGIN = "SELECT * FROM user JOIN role ON role.id = user.role_id WHERE user.login = ?";
+    static final String SELECT_USER = "SELECT * FROM user JOIN role ON role.id = user.role_id %s";
     static final String INSERT_USER = "INSERT INTO user VALUES (DEFAULT,?,?,?,?,?,?)";
     static final String DELETE_USER = "DELETE FROM user WHERE id=?";
     static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?,surname=?, email=?, role_id=? WHERE id=?";
@@ -70,12 +66,9 @@ class SQLRequestConstants {
      */
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    static final String SELECT_COURSE_BY_ID =
+    static final String SELECT_COURSE =
             "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
-                    "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id WHERE course.id=?";
-    static final String SELECT_COURSE_BY_TITLE =
-            "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
-                    "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id WHERE course.title=?";
+                    "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id %s";
     static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,DEFAULT,?,?,?,DEFAULT)";
     static final String DELETE_COURSE = "DELETE FROM course WHERE id=?";
     static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?," +

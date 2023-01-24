@@ -8,9 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface Dao<T> {
-    Optional<T> getById(int id) throws DAOException;
-
-    Optional<T> getByName(String name) throws DAOException;
+    Optional<T> get(String param) throws DAOException;
 
     void add(T t) throws DAOException, ValidateException;
 

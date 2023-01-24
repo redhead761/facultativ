@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.AttributeConstants.RECORDS_PER_PAGE;
-import static com.epam.facultative.controller.actions.ActionNameConstants.MANAGE_CATEGORIES_ACTION;
 import static com.epam.facultative.controller.actions.ActionNameConstants.MANAGE_TEACHERS_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 

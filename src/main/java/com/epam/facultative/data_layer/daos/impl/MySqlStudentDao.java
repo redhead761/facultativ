@@ -25,26 +25,10 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public Optional<Student> getById(int id) throws DAOException {
+    public Optional<Student> get(String param) throws DAOException {
         Student student = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_STUDENT_BY_ID)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-                student = mapRow(rs);
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Optional.ofNullable(student);
-    }
-
-    @Override
-    public Optional<Student> getByName(String name) throws DAOException {
-        Student student = null;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_STUDENT_BY_LOGIN)) {
-            stmt.setString(1, name);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_STUDENT, param))) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 student = mapRow(rs);

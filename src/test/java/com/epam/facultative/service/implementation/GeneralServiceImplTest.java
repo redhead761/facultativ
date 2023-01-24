@@ -10,9 +10,7 @@ import com.epam.facultative.service.GeneralService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +48,7 @@ class GeneralServiceImplTest {
     void authorizationAdmin() throws DAOException, ValidateException, ServiceException {
         User admin = testServiceUtil.getAdmin();
         UserDTO adminDTO = testServiceUtil.getAdminDTO();
-        when(userDao.getByName(isA(String.class))).thenReturn(Optional.ofNullable(admin));
+        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(admin));
         assertEquals(adminDTO, generalService.authorization(adminDTO.getLogin(), adminDTO.getPassword()));
     }
 
@@ -58,7 +56,7 @@ class GeneralServiceImplTest {
     void authorizationTeacher() throws DAOException, ValidateException, ServiceException {
         Teacher teacher = testServiceUtil.getTeacher();
         TeacherDTO teacherDTO = testServiceUtil.getTeacherDTO();
-        when(userDao.getByName(isA(String.class))).thenReturn(Optional.ofNullable(teacher));
+        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(teacher));
         when(teacherDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(teacher));
         assertEquals(teacherDTO, generalService.authorization(teacherDTO.getLogin(), teacherDTO.getPassword()));
     }
@@ -67,7 +65,7 @@ class GeneralServiceImplTest {
     void authorizationStudent() throws DAOException, ValidateException, ServiceException {
         Student student = testServiceUtil.getStudent();
         StudentDTO studentDTO = testServiceUtil.getStudentDTO();
-        when(userDao.getByName(isA(String.class))).thenReturn(Optional.ofNullable(student));
+        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(student));
         when(studentDao.getById(isA(int.class))).thenReturn(Optional.ofNullable(student));
         assertEquals(studentDTO, generalService.authorization(studentDTO.getLogin(), studentDTO.getPassword()));
     }
@@ -76,13 +74,13 @@ class GeneralServiceImplTest {
     void authorizationWithWrongPassword() throws DAOException {
         User admin = testServiceUtil.getAdmin();
         StudentDTO studentDTO = testServiceUtil.getStudentDTO();
-        when(userDao.getByName(isA(String.class))).thenReturn(Optional.ofNullable(admin));
+        when(userDao.get(isA(String.class))).thenReturn(Optional.ofNullable(admin));
         assertThrows(ValidateException.class, () -> generalService.authorization(studentDTO.getLogin(), studentDTO.getPassword()));
     }
 
     @Test
     void authorizationFailed() throws DAOException {
-        doThrow(DAOException.class).when(userDao).getByName(isA(String.class));
+        doThrow(DAOException.class).when(userDao).get(isA(String.class));
         assertThrows(ServiceException.class, () -> generalService.authorization("test", "test"));
     }
 

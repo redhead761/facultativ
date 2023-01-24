@@ -23,27 +23,10 @@ public class MySqlCategoryDao implements CategoryDao {
     }
 
     @Override
-    public Optional<Category> getById(int id) throws DAOException {
+    public Optional<Category> get(String param) throws DAOException {
         Category category = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_ID)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                category = mapRow(rs);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Optional.ofNullable(category);
-    }
-
-    @Override
-    public Optional<Category> getByName(String name) throws DAOException {
-        Category category = null;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_CATEGORY_BY_TITLE)) {
-            stmt.setString(1, name);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_CATEGORY, param))) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 category = mapRow(rs);

@@ -22,27 +22,10 @@ public class MySqlCourseDao implements CourseDao {
     }
 
     @Override
-    public Optional<Course> getById(int id) throws DAOException {
+    public Optional<Course> get(String param) throws DAOException {
         Course course = null;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_ID)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                course = mapRowCourse(rs);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        return Optional.ofNullable(course);
-    }
-
-    @Override
-    public Optional<Course> getByName(String name) throws DAOException {
-        Course course = null;
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(SELECT_COURSE_BY_TITLE)) {
-            stmt.setString(1, name);
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_COURSE, param))) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 course = mapRowCourse(rs);

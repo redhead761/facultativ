@@ -2,6 +2,7 @@ package com.epam.facultative.service.implementation;
 
 import com.epam.facultative.data_layer.daos.CourseDao;
 import com.epam.facultative.data_layer.daos.StudentDao;
+import com.epam.facultative.data_layer.daos.TeacherDao;
 import com.epam.facultative.data_layer.entities.*;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.dto.StudentDTO;
@@ -25,7 +26,8 @@ class TeacherServiceImplTest {
 
     private final CourseDao courseDao = mock(CourseDao.class);
     private final StudentDao studentDao = mock(StudentDao.class);
-    TeacherService teacherService = new TeacherServiceImpl(courseDao, studentDao);
+    private final TeacherDao teacherDao = mock(TeacherDao.class);
+    TeacherService teacherService = new TeacherServiceImpl(courseDao, studentDao, teacherDao);
     private static TestServiceUtil testServiceUtil;
 
     @BeforeAll

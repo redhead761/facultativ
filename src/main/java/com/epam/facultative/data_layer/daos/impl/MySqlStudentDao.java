@@ -72,7 +72,7 @@ public class MySqlStudentDao implements StudentDao {
     }
 
     @Override
-    public void update(Student student) throws DAOException {
+    public void update(Student student) throws DAOException, ValidateException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -89,6 +89,9 @@ public class MySqlStudentDao implements StudentDao {
             stmt.setInt(++k, student.getId());
             stmt.executeUpdate();
             con.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollback(con);
+            throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
             throw new DAOException(e);

@@ -51,6 +51,7 @@ public class AuthAction implements Action {
             }
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute(USER, user);
+            req.getSession().setAttribute(ROLE, user.getRole());
             req.getSession().setAttribute(STATUSES, Status.values());
             switch (user.getRole()) {
                 case ADMIN -> path = ADMIN_PROFILE_PAGE;

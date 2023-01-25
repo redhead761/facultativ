@@ -11,6 +11,8 @@ public class PageNameConstants {
     public static final String INDEX_PAGE = "index.jsp";
     public static final String REGISTER_PAGE = "register.jsp";
     public static final String TEACHERS_PAGE = "teachers.jsp";
+    public static final String RECOVERY_PASSWORD_PAGE = "recovery.jsp";
+    public static final String CHANGE_PASSWORD_PAGE = "change_password.jsp";
 
     //ADMIN pages
     public static final String ADD_COURSE_PAGE = "admin/add_course.jsp";
@@ -30,6 +32,7 @@ public class PageNameConstants {
     public static final String TEACHER_PAGE = "teacher/teacher.jsp";
     public static final String TEACHER_COURSES_PAGE = "teacher/teacher_courses.jsp";
     public static final String TEACHER_PROFILE_PAGE = "teacher/teacher_profile.jsp";
+    public static final String EDIT_TEACHER_PROFILE_PAGE = "teacher/edit_teacher_profile.jsp";
 
     //STUDENT pages
     public static final String COMING_SOON_COURSES_PAGE = "student/coming_soon_courses.jsp";
@@ -39,4 +42,5 @@ public class PageNameConstants {
     public static final String STUDENT_COURSES_PAGE = "student/student_courses.jsp";
     public static final String STUDENT_PROFILE_PAGE = "student/student_profile.jsp";
     public static final String RESULT_PAGE = "student/result.jsp";
+    public static final String EDIT_STUDENT_PROFILE_PAGE = "student/edit_student_profile.jsp";
 }

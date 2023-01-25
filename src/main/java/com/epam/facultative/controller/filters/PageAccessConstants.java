@@ -13,21 +13,27 @@ public final class PageAccessConstants {
     private static final Set<String> ADMIN_PAGES = new HashSet<>();
     private static final Set<String> TEACHER_PAGES = new HashSet<>();
     private static final Set<String> STUDENT_PAGES = new HashSet<>();
+    private static final Set<String> COMMON_PAGES = new HashSet<>();
 
     static {
-        NO_LOGGED_USER_PAGES.add(ABOUT_US_PAGE);
-        NO_LOGGED_USER_PAGES.add(AUTH_PAGE);
-        NO_LOGGED_USER_PAGES.add(CONTACTS_PAGE);
-        NO_LOGGED_USER_PAGES.add(COURSES_PAGE);
-        NO_LOGGED_USER_PAGES.add(ERROR_PAGE);
-        NO_LOGGED_USER_PAGES.add(INDEX_PAGE);
-        NO_LOGGED_USER_PAGES.add(REGISTER_PAGE);
-        NO_LOGGED_USER_PAGES.add(TEACHERS_PAGE);
+        COMMON_PAGES.add(ABOUT_US_PAGE);
+        COMMON_PAGES.add(CONTACTS_PAGE);
+        COMMON_PAGES.add(COURSES_PAGE);
+        COMMON_PAGES.add(INDEX_PAGE);
+        COMMON_PAGES.add(TEACHERS_PAGE);
+        COMMON_PAGES.add(CHANGE_PASSWORD_PAGE);
     }
 
     static {
-        ADMIN_PAGES.addAll(NO_LOGGED_USER_PAGES);
-        ADMIN_PAGES.remove(AUTH_PAGE);
+        NO_LOGGED_USER_PAGES.addAll(COMMON_PAGES);
+        NO_LOGGED_USER_PAGES.remove(CHANGE_PASSWORD_PAGE);
+        NO_LOGGED_USER_PAGES.add(AUTH_PAGE);
+        NO_LOGGED_USER_PAGES.add(REGISTER_PAGE);
+        NO_LOGGED_USER_PAGES.add(RECOVERY_PASSWORD_PAGE);
+    }
+
+    static {
+        ADMIN_PAGES.addAll(COMMON_PAGES);
         ADMIN_PAGES.add(ADD_COURSE_PAGE);
         ADMIN_PAGES.add(ADD_TEACHER_PAGE);
         ADMIN_PAGES.add(ADMIN_PROFILE_PAGE);
@@ -42,17 +48,16 @@ public final class PageAccessConstants {
     }
 
     static {
-        TEACHER_PAGES.addAll(NO_LOGGED_USER_PAGES);
-        TEACHER_PAGES.remove(AUTH_PAGE);
+        TEACHER_PAGES.addAll(COMMON_PAGES);
         TEACHER_PAGES.add(JOURNAL_PAGE);
         TEACHER_PAGES.add(TEACHER_PAGE);
         TEACHER_PAGES.add(TEACHER_COURSES_PAGE);
         TEACHER_PAGES.add(TEACHER_PROFILE_PAGE);
+        TEACHER_PAGES.add(EDIT_TEACHER_PROFILE_PAGE);
     }
 
     static {
-        STUDENT_PAGES.addAll(NO_LOGGED_USER_PAGES);
-        STUDENT_PAGES.remove(AUTH_PAGE);
+        STUDENT_PAGES.addAll(COMMON_PAGES);
         STUDENT_PAGES.add(COMING_SOON_COURSES_PAGE);
         STUDENT_PAGES.add(COMPLETED_COURSES_PAGE);
         STUDENT_PAGES.add(IN_PROGRESS_COURSES_PAGE);
@@ -60,6 +65,7 @@ public final class PageAccessConstants {
         STUDENT_PAGES.add(STUDENT_COURSES_PAGE);
         STUDENT_PAGES.add(STUDENT_PROFILE_PAGE);
         STUDENT_PAGES.add(RESULT_PAGE);
+        STUDENT_PAGES.add(EDIT_STUDENT_PROFILE_PAGE);
     }
 
     public static Set<String> getNoLoggedUserPages() {

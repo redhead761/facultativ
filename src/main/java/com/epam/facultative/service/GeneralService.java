@@ -24,4 +24,8 @@ public interface GeneralService {
     Map.Entry<Integer, List<TeacherDTO>> getAllTeachers() throws ServiceException;
 
     ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException;
+
+    void recoveryPassword(String email) throws ServiceException, ValidateException;
+
+    void changePassword(String oldPassword, String newPassword, String userId) throws ServiceException, ValidateException;
 }

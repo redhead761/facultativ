@@ -72,7 +72,7 @@ public class MySqlTeacherDao implements TeacherDao {
     }
 
     @Override
-    public void update(Teacher teacher) throws DAOException {
+    public void update(Teacher teacher) throws DAOException, ValidateException {
         Connection con = null;
         PreparedStatement stmt = null;
         try {
@@ -88,6 +88,9 @@ public class MySqlTeacherDao implements TeacherDao {
             stmt.setInt(++k, teacher.getId());
             stmt.executeUpdate();
             con.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            rollback(con);
+            throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
             throw new DAOException(e);
@@ -112,6 +115,7 @@ public class MySqlTeacherDao implements TeacherDao {
             stmt.executeUpdate();
             con.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
+            rollback(con);
             throw new ValidateException(CAN_NOT_DELETE_TEACHER);
         } catch (SQLException e) {
             rollback(con);

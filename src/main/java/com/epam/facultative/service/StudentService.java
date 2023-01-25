@@ -21,4 +21,5 @@ public interface StudentService {
     ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException;
 
     void sendCertificate(StudentDTO studentDTO, int courseId, int grade) throws ValidateException, ServiceException;
+    StudentDTO updateStudent(StudentDTO studentDTO) throws ValidateException, ServiceException;
 }

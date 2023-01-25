@@ -18,6 +18,16 @@
            href="${pageContext.request.contextPath}/teacher/teacher_profile.jsp"><fmt:message key="profile"/></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/teacher/edit_teacher_profile.jsp"><fmt:message
+                key="edit.profile"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/change_password.jsp"><fmt:message
+                key="change.password"/></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link"
            href="${pageContext.request.contextPath}/controller?action=show_teacher_courses&user_id=${sessionScope.user.id}"
            role="button"><fmt:message key="my.courses"/></a>

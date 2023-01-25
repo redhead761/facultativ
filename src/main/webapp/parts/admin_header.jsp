@@ -19,6 +19,11 @@
            href="${pageContext.request.contextPath}/admin/admin_profile.jsp"><fmt:message key="profile"/></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/change_password.jsp"><fmt:message
+                key="change.password"/></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message key="manage.courses"/></a>
     </li>
     <li class="nav-item">

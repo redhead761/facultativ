@@ -18,7 +18,18 @@
     </li>
     <li class="nav-item">
         <a class="nav-link active" aria-current="page"
-           href="${pageContext.request.contextPath}/controller?action=show_all_courses"><fmt:message key="all.courses"/></a>
+           href="${pageContext.request.contextPath}/student/edit_student_profile.jsp"><fmt:message
+                key="edit.profile"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/change_password.jsp"><fmt:message
+                key="change.password"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/controller?action=show_all_courses"><fmt:message
+                key="all.courses"/></a>
     </li>
     <li class="nav-item">
         <a class="nav-link"

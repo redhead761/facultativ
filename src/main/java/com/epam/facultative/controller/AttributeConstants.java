@@ -26,10 +26,14 @@ public class AttributeConstants {
     public static String USER = "user";
     public static String STUDENTS = "students";
     public static String ON_COURSE = "on.course";
+    public static String ROLE = "role";
+    public static String USER_ID = "user_id";
 
     public static String STUDENT = "student";
     public static String LOGIN = "login";
     public static String PASSWORD = "password";
+    public static String OLD_PASSWORD = "old_password";
+    public static String NEW_PASSWORD = "new_password";
     public static String STATUSES = "statuses";
     public static String TITLE = "title";
     public static String DESCRIPTION = "description";

@@ -13,7 +13,7 @@ public class ServiceFactory {
     private ServiceFactory(DaoFactory daoFactory) {
         this.generalService = new GeneralServiceImpl(daoFactory.getCourseDao(), daoFactory.getUserDao(), daoFactory.getCategoryDao(), daoFactory.getTeacherDao(), daoFactory.getStudentDao());
         this.adminService = new AdminServiceImpl(daoFactory.getCourseDao(), daoFactory.getCategoryDao(), daoFactory.getStudentDao(), daoFactory.getTeacherDao());
-        this.teacherService = new TeacherServiceImpl(daoFactory.getCourseDao(), daoFactory.getStudentDao());
+        this.teacherService = new TeacherServiceImpl(daoFactory.getCourseDao(), daoFactory.getStudentDao(), daoFactory.getTeacherDao());
         this.studentService = new StudentServiceImpl(daoFactory.getCourseDao(), daoFactory.getStudentDao());
     }
 

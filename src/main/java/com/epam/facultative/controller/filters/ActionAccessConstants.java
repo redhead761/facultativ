@@ -10,28 +10,32 @@ public class ActionAccessConstants {
     private static final Set<String> ADMIN_ACTIONS = new HashSet<>();
     private static final Set<String> TEACHER_ACTIONS = new HashSet<>();
     private static final Set<String> STUDENT_ACTIONS = new HashSet<>();
-    private static final Set<String> GENERAL_ACTION = new HashSet<>();
+    private static final Set<String> COMMON_ACTIONS = new HashSet<>();
+    private static final Set<String> COMMON_LOGGED_ACTION = new HashSet<>();
 
     static {
+        COMMON_ACTIONS.add(COURSES_ACTION);
+        COMMON_ACTIONS.add(TEACHERS_ACTION);
+        COMMON_ACTIONS.add(DOWNLOAD_COURSES_ACTION);
+    }
+
+    static {
+        COMMON_LOGGED_ACTION.add(LOG_OUT_ACTION);
+        COMMON_LOGGED_ACTION.add(MY_CABINET_ACTION);
+        COMMON_LOGGED_ACTION.add(CHANGE_PASSWORD_ACTION);
+    }
+
+    static {
+        NO_LOGGED_USER_ACTIONS.addAll(COMMON_ACTIONS);
         NO_LOGGED_USER_ACTIONS.add(AUTH_ACTION);
         NO_LOGGED_USER_ACTIONS.add(REGISTER_ACTION);
-
-        NO_LOGGED_USER_ACTIONS.add(COURSES_ACTION);
-        NO_LOGGED_USER_ACTIONS.add(TEACHERS_ACTION);
-        NO_LOGGED_USER_ACTIONS.add(DOWNLOAD_COURSES_ACTION);
+        NO_LOGGED_USER_ACTIONS.add(RECOVERY_PASSWORD_ACTION);
     }
 
-    static {
-        GENERAL_ACTION.add(LOG_OUT_ACTION);
-        GENERAL_ACTION.add(MY_CABINET_ACTION);
-
-        GENERAL_ACTION.add(COURSES_ACTION);
-        GENERAL_ACTION.add(TEACHERS_ACTION);
-        GENERAL_ACTION.add(DOWNLOAD_COURSES_ACTION);
-    }
 
     static {
-        ADMIN_ACTIONS.addAll(GENERAL_ACTION);
+        ADMIN_ACTIONS.addAll(COMMON_ACTIONS);
+        ADMIN_ACTIONS.addAll(COMMON_LOGGED_ACTION);
         ADMIN_ACTIONS.add(MANAGE_COURSES_ACTION);
         ADMIN_ACTIONS.add(MANAGE_CATEGORIES_ACTION);
         ADMIN_ACTIONS.add(MANAGE_TEACHERS_ACTION);
@@ -50,19 +54,23 @@ public class ActionAccessConstants {
     }
 
     static {
-        TEACHER_ACTIONS.addAll(GENERAL_ACTION);
+        TEACHER_ACTIONS.addAll(COMMON_ACTIONS);
+        TEACHER_ACTIONS.addAll(COMMON_LOGGED_ACTION);
         TEACHER_ACTIONS.add(SHOW_TEACHER_COURSES_ACTION);
         TEACHER_ACTIONS.add(SHOW_JOURNAL_ACTION);
         TEACHER_ACTIONS.add(GRADE_ACTION);
+        TEACHER_ACTIONS.add(EDIT_TEACHER_ACTION);
     }
 
     static {
-        STUDENT_ACTIONS.addAll(GENERAL_ACTION);
+        STUDENT_ACTIONS.addAll(COMMON_ACTIONS);
+        STUDENT_ACTIONS.addAll(COMMON_LOGGED_ACTION);
         STUDENT_ACTIONS.add(ENROLL_ACTION);
         STUDENT_ACTIONS.add(SHOW_STUDENT_COURSES_ACTION);
         STUDENT_ACTIONS.add(SHOW_ALL_COURSES_ACTION);
         STUDENT_ACTIONS.add(SHOW_RESULT_ACTION);
         STUDENT_ACTIONS.add(CERTIFICATE_ACTION);
+        STUDENT_ACTIONS.add(EDIT_STUDENT_ACTION);
     }
 
     public static Set<String> getNoLoggedUserActions() {

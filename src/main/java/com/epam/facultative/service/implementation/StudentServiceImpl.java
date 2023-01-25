@@ -3,6 +3,7 @@ package com.epam.facultative.service.implementation;
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.data_layer.daos.CourseDao;
 import com.epam.facultative.data_layer.daos.StudentDao;
+import com.epam.facultative.data_layer.entities.Student;
 import com.epam.facultative.dto.CourseDTO;
 import com.epam.facultative.data_layer.entities.Course;
 import com.epam.facultative.data_layer.entities.Role;
@@ -18,6 +19,7 @@ import static com.epam.facultative.dto.Converter.*;
 import static com.epam.facultative.utils.email_sender.EmailConstants.*;
 import static com.epam.facultative.utils.hash_password.HashPassword.*;
 import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
+import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.studentParamBuilderForQuery;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOGIN_NOT_EXIST_MESSAGE;
 import static com.epam.facultative.utils.validator.Validator.*;
 
@@ -106,5 +108,27 @@ public class StudentServiceImpl implements StudentService {
             throw new ServiceException(e);
         }
 
+    }
+
+    @Override
+    public StudentDTO updateStudent(StudentDTO studentDTO) throws ValidateException, ServiceException {
+        validateLogin(studentDTO.getLogin());
+        validateNameAndSurname(studentDTO.getName(), studentDTO.getSurname());
+        validateEmail(studentDTO.getEmail());
+        studentDTO.setRole(Role.STUDENT);
+        try {
+            Student student = studentDao
+                    .get(studentParamBuilderForQuery().setUserIdFilter(String.valueOf(studentDTO.getId())).getParam())
+                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            student.setLogin(studentDTO.getLogin());
+            student.setName(studentDTO.getName());
+            student.setSurname(studentDTO.getSurname());
+            student.setEmail(studentDTO.getEmail());
+            student.setCourseNumber(studentDTO.getCourseNumber());
+            studentDao.update(student);
+            return convertStudentToDTO(student);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.controller.actions.impl.admin.*;
 import com.epam.facultative.controller.actions.impl.general.*;
 import com.epam.facultative.controller.actions.impl.student.*;
+import com.epam.facultative.controller.actions.impl.teacher.EditTeacherAction;
 import com.epam.facultative.controller.actions.impl.teacher.GradeAction;
 import com.epam.facultative.controller.actions.impl.teacher.ShowJournalAction;
 import com.epam.facultative.controller.actions.impl.teacher.ShowTeacherCoursesAction;
@@ -22,6 +23,7 @@ public class ActionFactory {
         ACTION_MAP.put(AUTH_ACTION, new AuthAction(APP_CONTEXT));
         ACTION_MAP.put(COURSES_ACTION, new CoursesAction(APP_CONTEXT));
         ACTION_MAP.put(TEACHERS_ACTION, new TeachersAction(APP_CONTEXT));
+        ACTION_MAP.put(RECOVERY_PASSWORD_ACTION, new RecoveryPasswordAction(APP_CONTEXT));
 
         ACTION_MAP.put(MANAGE_COURSES_ACTION, new ManageCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(MANAGE_CATEGORIES_ACTION, new ManageCategoriesAction(APP_CONTEXT));
@@ -55,6 +57,10 @@ public class ActionFactory {
 
         ACTION_MAP.put(DOWNLOAD_COURSES_ACTION, new DownloadCoursesAction(APP_CONTEXT));
         ACTION_MAP.put(CERTIFICATE_ACTION, new CertificateAction(APP_CONTEXT));
+
+        ACTION_MAP.put(EDIT_TEACHER_ACTION, new EditTeacherAction(APP_CONTEXT));
+        ACTION_MAP.put(EDIT_STUDENT_ACTION, new EditStudentAction(APP_CONTEXT));
+        ACTION_MAP.put(CHANGE_PASSWORD_ACTION, new ChangePasswordAction(APP_CONTEXT));
     }
 
     private ActionFactory() {

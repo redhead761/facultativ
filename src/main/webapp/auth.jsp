@@ -72,7 +72,7 @@
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;"><fmt:message
                                 key="log.in"/>
                         </button>
-                        <a href="#" class="text-body"><fmt:message key="forgot.password"/></a>
+                        <a href="recovery.jsp" class="text-body"><fmt:message key="forgot.password"/></a>
                     </div>
 
                     <div class="text-center text-lg-start pt-2">

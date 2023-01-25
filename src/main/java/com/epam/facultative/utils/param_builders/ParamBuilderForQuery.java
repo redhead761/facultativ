@@ -76,6 +76,14 @@ public abstract class ParamBuilderForQuery {
         return this;
     }
 
+    public ParamBuilderForQuery setUserEmailFilter(String email) {
+        if (email != null) {
+            filters.add(USER_EMAIL + "=" + "\"" + email + "\"");
+        }
+        return this;
+    }
+
+
 
     public ParamBuilderForQuery setOrder(String order) {
         if (order != null && order.equalsIgnoreCase("DESC")) {

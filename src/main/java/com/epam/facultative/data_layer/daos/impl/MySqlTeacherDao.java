@@ -7,11 +7,11 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
 import javax.sql.DataSource;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
@@ -32,7 +32,7 @@ public class MySqlTeacherDao implements TeacherDao {
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 teacher = mapRow(rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DAOException(e);
         }
         return Optional.ofNullable(teacher);
@@ -141,7 +141,7 @@ public class MySqlTeacherDao implements TeacherDao {
             if (rs.next()) {
                 noOfRecords = rs.getInt(1);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, teachers);
@@ -150,7 +150,21 @@ public class MySqlTeacherDao implements TeacherDao {
     /**
      * Helping methods
      */
-    private Teacher mapRow(ResultSet rs) throws SQLException {
+    private Teacher mapRow(ResultSet rs) throws SQLException, IOException {
+        String avatar = null;
+        if (rs.getBlob(USER_AVATAR) != null) {
+            Blob blob = rs.getBlob(USER_AVATAR);
+            InputStream inputStream = blob.getBinaryStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead = -1;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            avatar = Base64.getEncoder().encodeToString(imageBytes);
+        }
+
         return Teacher.builder()
                 .id(rs.getInt(TEACHER_ID))
                 .login(rs.getString(USER_LOGIN))
@@ -160,6 +174,7 @@ public class MySqlTeacherDao implements TeacherDao {
                 .email(rs.getString(USER_EMAIL))
                 .role(Role.TEACHER)
                 .degree(rs.getString(TEACHER_DEGREE))
+                .avatar(avatar)
                 .build();
     }
 

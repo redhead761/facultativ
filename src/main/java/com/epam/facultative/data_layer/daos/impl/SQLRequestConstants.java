@@ -59,6 +59,7 @@ class SQLRequestConstants {
     static final String DELETE_USER = "DELETE FROM user WHERE id=?";
     static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?,surname=?, email=?, role_id=? WHERE id=?";
     static final String SELECT_FOUND_ROWS = "SELECT FOUND_ROWS()";
+    static final String ADD_AVATAR = "UPDATE user SET avatar=? WHERE id = ?";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**

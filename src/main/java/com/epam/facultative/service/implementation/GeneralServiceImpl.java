@@ -161,15 +161,15 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public UserDTO addAvatar(String userId, InputStream avatar) throws ServiceException, ValidateException {
-        Student user;
+        User user;
         UserDTO result = null;
         try {
-            user = studentDao
+            user = userDao
                     .get(userParamBuilderForQuery().setUserIdFilter(userId).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-            studentDao.addAvatar(Integer.parseInt(userId), avatar);
+            userDao.addAvatar(Integer.parseInt(userId), avatar);
             Role role = user.getRole();
-            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId));
+            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(userId);
             switch (role) {
                 case ADMIN -> result = convertUserToDTO(user);
                 case TEACHER -> {

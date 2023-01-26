@@ -16,7 +16,6 @@ import java.util.*;
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
-import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.TITLE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlStudentDao implements StudentDao {
     private final DataSource dataSource;
@@ -192,19 +191,6 @@ public class MySqlStudentDao implements StudentDao {
             throw new DAOException(e);
         }
         return grade;
-    }
-
-    @Override
-    public void addAvatar(int userId, InputStream avatar) throws DAOException {
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement("UPDATE user SET avatar=? WHERE id = ?")) {
-            int k = 0;
-            stmt.setBlob(++k, avatar);
-            stmt.setInt(++k, userId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
     }
 
     /**

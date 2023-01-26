@@ -14,6 +14,4 @@ public interface StudentDao extends Dao<Student> {
 
     int getGrade(int courseId, int studentId) throws DAOException;
 
-    void addAvatar(int userId, InputStream avatar) throws DAOException;
-
 }

@@ -38,7 +38,7 @@ public class EditStudentAction implements Action {
     private String executePost(HttpServletRequest req) throws ServiceException {
         StudentDTO studentDTO = getStudentForAttribute(req);
         try {
-            studentService.updateStudent(studentDTO);
+            studentDTO = studentService.updateStudent(studentDTO);
             req.getSession().setAttribute(USER, studentDTO);
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {

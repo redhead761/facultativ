@@ -34,7 +34,6 @@ public class AddAvatarAction implements Action {
         String userId = req.getParameter(USER_ID);
         try {
             Part part = req.getPart(AVATAR);
-            System.out.println("PART = " + part);
             InputStream inputStream = null;
             if (part != null) {
                 inputStream = part.getInputStream();

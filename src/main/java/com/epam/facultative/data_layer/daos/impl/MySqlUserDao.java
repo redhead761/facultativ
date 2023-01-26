@@ -6,6 +6,7 @@ import com.epam.facultative.data_layer.entities.User;
 import com.epam.facultative.exception.DAOException;
 
 import javax.sql.DataSource;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,20 @@ public class MySqlUserDao implements UserDao {
         return null;
     }
 
+    @Override
+    public void addAvatar(int userId, InputStream avatar) throws DAOException {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement(ADD_AVATAR)) {
+            int k = 0;
+            stmt.setBlob(++k, avatar);
+            stmt.setInt(++k, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+
     /**
      * Helping methods
      */
@@ -100,4 +115,5 @@ public class MySqlUserDao implements UserDao {
         stmt.setInt(++k, user.getRole().getId());
         return ++k;
     }
+
 }

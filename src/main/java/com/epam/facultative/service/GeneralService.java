@@ -10,6 +10,7 @@ import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +29,6 @@ public interface GeneralService {
     void recoveryPassword(String email) throws ServiceException, ValidateException;
 
     void changePassword(String oldPassword, String newPassword, String userId) throws ServiceException, ValidateException;
+
+    UserDTO addAvatar(String userId, InputStream avatar) throws ServiceException, ValidateException;
 }

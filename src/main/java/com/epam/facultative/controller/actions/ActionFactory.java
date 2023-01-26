@@ -61,6 +61,7 @@ public class ActionFactory {
         ACTION_MAP.put(EDIT_TEACHER_ACTION, new EditTeacherAction(APP_CONTEXT));
         ACTION_MAP.put(EDIT_STUDENT_ACTION, new EditStudentAction(APP_CONTEXT));
         ACTION_MAP.put(CHANGE_PASSWORD_ACTION, new ChangePasswordAction(APP_CONTEXT));
+        ACTION_MAP.put(ADD_AVATAR_ACTION, new AddAvatarAction(APP_CONTEXT));
     }
 
     private ActionFactory() {

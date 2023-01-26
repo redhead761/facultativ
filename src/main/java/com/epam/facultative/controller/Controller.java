@@ -4,6 +4,7 @@ import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.actions.ActionFactory;
 import com.epam.facultative.exception.ServiceException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 @WebServlet("/controller")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,
+        maxFileSize = 1024 * 1024 * 50,
+        maxRequestSize = 1024 * 1024 * 100)
 public class Controller extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
     private static final ActionFactory ACTION_FACTORY = ActionFactory.getActionFactory();

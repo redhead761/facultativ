@@ -55,7 +55,7 @@ class SQLRequestConstants {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     static final String SELECT_USER = "SELECT * FROM user JOIN role ON role.id = user.role_id %s";
-    static final String INSERT_USER = "INSERT INTO user VALUES (DEFAULT,?,?,?,?,?,?)";
+    static final String INSERT_USER = "INSERT INTO user VALUES (DEFAULT,?,?,?,?,?,?,DEFAULT)";
     static final String DELETE_USER = "DELETE FROM user WHERE id=?";
     static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?,surname=?, email=?, role_id=? WHERE id=?";
     static final String SELECT_FOUND_ROWS = "SELECT FOUND_ROWS()";

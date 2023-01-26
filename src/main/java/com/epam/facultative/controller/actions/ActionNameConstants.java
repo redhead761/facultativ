@@ -44,4 +44,5 @@ public class ActionNameConstants {
     public static String LOG_OUT_ACTION = "log_out";
     public static String MY_CABINET_ACTION = "my_cabinet";
     public static String CHANGE_PASSWORD_ACTION = "change_password";
+    public static String ADD_AVATAR_ACTION = "add_avatar";
 }

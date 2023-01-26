@@ -14,6 +14,7 @@ public class Converter {
                 .surname(user.getSurname())
                 .email(user.getEmail())
                 .role(user.getRole())
+                .avatar(user.getAvatar())
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class Converter {
                 .email(teacher.getEmail())
                 .role(teacher.getRole())
                 .degree(teacher.getDegree())
+                .avatar(teacher.getAvatar())
                 .build();
     }
 
@@ -40,6 +42,7 @@ public class Converter {
                 .block(student.isBlock())
                 .courseNumber(student.getCourseNumber())
                 .grade(student.getGrade())
+                .avatar(student.getAvatar())
                 .build();
     }
 
@@ -87,6 +90,7 @@ public class Converter {
                 .email(teacherDTO.getEmail())
                 .role(teacherDTO.getRole())
                 .degree(teacherDTO.getDegree())
+                .avatar(teacherDTO.getAvatar())
                 .build();
     }
 
@@ -102,6 +106,7 @@ public class Converter {
                 .block(studentDTO.isBlock())
                 .courseNumber(studentDTO.getCourseNumber())
                 .grade(studentDTO.getGrade())
+                .avatar(studentDTO.getAvatar())
                 .build();
     }
 

@@ -55,4 +55,5 @@ public class AttributeConstants {
     public static String COURSE_NUMBER = "course_number";
     public static String ORDER = "order";
     public static String NO_OF_PAGES = "no_of_pages";
+    public static String AVATAR = "avatar";
 }

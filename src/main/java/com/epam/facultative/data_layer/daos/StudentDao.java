@@ -3,6 +3,7 @@ package com.epam.facultative.data_layer.daos;
 import com.epam.facultative.data_layer.entities.Student;
 import com.epam.facultative.exception.DAOException;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -12,5 +13,7 @@ public interface StudentDao extends Dao<Student> {
     void updateBlock(int studentId, boolean block) throws DAOException;
 
     int getGrade(int courseId, int studentId) throws DAOException;
+
+    void addAvatar(int userId, InputStream avatar) throws DAOException;
 
 }

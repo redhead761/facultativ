@@ -2,7 +2,6 @@ package com.epam.facultative.controller.actions.impl.general;
 
 import com.epam.facultative.controller.AppContext;
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.data_layer.entities.User;
 import com.epam.facultative.exception.ServiceException;
 import com.epam.facultative.exception.ValidateException;
 import com.epam.facultative.service.GeneralService;

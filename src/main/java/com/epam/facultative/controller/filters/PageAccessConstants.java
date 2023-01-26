@@ -22,6 +22,7 @@ public final class PageAccessConstants {
         COMMON_PAGES.add(INDEX_PAGE);
         COMMON_PAGES.add(TEACHERS_PAGE);
         COMMON_PAGES.add(CHANGE_PASSWORD_PAGE);
+        COMMON_PAGES.add(ERROR_PAGE);
     }
 
     static {

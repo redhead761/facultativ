@@ -7,15 +7,16 @@ import com.epam.facultative.exception.DAOException;
 import com.epam.facultative.exception.ValidateException;
 
 import javax.sql.DataSource;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.epam.facultative.data_layer.daos.impl.SQLRequestConstants.*;
 import static com.epam.facultative.data_layer.daos.impl.FieldsConstants.*;
 import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
+import static com.epam.facultative.utils.validator.ValidateExceptionMessageConstants.TITLE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlStudentDao implements StudentDao {
     private final DataSource dataSource;
@@ -32,7 +33,7 @@ public class MySqlStudentDao implements StudentDao {
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
                 student = mapRow(rs);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DAOException(e);
         }
         return Optional.ofNullable(student);
@@ -103,13 +104,24 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public void delete(int id) throws DAOException {
-        try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(DELETE_STUDENT)) {
-            int k = 0;
-            stmt.setString(++k, String.valueOf(id));
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = dataSource.getConnection();
+            stmt = con.prepareStatement(DELETE_STUDENT);
+            con.setAutoCommit(false);
+            stmt.setInt(1, id);
             stmt.executeUpdate();
+            stmt = con.prepareStatement(DELETE_USER);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
+            rollback(con);
             throw new DAOException(e);
+        } finally {
+            close(stmt);
+            close(con);
         }
     }
 
@@ -125,7 +137,7 @@ public class MySqlStudentDao implements StudentDao {
                 }
             }
             noOfRecords = setFoundRows(stmt);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, students);
@@ -145,7 +157,7 @@ public class MySqlStudentDao implements StudentDao {
                 }
             }
             noOfRecords = setFoundRows(stmt);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, students);
@@ -182,10 +194,38 @@ public class MySqlStudentDao implements StudentDao {
         return grade;
     }
 
+    @Override
+    public void addAvatar(int userId, InputStream avatar) throws DAOException {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement stmt = con.prepareStatement("UPDATE user SET avatar=? WHERE id = ?")) {
+            int k = 0;
+            stmt.setBlob(++k, avatar);
+            stmt.setInt(++k, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
     /**
      * Helping methods
      */
-    private Student mapRow(ResultSet rs) throws SQLException {
+    private Student mapRow(ResultSet rs) throws SQLException, IOException {
+
+        String avatar = null;
+        if (rs.getBlob(USER_AVATAR) != null) {
+            Blob blob = rs.getBlob(USER_AVATAR);
+            InputStream inputStream = blob.getBinaryStream();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int bytesRead = -1;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            byte[] imageBytes = outputStream.toByteArray();
+            avatar = Base64.getEncoder().encodeToString(imageBytes);
+        }
+
         return Student.builder()
                 .id(rs.getInt(STUDENT_ID))
                 .login(rs.getString(USER_LOGIN))
@@ -196,6 +236,7 @@ public class MySqlStudentDao implements StudentDao {
                 .courseNumber(rs.getInt(STUDENT_COURSE_NUMBER))
                 .block(rs.getBoolean(STUDENT_BLOCK))
                 .role(Role.STUDENT)
+                .avatar(avatar)
                 .build();
     }
 

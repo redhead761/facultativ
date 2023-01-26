@@ -28,6 +28,7 @@ public class FieldsConstants {
     public static final String USER_FIRST_NAME = "user.name";
     public static final String USER_FAMILY_NAME = "user.surname";
     public static final String USER_EMAIL = "user.email";
+    public static final String USER_AVATAR = "avatar";
 
     //Teacher fields
     public static final String TEACHER_ID = "user_id";

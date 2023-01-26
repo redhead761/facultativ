@@ -16,6 +16,7 @@ import com.epam.facultative.utils.pdf_creator.PdfCreator;
 import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
@@ -156,6 +157,37 @@ public class GeneralServiceImpl implements GeneralService {
             throw new ServiceException(e);
         }
 
+    }
+
+    @Override
+    public UserDTO addAvatar(String userId, InputStream avatar) throws ServiceException, ValidateException {
+        Student user;
+        UserDTO result = null;
+        try {
+            user = studentDao
+                    .get(userParamBuilderForQuery().setUserIdFilter(userId).getParam())
+                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+            studentDao.addAvatar(Integer.parseInt(userId), avatar);
+            Role role = user.getRole();
+            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId));
+            switch (role) {
+                case ADMIN -> result = convertUserToDTO(user);
+                case TEACHER -> {
+                    Teacher teacher = teacherDao.get(paramBuilder.getParam())
+                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    result = convertTeacherToDTO(teacher);
+                }
+                case STUDENT -> {
+                    Student student = studentDao.get(paramBuilder.getParam())
+                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    checkBlocStudent(student);
+                    result = convertStudentToDTO(student);
+                }
+            }
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return result;
     }
 
     private String getNewPassword() {

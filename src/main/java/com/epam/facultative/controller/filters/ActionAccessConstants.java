@@ -23,6 +23,7 @@ public class ActionAccessConstants {
         COMMON_LOGGED_ACTION.add(LOG_OUT_ACTION);
         COMMON_LOGGED_ACTION.add(MY_CABINET_ACTION);
         COMMON_LOGGED_ACTION.add(CHANGE_PASSWORD_ACTION);
+        COMMON_LOGGED_ACTION.add(ADD_AVATAR_ACTION);
     }
 
     static {

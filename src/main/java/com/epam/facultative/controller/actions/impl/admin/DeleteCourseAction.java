@@ -20,14 +20,14 @@ public class DeleteCourseAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int id = Integer.parseInt(req.getParameter(COURSE_ID));
+        String id = req.getParameter(COURSE_ID);
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
         String sort = req.getParameter(SORT);
         String selectByCategory = req.getParameter(SELECT_BY_CATEGORY);
         String selectByTeacher = req.getParameter(SELECT_BY_TEACHER);
         try {
-            adminService.deleteCourse(id);
+            adminService.deleteCourse(Integer.parseInt(id));
         } catch (ValidateException e) {
             req.getSession().setAttribute(ERROR, e.getMessage());
         }

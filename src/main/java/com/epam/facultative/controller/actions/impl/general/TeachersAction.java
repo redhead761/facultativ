@@ -5,6 +5,7 @@ import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.model.dto.TeacherDTO;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.service.AdminService;
+import com.epam.facultative.model.service.GeneralService;
 import com.epam.facultative.model.utils.param_builder.ParamBuilderForQuery;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,15 +22,17 @@ import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQuer
 
 public class TeachersAction implements Action {
     private final AdminService adminService;
+    private final GeneralService generalService;
 
     public TeachersAction(AppContext appContext) {
         adminService = appContext.getAdminService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         ParamBuilderForQuery paramBuilder = teacherParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
-        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = adminService.getAllTeachersPagination(paramBuilder.getParam());
+        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = generalService.getTeachers(paramBuilder.getParam());
         req.setAttribute(TEACHERS, teachersWithRows.getValue());
         testSetUp(req, teachersWithRows.getKey());
         return TEACHERS_PAGE;

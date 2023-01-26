@@ -20,6 +20,7 @@ import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.ADD_COURSE_PAGE;
+import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
 
 public class AddCourseAction implements Action {
 
@@ -39,7 +40,7 @@ public class AddCourseAction implements Action {
 
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, COURSE);
-        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
+        req.setAttribute(CATEGORIES, generalService.getCategories(categoryParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
         return ADD_COURSE_PAGE;
     }
 
@@ -62,8 +63,8 @@ public class AddCourseAction implements Action {
         LocalDate date = LocalDate.parse(req.getParameter(START_DATE));
         String description = req.getParameter(DESCRIPTION);
         Status status = Status.valueOf(req.getParameter(STATUS));
-        int categoryId = Integer.parseInt(req.getParameter(CATEGORY));
-        CategoryDTO categoryDTO = adminService.getCategory(categoryId);
+        String categoryId = req.getParameter(CATEGORY);
+        CategoryDTO categoryDTO = adminService.getCategory(Integer.parseInt(categoryId));
         return CourseDTO.builder()
                 .id(0)
                 .title(title)

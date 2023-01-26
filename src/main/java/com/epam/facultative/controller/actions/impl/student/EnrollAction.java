@@ -21,7 +21,7 @@ public class EnrollAction implements Action {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
-        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
+        String courseId = req.getParameter(COURSE_ID);
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
         String sort = req.getParameter(SORT);
@@ -30,7 +30,7 @@ public class EnrollAction implements Action {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
         int id = student.getId();
         try {
-            studentService.enroll(courseId, id);
+            studentService.enroll(Integer.parseInt(courseId), id);
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ServiceException e) {
             req.getSession().setAttribute(ERROR, ON_COURSE);

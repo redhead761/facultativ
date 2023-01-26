@@ -38,7 +38,7 @@ public class AddAvatarAction implements Action {
             if (part != null) {
                 inputStream = part.getInputStream();
             }
-            UserDTO userDTO = generalService.addAvatar(userId, inputStream);
+            UserDTO userDTO = generalService.addAvatar(Integer.parseInt(userId), inputStream);
             req.getSession().setAttribute(USER, userDTO);
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {

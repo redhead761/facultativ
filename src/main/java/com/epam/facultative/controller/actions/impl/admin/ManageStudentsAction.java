@@ -29,7 +29,7 @@ public class ManageStudentsAction implements Action {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE);
         ParamBuilderForQuery paramBuilder = studentParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
-        Map.Entry<Integer, List<StudentDTO>> studentsWithRows = adminService.getAllStudentsPagination(paramBuilder.getParam());
+        Map.Entry<Integer, List<StudentDTO>> studentsWithRows = adminService.getStudents(paramBuilder.getParam());
         req.setAttribute(STUDENTS, studentsWithRows.getValue());
         testSetUp(req, studentsWithRows.getKey());
         return MANAGE_STUDENTS_PAGE;

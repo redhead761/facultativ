@@ -13,6 +13,7 @@ import java.util.StringJoiner;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.CONTROLLER;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
+import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
 public class ActionUtils {
     private ActionUtils() {
@@ -33,13 +34,13 @@ public class ActionUtils {
                 .setUserIdFilter(selectByTeacher)
                 .setLimits(currentPage, recordsPerPage);
 
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilderForQuery.getParam());
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getCourses(paramBuilderForQuery.getParam());
 
         testSetUp(req, coursesWithRows.getKey());
 
         req.setAttribute(COURSES, coursesWithRows.getValue());
-        req.setAttribute(TEACHERS, generalService.getAllTeachers().getValue());
-        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
+        req.setAttribute(TEACHERS, generalService.getTeachers(teacherParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
+        req.setAttribute(CATEGORIES, generalService.getCategories(courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
     }
 
     public static void testSetUp(HttpServletRequest req, int noOfRecords) {

@@ -6,6 +6,7 @@ import com.epam.facultative.model.dto.TeacherDTO;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.AdminService;
+import com.epam.facultative.model.service.GeneralService;
 import com.epam.facultative.model.utils.param_builder.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,9 +22,11 @@ import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQuer
 
 public class AssignAction implements Action {
     private final AdminService adminService;
+    private final GeneralService generalService;
 
     public AssignAction(AppContext appContext) {
         adminService = appContext.getAdminService();
+        generalService = appContext.getGeneralService();
     }
 
     @Override
@@ -36,7 +39,7 @@ public class AssignAction implements Action {
         int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
         req.setAttribute(COURSE_ID, courseId);
         ParamBuilderForQuery paramBuilderForQuery = teacherParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
-        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = adminService.getAllTeachersPagination(paramBuilderForQuery.getParam());
+        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = generalService.getTeachers(paramBuilderForQuery.getParam());
         req.setAttribute(TEACHERS, teachersWithRows.getValue());
         testSetUp(req, teachersWithRows.getKey());
         transferAttributeFromSessionToRequest(req, MESSAGE);
@@ -44,14 +47,14 @@ public class AssignAction implements Action {
     }
 
     private String executePost(HttpServletRequest req) throws ServiceException {
-        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
-        int teacherId = Integer.parseInt(req.getParameter(TEACHER_ID));
+        String courseId = req.getParameter(COURSE_ID);
+        String teacherId = req.getParameter(TEACHER_ID);
         try {
-            adminService.assigned(courseId, teacherId);
+            adminService.assigned(Integer.parseInt(courseId), Integer.parseInt(teacherId));
         } catch (ValidateException e) {
             throw new ServiceException(e);
         }
         req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
-        return getGetAction(ASSIGN_ACTION, COURSE_ID, String.valueOf(courseId));
+        return getGetAction(ASSIGN_ACTION, COURSE_ID, courseId);
     }
 }

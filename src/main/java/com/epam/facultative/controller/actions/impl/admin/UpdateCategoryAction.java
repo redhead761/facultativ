@@ -31,10 +31,10 @@ public class UpdateCategoryAction implements Action {
 
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
-        int categoryId = Integer.parseInt(req.getParameter(CATEGORY_ID));
+        String categoryId = req.getParameter(CATEGORY_ID);
         CategoryDTO category = null;
         try {
-            category = adminService.getCategory(categoryId);
+            category = adminService.getCategory(Integer.parseInt(categoryId));
         } catch (ValidateException e) {
             req.setAttribute(ERROR, e.getMessage());
         }

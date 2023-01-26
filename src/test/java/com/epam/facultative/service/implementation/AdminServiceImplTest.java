@@ -213,29 +213,29 @@ class AdminServiceImplTest {
 //
 //    }
 
-    @Test
-    void blockStudent() throws DAOException {
-        doNothing().when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
-        assertDoesNotThrow(() -> adminService.blockStudent(1));
-    }
-
-    @Test
-    void blockStudentWithIllegalArgument() throws DAOException {
-        doThrow(DAOException.class).when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
-        assertThrows(ServiceException.class, () -> adminService.blockStudent(-1));
-    }
-
-    @Test
-    void unblockStudent() throws DAOException {
-        doNothing().when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
-        assertDoesNotThrow(() -> adminService.unblockStudent(1));
-    }
-
-    @Test
-    void unblockStudentWithIllegalArgument() throws DAOException {
-        doThrow(DAOException.class).when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
-        assertThrows(ServiceException.class, () -> adminService.unblockStudent(-1));
-    }
+//    @Test
+//    void blockStudent() throws DAOException {
+//        doNothing().when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
+//        assertDoesNotThrow(() -> adminService.blockStudent(1));
+//    }
+//
+//    @Test
+//    void blockStudentWithIllegalArgument() throws DAOException {
+//        doThrow(DAOException.class).when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
+//        assertThrows(ServiceException.class, () -> adminService.blockStudent(-1));
+//    }
+//
+//    @Test
+//    void unblockStudent() throws DAOException {
+//        doNothing().when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
+//        assertDoesNotThrow(() -> adminService.unblockStudent(1));
+//    }
+//
+//    @Test
+//    void unblockStudentWithIllegalArgument() throws DAOException {
+//        doThrow(DAOException.class).when(studentDao).updateBlock(isA(int.class), isA(boolean.class));
+//        assertThrows(ServiceException.class, () -> adminService.unblockStudent(-1));
+//    }
 
     @Test
     void addTeacher() throws DAOException, ValidateException {

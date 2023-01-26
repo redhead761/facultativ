@@ -124,24 +124,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(String param) throws ServiceException {
-        try {
-            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAll(param);
-            List<CategoryDTO> categories = prepareCategories(categoriesWithRows.getValue());
-            return Map.entry(categoriesWithRows.getKey(), categories);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void assigned(int idCourse, int idUser) throws ServiceException, ValidateException {
+    public void assigned(int courseId, int userId) throws ServiceException, ValidateException {
         try {
             Course course = courseDao
-                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(idCourse)).getParam())
+                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(courseId)).getParam())
                     .orElseThrow(() -> new ValidateException(COURSE_NOT_FOUND_MESSAGE));
             Teacher teacher = teacherDao
-                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(idUser)).getParam())
+                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId)).getParam())
                     .orElseThrow(() -> new ValidateException(TEACHER_NOT_FOUND_MESSAGE));
             course.setTeacher(teacher);
             courseDao.update(course);
@@ -185,22 +174,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(String param) throws ServiceException {
+    public Map.Entry<Integer, List<StudentDTO>> getStudents(String param) throws ServiceException {
         try {
             Map.Entry<Integer, List<Student>> studentsWithRows = studentDao.getAll(param);
             List<StudentDTO> students = prepareStudents(studentsWithRows.getValue());
             return Map.entry(studentsWithRows.getKey(), students);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(String param) throws ServiceException {
-        try {
-            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAll(param);
-            List<TeacherDTO> teachers = prepareTeachers(teachersWithRows.getValue());
-            return Map.entry(teachersWithRows.getKey(), teachers);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

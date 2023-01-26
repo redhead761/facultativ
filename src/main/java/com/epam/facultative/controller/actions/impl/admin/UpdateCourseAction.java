@@ -18,6 +18,8 @@ import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.EDIT_COURSE_PAGE;
+import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
+import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;
@@ -36,16 +38,16 @@ public class UpdateCourseAction implements Action {
 
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
-        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
+        String courseId = req.getParameter(COURSE_ID);
         CourseDTO course = null;
         try {
-            course = adminService.getCourse(courseId);
+            course = adminService.getCourse(Integer.parseInt(courseId));
         } catch (ValidateException e) {
             req.setAttribute(MESSAGE, e.getMessage());
         }
         req.setAttribute(COURSE, course);
-        req.setAttribute(CATEGORIES, generalService.getAllCategories().getValue());
-        req.setAttribute(TEACHERS, generalService.getAllTeachers().getValue());
+        req.setAttribute(CATEGORIES, generalService.getCategories(categoryParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
+        req.setAttribute(TEACHERS, generalService.getTeachers(teacherParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
         return EDIT_COURSE_PAGE;
     }
 
@@ -54,9 +56,9 @@ public class UpdateCourseAction implements Action {
         try {
             CourseDTO course = getCourseFromParameter(req);
             if (req.getParameter(TEACHER_ID) != null && !req.getParameter(TEACHER_ID).isBlank()) {
-                int teacherId = Integer.parseInt(req.getParameter(TEACHER_ID));
-                adminService.assigned(Integer.parseInt(courseId), teacherId);
-                course.setTeacher(adminService.getTeacher(teacherId));
+                String teacherId = req.getParameter(TEACHER_ID);
+                adminService.assigned(Integer.parseInt(courseId), Integer.parseInt(teacherId));
+                course.setTeacher(adminService.getTeacher(Integer.parseInt(teacherId)));
             }
             adminService.updateCourse(course);
             if (req.getParameter(EMAIL_SEND) != null) {
@@ -76,8 +78,8 @@ public class UpdateCourseAction implements Action {
         LocalDate date = LocalDate.parse(req.getParameter(START_DATE));
         String description = req.getParameter(DESCRIPTION);
         Status status = Status.valueOf(req.getParameter(STATUS));
-        int categoryId = Integer.parseInt(req.getParameter(CATEGORY));
-        CategoryDTO categoryDTO = adminService.getCategory(categoryId);
+        String categoryId = req.getParameter(CATEGORY);
+        CategoryDTO categoryDTO = adminService.getCategory(Integer.parseInt(categoryId));
         return CourseDTO.builder()
                 .id(courseId)
                 .title(title)

@@ -23,10 +23,10 @@ public class UpdateBlockAction implements Action {
         String type = req.getParameter(TYPE);
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
-        int studentId = Integer.parseInt(req.getParameter(STUDENT_ID));
+        String studentId = req.getParameter(STUDENT_ID);
         switch (type) {
-            case "block" -> adminService.blockStudent(studentId);
-            case "unblock" -> adminService.unblockStudent(studentId);
+            case "block" -> adminService.blockStudent(Integer.parseInt(studentId));
+            case "unblock" -> adminService.unblockStudent(Integer.parseInt(studentId));
         }
         req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         return getGetAction(MANAGE_STUDENTS_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage);

@@ -13,24 +13,19 @@ import java.util.Map;
 public interface AdminService {
     void courseLaunchNewsLetter(CourseDTO courseDTO) throws ServiceException;
 
-    //Course
     void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;
 
     void updateCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;
 
     void deleteCourse(int courseId) throws ServiceException, ValidateException;
 
-    //Category
     void addCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException;
 
     void updateCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException;
 
     void deleteCategory(int categoryId) throws ServiceException, ValidateException;
 
-    Map.Entry<Integer, List<CategoryDTO>> getAllCategoriesPagination(String param) throws ServiceException;
-
-    //User
-    void assigned(int idCourse, int idUser) throws ServiceException, ValidateException;
+    void assigned(int courseId, int userId) throws ServiceException, ValidateException;
 
     void blockStudent(int userId) throws ServiceException;
 
@@ -38,9 +33,7 @@ public interface AdminService {
 
     void addTeacher(TeacherDTO teacherDTO) throws ServiceException, ValidateException;
 
-    Map.Entry<Integer, List<StudentDTO>> getAllStudentsPagination(String param) throws ServiceException;
-
-    Map.Entry<Integer, List<TeacherDTO>> getAllTeachersPagination(String param) throws ServiceException;
+    Map.Entry<Integer, List<StudentDTO>> getStudents(String param) throws ServiceException;
 
     CategoryDTO getCategory(int id) throws ServiceException, ValidateException;
 

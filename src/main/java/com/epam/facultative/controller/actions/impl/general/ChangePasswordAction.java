@@ -40,7 +40,7 @@ public class ChangePasswordAction implements Action {
         String userId = req.getParameter(USER_ID);
         try {
             checkConfirmPassword(newPassword, repeatPassword);
-            generalService.changePassword(oldPassword, newPassword, userId);
+            generalService.changePassword(oldPassword, newPassword, Integer.parseInt(userId));
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
             req.getSession().setAttribute(ERROR, e.getMessage());

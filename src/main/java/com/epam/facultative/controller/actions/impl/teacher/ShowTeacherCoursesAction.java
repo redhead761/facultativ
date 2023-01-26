@@ -31,7 +31,7 @@ public class ShowTeacherCoursesAction implements Action {
         ParamBuilderForQuery paramBuilder = teacherParamBuilderForQuery()
                 .setUserIdFilter(String.valueOf(teacher.getId()))
                 .setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getAllCourses(paramBuilder.getParam());
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getCourses(paramBuilder.getParam());
         req.setAttribute(COURSES, coursesWithRows.getValue());
         testSetUp(req, coursesWithRows.getKey());
         return TEACHER_COURSES_PAGE;

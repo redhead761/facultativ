@@ -83,7 +83,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public Map.Entry<Integer, List<CourseDTO>> getAllCourses(String param) throws ServiceException {
+    public Map.Entry<Integer, List<CourseDTO>> getCourses(String param) throws ServiceException {
         try {
             Map.Entry<Integer, List<Course>> coursesWithRows = courseDao.getAll(param);
             List<CourseDTO> courses = prepareCourses(coursesWithRows.getValue());
@@ -94,10 +94,9 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public Map.Entry<Integer, List<CategoryDTO>> getAllCategories() throws ServiceException {
+    public Map.Entry<Integer, List<CategoryDTO>> getCategories(String param) throws ServiceException {
         try {
-            ParamBuilderForQuery paramBuilderForQuery = categoryParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE));
-            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAll(paramBuilderForQuery.getParam());
+            Map.Entry<Integer, List<Category>> categoriesWithRows = categoryDao.getAll(param);
             List<CategoryDTO> categoryDTOS = prepareCategories(categoriesWithRows.getValue());
             return Map.entry(categoriesWithRows.getKey(), categoryDTOS);
         } catch (DAOException e) {
@@ -106,10 +105,9 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public Map.Entry<Integer, List<TeacherDTO>> getAllTeachers() throws ServiceException {
+    public Map.Entry<Integer, List<TeacherDTO>> getTeachers(String param) throws ServiceException {
         try {
-            ParamBuilderForQuery paramBuilderForQuery = teacherParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE));
-            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAll(paramBuilderForQuery.getParam());
+            Map.Entry<Integer, List<Teacher>> teachersWithRows = teacherDao.getAll(param);
             List<TeacherDTO> teacherDTOS = prepareTeachers(teachersWithRows.getValue());
             return Map.entry(teachersWithRows.getKey(), teacherDTOS);
         } catch (DAOException e) {
@@ -120,7 +118,7 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException {
         ParamBuilderForQuery paramBuilderForQuery = courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE));
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = getAllCourses(paramBuilderForQuery.getParam());
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = getCourses(paramBuilderForQuery.getParam());
         List<CourseDTO> courses = coursesWithRows.getValue();
         PdfCreator pdfCreator = new PdfCreator();
         return pdfCreator.createCoursesPdf(courses, locale);
@@ -142,11 +140,11 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public void changePassword(String oldPassword, String newPassword, String userId) throws ServiceException, ValidateException {
+    public void changePassword(String oldPassword, String newPassword, int userId) throws ServiceException, ValidateException {
         User user;
         try {
             user = userDao
-                    .get(userParamBuilderForQuery().setUserIdFilter(userId).getParam())
+                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId)).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             if (!verify(user.getPassword(), oldPassword)) {
                 throw new ValidateException(WRONG_PASSWORD_MESSAGE);
@@ -161,16 +159,16 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public UserDTO addAvatar(String userId, InputStream avatar) throws ServiceException, ValidateException {
+    public UserDTO addAvatar(int userId, InputStream avatar) throws ServiceException, ValidateException {
         User user;
         UserDTO result = null;
         try {
             user = userDao
-                    .get(userParamBuilderForQuery().setUserIdFilter(userId).getParam())
+                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId)).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-            userDao.addAvatar(Integer.parseInt(userId), avatar);
+            userDao.addAvatar(Integer.parseInt(String.valueOf(userId)), avatar);
             Role role = user.getRole();
-            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(userId);
+            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId));
             switch (role) {
                 case ADMIN -> result = convertUserToDTO(user);
                 case TEACHER -> {

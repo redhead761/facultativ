@@ -1,12 +1,16 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.data_layer.daos.*;
-import com.epam.facultative.data_layer.entities.*;
-import com.epam.facultative.dto.*;
-import com.epam.facultative.exception.DAOException;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.model.dao.*;
+import com.epam.facultative.model.exception.DAOException;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.entities.Course;
+import com.epam.facultative.model.entities.User;
+import com.epam.facultative.model.dto.CourseDTO;
+import com.epam.facultative.model.dto.StudentDTO;
+import com.epam.facultative.model.dto.UserDTO;
+import com.epam.facultative.model.service.GeneralService;
+import com.epam.facultative.model.service.implementation.GeneralServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

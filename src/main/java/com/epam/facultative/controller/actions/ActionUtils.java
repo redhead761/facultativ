@@ -1,18 +1,18 @@
 package com.epam.facultative.controller.actions;
 
-import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.GeneralService;
-import com.epam.facultative.utils.param_builders.ParamBuilderForQuery;
+import com.epam.facultative.model.dto.CourseDTO;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.service.GeneralService;
+import com.epam.facultative.model.utils.param_builder.ParamBuilderForQuery;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionNameConstants.CONTROLLER;
-import static com.epam.facultative.utils.param_builders.ParamBuilderForQueryUtil.*;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.CONTROLLER;
+import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 
 public class ActionUtils {
     private ActionUtils() {

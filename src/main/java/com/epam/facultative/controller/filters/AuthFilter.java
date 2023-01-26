@@ -1,6 +1,8 @@
 package com.epam.facultative.controller.filters;
 
-import com.epam.facultative.dto.UserDTO;
+import com.epam.facultative.controller.constants.ActionAccessConstants;
+import com.epam.facultative.controller.constants.PageAccessConstants;
+import com.epam.facultative.model.dto.UserDTO;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

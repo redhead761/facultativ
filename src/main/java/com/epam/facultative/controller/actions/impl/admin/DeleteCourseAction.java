@@ -1,14 +1,14 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.*;
+import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.service.AdminService;
 import jakarta.servlet.http.*;
 
-import static com.epam.facultative.controller.actions.ActionNameConstants.MANAGE_COURSES_ACTION;
-import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.MANAGE_COURSES_ACTION;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 
 public class DeleteCourseAction implements Action {

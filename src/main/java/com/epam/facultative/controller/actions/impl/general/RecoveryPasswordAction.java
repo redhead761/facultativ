@@ -1,20 +1,20 @@
 package com.epam.facultative.controller.actions.impl.general;
 
-import com.epam.facultative.controller.AppContext;
+import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.service.GeneralService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionNameConstants.RECOVERY_PASSWORD_ACTION;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.RECOVERY_PASSWORD_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
-import static com.epam.facultative.controller.actions.PageNameConstants.RECOVERY_PASSWORD_PAGE;
+import static com.epam.facultative.controller.constants.PageNameConstants.RECOVERY_PASSWORD_PAGE;
 
 public class RecoveryPasswordAction implements Action {
     GeneralService generalService;

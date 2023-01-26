@@ -1,6 +1,6 @@
 package com.epam.facultative.controller.actions;
 
-import com.epam.facultative.controller.AppContext;
+import com.epam.facultative.controller.app_context.AppContext;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

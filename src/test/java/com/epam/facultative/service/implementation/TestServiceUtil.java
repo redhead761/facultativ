@@ -1,13 +1,13 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.data_layer.entities.*;
-import com.epam.facultative.dto.*;
+import com.epam.facultative.model.dto.*;
+import com.epam.facultative.model.entities.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.facultative.utils.hash_password.HashPassword.encode;
+import static com.epam.facultative.model.utils.hash_password.HashPassword.encode;
 
 public class TestServiceUtil {
     public User getAdmin() {

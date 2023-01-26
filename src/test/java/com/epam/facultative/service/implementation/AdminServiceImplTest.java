@@ -1,20 +1,25 @@
 package com.epam.facultative.service.implementation;
 
-import com.epam.facultative.data_layer.daos.*;
-import com.epam.facultative.data_layer.entities.*;
-import com.epam.facultative.dto.*;
-import com.epam.facultative.exception.DAOException;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.AdminService;
+import com.epam.facultative.model.exception.DAOException;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.dao.CategoryDao;
+import com.epam.facultative.model.dao.CourseDao;
+import com.epam.facultative.model.dao.StudentDao;
+import com.epam.facultative.model.dao.TeacherDao;
+import com.epam.facultative.model.entities.Category;
+import com.epam.facultative.model.entities.Course;
+import com.epam.facultative.model.entities.Teacher;
+import com.epam.facultative.model.dto.CategoryDTO;
+import com.epam.facultative.model.dto.CourseDTO;
+import com.epam.facultative.model.dto.TeacherDTO;
+import com.epam.facultative.model.service.AdminService;
+import com.epam.facultative.model.service.implementation.AdminServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,11 +1,11 @@
 package com.epam.facultative.controller.actions.impl.general;
 
-import com.epam.facultative.controller.AppContext;
+import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.dto.UserDTO;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.model.dto.UserDTO;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.service.GeneralService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +15,8 @@ import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionNameConstants.MY_CABINET_ACTION;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.MY_CABINET_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,

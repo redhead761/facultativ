@@ -1,14 +1,14 @@
 package com.epam.facultative.controller.actions.impl.teacher;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.service.TeacherService;
+import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.service.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionNameConstants.*;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 
 public class GradeAction implements Action {

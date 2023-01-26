@@ -1,23 +1,23 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.data_layer.entities.Status;
-import com.epam.facultative.dto.CategoryDTO;
-import com.epam.facultative.dto.CourseDTO;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.AdminService;
-import com.epam.facultative.service.GeneralService;
+import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.entities.Status;
+import com.epam.facultative.model.dto.CategoryDTO;
+import com.epam.facultative.model.dto.CourseDTO;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.service.AdminService;
+import com.epam.facultative.model.service.GeneralService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.LocalDate;
 
-import static com.epam.facultative.controller.actions.ActionNameConstants.*;
-import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.*;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
-import static com.epam.facultative.controller.actions.PageNameConstants.EDIT_COURSE_PAGE;
+import static com.epam.facultative.controller.constants.PageNameConstants.EDIT_COURSE_PAGE;
 
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;

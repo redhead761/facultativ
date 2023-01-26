@@ -1,21 +1,21 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.dto.TeacherDTO;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.AdminService;
+import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.dto.TeacherDTO;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.service.AdminService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.epam.facultative.controller.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionNameConstants.ADD_TEACHER_ACTION;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.ADD_TEACHER_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
-import static com.epam.facultative.controller.actions.PageNameConstants.ADD_TEACHER_PAGE;
+import static com.epam.facultative.controller.constants.PageNameConstants.ADD_TEACHER_PAGE;
 
 public class AddTeacherAction implements Action {
     private final AdminService adminService;

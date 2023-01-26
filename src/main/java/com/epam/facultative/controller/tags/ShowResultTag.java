@@ -1,7 +1,7 @@
 package com.epam.facultative.controller.tags;
 
-import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.service.StudentService;
+import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.service.StudentService;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;

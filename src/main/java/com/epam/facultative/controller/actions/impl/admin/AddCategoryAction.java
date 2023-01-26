@@ -1,21 +1,21 @@
 package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
-import com.epam.facultative.controller.AppContext;
-import com.epam.facultative.dto.CategoryDTO;
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
-import com.epam.facultative.service.AdminService;
+import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.dto.CategoryDTO;
+import com.epam.facultative.model.exception.ServiceException;
+import com.epam.facultative.model.exception.ValidateException;
+import com.epam.facultative.model.service.AdminService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.epam.facultative.controller.actions.ActionNameConstants.ADD_CATEGORY_ACTION;
+import static com.epam.facultative.controller.constants.ActionNameConstants.ADD_CATEGORY_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
-import static com.epam.facultative.controller.actions.PageNameConstants.*;
-import static com.epam.facultative.controller.AttributeConstants.*;
+import static com.epam.facultative.controller.constants.PageNameConstants.*;
+import static com.epam.facultative.controller.constants.AttributeConstants.*;
 
 public class AddCategoryAction implements Action {
 

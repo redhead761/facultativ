@@ -1,7 +1,6 @@
 package com.epam.facultative.controller.actions;
 
-import com.epam.facultative.exception.ServiceException;
-import com.epam.facultative.exception.ValidateException;
+import com.epam.facultative.model.exception.ServiceException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

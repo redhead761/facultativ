@@ -1,6 +1,6 @@
 package com.epam.facultative.controller.actions;
 
-import com.epam.facultative.controller.AppContext;
+import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.controller.actions.impl.admin.*;
 import com.epam.facultative.controller.actions.impl.general.*;
 import com.epam.facultative.controller.actions.impl.student.*;
@@ -11,7 +11,7 @@ import com.epam.facultative.controller.actions.impl.teacher.ShowTeacherCoursesAc
 
 import java.util.*;
 
-import static com.epam.facultative.controller.actions.ActionNameConstants.*;
+import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 
 public class ActionFactory {
     private static final ActionFactory ACTION_FACTORY = new ActionFactory();

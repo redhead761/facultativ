@@ -11,7 +11,7 @@ class ActionFactoryTest {
 
     @BeforeAll
     static void beforeAll() {
-        AppContext.createAppContext("confProperties");
+        AppContext.createAppContext("configuration.properties");
         actionFactory = ActionFactory.getActionFactory();
     }
 

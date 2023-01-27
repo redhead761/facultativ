@@ -16,9 +16,9 @@ import com.epam.facultative.model.service.TeacherService;
 import java.util.List;
 import java.util.Map;
 
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.*;
 import static com.epam.facultative.model.utils.converter.Converter.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.studentParamBuilderForQuery;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.LOGIN_NOT_EXIST_MESSAGE;
 import static com.epam.facultative.model.utils.validator.Validator.*;
 
 public class TeacherServiceImpl implements TeacherService {
@@ -55,7 +55,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherDTO updateTeacher(TeacherDTO teacherDTO) throws ValidateException, ServiceException {
         validateLogin(teacherDTO.getLogin());
-        validateNameAndSurname(teacherDTO.getName(), teacherDTO.getSurname());
+        validateName(teacherDTO.getName());
+        validateName(teacherDTO.getSurname());
         validateEmail(teacherDTO.getEmail());
         teacherDTO.setRole(Role.TEACHER);
         try {

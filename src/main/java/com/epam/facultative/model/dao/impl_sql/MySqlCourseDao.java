@@ -12,7 +12,7 @@ import java.util.*;
 
 import static com.epam.facultative.model.dao.сonstants.SQLRequestConstants.*;
 import static com.epam.facultative.model.dao.сonstants.FieldsConstants.*;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.TITLE_NOT_UNIQUE_MESSAGE;
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.TITLE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlCourseDao implements CourseDao {
     private final DataSource dataSource;

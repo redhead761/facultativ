@@ -15,8 +15,8 @@ import java.util.*;
 
 import static com.epam.facultative.model.dao.сonstants.SQLRequestConstants.*;
 import static com.epam.facultative.model.dao.сonstants.FieldsConstants.*;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.CAN_NOT_DELETE_TEACHER;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.CAN_NOT_DELETE_TEACHER_MESSAGE;
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.LOE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlTeacherDao implements TeacherDao {
     private final DataSource dataSource;
@@ -117,7 +117,7 @@ public class MySqlTeacherDao implements TeacherDao {
             con.commit();
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
-            throw new ValidateException(CAN_NOT_DELETE_TEACHER);
+            throw new ValidateException(CAN_NOT_DELETE_TEACHER_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
             throw new DAOException(e);

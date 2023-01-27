@@ -19,12 +19,12 @@ import com.epam.facultative.model.utils.param_builder.ParamBuilderForQuery;
 
 import java.util.*;
 
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.*;
 import static com.epam.facultative.model.utils.converter.Converter.*;
 import static com.epam.facultative.model.utils.email_sender.EmailConstants.EMAIL_MESSAGE_FOR_CHANGE_COURSE;
 import static com.epam.facultative.model.utils.email_sender.EmailConstants.EMAIL_SUBJECT_FOR_CHANGE_COURSE;
 import static com.epam.facultative.model.utils.hash_password.HashPassword.encode;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.*;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.model.utils.validator.Validator.*;
 
 public class AdminServiceImpl implements AdminService {
@@ -42,7 +42,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
-        validateCourseData(courseDTO.getTitle(), courseDTO.getDescription(), courseDTO.getDuration());
+        validateTitle(courseDTO.getTitle());
+        validateDescription(courseDTO.getDescription());
         validateDate(courseDTO.getStartDate());
         Course course = convertDTOToCourse(courseDTO);
         try {
@@ -54,7 +55,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
-        validateCourseData(courseDTO.getTitle(), courseDTO.getDescription(), courseDTO.getDuration());
+        validateTitle(courseDTO.getTitle());
+        validateDescription(courseDTO.getDescription());
         Course course = convertDTOToCourse(courseDTO);
         try {
             courseDao.update(course);
@@ -94,7 +96,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException {
-        validateCategoryData(categoryDTO.getTitle(), categoryDTO.getDescription());
+        validateTitle(categoryDTO.getTitle());
+        validateDescription(categoryDTO.getDescription());
         Category category = convertDTOToCategory(categoryDTO);
         try {
             categoryDao.add(category);
@@ -105,7 +108,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException {
-        validateCategoryData(categoryDTO.getTitle(), categoryDTO.getDescription());
+        validateTitle(categoryDTO.getTitle());
+        validateDescription(categoryDTO.getDescription());
         Category category = convertDTOToCategory(categoryDTO);
         try {
             categoryDao.update(category);
@@ -161,7 +165,8 @@ public class AdminServiceImpl implements AdminService {
     public void addTeacher(TeacherDTO teacherDTO) throws ServiceException, ValidateException {
         validateLogin(teacherDTO.getLogin());
         validatePassword(teacherDTO.getPassword());
-        validateNameAndSurname(teacherDTO.getName(), teacherDTO.getSurname());
+        validateName(teacherDTO.getName());
+        validateName(teacherDTO.getSurname());
         validateEmail(teacherDTO.getEmail());
         teacherDTO.setRole(Role.TEACHER);
         teacherDTO.setPassword(encode(teacherDTO.getPassword()));

@@ -15,7 +15,7 @@ import java.util.*;
 
 import static com.epam.facultative.model.dao.сonstants.SQLRequestConstants.*;
 import static com.epam.facultative.model.dao.сonstants.FieldsConstants.*;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.LOE_NOT_UNIQUE_MESSAGE;
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.LOE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlStudentDao implements StudentDao {
     private final DataSource dataSource;

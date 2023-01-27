@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.CAN_NOT_DELETE_CATEGORY;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.TITLE_NOT_UNIQUE_MESSAGE;
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.CAN_NOT_DELETE_CATEGORY_MESSAGE;
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.TITLE_NOT_UNIQUE_MESSAGE;
 
 public class MySqlCategoryDao implements CategoryDao {
     private final DataSource dataSource;
@@ -72,7 +72,7 @@ public class MySqlCategoryDao implements CategoryDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            throw new ValidateException(CAN_NOT_DELETE_CATEGORY);
+            throw new ValidateException(CAN_NOT_DELETE_CATEGORY_MESSAGE);
         } catch (SQLException e) {
             throw new DAOException(e);
         }

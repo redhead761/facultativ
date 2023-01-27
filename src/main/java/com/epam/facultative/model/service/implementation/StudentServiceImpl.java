@@ -15,13 +15,13 @@ import com.epam.facultative.model.service.StudentService;
 import com.epam.facultative.model.utils.email_sender.EmailSender;
 import com.epam.facultative.model.utils.pdf_creator.PdfCreator;
 
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.*;
 import static com.epam.facultative.model.utils.converter.Converter.*;
 import static com.epam.facultative.model.utils.email_sender.EmailConstants.EMAIL_MESSAGE_FOR_CERTIFICATE;
 import static com.epam.facultative.model.utils.email_sender.EmailConstants.EMAIL_SUBJECT_FOR_CERTIFICATE;
 import static com.epam.facultative.model.utils.hash_password.HashPassword.encode;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.studentParamBuilderForQuery;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.LOGIN_NOT_EXIST_MESSAGE;
 import static com.epam.facultative.model.utils.validator.Validator.*;
 
 import java.io.ByteArrayOutputStream;
@@ -61,7 +61,8 @@ public class StudentServiceImpl implements StudentService {
     public void addStudent(StudentDTO studentDTO) throws ServiceException, ValidateException {
         validateLogin(studentDTO.getLogin());
         validatePassword(studentDTO.getPassword());
-        validateNameAndSurname(studentDTO.getName(), studentDTO.getSurname());
+        validateName(studentDTO.getName());
+        validateName(studentDTO.getSurname());
         validateEmail(studentDTO.getEmail());
         studentDTO.setRole(Role.STUDENT);
         studentDTO.setPassword(encode(studentDTO.getPassword()));
@@ -114,7 +115,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDTO updateStudent(StudentDTO studentDTO) throws ValidateException, ServiceException {
         validateLogin(studentDTO.getLogin());
-        validateNameAndSurname(studentDTO.getName(), studentDTO.getSurname());
+        validateName(studentDTO.getName());
+        validateName(studentDTO.getSurname());
         validateEmail(studentDTO.getEmail());
         studentDTO.setRole(Role.STUDENT);
         try {

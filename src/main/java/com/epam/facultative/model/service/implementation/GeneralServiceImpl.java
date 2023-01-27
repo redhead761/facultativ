@@ -21,13 +21,13 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 
+import static com.epam.facultative.model.exception.ConstantsValidateMessage.*;
 import static com.epam.facultative.model.utils.converter.Converter.*;
 import static com.epam.facultative.model.utils.email_sender.EmailConstants.EMAIL_MESSAGE_FOR_RECOVERY_PASSWORD;
 import static com.epam.facultative.model.utils.email_sender.EmailConstants.EMAIL_SUBJECT_FOR_RECOVERY_PASSWORD;
 import static com.epam.facultative.model.utils.hash_password.HashPassword.encode;
 import static com.epam.facultative.model.utils.hash_password.HashPassword.verify;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.*;
-import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.*;
 import static com.epam.facultative.model.utils.validator.Validator.validatePassword;
 
 public class GeneralServiceImpl implements GeneralService {
@@ -79,7 +79,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     private void checkBlocStudent(Student student) throws ValidateException {
-        if (student.isBlock()) throw new ValidateException(STUDENT_BLOCKED);
+        if (student.isBlock()) throw new ValidateException(STUDENT_BLOCKED_MESSAGE);
     }
 
     @Override

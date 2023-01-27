@@ -1,4 +1,4 @@
-package com.epam.facultative.service.implementation;
+package com.epam.facultative.model.service.implementation;
 
 import com.epam.facultative.model.dao.*;
 import com.epam.facultative.model.exception.DAOException;
@@ -10,7 +10,6 @@ import com.epam.facultative.model.dto.CourseDTO;
 import com.epam.facultative.model.dto.StudentDTO;
 import com.epam.facultative.model.dto.UserDTO;
 import com.epam.facultative.model.service.GeneralService;
-import com.epam.facultative.model.service.implementation.GeneralServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

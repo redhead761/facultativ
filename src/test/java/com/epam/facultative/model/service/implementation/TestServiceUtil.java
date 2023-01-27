@@ -1,4 +1,4 @@
-package com.epam.facultative.service.implementation;
+package com.epam.facultative.model.service.implementation;
 
 import com.epam.facultative.model.dto.*;
 import com.epam.facultative.model.entities.*;
@@ -6,6 +6,7 @@ import com.epam.facultative.model.entities.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.epam.facultative.model.utils.hash_password.HashPassword.encode;
 
@@ -142,16 +143,16 @@ public class TestServiceUtil {
         return categoryDTOS;
     }
 
-    public List<Student> getStudents() {
+    public Map.Entry<Integer, List<Student>> getStudents() {
         List<Student> students = new ArrayList<>();
         students.add(getStudent());
-        return students;
+        return Map.entry(1, students);
     }
 
-    public List<StudentDTO> getStudentDTOS() {
+    public Map.Entry<Integer, List<StudentDTO>> getStudentDTOS() {
         List<StudentDTO> studentDTOS = new ArrayList<>();
         studentDTOS.add(getStudentDTO());
-        return studentDTOS;
+        return Map.entry(1, studentDTOS);
     }
 
     public List<Teacher> getTeachers() {

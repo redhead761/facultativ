@@ -18,9 +18,11 @@ import static com.epam.facultative.controller.constants.PageNameConstants.RECOVE
 
 public class RecoveryPasswordAction implements Action {
     GeneralService generalService;
+    AppContext appContext;
 
     public RecoveryPasswordAction(AppContext appContext) {
         generalService = appContext.getGeneralService();
+        this.appContext = appContext;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class RecoveryPasswordAction implements Action {
     private String executePost(HttpServletRequest req) throws ServiceException {
         String email = req.getParameter(EMAIL);
         try {
-            generalService.recoveryPassword(email);
+            generalService.recoveryPassword(email, appContext);
             req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
             req.getSession().setAttribute(EMAIL, email);

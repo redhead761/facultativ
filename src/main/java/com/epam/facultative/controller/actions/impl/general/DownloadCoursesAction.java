@@ -16,15 +16,17 @@ import static com.epam.facultative.controller.constants.PageNameConstants.INDEX_
 
 public class DownloadCoursesAction implements Action {
     private final GeneralService generalService;
+    private final AppContext appContext;
 
     public DownloadCoursesAction(AppContext appContext) {
         generalService = appContext.getGeneralService();
+        this.appContext = appContext;
     }
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServiceException {
         String locale = (String) req.getSession().getAttribute(LANGUAGE);
-        ByteArrayOutputStream usersPdf = generalService.downloadAllCoursesInPdf(locale);
+        ByteArrayOutputStream usersPdf = generalService.downloadAllCoursesInPdf(locale, appContext);
         setResponse(resp, usersPdf);
         return INDEX_PAGE;
     }

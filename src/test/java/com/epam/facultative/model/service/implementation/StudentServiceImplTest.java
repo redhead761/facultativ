@@ -37,12 +37,12 @@ class StudentServiceImplTest {
         testServiceUtil = new TestServiceUtil();
     }
 
-    @BeforeEach
-    void setUp() {
-        courses = testServiceUtil.getCourses();
-        courseDTOs = testServiceUtil.getTCourseDTOS();
-        studentDTO = testServiceUtil.getStudentDTO();
-    }
+//    @BeforeEach
+//    void setUp() {
+//        courses = testServiceUtil.getCourses();
+//        courseDTOs = testServiceUtil.getTCourseDTOS();
+//        studentDTO = testServiceUtil.getStudentDTO();
+//    }
 
 //    @Test
 //    void getCoursesByStudent() throws DAOException, ServiceException {

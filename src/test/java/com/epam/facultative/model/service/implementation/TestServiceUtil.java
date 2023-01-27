@@ -131,16 +131,16 @@ public class TestServiceUtil {
                 .build();
     }
 
-    public List<Category> getCategories() {
+    public Map.Entry<Integer, List<Category>> getCategories() {
         List<Category> categories = new ArrayList<>();
         categories.add(getCategory());
-        return categories;
+        return Map.entry(1, categories);
     }
 
-    public List<CategoryDTO> getCategoryDTOS() {
+    public Map.Entry<Integer, List<CategoryDTO>> getCategoryDTOS() {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         categoryDTOS.add(getCategoryDTO());
-        return categoryDTOS;
+        return Map.entry(1, categoryDTOS);
     }
 
     public Map.Entry<Integer, List<Student>> getStudents() {
@@ -155,27 +155,27 @@ public class TestServiceUtil {
         return Map.entry(1, studentDTOS);
     }
 
-    public List<Teacher> getTeachers() {
+    public Map.Entry<Integer, List<Teacher>> getTeachers() {
         List<Teacher> teachers = new ArrayList<>();
         teachers.add(getTeacher());
-        return teachers;
+        return Map.entry(1, teachers);
     }
 
-    public List<TeacherDTO> getTeacherDTOS() {
+    public Map.Entry<Integer, List<TeacherDTO>> getTeacherDTOS() {
         List<TeacherDTO> teacherDTOS = new ArrayList<>();
         teacherDTOS.add(getTeacherDTO());
-        return teacherDTOS;
+        return Map.entry(1, teacherDTOS);
     }
 
-    public List<Course> getCourses() {
+    public Map.Entry<Integer, List<Course>> getCourses() {
         List<Course> courses = new ArrayList<>();
         courses.add(getCourse());
-        return courses;
+        return Map.entry(1, courses);
     }
 
-    public List<CourseDTO> getTCourseDTOS() {
+    public Map.Entry<Integer, List<CourseDTO>> getTCourseDTOS() {
         List<CourseDTO> courseDTOS = new ArrayList<>();
         courseDTOS.add(getCourseDTO());
-        return courseDTOS;
+        return Map.entry(1, courseDTOS);
     }
 }

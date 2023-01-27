@@ -1,5 +1,6 @@
 package com.epam.facultative.model.service;
 
+import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.model.dto.CategoryDTO;
 import com.epam.facultative.model.dto.CourseDTO;
 import com.epam.facultative.model.dto.TeacherDTO;
@@ -22,9 +23,9 @@ public interface GeneralService {
 
     Map.Entry<Integer, List<TeacherDTO>> getTeachers(String param) throws ServiceException;
 
-    ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException;
+    ByteArrayOutputStream downloadAllCoursesInPdf(String locale, AppContext appContext) throws ServiceException;
 
-    void recoveryPassword(String email) throws ServiceException, ValidateException;
+    void recoveryPassword(String email, AppContext appContext) throws ServiceException, ValidateException;
 
     void changePassword(String oldPassword, String newPassword, int userId) throws ServiceException, ValidateException;
 

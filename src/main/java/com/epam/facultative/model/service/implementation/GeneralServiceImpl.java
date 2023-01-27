@@ -47,39 +47,15 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
-        UserDTO result = null;
         try {
             User user = userDao
                     .get(userParamBuilderForQuery().setUserLoginFilter(login).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-            if (!verify(user.getPassword(), password)) {
-                throw new ValidateException(WRONG_PASSWORD_MESSAGE);
-            }
-            int id = user.getId();
-            Role role = user.getRole();
-            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(id));
-            switch (role) {
-                case ADMIN -> result = convertUserToDTO(user);
-                case TEACHER -> {
-                    Teacher teacher = teacherDao.get(paramBuilder.getParam())
-                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-                    result = convertTeacherToDTO(teacher);
-                }
-                case STUDENT -> {
-                    Student student = studentDao.get(paramBuilder.getParam())
-                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-                    checkBlocStudent(student);
-                    result = convertStudentToDTO(student);
-                }
-            }
+            verifyPassword(user.getPassword(), password);
+            return getLoggedUser(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        return result;
-    }
-
-    private void checkBlocStudent(Student student) throws ValidateException {
-        if (student.isBlock()) throw new ValidateException(STUDENT_BLOCKED_MESSAGE);
     }
 
     @Override
@@ -116,22 +92,20 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public ByteArrayOutputStream downloadAllCoursesInPdf(String locale) throws ServiceException {
-        ParamBuilderForQuery paramBuilderForQuery = courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE));
-        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = getCourses(paramBuilderForQuery.getParam());
+    public ByteArrayOutputStream downloadAllCoursesInPdf(String locale, AppContext appContext) throws ServiceException {
+        Map.Entry<Integer, List<CourseDTO>> coursesWithRows = getCourses(courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam());
         List<CourseDTO> courses = coursesWithRows.getValue();
-        PdfCreator pdfCreator = new PdfCreator();
+        PdfCreator pdfCreator = appContext.getPdfCreator();
         return pdfCreator.createCoursesPdf(courses, locale);
     }
 
     @Override
-    public void recoveryPassword(String email) throws ServiceException, ValidateException {
+    public void recoveryPassword(String email, AppContext appContext) throws ServiceException, ValidateException {
         try {
             User user = userDao.get(userParamBuilderForQuery().setUserEmailFilter(email).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             String newPass = getNewPassword();
             user.setPassword(newPass);
-            AppContext appContext = AppContext.getAppContext();
             EmailSender emailSender = appContext.getEmailSender();
             emailSender.send(email, EMAIL_SUBJECT_FOR_RECOVERY_PASSWORD, EMAIL_MESSAGE_FOR_RECOVERY_PASSWORD + newPass);
         } catch (DAOException e) {
@@ -141,60 +115,65 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public void changePassword(String oldPassword, String newPassword, int userId) throws ServiceException, ValidateException {
-        User user;
         try {
-            user = userDao
+            User user = userDao
                     .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId)).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-            if (!verify(user.getPassword(), oldPassword)) {
-                throw new ValidateException(WRONG_PASSWORD_MESSAGE);
-            }
+            verifyPassword(user.getPassword(), oldPassword);
             validatePassword(newPassword);
             user.setPassword(encode(newPassword));
             userDao.update(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-
     }
 
     @Override
     public UserDTO addAvatar(int userId, InputStream avatar) throws ServiceException, ValidateException {
-        User user;
-        UserDTO result = null;
         try {
-            user = userDao
+            User user = userDao
                     .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId)).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-            userDao.addAvatar(Integer.parseInt(String.valueOf(userId)), avatar);
-            Role role = user.getRole();
-            ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId));
-            switch (role) {
-                case ADMIN -> result = convertUserToDTO(user);
-                case TEACHER -> {
-                    Teacher teacher = teacherDao.get(paramBuilder.getParam())
-                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-                    result = convertTeacherToDTO(teacher);
-                }
-                case STUDENT -> {
-                    Student student = studentDao.get(paramBuilder.getParam())
-                            .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-                    checkBlocStudent(student);
-                    result = convertStudentToDTO(student);
-                }
-            }
+            userDao.addAvatar(userId, avatar);
+            return getLoggedUser(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-        return result;
+    }
+
+    private void verifyPassword(String userPassword, String inputPassword) throws ValidateException {
+        if (!verify(userPassword, inputPassword)) throw new ValidateException(WRONG_PASSWORD_MESSAGE);
+    }
+
+    private UserDTO getLoggedUser(User user) throws DAOException, ValidateException {
+        UserDTO userDTO = null;
+        Role role = user.getRole();
+        ParamBuilderForQuery paramBuilder = userParamBuilderForQuery().setUserIdFilter(String.valueOf(user.getId()));
+        switch (role) {
+            case ADMIN -> userDTO = convertUserToDTO(user);
+            case TEACHER -> {
+                Teacher teacher = teacherDao.get(paramBuilder.getParam())
+                        .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                userDTO = convertTeacherToDTO(teacher);
+            }
+            case STUDENT -> {
+                Student student = studentDao.get(paramBuilder.getParam())
+                        .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                checkBlocStudent(student);
+                userDTO = convertStudentToDTO(student);
+            }
+        }
+        return userDTO;
+    }
+
+    private void checkBlocStudent(Student student) throws ValidateException {
+        if (student.isBlock()) throw new ValidateException(STUDENT_BLOCKED_MESSAGE);
     }
 
     private String getNewPassword() {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
         SecureRandom random = new SecureRandom();
         StringBuilder sb = new StringBuilder();
-
         for (int i = 0; i < 10; i++) {
             int randomIndex = random.nextInt(chars.length());
             sb.append(chars.charAt(randomIndex));

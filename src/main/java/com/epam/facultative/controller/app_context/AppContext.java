@@ -4,6 +4,7 @@ import com.epam.facultative.model.dao.DaoFactory;
 import com.epam.facultative.model.connection.MyDataSource;
 import com.epam.facultative.model.service.*;
 import com.epam.facultative.model.utils.email_sender.EmailSender;
+import com.epam.facultative.model.utils.pdf_creator.PdfCreator;
 import com.epam.facultative.model.utils.recaptcha.Recaptcha;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -25,8 +26,10 @@ public class AppContext {
     private final TeacherService teacherService;
     private final Recaptcha recaptcha;
     private final EmailSender emailSender;
+    private final PdfCreator pdfCreator;
 
     private AppContext(String confPropertiesFile) {
+        pdfCreator = new PdfCreator();
         Properties properties = getProperties(confPropertiesFile);
         recaptcha = new Recaptcha(properties);
         emailSender = new EmailSender(properties);

@@ -1,5 +1,6 @@
 package com.epam.facultative.model.service;
 
+import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.model.dto.CategoryDTO;
 import com.epam.facultative.model.dto.CourseDTO;
 import com.epam.facultative.model.dto.StudentDTO;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdminService {
-    void courseLaunchNewsLetter(CourseDTO courseDTO) throws ServiceException;
+    void courseLaunchNewsLetter(CourseDTO courseDTO, AppContext appContext) throws ServiceException;
 
     void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException;
 

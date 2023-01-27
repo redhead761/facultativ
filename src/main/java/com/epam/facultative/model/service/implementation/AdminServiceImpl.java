@@ -42,8 +42,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
-        validateTitle(courseDTO.getTitle());
-        validateDescription(courseDTO.getDescription());
+        validateCourseData(courseDTO);
         validateDate(courseDTO.getStartDate());
         Course course = convertDTOToCourse(courseDTO);
         try {
@@ -55,8 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
-        validateTitle(courseDTO.getTitle());
-        validateDescription(courseDTO.getDescription());
+        validateCourseData(courseDTO);
         Course course = convertDTOToCourse(courseDTO);
         try {
             courseDao.update(course);
@@ -66,10 +64,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void courseLaunchNewsLetter(CourseDTO courseDTO) throws ServiceException {
+    public void courseLaunchNewsLetter(CourseDTO courseDTO, AppContext appContext) throws ServiceException {
         int courseId = courseDTO.getId();
         List<Student> students;
-        EmailSender emailSender = AppContext.getAppContext().getEmailSender();
+        EmailSender emailSender = appContext.getEmailSender();
         ParamBuilderForQuery paramBuilder = courseParamBuilderForQuery()
                 .setIdFilterCourseForStudent(String.valueOf(courseId))
                 .setLimits("1", String.valueOf(Integer.MAX_VALUE));
@@ -96,8 +94,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException {
-        validateTitle(categoryDTO.getTitle());
-        validateDescription(categoryDTO.getDescription());
+        validateCategoryData(categoryDTO);
         Category category = convertDTOToCategory(categoryDTO);
         try {
             categoryDao.add(category);
@@ -108,8 +105,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateCategory(CategoryDTO categoryDTO) throws ServiceException, ValidateException {
-        validateTitle(categoryDTO.getTitle());
-        validateDescription(categoryDTO.getDescription());
+        validateCategoryData(categoryDTO);
         Category category = convertDTOToCategory(categoryDTO);
         try {
             categoryDao.update(category);
@@ -163,11 +159,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addTeacher(TeacherDTO teacherDTO) throws ServiceException, ValidateException {
-        validateLogin(teacherDTO.getLogin());
-        validatePassword(teacherDTO.getPassword());
-        validateName(teacherDTO.getName());
-        validateName(teacherDTO.getSurname());
-        validateEmail(teacherDTO.getEmail());
+        validateTeacherData(teacherDTO);
         teacherDTO.setRole(Role.TEACHER);
         teacherDTO.setPassword(encode(teacherDTO.getPassword()));
         Teacher teacher = convertDTOToTeacher(teacherDTO);
@@ -232,6 +224,26 @@ public class AdminServiceImpl implements AdminService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    private void validateCourseData(CourseDTO courseDTO) throws ValidateException {
+        validateTitle(courseDTO.getTitle());
+        validateDescription(courseDTO.getDescription());
+    }
+
+
+    private void validateCategoryData(CategoryDTO categoryDTO) throws ValidateException {
+        validateTitle(categoryDTO.getTitle());
+        validateDescription(categoryDTO.getDescription());
+    }
+
+
+    private void validateTeacherData(TeacherDTO teacherDTO) throws ValidateException {
+        validateLogin(teacherDTO.getLogin());
+        validatePassword(teacherDTO.getPassword());
+        validateName(teacherDTO.getName());
+        validateName(teacherDTO.getSurname());
+        validateEmail(teacherDTO.getEmail());
     }
 
 }

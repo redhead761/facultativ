@@ -38,7 +38,7 @@ public class TestServiceUtil {
                 .id(0)
                 .title("Test course")
                 .duration(100)
-                .startDate(LocalDate.parse("2013-01-08"))
+                .startDate(LocalDate.parse("2024-01-08"))
                 .status(Status.COMING_SOON)
                 .teacher(getTeacherDTO())
                 .category(getCategoryDTO())

@@ -24,11 +24,13 @@ import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQuer
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;
     private final GeneralService generalService;
+    private final AppContext appContext;
 
 
     public UpdateCourseAction(AppContext appContext) {
         adminService = appContext.getAdminService();
         generalService = appContext.getGeneralService();
+        this.appContext = appContext;
     }
 
     @Override
@@ -62,7 +64,7 @@ public class UpdateCourseAction implements Action {
             }
             adminService.updateCourse(course);
             if (req.getParameter(EMAIL_SEND) != null) {
-                adminService.courseLaunchNewsLetter(course);
+                adminService.courseLaunchNewsLetter(course, appContext);
             }
             req.getSession().setAttribute(MESSAGE, CHANGES_SAVED);
         } catch (ValidateException e) {

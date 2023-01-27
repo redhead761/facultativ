@@ -20,9 +20,11 @@ import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 
 public class CertificateAction implements Action {
     private final StudentService studentService;
+    private final AppContext appContext;
 
     public CertificateAction(AppContext appContext) {
         studentService = appContext.getStudentService();
+        this.appContext = appContext;
     }
 
     @Override
@@ -34,10 +36,10 @@ public class CertificateAction implements Action {
         try {
             switch (type) {
                 case "download" -> {
-                    ByteArrayOutputStream certificate = studentService.downloadCertificate(student, courseId, grade);
+                    ByteArrayOutputStream certificate = studentService.downloadCertificate(student, courseId, grade, appContext);
                     setResponse(resp, certificate);
                 }
-                case "send" -> studentService.sendCertificate(student, courseId, grade);
+                case "send" -> studentService.sendCertificate(student, courseId, grade, appContext);
             }
         } catch (ValidateException e) {
             req.setAttribute(ERROR, e.getMessage());

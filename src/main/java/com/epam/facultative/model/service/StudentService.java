@@ -1,5 +1,6 @@
 package com.epam.facultative.model.service;
 
+import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.model.dto.CourseDTO;
 import com.epam.facultative.model.dto.StudentDTO;
 import com.epam.facultative.model.exception.ServiceException;
@@ -18,9 +19,9 @@ public interface StudentService {
 
     int getGrade(int courseId, int userId) throws ServiceException;
 
-    ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException;
+    ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade, AppContext appContext) throws ServiceException, ValidateException;
 
-    void sendCertificate(StudentDTO studentDTO, int courseId, int grade) throws ValidateException, ServiceException;
+    void sendCertificate(StudentDTO studentDTO, int courseId, int grade, AppContext appContext) throws ValidateException, ServiceException;
 
     StudentDTO updateStudent(StudentDTO studentDTO) throws ValidateException, ServiceException;
 }

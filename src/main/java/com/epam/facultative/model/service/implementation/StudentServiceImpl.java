@@ -59,11 +59,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void addStudent(StudentDTO studentDTO) throws ServiceException, ValidateException {
-        validateLogin(studentDTO.getLogin());
+        validateStudentData(studentDTO);
         validatePassword(studentDTO.getPassword());
-        validateName(studentDTO.getName());
-        validateName(studentDTO.getSurname());
-        validateEmail(studentDTO.getEmail());
         studentDTO.setRole(Role.STUDENT);
         studentDTO.setPassword(encode(studentDTO.getPassword()));
         try {
@@ -83,12 +80,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade) throws ServiceException, ValidateException {
+    public ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade, AppContext appContext) throws ServiceException, ValidateException {
         try {
             Course course = courseDao
                     .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(courseId)).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
-            PdfCreator pdfCreator = new PdfCreator();
+            PdfCreator pdfCreator = appContext.getPdfCreator();
             return pdfCreator.createCertificateForDownload(studentDTO, course, grade);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -96,28 +93,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void sendCertificate(StudentDTO studentDTO, int courseId, int grade) throws ValidateException, ServiceException {
-        PdfCreator pdfCreator = new PdfCreator();
+    public void sendCertificate(StudentDTO studentDTO, int courseId, int grade, AppContext appContext) throws ValidateException, ServiceException {
+        PdfCreator pdfCreator = appContext.getPdfCreator();
         try {
             Course course = courseDao
                     .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(courseId)).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             String certificate = pdfCreator.createCertificateForSend(studentDTO, course, grade);
-            AppContext appContext = AppContext.getAppContext();
             EmailSender emailSender = appContext.getEmailSender();
             emailSender.sendCertificate(studentDTO.getEmail(), EMAIL_SUBJECT_FOR_CERTIFICATE, EMAIL_MESSAGE_FOR_CERTIFICATE, certificate);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-
     }
 
     @Override
     public StudentDTO updateStudent(StudentDTO studentDTO) throws ValidateException, ServiceException {
-        validateLogin(studentDTO.getLogin());
-        validateName(studentDTO.getName());
-        validateName(studentDTO.getSurname());
-        validateEmail(studentDTO.getEmail());
+        validateStudentData(studentDTO);
         studentDTO.setRole(Role.STUDENT);
         try {
             Student student = studentDao
@@ -133,5 +125,12 @@ public class StudentServiceImpl implements StudentService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    private void validateStudentData(StudentDTO studentDTO) throws ValidateException {
+        validateLogin(studentDTO.getLogin());
+        validateName(studentDTO.getName());
+        validateName(studentDTO.getSurname());
+        validateEmail(studentDTO.getEmail());
     }
 }

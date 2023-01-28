@@ -21,7 +21,7 @@ public class CoursesAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         setAllCourses(req, generalService);
         return COURSES_PAGE;
     }

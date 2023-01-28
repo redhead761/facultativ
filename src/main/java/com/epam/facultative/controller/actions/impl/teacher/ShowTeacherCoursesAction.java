@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
+import static com.epam.facultative.controller.actions.ActionUtils.setUpPaginate;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
@@ -33,7 +33,7 @@ public class ShowTeacherCoursesAction implements Action {
                 .setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getCourses(paramBuilder.getParam());
         req.setAttribute(COURSES, coursesWithRows.getValue());
-        testSetUp(req, coursesWithRows.getKey());
+        setUpPaginate(req, coursesWithRows.getKey());
         return TEACHER_COURSES_PAGE;
     }
 }

@@ -6,11 +6,8 @@ import com.epam.facultative.model.dto.CategoryDTO;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.AdminService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.controller.constants.ActionNameConstants.ADD_CATEGORY_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
@@ -26,7 +23,7 @@ public class AddCategoryAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         return isPostMethod(req) ? executePost(req) : executeGet(req);
     }
 

@@ -9,12 +9,12 @@ import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.AdminService;
 import com.epam.facultative.model.service.GeneralService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
@@ -33,14 +33,15 @@ public class AddCourseAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         return isPostMethod(req) ? executePost(req) : executeGet(req);
 
     }
 
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, COURSE);
-        req.setAttribute(CATEGORIES, generalService.getCategories(categoryParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
+        Map.Entry<Integer, List<CategoryDTO>> categories = generalService.getCategories(categoryParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam());
+        req.setAttribute(CATEGORIES, categories.getValue());
         return ADD_COURSE_PAGE;
     }
 

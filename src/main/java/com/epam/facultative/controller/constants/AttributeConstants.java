@@ -56,4 +56,6 @@ public class AttributeConstants {
     public static String ORDER = "order";
     public static String NO_OF_PAGES = "no_of_pages";
     public static String AVATAR = "avatar";
+    public static String POST = "POST";
+    public static String GET = "GET";
 }

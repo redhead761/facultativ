@@ -23,7 +23,7 @@ public class ManageCoursesAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE);
         setAllCourses(req, generalService);
         return MANAGE_COURSES_PAGE;

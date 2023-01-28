@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
-import static com.epam.facultative.controller.actions.ActionUtils.testSetUp;
+import static com.epam.facultative.controller.actions.ActionUtils.setUpPaginate;
 import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.studentParamBuilderForQuery;
@@ -31,7 +31,7 @@ public class ManageStudentsAction implements Action {
         ParamBuilderForQuery paramBuilder = studentParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<StudentDTO>> studentsWithRows = adminService.getStudents(paramBuilder.getParam());
         req.setAttribute(STUDENTS, studentsWithRows.getValue());
-        testSetUp(req, studentsWithRows.getKey());
+        setUpPaginate(req, studentsWithRows.getKey());
         return MANAGE_STUDENTS_PAGE;
     }
 }

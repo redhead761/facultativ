@@ -24,14 +24,15 @@ public class DeleteCourseAction implements Action {
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
         String sort = req.getParameter(SORT);
+        String order = req.getParameter(ORDER);
         String selectByCategory = req.getParameter(SELECT_BY_CATEGORY);
         String selectByTeacher = req.getParameter(SELECT_BY_TEACHER);
         try {
             adminService.deleteCourse(Integer.parseInt(id));
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
         } catch (ValidateException e) {
             req.getSession().setAttribute(ERROR, e.getMessage());
         }
-        req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
-        return getGetAction(MANAGE_COURSES_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage, SORT, sort, SELECT_BY_CATEGORY, selectByCategory, SELECT_BY_TEACHER, selectByTeacher);
+        return getGetAction(MANAGE_COURSES_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage, SORT, sort, SELECT_BY_CATEGORY, selectByCategory, SELECT_BY_TEACHER, selectByTeacher, ORDER, order);
     }
 }

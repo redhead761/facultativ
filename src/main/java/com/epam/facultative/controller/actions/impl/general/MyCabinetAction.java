@@ -16,7 +16,7 @@ import static com.epam.facultative.controller.constants.PageNameConstants.*;
 public class MyCabinetAction implements Action {
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
         String path = null;
         Role role = (Role) req.getSession().getAttribute(ROLE);

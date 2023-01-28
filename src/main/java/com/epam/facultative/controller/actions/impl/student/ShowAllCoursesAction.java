@@ -4,11 +4,8 @@ import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.service.GeneralService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.setAllCourses;
@@ -23,7 +20,7 @@ public class ShowAllCoursesAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, ServletException, IOException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE, ERROR);
         setAllCourses(req, generalService);
         return STUDENT_PAGE;

@@ -26,7 +26,7 @@ public class RecoveryPasswordAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         return isPostMethod(req) ? executePost(req) : executeGet(req);
     }
 

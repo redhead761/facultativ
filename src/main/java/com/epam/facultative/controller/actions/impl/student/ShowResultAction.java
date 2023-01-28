@@ -23,7 +23,7 @@ public class ShowResultAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE, ERROR);
         int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);

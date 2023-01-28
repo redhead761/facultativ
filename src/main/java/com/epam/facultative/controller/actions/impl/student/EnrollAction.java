@@ -25,6 +25,7 @@ public class EnrollAction implements Action {
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
         String sort = req.getParameter(SORT);
+        String order = req.getParameter(ORDER);
         String selectByCategory = req.getParameter(SELECT_BY_CATEGORY);
         String selectByTeacher = req.getParameter(SELECT_BY_TEACHER);
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
@@ -35,6 +36,6 @@ public class EnrollAction implements Action {
         } catch (ServiceException e) {
             req.getSession().setAttribute(ERROR, ON_COURSE);
         }
-        return getGetAction(SHOW_ALL_COURSES_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage, SORT, sort, SELECT_BY_CATEGORY, selectByCategory, SELECT_BY_TEACHER, selectByTeacher);
+        return getGetAction(SHOW_ALL_COURSES_ACTION, CURRENT_PAGE, currentPage, RECORDS_PER_PAGE, recordsPerPage, SORT, sort, SELECT_BY_CATEGORY, selectByCategory, SELECT_BY_TEACHER, selectByTeacher, ORDER, order);
     }
 }

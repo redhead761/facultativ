@@ -28,7 +28,7 @@ public class CertificateAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, IOException {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
         int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
         int grade = Integer.parseInt(req.getParameter(GRADE));

@@ -24,7 +24,7 @@ public class DownloadCoursesAction implements Action {
     }
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServiceException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, IOException {
         String locale = (String) req.getSession().getAttribute(LANGUAGE);
         ByteArrayOutputStream usersPdf = generalService.downloadAllCoursesInPdf(locale, appContext);
         setResponse(resp, usersPdf);

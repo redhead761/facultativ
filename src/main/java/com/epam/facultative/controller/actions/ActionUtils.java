@@ -1,6 +1,7 @@
 package com.epam.facultative.controller.actions;
 
 import com.epam.facultative.model.dto.CourseDTO;
+import com.epam.facultative.model.dto.TeacherDTO;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.service.GeneralService;
 import com.epam.facultative.model.utils.param_builder.ParamBuilderForQuery;
@@ -36,14 +37,21 @@ public class ActionUtils {
 
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = generalService.getCourses(paramBuilderForQuery.getParam());
 
-        testSetUp(req, coursesWithRows.getKey());
+        setUpPaginate(req, coursesWithRows.getKey());
 
         req.setAttribute(COURSES, coursesWithRows.getValue());
         req.setAttribute(TEACHERS, generalService.getTeachers(teacherParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
         req.setAttribute(CATEGORIES, generalService.getCategories(courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
     }
 
-    public static void testSetUp(HttpServletRequest req, int noOfRecords) {
+    public static void setAllTeachers(HttpServletRequest req, GeneralService generalService) throws ServiceException {
+        ParamBuilderForQuery paramBuilderForQuery = teacherParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
+        Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = generalService.getTeachers(paramBuilderForQuery.getParam());
+        req.setAttribute(TEACHERS, teachersWithRows.getValue());
+        setUpPaginate(req, teachersWithRows.getKey());
+    }
+
+    public static void setUpPaginate(HttpServletRequest req, int noOfRecords) {
         int currentPage = getCorrectIntValue(req.getParameter(CURRENT_PAGE), 1);
         int recordsPerPage = getCorrectIntValue(req.getParameter(RECORDS_PER_PAGE), 5);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);

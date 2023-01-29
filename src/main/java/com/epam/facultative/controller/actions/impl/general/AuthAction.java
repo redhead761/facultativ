@@ -8,11 +8,8 @@ import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.GeneralService;
 import com.epam.facultative.model.utils.recaptcha.Recaptcha;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.AUTH_ACTION;
@@ -43,7 +40,7 @@ public class AuthAction implements Action {
         String path = null;
         String login = req.getParameter(LOGIN);
         String password = req.getParameter(PASSWORD);
-        String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
+        String gRecaptchaResponse = req.getParameter(RECAPTCHA);
         try {
             boolean verify = recaptcha.verify(gRecaptchaResponse);
             if (!verify) {

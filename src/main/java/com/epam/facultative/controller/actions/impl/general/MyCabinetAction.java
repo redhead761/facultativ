@@ -2,12 +2,8 @@ package com.epam.facultative.controller.actions.impl.general;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.model.entities.Role;
-import com.epam.facultative.model.exception.ServiceException;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;

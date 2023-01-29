@@ -4,11 +4,8 @@ import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.service.GeneralService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.controller.actions.ActionUtils.setAllCourses;
 import static com.epam.facultative.controller.constants.PageNameConstants.COURSES_PAGE;

@@ -31,11 +31,11 @@ public class DownloadCoursesAction implements Action {
         return INDEX_PAGE;
     }
 
-    private void setResponse(HttpServletResponse response, ByteArrayOutputStream output) throws IOException {
-        response.setContentType("application/pdf");
-        response.setContentLength(output.size());
-        response.setHeader("Content-Disposition", "attachment; filename=\"courses.pdf\"");
-        OutputStream outputStream = response.getOutputStream();
+    private void setResponse(HttpServletResponse resp, ByteArrayOutputStream output) throws IOException {
+        resp.setContentType("application/pdf");
+        resp.setContentLength(output.size());
+        resp.setHeader("Content-Disposition", "attachment; filename=\"courses.pdf\"");
+        OutputStream outputStream = resp.getOutputStream();
         output.writeTo(outputStream);
         outputStream.flush();
     }

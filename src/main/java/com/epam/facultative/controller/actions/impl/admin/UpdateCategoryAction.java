@@ -6,11 +6,8 @@ import com.epam.facultative.model.dto.CategoryDTO;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.AdminService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.*;
@@ -32,13 +29,12 @@ public class UpdateCategoryAction implements Action {
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
         String categoryId = req.getParameter(CATEGORY_ID);
-        CategoryDTO category = null;
         try {
-            category = adminService.getCategory(Integer.parseInt(categoryId));
+            CategoryDTO category = adminService.getCategory(Integer.parseInt(categoryId));
+            req.setAttribute(CATEGORY, category);
         } catch (ValidateException e) {
             req.setAttribute(ERROR, e.getMessage());
         }
-        req.setAttribute(CATEGORY, category);
         return EDIT_CATEGORY_PAGE;
     }
 

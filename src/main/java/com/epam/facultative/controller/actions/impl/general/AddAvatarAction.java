@@ -46,5 +46,4 @@ public class AddAvatarAction implements Action {
         }
         return getGetAction(MY_CABINET_ACTION);
     }
-
 }

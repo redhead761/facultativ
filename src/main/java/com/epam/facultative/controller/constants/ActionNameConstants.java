@@ -9,7 +9,7 @@ public class ActionNameConstants {
     public static String COURSES_ACTION = "courses";
     public static String TEACHERS_ACTION = "teachers";
     public static String DOWNLOAD_COURSES_ACTION = "download_courses";
-    public static String CERTIFICATE_ACTION = "certificate";
+
     public static String RECOVERY_PASSWORD_ACTION = "recovery_password";
     //Admin
     public static String MANAGE_COURSES_ACTION = "manage_courses";
@@ -24,7 +24,6 @@ public class ActionNameConstants {
     public static String DELETE_COURSE_ACTION = "delete_course";
     public static String ASSIGN_ACTION = "assign";
     public static String UPDATE_BLOCK_ACTION = "update_block";
-    public static String UNBLOCK_ACTION = "unblock";
     public static String ADD_TEACHER_ACTION = "add_teacher";
     public static String DELETE_TEACHER_ACTION = "delete_teacher";
 
@@ -40,6 +39,7 @@ public class ActionNameConstants {
     public static String SHOW_ALL_COURSES_ACTION = "show_all_courses";
     public static String SHOW_RESULT_ACTION = "show_result";
     public static String EDIT_STUDENT_ACTION = "edit_student";
+    public static String CERTIFICATE_ACTION = "certificate";
     //General
     public static String LOG_OUT_ACTION = "log_out";
     public static String MY_CABINET_ACTION = "my_cabinet";

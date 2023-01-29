@@ -61,7 +61,7 @@ public class ActionUtils {
 
     }
 
-    private static int getCorrectIntValue(String value, int defaultValue) {
+    static int getCorrectIntValue(String value, int defaultValue) {
         try {
             int i = Integer.parseInt(value);
             if (i <= 0) {

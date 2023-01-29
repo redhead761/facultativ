@@ -6,7 +6,6 @@ import com.epam.facultative.model.dto.StudentDTO;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.StudentService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,22 +29,25 @@ public class CertificateAction implements Action {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, IOException {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);
-        int courseId = Integer.parseInt(req.getParameter(COURSE_ID));
+        String courseId = req.getParameter(COURSE_ID);
         int grade = Integer.parseInt(req.getParameter(GRADE));
         String type = req.getParameter(TYPE);
         try {
             switch (type) {
                 case "download" -> {
-                    ByteArrayOutputStream certificate = studentService.downloadCertificate(student, courseId, grade, appContext);
+                    ByteArrayOutputStream certificate = studentService.downloadCertificate(student, Integer.parseInt(courseId), grade, appContext);
                     setResponse(resp, certificate);
+                    req.setAttribute(MESSAGE, SUCCESSFUL);
                 }
-                case "send" -> studentService.sendCertificate(student, courseId, grade, appContext);
+                case "send" -> {
+                    studentService.sendCertificate(student, Integer.parseInt(courseId), grade, appContext);
+                    req.setAttribute(MESSAGE, SUCCESSFUL);
+                }
             }
         } catch (ValidateException e) {
             req.setAttribute(ERROR, e.getMessage());
         }
-        req.setAttribute(MESSAGE, SUCCESSFUL);
-        return getGetAction(SHOW_RESULT_ACTION, COURSE_ID, String.valueOf(courseId));
+        return getGetAction(SHOW_RESULT_ACTION, COURSE_ID, courseId);
     }
 
     private void setResponse(HttpServletResponse response, ByteArrayOutputStream output) throws IOException {

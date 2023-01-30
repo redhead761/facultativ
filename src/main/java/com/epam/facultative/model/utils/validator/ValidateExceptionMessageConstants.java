@@ -1,5 +1,11 @@
 package com.epam.facultative.model.utils.validator;
 
+/**
+ * Class containing message with not validate parameter
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ValidateExceptionMessageConstants {
     static final String LOGIN_NO_VALIDATE_MESSAGE = "You entered incorrect login, login must contains 4-16 characters";
     static final String PASSWORD_NO_VALIDATE_MESSAGE = "You entered incorrect password, password must contains 8-20 characters";

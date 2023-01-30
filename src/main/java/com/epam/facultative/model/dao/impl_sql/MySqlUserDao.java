@@ -4,6 +4,7 @@ import com.epam.facultative.model.dao.UserDao;
 import com.epam.facultative.model.entities.Role;
 import com.epam.facultative.model.entities.User;
 import com.epam.facultative.model.exception.DAOException;
+import lombok.RequiredArgsConstructor;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
@@ -22,17 +23,9 @@ import static com.epam.facultative.model.dao.impl_sql.сonstants.SQLRequestConst
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class MySqlUserDao implements UserDao {
     private final DataSource dataSource;
-
-    /**
-     * The only constructor to get DAO instance
-     *
-     * @param dataSource to get connection to database
-     */
-    public MySqlUserDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     /**
      * Obtains instance of User from database by parameter

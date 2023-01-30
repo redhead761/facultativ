@@ -6,7 +6,19 @@ import com.epam.facultative.model.entities.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Converts DTO to Entities and vise versa
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class Converter {
+    /**
+     * Converts User into UserDTO
+     *
+     * @param user to convert
+     * @return UserDTO entity
+     */
     public static UserDTO convertUserToDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())
@@ -19,6 +31,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts Teacher into TeacherDTO
+     *
+     * @param teacher to convert
+     * @return TeacherDTO entity
+     */
     public static TeacherDTO convertTeacherToDTO(Teacher teacher) {
         return TeacherDTO.builder()
                 .id(teacher.getId())
@@ -32,6 +50,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts Student into StudentDTO
+     *
+     * @param student to convert
+     * @return StudentDTO entity
+     */
     public static StudentDTO convertStudentToDTO(Student student) {
         return StudentDTO.builder()
                 .id(student.getId())
@@ -47,6 +71,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts Course into CourseDTO
+     *
+     * @param course to convert
+     * @return CourseDTO entity
+     */
     public static CourseDTO convertCourseToDTO(Course course) {
         return CourseDTO.builder()
                 .id(course.getId())
@@ -61,6 +91,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts Category into CategoryDTO
+     *
+     * @param category to convert
+     * @return CategoryDTO entity
+     */
     public static CategoryDTO convertCategoryToDTO(Category category) {
         return CategoryDTO.builder()
                 .id(category.getId())
@@ -69,6 +105,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts UserDTO into User
+     *
+     * @param userDTO to convert
+     * @return User entity
+     */
     public static User convertDTOToUser(UserDTO userDTO) {
         return User.builder()
                 .id(userDTO.getId())
@@ -81,6 +123,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts TeacherDTO into Teacher
+     *
+     * @param teacherDTO to convert
+     * @return Teacher entity
+     */
     public static Teacher convertDTOToTeacher(TeacherDTO teacherDTO) {
         return Teacher.builder()
                 .id(teacherDTO.getId())
@@ -95,6 +143,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts StudentDTO into Student
+     *
+     * @param studentDTO to convert
+     * @return Student entity
+     */
     public static Student convertDTOToStudent(StudentDTO studentDTO) {
         return Student.builder()
                 .id(studentDTO.getId())
@@ -111,6 +165,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts CourseDTO into Course
+     *
+     * @param courseDTO to convert
+     * @return Course entity
+     */
     public static Course convertDTOToCourse(CourseDTO courseDTO) {
         return Course.builder()
                 .id(courseDTO.getId())
@@ -125,6 +185,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts CategoryDTO into Category
+     *
+     * @param categoryDTO to convert
+     * @return Category entity
+     */
     public static Category convertDTOToCategory(CategoryDTO categoryDTO) {
         return Category.builder()
                 .id(categoryDTO.getId())
@@ -133,6 +199,12 @@ public class Converter {
                 .build();
     }
 
+    /**
+     * Converts List<Teacher> into List<TeacherDTO>
+     *
+     * @param teachers to convert
+     * @return List<TeacherDTO> entity
+     */
     public static List<TeacherDTO> prepareTeachers(List<Teacher> teachers) {
         List<TeacherDTO> result = new ArrayList<>();
         for (Teacher teacher : teachers) {
@@ -141,6 +213,12 @@ public class Converter {
         return result;
     }
 
+    /**
+     * Converts List<Student> into List<StudentDTO>
+     *
+     * @param students to convert
+     * @return List<StudentDTO> entity
+     */
     public static List<StudentDTO> prepareStudents(List<Student> students) {
         List<StudentDTO> result = new ArrayList<>();
         for (Student student : students) {
@@ -149,6 +227,12 @@ public class Converter {
         return result;
     }
 
+    /**
+     * Converts List<Category> into List<CategoryDTO>
+     *
+     * @param categories to convert
+     * @return List<CategoryDTO> entity
+     */
     public static List<CategoryDTO> prepareCategories(List<Category> categories) {
         List<CategoryDTO> result = new ArrayList<>();
         for (Category category : categories) {
@@ -157,6 +241,12 @@ public class Converter {
         return result;
     }
 
+    /**
+     * Converts List<Course> into List<CourseDTO>
+     *
+     * @param courses to convert
+     * @return List<CourseDTO> entity
+     */
     public static List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();
         for (Course course : courses) {

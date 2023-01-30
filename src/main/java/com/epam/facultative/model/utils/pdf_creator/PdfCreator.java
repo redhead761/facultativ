@@ -28,6 +28,12 @@ import java.util.stream.Stream;
 
 import static java.util.ResourceBundle.getBundle;
 
+/**
+ * Create required pdf docs with itext pdf library
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class PdfCreator {
     private static final Logger logger = LoggerFactory.getLogger(PdfCreator.class);
     private static final String COURSE_TITLE = "all.course";
@@ -38,6 +44,13 @@ public class PdfCreator {
             new String[]{"title", "duration", "start.date", "amount.students", "category", "status", "teacher"};
     private static final String PATH_FONT = "C:\\epam\\facultative\\pdf\\arial.ttf";
 
+    /**
+     * Creates pdf document with Courses' info. Creates resourceBundle to localize table fields
+     *
+     * @param courses - list of courses to be placed in the document
+     * @param locale  - for localization purpose
+     * @return outputStream to place in response
+     */
     public ByteArrayOutputStream createCoursesPdf(List<CourseDTO> courses, String locale) {
         ResourceBundle currentResourceBundle = getCurrentResourceBundle(locale);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -50,6 +63,12 @@ public class PdfCreator {
         return output;
     }
 
+    /**
+     * Creates pdf document with certificate info.
+     *
+     * @param studentDTO,course,grade - parameter for create certificate
+     * @return outputStream to place in response
+     */
     public ByteArrayOutputStream createCertificateForDownload(StudentDTO studentDTO, Course course, int grade) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(output);
@@ -58,6 +77,12 @@ public class PdfCreator {
         return output;
     }
 
+    /**
+     * Creates pdf document with certificate info.
+     *
+     * @param studentDTO,course,grade - parameter for create certificate
+     * @return outputStream to place in response
+     */
     public String createCertificateForSend(StudentDTO studentDTO, Course course, int grade) {
         String dest = "C:\\epam\\facultative\\pdf\\certificate_" + studentDTO.getLogin() + course.getTitle() + ".pdf";
         try {
@@ -69,6 +94,22 @@ public class PdfCreator {
             logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Will create document with album orientation and font that supports cyrillic
+     *
+     * @param writer - to create Document based on writer
+     * @return Document
+     */
+    private Document getPdfDocument(PdfWriter writer) {
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf, PageSize.A4.rotate());
+        PdfFont font = getPdfFont();
+        if (font != null) {
+            document.setFont(font);
+        }
+        return document;
     }
 
     private void setCertificate(Document document, StudentDTO studentDTO, Course course, int grade) {
@@ -127,16 +168,6 @@ public class PdfCreator {
         return new Paragraph(new Text(tableTitle))
                 .setFontSize(TITLE_SIZE)
                 .setTextAlignment(TextAlignment.CENTER);
-    }
-
-    private Document getPdfDocument(PdfWriter writer) {
-        PdfDocument pdf = new PdfDocument(writer);
-        Document document = new Document(pdf, PageSize.A4.rotate());
-        PdfFont font = getPdfFont();
-        if (font != null) {
-            document.setFont(font);
-        }
-        return document;
     }
 
     private PdfFont getPdfFont() {

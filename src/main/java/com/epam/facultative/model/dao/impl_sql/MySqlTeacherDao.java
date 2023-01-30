@@ -5,6 +5,7 @@ import com.epam.facultative.model.entities.Role;
 import com.epam.facultative.model.entities.Teacher;
 import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ValidateException;
+import lombok.RequiredArgsConstructor;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
@@ -24,17 +25,9 @@ import static com.epam.facultative.model.exception.ConstantsValidateMessage.LOE_
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class MySqlTeacherDao implements TeacherDao {
     private final DataSource dataSource;
-
-    /**
-     * The only constructor to get DAO instance
-     *
-     * @param dataSource to get connection to database
-     */
-    public MySqlTeacherDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     /**
      * Obtains instance of Teacher from database by parameter

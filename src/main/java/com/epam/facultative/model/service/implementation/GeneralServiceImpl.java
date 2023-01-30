@@ -14,6 +14,7 @@ import com.epam.facultative.model.service.GeneralService;
 import com.epam.facultative.model.utils.email_sender.EmailSender;
 import com.epam.facultative.model.utils.pdf_creator.PdfCreator;
 import com.epam.facultative.model.utils.param_builder.ParamBuilderForQuery;
+import lombok.RequiredArgsConstructor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -30,6 +31,13 @@ import static com.epam.facultative.model.utils.hash_password.HashPassword.verify
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.*;
 import static com.epam.facultative.model.utils.validator.Validator.validatePassword;
 
+/**
+ * Implementation of GeneralService interface.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
+@RequiredArgsConstructor
 public class GeneralServiceImpl implements GeneralService {
     private final CourseDao courseDao;
     private final UserDao userDao;
@@ -37,14 +45,14 @@ public class GeneralServiceImpl implements GeneralService {
     private final TeacherDao teacherDao;
     private final StudentDao studentDao;
 
-    public GeneralServiceImpl(CourseDao courseDao, UserDao userDao, CategoryDao categoryDao, TeacherDao teacherDao, StudentDao studentDao) {
-        this.courseDao = courseDao;
-        this.userDao = userDao;
-        this.categoryDao = categoryDao;
-        this.teacherDao = teacherDao;
-        this.studentDao = studentDao;
-    }
-
+    /**
+     * Gets login and password from action. Verify password. Convert entity to DTO. Returned user from role.
+     *
+     * @param login,password - used to find and verify
+     * @return UserDTO - DTO from role
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-verify password or not found user
+     */
     @Override
     public UserDTO authorization(String login, String password) throws ServiceException, ValidateException {
         try {
@@ -58,6 +66,13 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Gets parameter from action and calls DAO to get relevant entities and count rows. Convert entity to DTO.
+     *
+     * @param param - parameters to get
+     * @return Map.Entry<Integer, List < CourseDTO>> - return relevant DTO and count rows
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public Map.Entry<Integer, List<CourseDTO>> getCourses(String param) throws ServiceException {
         try {
@@ -69,6 +84,13 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Gets parameter from action and calls DAO to get relevant entities and count rows. Convert entity to DTO.
+     *
+     * @param param - parameters to get
+     * @return Map.Entry<Integer, List < CategoryDTO>> - return relevant DTO and count rows
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public Map.Entry<Integer, List<CategoryDTO>> getCategories(String param) throws ServiceException {
         try {
@@ -80,6 +102,13 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Gets parameter from action and calls DAO to get relevant entities and count rows. Convert entity to DTO.
+     *
+     * @param param - parameters to get
+     * @return Map.Entry<Integer, List < TeacherDTO>> - return relevant DTO and count rows
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public Map.Entry<Integer, List<TeacherDTO>> getTeachers(String param) throws ServiceException {
         try {
@@ -91,6 +120,15 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Gets locale and AppContext from action and calls DAO to get relevant entities and count rows.
+     * Calls PdfCreator to create table with courses. Convert entity to DTO.
+     *
+     * @param locale     - used to table localization
+     * @param appContext - used to call PdfCreator
+     * @return ByteArrayOutputStream - return table
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public ByteArrayOutputStream downloadAllCoursesInPdf(String locale, AppContext appContext) throws ServiceException {
         Map.Entry<Integer, List<CourseDTO>> coursesWithRows = getCourses(courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam());
@@ -99,6 +137,15 @@ public class GeneralServiceImpl implements GeneralService {
         return pdfCreator.createCoursesPdf(courses, locale);
     }
 
+    /**
+     * Gets email and AppContext from action and calls DAO to get relevant entity and count rows. Generate new password.
+     * Sent email with new password.
+     *
+     * @param email      - use to send email
+     * @param appContext - use to call EmailSender
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public void recoveryPassword(String email, AppContext appContext) throws ServiceException, ValidateException {
         try {
@@ -113,6 +160,15 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Updates User's password. Validate passwords. Encode new password
+     *
+     * @param userId      - id to find user by
+     * @param oldPassword - old password
+     * @param newPassword - new password
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public void changePassword(String oldPassword, String newPassword, int userId) throws ServiceException, ValidateException {
         try {
@@ -128,6 +184,14 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Gets userId and avatar from action and calls DAO to add relevant entity. Add avatar to user. Return DTO with new avatar.
+     *
+     * @param userId - use to find
+     * @param avatar - new image
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public UserDTO addAvatar(int userId, InputStream avatar) throws ServiceException, ValidateException {
         try {
@@ -141,10 +205,16 @@ public class GeneralServiceImpl implements GeneralService {
         }
     }
 
+    /**
+     * Verify input password
+     */
     private void verifyPassword(String userPassword, String inputPassword) throws ValidateException {
         if (!verify(userPassword, inputPassword)) throw new ValidateException(WRONG_PASSWORD_MESSAGE);
     }
 
+    /**
+     * Check user role and return relevant DTO
+     */
     private UserDTO getLoggedUser(User user) throws DAOException, ValidateException {
         UserDTO userDTO = null;
         Role role = user.getRole();
@@ -166,10 +236,18 @@ public class GeneralServiceImpl implements GeneralService {
         return userDTO;
     }
 
+    /**
+     * Check block status student
+     */
     private void checkBlocStudent(Student student) throws ValidateException {
         if (student.isBlock()) throw new ValidateException(STUDENT_BLOCKED_MESSAGE);
     }
 
+    /**
+     * Obtains new password for User
+     *
+     * @return generated password
+     */
     private String getNewPassword() {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         SecureRandom random = new SecureRandom();

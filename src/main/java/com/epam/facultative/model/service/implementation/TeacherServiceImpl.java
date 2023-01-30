@@ -12,6 +12,7 @@ import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.TeacherService;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
@@ -21,16 +22,25 @@ import static com.epam.facultative.model.utils.converter.Converter.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.studentParamBuilderForQuery;
 import static com.epam.facultative.model.utils.validator.Validator.*;
 
+/**
+ * Implementation of StudentService interface.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
+@RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
     private final CourseDao courseDao;
     private final StudentDao studentDao;
     private final TeacherDao teacherDao;
 
-    public TeacherServiceImpl(CourseDao courseDao, StudentDao studentDao, TeacherDao teacherDao) {
-        this.courseDao = courseDao;
-        this.studentDao = studentDao;
-        this.teacherDao = teacherDao;
-    }
+    /**
+     * Gets courseId, userId and grade and calls DAO to add student`s grade for course.
+     *
+     * @param courseId,userId - use to find
+     * @param grade           - use to add
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
 
     @Override
     public void grading(int courseId, int userId, int grade) throws ServiceException {
@@ -41,6 +51,13 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
+    /**
+     * Gets parameter from action and calls DAO to get relevant entities and count rows. Convert entity to DTO.
+     *
+     * @param param - parameters to get
+     * @return Map.Entry<Integer, List < StudentDTO>> - return relevant DTO and count rows
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public Map.Entry<Integer, List<StudentDTO>> getStudentsByCourse(String param) throws ServiceException {
         try {
@@ -52,6 +69,13 @@ public class TeacherServiceImpl implements TeacherService {
         }
     }
 
+    /**
+     * Gets TeacherDTO from action and calls DAO to update relevant entity. Validate teacher's fields. Convert DTO to entity.
+     *
+     * @param teacherDTO - DTO to be updated as Teacher to database
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public TeacherDTO updateTeacher(TeacherDTO teacherDTO) throws ValidateException, ServiceException {
         validateLogin(teacherDTO.getLogin());

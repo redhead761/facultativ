@@ -6,6 +6,12 @@ import java.util.Set;
 import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.CATEGORY_DESCRIPTION;
 import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.CATEGORY_TITLE;
 
+/**
+ * Class makes it possible to build param for query to obtain sorted, ordered and limited list of events
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class CategoryParamBuilderForQuery extends ParamBuilderForQuery {
     private static final Set<String> CATEGORY_SORT_FIELDS = new HashSet<>();
 

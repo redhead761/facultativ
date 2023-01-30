@@ -13,6 +13,14 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.epam.facultative.model.utils.recaptcha.CaptchaConstants.*;
+
+/**
+ * Validate Google ReCaptcha
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class Recaptcha {
 
     private static final Logger logger = LoggerFactory.getLogger(Recaptcha.class);
@@ -22,12 +30,18 @@ public class Recaptcha {
     private final String acceptLanguage;
 
     public Recaptcha(Properties properties) {
-        captchaURL = properties.getProperty(CaptchaConstants.CAPTCHA_URL);
-        secret = properties.getProperty(CaptchaConstants.CAPTCHA_SECRET);
-        userAgent = properties.getProperty(CaptchaConstants.CAPTCHA_USER_AGENT);
-        acceptLanguage = properties.getProperty(CaptchaConstants.CAPTCHA_ACCEPT_LANGUAGE);
+        captchaURL = properties.getProperty(CAPTCHA_URL);
+        secret = properties.getProperty(CAPTCHA_SECRET);
+        userAgent = properties.getProperty(CAPTCHA_USER_AGENT);
+        acceptLanguage = properties.getProperty(CAPTCHA_ACCEPT_LANGUAGE);
     }
 
+    /**
+     * Checks if user is human. Setups and connects to Google ReCaptcha services. Sends User's captcha result.
+     * Gets response and checks if it matches. Disable captcha if Google is down.
+     *
+     * @param gRecaptchaResponse get it from controller
+     */
     public boolean verify(String gRecaptchaResponse) {
         if (gRecaptchaResponse == null || "".equals(gRecaptchaResponse)) {
             return false;

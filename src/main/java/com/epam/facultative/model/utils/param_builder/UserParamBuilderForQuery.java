@@ -5,6 +5,12 @@ import java.util.Set;
 
 import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.*;
 
+/**
+ * Class makes it possible to build param for query to obtain sorted, ordered and limited list of events
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class UserParamBuilderForQuery extends ParamBuilderForQuery {
 
     private static final Set<String> USER_SORT_FIELDS = new HashSet<>();

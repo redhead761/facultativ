@@ -4,6 +4,7 @@ import com.epam.facultative.model.dao.CourseDao;
 import com.epam.facultative.model.entities.*;
 import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ValidateException;
+import lombok.RequiredArgsConstructor;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -20,17 +21,9 @@ import static com.epam.facultative.model.exception.ConstantsValidateMessage.TITL
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@RequiredArgsConstructor
 public class MySqlCourseDao implements CourseDao {
     private final DataSource dataSource;
-
-    /**
-     * The only constructor to get DAO instance
-     *
-     * @param dataSource to get connection to database
-     */
-    public MySqlCourseDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     /**
      * Obtains instance of Course from database by parameter

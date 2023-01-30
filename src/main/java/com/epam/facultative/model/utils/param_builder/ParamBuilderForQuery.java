@@ -6,6 +6,12 @@ import java.util.StringJoiner;
 
 import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.*;
 
+/**
+ * Abstract param builder. Defines all methods to build parameter to obtain sorted, ordered and limited list of entities
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public abstract class ParamBuilderForQuery {
     private final List<String> filters = new ArrayList<>();
     private String sortField;
@@ -13,6 +19,19 @@ public abstract class ParamBuilderForQuery {
     private int page = 1;
     private int records = 5;
 
+    /**
+     * @return complete param to use in DAO to obtain list of Entities
+     */
+    public String getParam() {
+        return getFilterParam() + getSortParam() + getLimitParam();
+    }
+
+    /**
+     * Sets sort field, but will check if it
+     *
+     * @param sortField will be checked in subclasses to avoid injections
+     * @return QueryBuilder (as Builder pattern)
+     */
     public ParamBuilderForQuery setSortFieldForCourse(String sortField) {
         if (sortField != null) {
             this.sortField = checkSortField(sortField);
@@ -99,10 +118,6 @@ public abstract class ParamBuilderForQuery {
             this.records = Integer.parseInt(records);
         }
         return this;
-    }
-
-    public String getParam() {
-        return getFilterParam() + getSortParam() + getLimitParam();
     }
 
     private String getLimitParam() {

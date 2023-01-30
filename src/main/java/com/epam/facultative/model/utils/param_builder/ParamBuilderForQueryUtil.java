@@ -1,5 +1,11 @@
 package com.epam.facultative.model.utils.param_builder;
 
+/**
+ * Factory to return concrete parameter builders
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ParamBuilderForQueryUtil {
     private ParamBuilderForQueryUtil() {
     }

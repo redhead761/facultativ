@@ -6,6 +6,12 @@ import java.time.LocalDate;
 
 import static com.epam.facultative.model.utils.validator.ValidateExceptionMessageConstants.*;
 
+/**
+ * Validate parameter
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public final class Validator {
 
     private Validator() {

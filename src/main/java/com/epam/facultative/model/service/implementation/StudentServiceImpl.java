@@ -14,6 +14,7 @@ import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.StudentService;
 import com.epam.facultative.model.utils.email_sender.EmailSender;
 import com.epam.facultative.model.utils.pdf_creator.PdfCreator;
+import lombok.RequiredArgsConstructor;
 
 import static com.epam.facultative.model.exception.ConstantsValidateMessage.*;
 import static com.epam.facultative.model.utils.converter.Converter.*;
@@ -27,15 +28,24 @@ import static com.epam.facultative.model.utils.validator.Validator.*;
 import java.io.ByteArrayOutputStream;
 import java.util.*;
 
+/**
+ * Implementation of StudentService interface.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final CourseDao courseDao;
     private final StudentDao studentDao;
 
-    public StudentServiceImpl(CourseDao courseDao, StudentDao studentDao) {
-        this.courseDao = courseDao;
-        this.studentDao = studentDao;
-    }
-
+    /**
+     * Gets parameter from action and calls DAO to get relevant entities and count rows. Convert entity to DTO.
+     *
+     * @param param - parameters to get
+     * @return Map.Entry<Integer, List < CourseDTO>> - return relevant DTO and count rows
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public Map.Entry<Integer, List<CourseDTO>> getCoursesByJournal(String param) throws ServiceException {
         try {
@@ -47,7 +57,12 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-
+    /**
+     * Gets courseId and userId from action and calls DAO to add student to course.
+     *
+     * @param courseId,userId- use to find and add
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public void enroll(int courseId, int userId) throws ServiceException {
         try {
@@ -57,6 +72,14 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    /**
+     * Gets StudentDTO from action and calls DAO to add relevant entity. Validate student's fields. Convert DTO to entity.
+     * Encode password.
+     *
+     * @param studentDTO - DTO to be added as Student to database
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public void addStudent(StudentDTO studentDTO) throws ServiceException, ValidateException {
         validateStudentData(studentDTO);
@@ -70,6 +93,13 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    /**
+     * Gets courseId and userId from action and calls DAO to get grade.
+     *
+     * @param courseId,userId - parameters to get
+     * @return grade - return found grade
+     * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
+     */
     @Override
     public int getGrade(int courseId, int userId) throws ServiceException {
         try {
@@ -79,6 +109,17 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    /**
+     * Gets studentDTO,courseId, grade and AppContext from action and calls DAO to get relevant entity.
+     * Calls PdfCreator to create certificate with course and grade.
+     *
+     * @param courseId         - used to find
+     * @param appContext       - used to call PdfCreator
+     * @param studentDTO,grade - used to create certificate
+     * @return ByteArrayOutputStream - return table
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public ByteArrayOutputStream downloadCertificate(StudentDTO studentDTO, int courseId, int grade, AppContext appContext) throws ServiceException, ValidateException {
         try {
@@ -92,6 +133,17 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+
+    /**
+     * Gets studentDTO,courseId, grade and AppContext from action and calls DAO to get relevant entity.
+     * Calls PdfCreator to create certificate with course and grade. Calls EmailSender to send cerfiticate
+     *
+     * @param courseId         - used to find
+     * @param appContext       - used to call PdfCreator and EmailSender
+     * @param studentDTO,grade - used to create certificate
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public void sendCertificate(StudentDTO studentDTO, int courseId, int grade, AppContext appContext) throws ValidateException, ServiceException {
         PdfCreator pdfCreator = appContext.getPdfCreator();
@@ -107,6 +159,14 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+
+    /**
+     * Gets StudentDTO from action and calls DAO to update relevant entity. Validate student's fields. Convert DTO to entity.
+     *
+     * @param studentDTO - DTO to be updated as Student to database
+     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
+     * @throws ValidateException - occurs in case of non-validation of data
+     */
     @Override
     public StudentDTO updateStudent(StudentDTO studentDTO) throws ValidateException, ServiceException {
         validateStudentData(studentDTO);

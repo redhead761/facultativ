@@ -4,6 +4,12 @@ import com.epam.facultative.model.dao.*;
 
 import javax.sql.DataSource;
 
+/**
+ * My SQL factory that provides My SQL DAOs (Factory pattern)
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class MySqlDaoFactory extends DaoFactory {
     private final DataSource dataSource;
     private CategoryDao categoryDao;
@@ -16,6 +22,11 @@ public class MySqlDaoFactory extends DaoFactory {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Obtains single instance of the CategoryDao (Singleton pattern).
+     *
+     * @return MySqlCategoryDao
+     */
     @Override
     public CategoryDao getCategoryDao() {
         if (this.categoryDao == null) {
@@ -24,6 +35,11 @@ public class MySqlDaoFactory extends DaoFactory {
         return categoryDao;
     }
 
+    /**
+     * Obtains single instance of the CourseDao (Singleton pattern).
+     *
+     * @return MySqlCourseDao
+     */
     @Override
     public CourseDao getCourseDao() {
         if (this.courseDao == null) {
@@ -32,6 +48,11 @@ public class MySqlDaoFactory extends DaoFactory {
         return courseDao;
     }
 
+    /**
+     * Obtains single instance of the UserDao (Singleton pattern).
+     *
+     * @return MySqlUserDao
+     */
     @Override
     public UserDao getUserDao() {
         if (this.userDao == null) {
@@ -40,6 +61,11 @@ public class MySqlDaoFactory extends DaoFactory {
         return userDao;
     }
 
+    /**
+     * Obtains single instance of the TeacherDao (Singleton pattern).
+     *
+     * @return MySqlTeacherDao
+     */
     @Override
     public TeacherDao getTeacherDao() {
         if (this.teacherDao == null) {
@@ -48,6 +74,11 @@ public class MySqlDaoFactory extends DaoFactory {
         return teacherDao;
     }
 
+    /**
+     * Obtains single instance of the StudentDao (Singleton pattern).
+     *
+     * @return MySqlStudentDao
+     */
     @Override
     public StudentDao getStudentDao() {
         if (this.studentDao == null) {

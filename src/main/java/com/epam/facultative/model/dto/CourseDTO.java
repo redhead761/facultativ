@@ -9,6 +9,13 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * CourseDTO class. Fields are similar to Event entity.
+ * Use CourseDTO.builder().fieldName(fieldValue).build() to create an instance
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 @Data
 @EqualsAndHashCode(of = {"id", "title"})
 @Builder

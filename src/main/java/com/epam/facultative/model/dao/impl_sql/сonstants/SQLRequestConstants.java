@@ -1,27 +1,25 @@
-package com.epam.facultative.model.dao.сonstants;
+package com.epam.facultative.model.dao.impl_sql.сonstants;
 
 /**
- * Holder for SQL request.
+ * Class containing My SQL queries for DAOs.
  *
- * @author O.Panchenko
+ * @author Oleksandr Panchenko
+ * @version 1.0
  */
 
 public class SQLRequestConstants {
     /**
-     * //SQL request for Category DAO
+     * Queries to use in Category DAO methods
      */
     public static final String UPDATE_CATEGORY = "UPDATE category SET title=?, description=? WHERE id=?";
     public static final String INSERT_CATEGORY = "INSERT INTO category VALUES (DEFAULT,?,?)";
     public static final String DELETE_CATEGORY = "DELETE FROM category WHERE id=?";
     public static final String SELECT_CATEGORY = "SELECT * FROM category %s";
-    public static final String SELECT_ALL_CATEGORIES_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM category %s";
+    public static final String SELECT_ALL_CATEGORIES = "SELECT SQL_CALC_FOUND_ROWS * FROM category %s";
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * //SQL request for Teacher DAO
+     * Queries to use in Teacher DAO methods
      */
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public static final String INSERT_TEACHER = "INSERT INTO teacher VALUES (?,?)";
     public static final String UPDATE_TEACHER = "UPDATE teacher SET degree=? WHERE user_id=?";
     public static final String SELECT_TEACHER =
@@ -30,12 +28,9 @@ public class SQLRequestConstants {
     public static final String SELECT_ALL_TEACHERS_PAGINATION =
             "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id %s";
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * //SQL request for Student DAO
+     * Queries to use in Student DAO methods
      */
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public static final String INSERT_STUDENT = "INSERT INTO student VALUES (?,?,?)";
     public static final String UPDATE_STUDENT = "UPDATE student SET course_number=?, block=? WHERE user_id=?";
     public static final String SELECT_STUDENT =
@@ -48,25 +43,20 @@ public class SQLRequestConstants {
     public static final String UPDATE_BLOCK = "UPDATE student SET block=? WHERE user_id=?";
     public static final String SELECT_GRADE = "SELECT grade FROM journal WHERE course_id=? AND student_id=?";
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * //SQL request for User DAO
+     * Queries to use in User DAO methods
      */
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public static final String SELECT_USER = "SELECT * FROM user JOIN role ON role.id = user.role_id %s";
     public static final String INSERT_USER = "INSERT INTO user VALUES (DEFAULT,?,?,?,?,?,?,DEFAULT)";
     public static final String DELETE_USER = "DELETE FROM user WHERE id=?";
     public static final String UPDATE_USER = "UPDATE user SET login=?, password=?, name=?,surname=?, email=?, role_id=? WHERE id=?";
     public static final String SELECT_FOUND_ROWS = "SELECT FOUND_ROWS()";
     public static final String ADD_AVATAR = "UPDATE user SET avatar=? WHERE id = ?";
+    public static final String SELECT_ALL_USERS = "SELECT SQL_CALC_FOUND_ROWS * FROM user %s";
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * //SQL request for Course DAO
+     * Queries to use in Course DAO methods
      */
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     public static final String SELECT_COURSE =
             "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
                     "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id %s";
@@ -88,5 +78,4 @@ public class SQLRequestConstants {
     public static final String UPDATE_JOURNAL = "UPDATE journal SET grade=? WHERE course_id=? AND student_id=?";
     public static final String ADD_NUMBER_STUDENTS_TO_COURSE =
             "UPDATE course SET amount_students = amount_students + 1 WHERE id=?";
-
 }

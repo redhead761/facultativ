@@ -3,7 +3,7 @@ package com.epam.facultative.model.utils.param_builder;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.epam.facultative.model.dao.сonstants.FieldsConstants.*;
+import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.*;
 
 public class CourseParamBuilderForQuery extends ParamBuilderForQuery {
     private static final Set<String> COURSE_SORT_FIELDS = new HashSet<>();

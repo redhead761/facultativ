@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static com.epam.facultative.model.dao.сonstants.FieldsConstants.*;
+import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.*;
 
 public abstract class ParamBuilderForQuery {
     private final List<String> filters = new ArrayList<>();

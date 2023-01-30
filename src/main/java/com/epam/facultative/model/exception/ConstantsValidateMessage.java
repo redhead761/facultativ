@@ -1,7 +1,13 @@
 package com.epam.facultative.model.exception;
 
-public class ConstantsValidateMessage {
+/**
+ * Class containing messages for all user-defined exceptions
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 
+public class ConstantsValidateMessage {
     public static final String LOGIN_NOT_EXIST_MESSAGE = "login.not.exist";
     public static final String WRONG_PASSWORD_MESSAGE = "wrong.password";
     public static final String TITLE_NOT_UNIQUE_MESSAGE = "title.not.unique";

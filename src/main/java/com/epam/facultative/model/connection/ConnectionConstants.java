@@ -1,9 +1,10 @@
 package com.epam.facultative.model.connection;
 
 /**
- * Holder for fields property and settings file.
+ * Keyholder for properties to configure database connection
  *
- * @author O.Panchenko
+ * @author Oleksandr Panchenko
+ * @version 1.0
  */
 
 class ConnectionConstants {
@@ -14,5 +15,4 @@ class ConnectionConstants {
     static String CACHE_PREPARED_STATEMENT = "cache.prep.stmts";
     static String CACHE_SIZE = "prep.stmt.cache.size";
     static String CACHE_SQL_LIMIT = "prep.stmt.cache.sql.limit";
-
 }

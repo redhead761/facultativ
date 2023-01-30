@@ -7,8 +7,15 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * Teacher entity class. Matches table 'teacher' in database.
+ * Use Teacher.builder().fieldName(fieldValue).build() to create an instance
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Teacher extends User implements Serializable {
     @Serial

@@ -6,6 +6,12 @@ import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Class to configure and obtain HikariDataSource. Use it to connect to database
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class MyDataSource {
 
     private static HikariDataSource ds;
@@ -13,6 +19,12 @@ public class MyDataSource {
     private MyDataSource() {
     }
 
+    /**
+     * Configures and obtains HikariDataSource.
+     *
+     * @param properties - all required info to configure datasource
+     * @return singleton instance of HikariDataSource
+     */
     public static DataSource getDataSource(Properties properties) {
         if (ds == null) {
             HikariConfig config = getHikariConfig(properties);

@@ -1,12 +1,18 @@
 package com.epam.facultative.model.exception;
 
-public class ServiceException extends Exception{
+/**
+ * Wrapper for DAOException
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
+public class ServiceException extends Exception {
 
-    public ServiceException(){
+    public ServiceException() {
         super();
     }
 
-    public ServiceException(Throwable cause){
+    public ServiceException(Throwable cause) {
         super(cause);
     }
 }

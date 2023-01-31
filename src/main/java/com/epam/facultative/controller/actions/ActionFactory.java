@@ -13,6 +13,12 @@ import java.util.*;
 
 import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 
+/**
+ * Containing all available actions and method to get any of them.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ActionFactory {
     private static final ActionFactory ACTION_FACTORY = new ActionFactory();
     private static final Map<String, Action> ACTION_MAP = new HashMap<>();
@@ -71,6 +77,12 @@ public class ActionFactory {
         return ACTION_FACTORY;
     }
 
+    /**
+     * Obtains action by its name
+     *
+     * @param actionName - to search in map
+     * @return required action implementation
+     */
     public Action getAction(String actionName) {
         return ACTION_MAP.get(actionName);
     }

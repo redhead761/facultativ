@@ -11,6 +11,12 @@ import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 
+/**
+ * Accessible by admin. Allows to show manage teachers
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ManageTeachersAction implements Action {
     private final GeneralService generalService;
 
@@ -18,6 +24,12 @@ public class ManageTeachersAction implements Action {
         generalService = appContext.getGeneralService();
     }
 
+    /**
+     * Called from doPost method in front-controller.Transfer attributes from session to request. Get and set teachers
+     *
+     * @param req to set teachers
+     * @return manage teachers page
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);

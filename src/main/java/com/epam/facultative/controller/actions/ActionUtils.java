@@ -16,10 +16,21 @@ import static com.epam.facultative.controller.constants.ActionNameConstants.CONT
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
+/**
+ * Containing utils methods to use in actions.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ActionUtils {
     private ActionUtils() {
     }
 
+    /**
+     * Makes settings for pages with all courses
+     *
+     * @param req,generalService - derive from action
+     */
     public static void setAllCourses(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         String currentPage = req.getParameter(CURRENT_PAGE);
         String recordsPerPage = req.getParameter(RECORDS_PER_PAGE);
@@ -44,6 +55,11 @@ public class ActionUtils {
         req.setAttribute(CATEGORIES, generalService.getCategories(courseParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam()).getValue());
     }
 
+    /**
+     * Makes settings for pages with all teacher
+     *
+     * @param req,generalService - derive from action
+     */
     public static void setAllTeachers(HttpServletRequest req, GeneralService generalService) throws ServiceException {
         ParamBuilderForQuery paramBuilderForQuery = teacherParamBuilderForQuery().setLimits(req.getParameter(CURRENT_PAGE), req.getParameter(RECORDS_PER_PAGE));
         Map.Entry<Integer, List<TeacherDTO>> teachersWithRows = generalService.getTeachers(paramBuilderForQuery.getParam());
@@ -51,6 +67,12 @@ public class ActionUtils {
         setUpPaginate(req, teachersWithRows.getKey());
     }
 
+    /**
+     * Makes settings for pagination
+     *
+     * @param req         - derive from action
+     * @param noOfRecords - number of all records
+     */
     public static void setUpPaginate(HttpServletRequest req, int noOfRecords) {
         int currentPage = getCorrectIntValue(req.getParameter(CURRENT_PAGE), 1);
         int recordsPerPage = getCorrectIntValue(req.getParameter(RECORDS_PER_PAGE), 5);
@@ -61,6 +83,13 @@ public class ActionUtils {
 
     }
 
+    /**
+     * Checks the value limit or offset and return it. Return default if value invalid
+     *
+     * @param value        - value
+     * @param defaultValue - default value
+     * @return int - correct value
+     */
     static int getCorrectIntValue(String value, int defaultValue) {
         try {
             int i = Integer.parseInt(value);
@@ -73,19 +102,37 @@ public class ActionUtils {
         return Integer.parseInt(value);
     }
 
+    /**
+     * Creates get action with parameters
+     *
+     * @param action     - Action to be sent
+     * @param parameters - required parameters
+     * @return - path
+     */
     public static String getGetAction(String action, String... parameters) {
         String base = CONTROLLER + action;
-        StringJoiner stringJoiner = new StringJoiner("&", "&", "");
+        StringJoiner stringJoiner = new StringJoiner("&", "&", "").setEmptyValue("");
         for (int i = 0; i < parameters.length; i += 2) {
             stringJoiner.add(parameters[i] + "=" + parameters[i + 1]);
         }
-        return base + (parameters.length > 0 ? stringJoiner : "");
+        return base + stringJoiner;
     }
 
-    public static boolean isPostMethod(HttpServletRequest request) {
-        return request.getMethod().equals("POST");
+    /**
+     * Checks if method is POST method
+     *
+     * @param req passed by action
+     * @return true if POST method
+     */
+    public static boolean isPostMethod(HttpServletRequest req) {
+        return req.getMethod().equals("POST");
     }
 
+    /**
+     * Transfers sessions attributes to request.Then delete
+     *
+     * @param req passed by action
+     */
     public static void transferAttributeFromSessionToRequest(HttpServletRequest req, String... attributeNames) {
         for (String attributeName : attributeNames) {
             Object obj = req.getSession().getAttribute(attributeName);

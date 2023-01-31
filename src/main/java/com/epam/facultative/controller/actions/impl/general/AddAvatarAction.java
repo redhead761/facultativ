@@ -19,6 +19,12 @@ import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.MY_CABINET_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 
+/**
+ * Accessible by general. Allows to add avatar to user to database.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 100)
@@ -29,6 +35,12 @@ public class AddAvatarAction implements Action {
         generalService = appContext.getGeneralService();
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to add avatar to user.Set error message if not be able.
+     *
+     * @param req to get users id and set message in case of successful added
+     * @return path to redirect to executeGet method through front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String userId = req.getParameter(USER_ID);

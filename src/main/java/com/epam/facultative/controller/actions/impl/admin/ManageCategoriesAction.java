@@ -17,6 +17,12 @@ import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
 
+/**
+ * Accessible by admin. Allows to show manage categories
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ManageCategoriesAction implements Action {
     private final GeneralService generalService;
 
@@ -24,6 +30,12 @@ public class ManageCategoriesAction implements Action {
         generalService = appContext.getGeneralService();
     }
 
+    /**
+     * Called from doPost method in front-controller. Transfer attributes from session to request. Get and set categories.
+     *
+     * @param req to set categories
+     * @return manage categories page
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE, ERROR);

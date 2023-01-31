@@ -9,8 +9,20 @@ import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 
+/**
+ * Accessible by general. Allows to show my cabinet.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class MyCabinetAction implements Action {
-
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param req to get role
+     * @return ma cabinet page from role after trying go to cabinet
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);

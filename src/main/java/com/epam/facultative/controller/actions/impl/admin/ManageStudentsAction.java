@@ -18,6 +18,12 @@ import static com.epam.facultative.controller.actions.ActionUtils.transferAttrib
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.studentParamBuilderForQuery;
 
+/**
+ * Accessible by admin. Allows to show manage students
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ManageStudentsAction implements Action {
     private final AdminService adminService;
 
@@ -25,6 +31,12 @@ public class ManageStudentsAction implements Action {
         adminService = appContext.getAdminService();
     }
 
+    /**
+     * Called from doPost method in front-controller.Transfer attributes from session to request. Get and set students
+     *
+     * @param req to set students
+     * @return manage students page
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE);

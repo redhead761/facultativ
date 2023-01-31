@@ -21,11 +21,16 @@ import static com.epam.facultative.controller.constants.PageNameConstants.EDIT_C
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
+/**
+ * Accessible by admin. Allows to update course from database. Implements PRG pattern
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class UpdateCourseAction implements Action {
     private final AdminService adminService;
     private final GeneralService generalService;
     private final AppContext appContext;
-
 
     public UpdateCourseAction(AppContext appContext) {
         adminService = appContext.getAdminService();
@@ -33,11 +38,25 @@ public class UpdateCourseAction implements Action {
         this.appContext = appContext;
     }
 
+    /**
+     * Checks method and calls required implementation
+     *
+     * @param req to get method, session and set all required attributes
+     * @return path to redirect or forward by front-controller
+     * @throws ServiceException to call error page in front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         return isPostMethod(req) ? executePost(req) : executeGet(req);
     }
 
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param req to get message attribute from session and put it in request
+     * @return update course page after trying to update course
+     */
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
         String courseId = req.getParameter(COURSE_ID);
@@ -53,6 +72,13 @@ public class UpdateCourseAction implements Action {
         return EDIT_COURSE_PAGE;
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to update course from database.
+     * Return input in case if not able
+     *
+     * @param req to get users id and set message in case of successful updated
+     * @return path to redirect to executeGet method through front-controller
+     */
     private String executePost(HttpServletRequest req) throws ServiceException {
         String courseId = req.getParameter(COURSE_ID);
         try {

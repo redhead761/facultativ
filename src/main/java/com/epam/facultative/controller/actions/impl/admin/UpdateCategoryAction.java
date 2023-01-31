@@ -14,6 +14,12 @@ import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.EDIT_CATEGORY_PAGE;
 
+/**
+ * Accessible by admin. Allows to update category from database. Implements PRG pattern
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class UpdateCategoryAction implements Action {
     private final AdminService adminService;
 
@@ -21,11 +27,25 @@ public class UpdateCategoryAction implements Action {
         adminService = appContext.getAdminService();
     }
 
+    /**
+     * Checks method and calls required implementation
+     *
+     * @param req to get method, session and set all required attributes
+     * @return path to redirect or forward by front-controller
+     * @throws ServiceException to call error page in front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         return isPostMethod(req) ? executePost(req) : executeGet(req);
     }
 
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param req to get message attribute from session and put it in request
+     * @return update category page after trying to update category
+     */
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);
         String categoryId = req.getParameter(CATEGORY_ID);
@@ -38,6 +58,13 @@ public class UpdateCategoryAction implements Action {
         return EDIT_CATEGORY_PAGE;
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to update category from database.
+     * Return input in case if not able
+     *
+     * @param req to get users id and set message in case of successful updated
+     * @return path to redirect to executeGet method through front-controller
+     */
     private String executePost(HttpServletRequest req) throws ServiceException {
         String categoryId = req.getParameter(CATEGORY_ID);
         CategoryDTO category = getCategoryFromParameter(req);

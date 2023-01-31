@@ -14,6 +14,12 @@ import java.io.OutputStream;
 import static com.epam.facultative.controller.constants.AttributeConstants.LANGUAGE;
 import static com.epam.facultative.controller.constants.PageNameConstants.INDEX_PAGE;
 
+/**
+ * Accessible by general. Allows to get pdf file with courses.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class DownloadCoursesAction implements Action {
     private final GeneralService generalService;
     private final AppContext appContext;
@@ -23,6 +29,12 @@ public class DownloadCoursesAction implements Action {
         this.appContext = appContext;
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to download courses.
+     *
+     * @param req to get locale and parameters
+     * @return index page after trying to download
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, IOException {
         String locale = (String) req.getSession().getAttribute(LANGUAGE);

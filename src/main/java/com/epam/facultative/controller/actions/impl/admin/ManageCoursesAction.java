@@ -12,6 +12,12 @@ import static com.epam.facultative.controller.actions.ActionUtils.setAllCourses;
 import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 
+/**
+ * Accessible by admin. Allows to show manage course
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ManageCoursesAction implements Action {
     private final GeneralService generalService;
 
@@ -19,6 +25,12 @@ public class ManageCoursesAction implements Action {
         generalService = appContext.getGeneralService();
     }
 
+    /**
+     * Called from doPost method in front-controller. Transfer attributes from session to request. Get and set courses
+     *
+     * @param req to set courses
+     * @return manage courses page
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE);

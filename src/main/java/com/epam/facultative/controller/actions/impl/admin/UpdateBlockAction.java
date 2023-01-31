@@ -11,6 +11,12 @@ import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.MANAGE_STUDENTS_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 
+/**
+ * Accessible by admin. Allows to update block student from database.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class UpdateBlockAction implements Action {
     private final AdminService adminService;
 
@@ -18,6 +24,12 @@ public class UpdateBlockAction implements Action {
         adminService = appContext.getAdminService();
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to update block student from database.
+     *
+     * @param req to get users id and set message in case of successful update
+     * @return path to redirect to executeGet method through front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String type = req.getParameter(TYPE);

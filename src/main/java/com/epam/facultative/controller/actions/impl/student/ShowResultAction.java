@@ -12,6 +12,12 @@ import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 
+/**
+ * Accessible by student. Allows to show grade and actions with certificate. Implements PRG pattern.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ShowResultAction implements Action {
     private final StudentService studentService;
 
@@ -19,6 +25,13 @@ public class ShowResultAction implements Action {
         studentService = appContext.getStudentService();
     }
 
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param req to get message attribute from session and put it in request
+     * @return result page after trying to show result
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, MESSAGE, ERROR);

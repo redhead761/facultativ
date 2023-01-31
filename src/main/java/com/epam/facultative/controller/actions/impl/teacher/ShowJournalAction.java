@@ -18,6 +18,12 @@ import static com.epam.facultative.controller.actions.ActionUtils.transferAttrib
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 
+/**
+ * Accessible by teacher. Allows to show e-journal with students and grades.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ShowJournalAction implements Action {
     private final TeacherService teacherService;
 
@@ -25,6 +31,13 @@ public class ShowJournalAction implements Action {
         teacherService = appContext.getTeacherService();
     }
 
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param req to get parameters and set students
+     * @return journal page after trying to show journal
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE);

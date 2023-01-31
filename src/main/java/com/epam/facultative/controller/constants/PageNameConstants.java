@@ -1,8 +1,15 @@
 package com.epam.facultative.controller.constants;
 
+/**
+ * Containing all page names
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class PageNameConstants {
-
-    //Not logged in pages
+    /**
+     * No logged pages
+     */
     public static final String ABOUT_US_PAGE = "about_us.jsp";
     public static final String AUTH_PAGE = "auth.jsp";
     public static final String CONTACTS_PAGE = "contacts.jsp";
@@ -13,8 +20,9 @@ public class PageNameConstants {
     public static final String TEACHERS_PAGE = "teachers.jsp";
     public static final String RECOVERY_PASSWORD_PAGE = "recovery.jsp";
     public static final String CHANGE_PASSWORD_PAGE = "change_password.jsp";
-
-    //ADMIN pages
+    /**
+     * Admin pages
+     */
     public static final String ADD_COURSE_PAGE = "admin/add_course.jsp";
     public static final String ADD_TEACHER_PAGE = "admin/add_teacher.jsp";
     public static final String ADMIN_PROFILE_PAGE = "admin/admin_profile.jsp";
@@ -26,15 +34,17 @@ public class PageNameConstants {
     public static final String MANAGE_STUDENTS_PAGE = "admin/manage_students.jsp";
     public static final String MANAGE_TEACHERS_PAGE = "admin/manage_teachers.jsp";
     public static final String ADD_CATEGORY_PAGE = "admin/add_category.jsp";
-
-    //TEACHER pages
+    /**
+     * Teacher pages
+     */
     public static final String JOURNAL_PAGE = "teacher/journal.jsp";
     public static final String TEACHER_PAGE = "teacher/teacher.jsp";
     public static final String TEACHER_COURSES_PAGE = "teacher/teacher_courses.jsp";
     public static final String TEACHER_PROFILE_PAGE = "teacher/teacher_profile.jsp";
     public static final String EDIT_TEACHER_PROFILE_PAGE = "teacher/edit_teacher_profile.jsp";
-
-    //STUDENT pages
+    /**
+     * Student pages
+     */
     public static final String COMING_SOON_COURSES_PAGE = "student/coming_soon_courses.jsp";
     public static final String COMPLETED_COURSES_PAGE = "student/completed_courses.jsp";
     public static final String IN_PROGRESS_COURSES_PAGE = "student/in_progress_courses.jsp";

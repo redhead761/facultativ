@@ -5,6 +5,12 @@ import java.util.Set;
 
 import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 
+/**
+ * Containing all action names for filter
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ActionAccessConstants {
     private static final Set<String> NO_LOGGED_USER_ACTIONS = new HashSet<>();
     private static final Set<String> ADMIN_ACTIONS = new HashSet<>();

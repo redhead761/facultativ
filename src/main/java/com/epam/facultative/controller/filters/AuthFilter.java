@@ -3,6 +3,7 @@ package com.epam.facultative.controller.filters;
 import com.epam.facultative.model.dto.UserDTO;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -11,13 +12,23 @@ import java.io.IOException;
 import static com.epam.facultative.controller.constants.ActionAccessConstants.*;
 import static com.epam.facultative.controller.constants.PageAccessConstants.*;
 
+/**
+ * Controls access to pages for users
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 @WebFilter(filterName = "AuthFilter")
-public class AuthFilter implements Filter {
-
+public class AuthFilter extends HttpFilter {
+    /**
+     * Checks for role in session and then checks if user has access to page or action.
+     *
+     * @param req         passed by application
+     * @param resp        passed by application
+     * @param filterChain passed by application
+     */
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+    public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
         UserDTO user = (UserDTO) req.getSession().getAttribute("user");
         String action = req.getParameter("action");
         String servletPath = req.getServletPath();

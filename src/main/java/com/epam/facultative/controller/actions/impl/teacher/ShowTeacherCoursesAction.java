@@ -18,6 +18,12 @@ import static com.epam.facultative.controller.actions.ActionUtils.setUpPaginate;
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
+/**
+ * Accessible by teacher. Allows to get teacher`s courses list. Implements PRG pattern.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ShowTeacherCoursesAction implements Action {
     private final GeneralService generalService;
 
@@ -25,6 +31,12 @@ public class ShowTeacherCoursesAction implements Action {
         generalService = appContext.getGeneralService();
     }
 
+    /**
+     * Called from doGet method in front-controller. Get and set teacher courses
+     *
+     * @param req to get parameter and set courses
+     * @return teacher courses page after trying to show teacher courses
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         TeacherDTO teacher = (TeacherDTO) req.getSession().getAttribute(USER);

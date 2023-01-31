@@ -12,6 +12,12 @@ import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.getBundle;
 
+/**
+ * Allows to show result.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ShowResultTag extends SimpleTagSupport {
     private String url;
     private int courseId;
@@ -34,6 +40,9 @@ public class ShowResultTag extends SimpleTagSupport {
         this.studentId = studentId;
     }
 
+    /**
+     * Displays a link for the result, or displays nothing if there is no result
+     */
     @SneakyThrows
     @Override
     public void doTag() {

@@ -17,6 +17,12 @@ import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 
+/**
+ * Accessible by student. Allows to create certificate and download or send it
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class CertificateAction implements Action {
     private final StudentService studentService;
     private final AppContext appContext;
@@ -26,6 +32,13 @@ public class CertificateAction implements Action {
         this.appContext = appContext;
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to create certificate and download or send it.Return error message
+     * in case if not able.
+     *
+     * @param req to get users id and set message in case of successful create certificate
+     * @return path to redirect to executeGet method through front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, IOException {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);

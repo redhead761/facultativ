@@ -14,6 +14,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * Controller  class. Implements Front-controller pattern. Chooses action to execute and redirect or forward result.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 @WebServlet("/controller")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
@@ -22,22 +28,34 @@ public class Controller extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
     private static final ActionFactory ACTION_FACTORY = ActionFactory.getActionFactory();
 
+    /**
+     * Calls and executes action and then forwards requestDispatcher
+     *
+     * @param req  comes from user
+     * @param resp comes from user
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("In DOGET");
         req.getRequestDispatcher(process(req, resp)).forward(req, resp);
-        System.out.println("Out DOGET");
     }
 
+    /**
+     * Calls and executes action and then sendRedirect for PRG pattern implementation
+     *
+     * @param req  comes from user
+     * @param resp comes from user
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("In DOPOST");
         resp.sendRedirect(process(req, resp));
-        System.out.println("Out DOPOST");
     }
 
+    /**
+     * Obtains path to use in doPost/doGet methods. In case of error will return error page
+     *
+     * @return path
+     */
     private String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("In PROCESS");
         String actionName = req.getParameter("action");
         Action action = ACTION_FACTORY.getAction(actionName);
         try {

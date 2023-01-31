@@ -19,6 +19,12 @@ import static com.epam.facultative.controller.constants.PageNameConstants.*;
 import static com.epam.facultative.model.entities.Status.*;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.courseParamBuilderForQuery;
 
+/**
+ * Accessible by student. Allows to get student`s courses list
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class ShowStudentCoursesAction implements Action {
     private final StudentService studentService;
 
@@ -26,6 +32,12 @@ public class ShowStudentCoursesAction implements Action {
         studentService = appContext.getStudentService();
     }
 
+    /**
+     * Called from doGet method in front-controller.
+     *
+     * @param req to get parameter
+     * @return path page depending on the type
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         StudentDTO student = (StudentDTO) req.getSession().getAttribute(USER);

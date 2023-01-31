@@ -4,7 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
-
+/**
+ * Containing all page names for filter
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class PageAccessConstants {
     private PageAccessConstants() {
     }

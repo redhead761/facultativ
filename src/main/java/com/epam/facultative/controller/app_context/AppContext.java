@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Containing all required to correct application work objects
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 @Getter
 public class AppContext {
     private static final Logger logger = LoggerFactory.getLogger(MyDataSource.class);
@@ -42,6 +48,11 @@ public class AppContext {
         teacherService = serviceFactory.getTeacherService();
     }
 
+    /**
+     * Creates instance of AppContext to use in Actions. Configure all required classes. Loads properties.
+     *
+     * @param confPropertiesFile - to configure DataSource, EmailSender and Captcha
+     */
     public static void createAppContext(String confPropertiesFile) {
         appContext = new AppContext(confPropertiesFile);
     }

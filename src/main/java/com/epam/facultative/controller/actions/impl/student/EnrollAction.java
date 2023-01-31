@@ -12,6 +12,12 @@ import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.SHOW_ALL_COURSES_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 
+/**
+ * Accessible by student. Allows to enroll student to course.
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class EnrollAction implements Action {
     private final StudentService studentService;
 
@@ -19,6 +25,13 @@ public class EnrollAction implements Action {
         studentService = appContext.getStudentService();
     }
 
+    /**
+     * Called from doPost method in front-controller. Tries to enroll.Return input and error message
+     * in case if not able.
+     *
+     * @param req to get users id and set message in case of successful enroll
+     * @return path to redirect to executeGet method through front-controller
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
         String courseId = req.getParameter(COURSE_ID);

@@ -1,9 +1,14 @@
 package com.epam.facultative.controller.constants;
 
+/**
+ * Containing all attribute for request names
+ *
+ * @author Oleksandr Panchenko
+ * @version 1.0
+ */
 public class AttributeConstants {
     public static String MESSAGE = "message";
     public static String ERROR = "error";
-
     public static String SUCCESSFUL = "successful";
     public static String COURSE = "course";
     public static String COURSES = "courses";
@@ -13,22 +18,18 @@ public class AttributeConstants {
     public static String CATEGORY_ID = "category_id";
     public static String STUDENT_ID = "student_id";
     public static String TEACHERS = "teachers";
-
     public static String TEACHER = "teacher";
     public static String CHANGES_SAVED = "changes.saved";
     public static String CATEGORY = "category";
     public static String TYPE = "type";
     public static String GRADE = "grade";
-
     public static String CURRENT_PAGE = "current_page";
-
     public static String RECORDS_PER_PAGE = "records_per_page";
     public static String USER = "user";
     public static String STUDENTS = "students";
     public static String ON_COURSE = "on.course";
     public static String ROLE = "role";
     public static String USER_ID = "user_id";
-
     public static String STUDENT = "student";
     public static String LOGIN = "login";
     public static String PASSWORD = "password";

@@ -36,7 +36,7 @@ public interface GeneralService {
      * Calls DAO to get relevant entities by param
      *
      * @param param - param to find
-     * @return Map.Entry<Integer, List < CourseDTO>> -  relevant to Course entity
+     * @return {@code Map.Entry<Integer, List < CourseDTO>>} -  relevant to Course entity
      * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
      */
     Map.Entry<Integer, List<CourseDTO>> getCourses(String param) throws ServiceException;
@@ -45,7 +45,7 @@ public interface GeneralService {
      * Calls DAO to get relevant entities by param
      *
      * @param param - param to find
-     * @return Map.Entry<Integer, List < CategoryDTO>> -  relevant to Category entity
+     * @return {@code Map.Entry<Integer, List < CategoryDTO>>} -  relevant to Category entity
      * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
      */
     Map.Entry<Integer, List<CategoryDTO>> getCategories(String param) throws ServiceException;
@@ -54,7 +54,7 @@ public interface GeneralService {
      * Calls DAO to get relevant entities by param
      *
      * @param param - param to find
-     * @return Map.Entry<Integer, List < TeacherDTO>> -  relevant to Teacher entity
+     * @return {@code  Map.Entry<Integer, List < TeacherDTO>>} -  relevant to Teacher entity
      * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
      */
     Map.Entry<Integer, List<TeacherDTO>> getTeachers(String param) throws ServiceException;

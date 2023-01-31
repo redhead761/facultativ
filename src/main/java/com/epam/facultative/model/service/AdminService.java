@@ -121,7 +121,7 @@ public interface AdminService {
      * Calls DAO to get relevant entities by param
      *
      * @param param - param to find
-     * @return Map.Entry<Integer, List < StudentDTO>> -  relevant to Student entity
+     * @return {@code Map.Entry<Integer, List < StudentDTO>>}-  relevant to Student entity
      * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
      */
     Map.Entry<Integer, List<StudentDTO>> getStudents(String param) throws ServiceException;

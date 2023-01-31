@@ -21,7 +21,7 @@ public class MyCabinetAction implements Action {
      * to request
      *
      * @param req to get role
-     * @return ma cabinet page from role after trying go to cabinet
+     * @return cabinet page from role after trying go to cabinet
      */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {

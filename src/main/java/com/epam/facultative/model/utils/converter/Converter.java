@@ -200,10 +200,10 @@ public class Converter {
     }
 
     /**
-     * Converts List<Teacher> into List<TeacherDTO>
+     * Converts {@code List<Teacher>} into {@code List<TeacherDTO>}
      *
      * @param teachers to convert
-     * @return List<TeacherDTO> entity
+     * @return {@code List<TeacherDTO>} entity
      */
     public static List<TeacherDTO> prepareTeachers(List<Teacher> teachers) {
         List<TeacherDTO> result = new ArrayList<>();
@@ -214,10 +214,10 @@ public class Converter {
     }
 
     /**
-     * Converts List<Student> into List<StudentDTO>
+     * Converts {@code List<Student>} into {@code List<StudentDTO>}
      *
      * @param students to convert
-     * @return List<StudentDTO> entity
+     * @return {@code List<StudentDTO>} entity
      */
     public static List<StudentDTO> prepareStudents(List<Student> students) {
         List<StudentDTO> result = new ArrayList<>();
@@ -228,10 +228,10 @@ public class Converter {
     }
 
     /**
-     * Converts List<Category> into List<CategoryDTO>
+     * Converts {@code List<Category>} into {@code List<CategoryDTO>}
      *
      * @param categories to convert
-     * @return List<CategoryDTO> entity
+     * @return {@code List<CategoryDTO>} entity
      */
     public static List<CategoryDTO> prepareCategories(List<Category> categories) {
         List<CategoryDTO> result = new ArrayList<>();
@@ -242,10 +242,10 @@ public class Converter {
     }
 
     /**
-     * Converts List<Course> into List<CourseDTO>
+     * Converts {@code List<Course>} into {@code List<CourseDTO>}
      *
      * @param courses to convert
-     * @return List<CourseDTO> entity
+     * @return {@code List<CourseDTO>} entity
      */
     public static List<CourseDTO> prepareCourses(List<Course> courses) {
         List<CourseDTO> coursesDTO = new ArrayList<>();

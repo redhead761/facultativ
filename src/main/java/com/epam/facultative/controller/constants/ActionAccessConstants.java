@@ -78,19 +78,30 @@ public class ActionAccessConstants {
         STUDENT_ACTIONS.add(CERTIFICATE_ACTION);
         STUDENT_ACTIONS.add(EDIT_STUDENT_ACTION);
     }
-
+    /**
+     *
+     *
+     * @return {@code Set<String>} - with no logged user actions
+     */
     public static Set<String> getNoLoggedUserActions() {
         return NO_LOGGED_USER_ACTIONS;
     }
 
+    /**
+     * @return {@code Set<String>} - with admin actions
+     */
     public static Set<String> getAdminActions() {
         return ADMIN_ACTIONS;
     }
-
+    /**
+     * @return {@code Set<String>} - with teacher actions
+     */
     public static Set<String> getTeacherActions() {
         return TEACHER_ACTIONS;
     }
-
+    /**
+     * @return {@code Set<String>} - with student actions
+     */
     public static Set<String> getStudentActions() {
         return STUDENT_ACTIONS;
     }

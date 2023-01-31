@@ -14,13 +14,16 @@ import java.io.IOException;
  * @version 1.0
  */
 public interface Action {
+
     /**
      * Obtains path to sendRedirect or forward in front-controller. Edits request and response if needed.
      *
      * @param req  passed by controller
      * @param resp passed by controller
      * @return path to return to front-controller
-     * @throws ServiceException,IOException,ServletException - any unhandled exception. Will cause front-controller to redirect to error page
+     * @throws ServiceException - any unhandled exception. Will cause front-controller to redirect to error page
+     * @throws IOException      - any unhandled exception. Will cause front-controller to redirect to error page
+     * @throws ServletException - any unhandled exception. Will cause front-controller to redirect to error page
      */
     String execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException, IOException, ServletException;
 }

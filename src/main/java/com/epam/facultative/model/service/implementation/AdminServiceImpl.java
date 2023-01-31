@@ -251,7 +251,7 @@ public class AdminServiceImpl implements AdminService {
      * Gets parameter from action and calls DAO to get relevant entities and count rows. Convert entity to DTO.
      *
      * @param param - parameters to get
-     * @return Map.Entry<Integer, List < StudentDTO>> - return relevant DTO and count rows
+     * @return {@code Map.Entry<Integer, List < StudentDTO>>} - return relevant DTO and count rows
      * @throws ServiceException - may wrap DAOException or be thrown by another mistakes
      */
     @Override

@@ -87,7 +87,7 @@ public class Converter {
                 .description(course.getDescription())
                 .category(convertCategoryToDTO(course.getCategory()))
                 .status(course.getStatus())
-                .teacher(course.getTeacher() != null ? convertTeacherToDTO(course.getTeacher()) : null)
+                .teacher(convertTeacherToDTO(course.getTeacher()))
                 .build();
     }
 
@@ -181,7 +181,7 @@ public class Converter {
                 .description(courseDTO.getDescription())
                 .category(convertDTOToCategory(courseDTO.getCategory()))
                 .status(courseDTO.getStatus())
-                .teacher(courseDTO.getTeacher() != null ? convertDTOToTeacher(courseDTO.getTeacher()) : null)
+                .teacher(convertDTOToTeacher(courseDTO.getTeacher()))
                 .build();
     }
 

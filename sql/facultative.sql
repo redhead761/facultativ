@@ -284,8 +284,8 @@ CREATE TABLE IF NOT EXISTS `course`
     45
 ) NULL DEFAULT NULL,
     `category_id` INT NOT NULL,
-    `status_id` INT NOT NULL,
-    `teacher_id` INT DEFAULT NULL,
+    `status_id` INT DEFAULT 1,
+    `teacher_id` INT NOT NULL,
     PRIMARY KEY
 (
     `id`

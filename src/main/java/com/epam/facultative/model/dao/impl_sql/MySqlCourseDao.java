@@ -77,11 +77,6 @@ public class MySqlCourseDao implements CourseDao {
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(UPDATE_COURSE)) {
             int k = setStatementFields(course, stmt);
-            if (course.getTeacher() != null) {
-                stmt.setInt(++k, course.getTeacher().getId());
-            } else {
-                stmt.setNull(++k, Types.INTEGER);
-            }
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -222,7 +217,7 @@ public class MySqlCourseDao implements CourseDao {
                 .description(rs.getString(COURSE_DESCRIPTION))
                 .status(Status.valueOf(rs.getString(STATUS_TITLE)))
                 .category(mapRowCategory(rs))
-                .teacher(rs.getString(TEACHER_ID) != null ? mapRowTeacher(rs) : null)
+                .teacher(mapRowTeacher(rs))
                 .build();
     }
 
@@ -255,6 +250,7 @@ public class MySqlCourseDao implements CourseDao {
         stmt.setString(++k, course.getDescription());
         stmt.setInt(++k, course.getCategory().getId());
         stmt.setInt(++k, course.getStatus().getId());
+        stmt.setInt(++k, course.getTeacher().getId());
         return k;
     }
 

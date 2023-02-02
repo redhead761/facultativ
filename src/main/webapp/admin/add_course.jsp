@@ -52,8 +52,7 @@
                             <input type="hidden" name="action" value="add_course"/>
 
                             <div class="row">
-                                <div class="col-md-6 mb-4">
-
+                                <div class="col-md-12 mb-4">
                                     <div class="form-floating">
                                         <input type="text" id="title" class="form-control form-control-lg"
                                                value="${requestScope.course.title}"
@@ -61,11 +60,12 @@
                                                title="Title must contain 1 to 3 characters" required name="title"/>
                                         <label class="form-label" for="title"><fmt:message key="title"/></label>
                                     </div>
-
                                 </div>
+                            </div>
+
+                            <div class="row">
 
                                 <div class="col-md-6 mb-4">
-
                                     <div class="form-floating">
                                         <input type="number" id="duration" class="form-control form-control-lg"
                                                name="duration"
@@ -74,13 +74,9 @@
                                                required/>
                                         <label class="form-label" for="duration"><fmt:message key="duration"/></label>
                                     </div>
-
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-4 d-flex align-items-center">
-
+                                <div class="col-md-6 mb-4">
                                     <div class="form-floating ">
                                         <input type="date" class="form-control form-control-lg" id="start_date"
                                                name="start_date" value="${requestScope.course.startDate}" required
@@ -88,33 +84,31 @@
                                         <label for="start_date" class="form-label"><fmt:message
                                                 key="start.date"/></label>
                                     </div>
-
                                 </div>
 
-                                <div class="col-md-6 mb-4">
-
-                                    <h6 class="mb-2 pb-1"><fmt:message key="status"/>:</h6>
-
-                                    <c:forEach var="status" items="${sessionScope.statuses}">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="status"
-                                                   id="status"
-                                                   value="${status.valueOf(status)}" checked/>
-                                            <label class="form-check-label"
-                                                   for="status">${status.valueOf(status)}</label>
-                                        </div>
-                                    </c:forEach>
-                                </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-12">
+
+                                <div class="col-md-6 mb-4">
                                     <label>
-                                        <select name="category" class="form-select form-select-lg mb-3" required>
+                                        <select name="category_id" class="form-select form-select-lg mb-3" required>
                                             <option disabled selected value=""><fmt:message
                                                     key="select.category"/></option>
                                             <c:forEach var="category" items="${requestScope.categories}">
                                                 <option value="${category.id}">${category.title}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </label>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label>
+                                        <select name="teacher_id" class="form-select form-select-lg mb-3" required>
+                                            <option disabled selected value=""><fmt:message
+                                                    key="select.teacher"/></option>
+                                            <c:forEach var="teacher" items="${requestScope.teachers}">
+                                                <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
                                             </c:forEach>
                                         </select>
                                     </label>

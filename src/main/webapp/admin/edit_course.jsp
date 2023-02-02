@@ -101,7 +101,7 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="status"
                                                    id="status"
-                                                   value="${status.valueOf(status)}" checked/>
+                                                   value="${status.valueOf(status)}" ${requestScope.course.status eq status.valueOf(status) ? 'checked' : ''}/>
                                             <label class="form-check-label"
                                                    for="status">${status.valueOf(status)}</label>
                                         </div>
@@ -110,44 +110,33 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-12">
 
+                                <div class="col-12">
                                     <label>
-                                        <select name="category" class="form-select form-select-lg mb-3" required>
-                                            <option disabled selected value=""><fmt:message key="select.category"/></option>
-                                            <c:if test="${requestScope.course.category != null}">
-                                                <option selected
-                                                        value="${requestScope.course.category.id}">${requestScope.course.category.title}</option>
-                                            </c:if>
+                                        <select name="category_id" class="form-select form-select-lg mb-3" required>
+                                            <option disabled selected value=""><fmt:message
+                                                    key="select.category"/></option>
                                             <c:forEach var="category" items="${requestScope.categories}">
-                                                <option value="${category.id}">${category.title}</option>
+                                                <option value="${category.id}" ${requestScope.course.category.id == category.id ? "selected" : ''}>${category.title}</option>
                                             </c:forEach>
                                         </select>
                                     </label>
-
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="col-12">
 
                                     <label>
                                         <select name="teacher_id" class="form-select form-select-lg mb-3">
-                                            <option disabled selected value=""><fmt:message key="select.teacher"/></option>
-                                            <c:if test="${requestScope.course.teacher != null}">
-                                                <option selected
-                                                        value="${requestScope.course.teacher.id}">${requestScope.course.teacher.name} ${requestScope.course.teacher.surname}
-                                                </option>
-                                            </c:if>
+                                            <option disabled selected value=""><fmt:message
+                                                    key="select.teacher"/></option>
                                             <c:forEach var="teacher" items="${requestScope.teachers}">
-                                                <option value="${teacher.id}">${teacher.name} ${teacher.surname}</option>
+                                                <option value="${teacher.id}" ${requestScope.course.teacher.id == teacher.id ? "selected" : ''}>${teacher.name} ${teacher.surname}</option>
                                             </c:forEach>
                                         </select>
                                     </label>
 
                                 </div>
-                            </div>
 
+                            </div>
                             <div class="row">
                                 <div class="col-12">
 

@@ -14,5 +14,7 @@ public class ValidateExceptionMessageConstants {
     static final String DATE_NO_VALIDATE_MESSAGE = "You entered incorrect date";
     static final String TITLE_NO_VALIDATE_MESSAGE = "You entered incorrect title, title must contains 1-100 characters";
     static final String DESCRIPTION_NO_VALIDATE_MESSAGE = "You entered incorrect description, description must contains 0-500 characters";
-
+    public static final String COMING_SOON_NO_VALIDATE_MESSAGE = "coming.soon.no.validate";
+    public static final String IN_PROCESS_NO_VALIDATE_MESSAGE = "in.process.no.validate";
+    public static final String COMPLETED_NO_VALIDATE_MESSAGE = "completed.no.validate";
 }

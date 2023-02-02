@@ -60,7 +60,7 @@ public class SQLRequestConstants {
     public static final String SELECT_COURSE =
             "SELECT * FROM course JOIN category ON category_id = category.id JOIN status ON status_id = status.id " +
                     "LEFT JOIN teacher ON teacher_id = user_id LEFT JOIN user ON teacher.user_id = user.id %s";
-    public static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,DEFAULT,?,?,?,DEFAULT)";
+    public static final String INSERT_COURSE = "INSERT INTO course VALUES (DEFAULT,?,?,?,DEFAULT,?,?,?,?)";
     public static final String DELETE_COURSE = "DELETE FROM course WHERE id=?";
     public static final String UPDATE_COURSE = "UPDATE course SET title=?, duration=?," +
             "start_date=?, description=?, category_id=?, status_id=?, teacher_id=? WHERE id=?";

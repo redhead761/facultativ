@@ -2,6 +2,7 @@ package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.app_context.AppContext;
+import com.epam.facultative.model.dto.TeacherDTO;
 import com.epam.facultative.model.entities.Status;
 import com.epam.facultative.model.dto.CategoryDTO;
 import com.epam.facultative.model.dto.CourseDTO;
@@ -83,11 +84,6 @@ public class UpdateCourseAction implements Action {
         String courseId = req.getParameter(COURSE_ID);
         try {
             CourseDTO course = getCourseFromParameter(req);
-            if (req.getParameter(TEACHER_ID) != null && !req.getParameter(TEACHER_ID).isBlank()) {
-                String teacherId = req.getParameter(TEACHER_ID);
-                adminService.assigned(Integer.parseInt(courseId), Integer.parseInt(teacherId));
-                course.setTeacher(adminService.getTeacher(Integer.parseInt(teacherId)));
-            }
             adminService.updateCourse(course);
             if (req.getParameter(EMAIL_SEND) != null) {
                 adminService.courseLaunchNewsLetter(course, appContext);
@@ -106,8 +102,10 @@ public class UpdateCourseAction implements Action {
         LocalDate date = LocalDate.parse(req.getParameter(START_DATE));
         String description = req.getParameter(DESCRIPTION);
         Status status = Status.valueOf(req.getParameter(STATUS));
-        String categoryId = req.getParameter(CATEGORY);
+        String categoryId = req.getParameter(CATEGORY_ID);
+        String teacherId = req.getParameter(TEACHER_ID);
         CategoryDTO categoryDTO = adminService.getCategory(Integer.parseInt(categoryId));
+        TeacherDTO teacherDTO = adminService.getTeacher(Integer.parseInt(teacherId));
         return CourseDTO.builder()
                 .id(courseId)
                 .title(title)
@@ -116,6 +114,7 @@ public class UpdateCourseAction implements Action {
                 .description(description)
                 .category(categoryDTO)
                 .status(status)
+                .teacher(teacherDTO)
                 .build();
     }
 }

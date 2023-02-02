@@ -29,7 +29,9 @@
     <div class="col-auto">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_teachers"><fmt:message key="back.teachers"/></a>
+                <a class="nav-link"
+                   href="${pageContext.request.contextPath}/controller?action=manage_teachers"><fmt:message
+                        key="back.teachers"/></a>
             </li>
         </ul>
     </div>
@@ -78,7 +80,8 @@
                                 </div>
 
                                 <div class="form-check-inline mb-2">
-                                    <input class="form-check-input" type="checkbox" onclick="checkPass('password');checkPass('repeat_password')"
+                                    <input class="form-check-input" type="checkbox"
+                                           onclick="checkPass('password');checkPass('repeat_password')"
                                            id="flexCheckDefault">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         <fmt:message key="show.password"/>
@@ -113,13 +116,13 @@
                                 <div class="form-floating d-flex flex-row align-items-center mb-4">
                                     <input class="form-control" name="degree" id="floatingInputDegree"
                                            placeholder="name" value="${requestScope.teacher.degree}"
-                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Degree must..."
-                                           required>
+                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{0,30}" title="Degree must...">
                                     <label for="floatingInputDegree"><fmt:message key="degree"/></label>
                                 </div>
 
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message key="register"/></button>
+                                    <button type="submit" class="btn btn-primary btn-lg"><fmt:message
+                                            key="register"/></button>
                                 </div>
 
                             </form>

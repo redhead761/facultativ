@@ -2,7 +2,7 @@ package com.epam.facultative.controller.actions.impl.admin;
 
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.controller.app_context.AppContext;
-import com.epam.facultative.model.entities.Status;
+import com.epam.facultative.model.dto.TeacherDTO;
 import com.epam.facultative.model.dto.CategoryDTO;
 import com.epam.facultative.model.dto.CourseDTO;
 import com.epam.facultative.model.exception.ServiceException;
@@ -20,7 +20,9 @@ import static com.epam.facultative.controller.constants.ActionNameConstants.*;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.ADD_COURSE_PAGE;
+import static com.epam.facultative.model.entities.Status.COMING_SOON;
 import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.categoryParamBuilderForQuery;
+import static com.epam.facultative.model.utils.param_builder.ParamBuilderForQueryUtil.teacherParamBuilderForQuery;
 
 /**
  * Accessible by admin. Allows to add course from database. Implements PRG pattern
@@ -60,7 +62,9 @@ public class AddCourseAction implements Action {
     private String executeGet(HttpServletRequest req) throws ServiceException {
         transferAttributeFromSessionToRequest(req, ERROR, MESSAGE, COURSE);
         Map.Entry<Integer, List<CategoryDTO>> categories = generalService.getCategories(categoryParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam());
+        Map.Entry<Integer, List<TeacherDTO>> teachers = generalService.getTeachers(teacherParamBuilderForQuery().setLimits("1", String.valueOf(Integer.MAX_VALUE)).getParam());
         req.setAttribute(CATEGORIES, categories.getValue());
+        req.setAttribute(TEACHERS, teachers.getValue());
         return ADD_COURSE_PAGE;
     }
 
@@ -89,9 +93,10 @@ public class AddCourseAction implements Action {
         int duration = Integer.parseInt(req.getParameter(DURATION));
         LocalDate date = LocalDate.parse(req.getParameter(START_DATE));
         String description = req.getParameter(DESCRIPTION);
-        Status status = Status.valueOf(req.getParameter(STATUS));
-        String categoryId = req.getParameter(CATEGORY);
+        String categoryId = req.getParameter(CATEGORY_ID);
+        String teacherId = req.getParameter(TEACHER_ID);
         CategoryDTO categoryDTO = adminService.getCategory(Integer.parseInt(categoryId));
+        TeacherDTO teacherDTO = adminService.getTeacher(Integer.parseInt(teacherId));
         return CourseDTO.builder()
                 .id(0)
                 .title(title)
@@ -99,7 +104,8 @@ public class AddCourseAction implements Action {
                 .startDate(date)
                 .description(description)
                 .category(categoryDTO)
-                .status(status)
+                .status(COMING_SOON)
+                .teacher(teacherDTO)
                 .build();
     }
 }

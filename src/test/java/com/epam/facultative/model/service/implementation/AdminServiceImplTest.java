@@ -76,7 +76,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).add(course);
             assertDoesNotThrow(() -> adminService.addCourse(courseDTO));
@@ -89,7 +89,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenThrow(ValidateException.class);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).add(course);
             assertThrows(ValidateException.class, () -> adminService.addCourse(courseDTO));
@@ -102,7 +102,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenThrow(ValidateException.class);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).add(course);
             assertThrows(ValidateException.class, () -> adminService.addCourse(courseDTO));
@@ -115,7 +115,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenThrow(ValidateException.class);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenThrow(ValidateException.class);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).add(course);
             assertThrows(ValidateException.class, () -> adminService.addCourse(courseDTO));
@@ -128,7 +128,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doThrow(ValidateException.class).when(courseDao).add(course);
             assertThrows(ValidateException.class, () -> adminService.addCourse(courseDTO));
@@ -141,7 +141,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doThrow(DAOException.class).when(courseDao).add(course);
             assertThrows(ServiceException.class, () -> adminService.addCourse(courseDTO));
@@ -154,7 +154,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).update(course);
             assertDoesNotThrow(() -> adminService.updateCourse(courseDTO));
@@ -167,7 +167,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenThrow(ValidateException.class);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).update(course);
             assertThrows(ValidateException.class, () -> adminService.updateCourse(courseDTO));
@@ -180,7 +180,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenThrow(ValidateException.class);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doNothing().when(courseDao).update(course);
             assertThrows(ValidateException.class, () -> adminService.updateCourse(courseDTO));
@@ -193,7 +193,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doThrow(ValidateException.class).when(courseDao).update(course);
             assertThrows(ValidateException.class, () -> adminService.updateCourse(courseDTO));
@@ -206,7 +206,7 @@ class AdminServiceImplTest {
              MockedStatic<Converter> converter = mockStatic(Converter.class)) {
             validator.when(() -> Validator.validateTitle(anyString())).thenAnswer(invocation -> null);
             validator.when(() -> Validator.validateDescription(anyString())).thenAnswer(invocation -> null);
-            validator.when(() -> Validator.validateDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
+            validator.when(() -> Validator.validateStartDate(isA(LocalDate.class))).thenAnswer(invocation -> null);
             converter.when(() -> Converter.convertDTOToCourse(courseDTO)).thenReturn(course);
             doThrow(DAOException.class).when(courseDao).update(course);
             assertThrows(ServiceException.class, () -> adminService.updateCourse(courseDTO));

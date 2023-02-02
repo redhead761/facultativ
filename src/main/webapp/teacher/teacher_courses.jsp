@@ -42,13 +42,8 @@
             <td>${course.startDate}</td>
             <td>${course.amountStudents}</td>
             <td>${course.getCategory().title}</td>
-            <td>${course.getStatus()}</td>
-            <td>
-                <c:if test="${course.getStatus() eq 'COMPLETED'}">
-                    <a href="${pageContext.request.contextPath}/controller?action=show_journal&course_id=${course.id}"><fmt:message
-                            key="journal"/></a>
-                </c:if>
-            </td>
+            <td><fmt:message key="${course.getStatus()}"/></td>
+            <td>${course.getTeacher().getName()} ${course.getTeacher().getSurname()}</td>
             </tbody>
         </c:forEach>
     </table>

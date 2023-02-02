@@ -48,7 +48,7 @@
             <td>${course.startDate}</td>
             <td>${course.amountStudents}</td>
             <td>${course.getCategory().title}</td>
-            <td>${course.getStatus()}</td>
+            <td><fmt:message key="${course.getStatus()}"/></td>
             <td>${course.getTeacher().getName()} ${course.getTeacher().getSurname()}</td>
             <td>
                 <c:if test="${course.getStatus() eq 'COMING_SOON'}">

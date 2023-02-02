@@ -51,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void addCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
         validateCourseData(courseDTO);
-        validateDate(courseDTO.getStartDate());
+        validateStartDate(courseDTO.getStartDate());
         Course course = convertDTOToCourse(courseDTO);
         try {
             courseDao.add(course);
@@ -70,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateCourse(CourseDTO courseDTO) throws ServiceException, ValidateException {
         validateCourseData(courseDTO);
+        validateStatus(courseDTO);
         Course course = convertDTOToCourse(courseDTO);
         try {
             courseDao.update(course);

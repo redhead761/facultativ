@@ -55,16 +55,8 @@
             <td>${course.startDate}</td>
             <td>${course.amountStudents}</td>
             <td>${course.getCategory().title}</td>
-            <td>${course.getStatus()}</td>
-            <td>
-                <c:if test="${course.getTeacher().getName() != null}">
-                    ${course.getTeacher().getName()} ${course.getTeacher().getSurname()}
-                </c:if>
-                <c:if test="${course.getTeacher().getName() == null}">
-                    <a href="${pageContext.request.contextPath}/controller?action=assign&course_id=${course.id}"><fmt:message
-                            key="assign"/></a>
-                </c:if>
-            </td>
+            <td><fmt:message key="${course.getStatus()}"/></td>
+            <td>${course.getTeacher().getName()} ${course.getTeacher().getSurname()}</td>
             <td>
                 <div class="row">
                     <div class="col-md-auto">

@@ -152,7 +152,8 @@ public class GeneralServiceImpl implements GeneralService {
             User user = userDao.get(userParamBuilderForQuery().setUserEmailFilter(email).getParam())
                     .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
             String newPass = getNewPassword();
-            user.setPassword(newPass);
+            user.setPassword(encode(newPass));
+            userDao.update(user);
             EmailSender emailSender = appContext.getEmailSender();
             emailSender.send(email, EMAIL_SUBJECT_FOR_RECOVERY_PASSWORD, EMAIL_MESSAGE_FOR_RECOVERY_PASSWORD + newPass);
         } catch (DAOException e) {

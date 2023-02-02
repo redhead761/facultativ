@@ -51,7 +51,7 @@
                         <input type="password" class="form-control form-control-lg" name="password"
                                id="password" placeholder="Password"
                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
-                               title="Password must be between 8 and 20 characters, capital letter and no special characters"
+                               title="Password must be between 8 and 20 characters, capital letter and digit"
                                required>
                         <label class="form-label" for="password"><fmt:message key="password.login"/></label>
                     </div>
@@ -64,8 +64,8 @@
                         </label>
                     </div>
 
-                    <div class="g-recaptcha"
-                         data-sitekey="6Len5_sjAAAAAMmiw0qgGKANuS-CJT-1vQi1b83Q"></div>
+<%--                    <div class="g-recaptcha"--%>
+<%--                         data-sitekey="6Len5_sjAAAAAMmiw0qgGKANuS-CJT-1vQi1b83Q"></div>--%>
 
                     <div class="d-flex justify-content-between align-items-center">
                         <button type="submit" class="btn btn-primary btn-lg"
@@ -78,7 +78,7 @@
                     <div class="text-center text-lg-start pt-2">
                         <p class="small fw-bold pt-1 mb-0"><fmt:message key="dont.have.account"/><a
                                 href="register.jsp"
-                                class="link-danger"><fmt:message key="register"/></a>
+                                class="link-danger"> <fmt:message key="register"/></a>
                         </p>
                     </div>
                 </form>

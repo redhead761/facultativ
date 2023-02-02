@@ -51,18 +51,20 @@
             <td>${course.getStatus()}</td>
             <td>${course.getTeacher().getName()} ${course.getTeacher().getSurname()}</td>
             <td>
-                <form action="${pageContext.request.contextPath}/controller" method="post">
-                    <input type="hidden" name="action" value="enroll"/>
-                    <input type="hidden" name="course_id" value="${course.id}"/>
-                    <input type="hidden" name="current_page" value="${param.current_page}"/>
-                    <input type="hidden" name="records_per_page" value="${param.records_per_page}"/>
-                    <input type="hidden" name="sort" value="${param.sort}"/>
-                    <input type="hidden" name="select_by_category" value="${param.select_by_category}"/>
-                    <input type="hidden" name="select_by_teacher" value="${param.select_by_teacher}"/>
+                <c:if test="${course.getStatus() eq 'COMING_SOON'}">
+                    <form action="${pageContext.request.contextPath}/controller" method="post">
+                        <input type="hidden" name="action" value="enroll"/>
+                        <input type="hidden" name="course_id" value="${course.id}"/>
+                        <input type="hidden" name="current_page" value="${param.current_page}"/>
+                        <input type="hidden" name="records_per_page" value="${param.records_per_page}"/>
+                        <input type="hidden" name="sort" value="${param.sort}"/>
+                        <input type="hidden" name="select_by_category" value="${param.select_by_category}"/>
+                        <input type="hidden" name="select_by_teacher" value="${param.select_by_teacher}"/>
 
-                    <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
-                            key="enroll"/></button>
-                </form>
+                        <button type="submit" class="btn btn-outline-secondary btn-sm"><fmt:message
+                                key="enroll"/></button>
+                    </form>
+                </c:if>
             </td>
             </tbody>
         </c:forEach>

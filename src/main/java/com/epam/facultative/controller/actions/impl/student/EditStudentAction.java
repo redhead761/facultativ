@@ -3,6 +3,7 @@ package com.epam.facultative.controller.actions.impl.student;
 import com.epam.facultative.controller.app_context.AppContext;
 import com.epam.facultative.controller.actions.Action;
 import com.epam.facultative.model.dto.StudentDTO;
+import com.epam.facultative.model.entities.User;
 import com.epam.facultative.model.exception.ServiceException;
 import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.StudentService;
@@ -72,12 +73,15 @@ public class EditStudentAction implements Action {
     }
 
     private StudentDTO getStudentForAttribute(HttpServletRequest req) {
+        StudentDTO user = (StudentDTO) req.getSession().getAttribute("user");
+        int id = user.getId();
         String login = req.getParameter(LOGIN);
         String name = req.getParameter(NAME);
         String surname = req.getParameter(SURNAME);
         String email = req.getParameter(EMAIL);
         int courseNumber = Integer.parseInt(req.getParameter(COURSE_NUMBER));
         return StudentDTO.builder()
+                .id(id)
                 .login(login)
                 .name(name)
                 .surname(surname)

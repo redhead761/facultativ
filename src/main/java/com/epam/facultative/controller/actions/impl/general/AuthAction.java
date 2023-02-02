@@ -51,7 +51,7 @@ public class AuthAction implements Action {
      * @return auth page after trying to authorization
      */
     private String executeGet(HttpServletRequest req) {
-        transferAttributeFromSessionToRequest(req, ERROR, LOGIN);
+        transferAttributeFromSessionToRequest(req, ERROR, LOGIN, MESSAGE);
         return AUTH_PAGE;
     }
 
@@ -66,12 +66,12 @@ public class AuthAction implements Action {
         String path = null;
         String login = req.getParameter(LOGIN);
         String password = req.getParameter(PASSWORD);
-        String gRecaptchaResponse = req.getParameter(RECAPTCHA);
+//        String gRecaptchaResponse = req.getParameter(RECAPTCHA);
         try {
-            boolean verify = recaptcha.verify(gRecaptchaResponse);
-            if (!verify) {
-                throw new ValidateException(MISSED_CAPTCHA);
-            }
+//            boolean verify = recaptcha.verify(gRecaptchaResponse);
+//            if (!verify) {
+//                throw new ValidateException(MISSED_CAPTCHA);
+//            }
             UserDTO user = generalService.authorization(login, password);
             req.getSession().setAttribute(USER, user);
             req.getSession().setAttribute(ROLE, user.getRole());

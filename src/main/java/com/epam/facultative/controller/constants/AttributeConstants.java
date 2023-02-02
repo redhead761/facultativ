@@ -10,6 +10,8 @@ public class AttributeConstants {
     public static String MESSAGE = "message";
     public static String ERROR = "error";
     public static String SUCCESSFUL = "successful";
+    public static String SUCCESSFUL_RECOVERY = "successful.recovery";
+
     public static String COURSE = "course";
     public static String COURSES = "courses";
     public static String CATEGORIES = "categories";

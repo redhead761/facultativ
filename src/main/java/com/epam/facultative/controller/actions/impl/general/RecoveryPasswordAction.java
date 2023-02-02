@@ -63,7 +63,7 @@ public class RecoveryPasswordAction implements Action {
         String email = req.getParameter(EMAIL);
         try {
             generalService.recoveryPassword(email, appContext);
-            req.getSession().setAttribute(MESSAGE, SUCCESSFUL);
+            req.getSession().setAttribute(MESSAGE, SUCCESSFUL_RECOVERY);
         } catch (ValidateException e) {
             req.getSession().setAttribute(EMAIL, email);
             req.getSession().setAttribute(ERROR, e.getMessage());

@@ -9,6 +9,7 @@ import com.epam.facultative.model.service.StudentService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static com.epam.facultative.controller.constants.ActionNameConstants.AUTH_ACTION;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.ActionNameConstants.REGISTER_ACTION;
 import static com.epam.facultative.controller.actions.ActionUtils.*;
@@ -69,8 +70,9 @@ public class RegisterAction implements Action {
         } catch (ValidateException e) {
             req.getSession().setAttribute(STUDENT, student);
             req.getSession().setAttribute(ERROR, e.getMessage());
+            return getGetAction(REGISTER_ACTION);
         }
-        return getGetAction(REGISTER_ACTION);
+        return getGetAction(AUTH_ACTION);
     }
 
     private StudentDTO getStudentForAttribute(HttpServletRequest req) {

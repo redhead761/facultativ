@@ -15,7 +15,6 @@
 "add_course"
 "update_course"
 "delete_course"
-"assign"
 "update_block"
 "add_teacher"
 "delete_teacher"

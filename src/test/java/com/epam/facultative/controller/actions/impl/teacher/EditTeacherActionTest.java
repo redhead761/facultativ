@@ -68,6 +68,7 @@ class EditTeacherActionTest {
         when(req.getParameter(DEGREE)).thenReturn(DEGREE);
         when(appContext.getTeacherService()).thenReturn(teacherService);
         when(req.getSession()).thenReturn(httpSession);
+        when(httpSession.getAttribute("user")).thenReturn(testServiceUtil.getTeacherDTO());
     }
 
 }

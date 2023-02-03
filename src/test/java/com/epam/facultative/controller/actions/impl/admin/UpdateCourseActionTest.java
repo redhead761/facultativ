@@ -84,14 +84,13 @@ class UpdateCourseActionTest {
         when(req.getParameter(DURATION)).thenReturn("1");
         when(req.getParameter(START_DATE)).thenReturn("2022-01-02");
         when(req.getParameter(STATUS)).thenReturn("COMING_SOON");
-        when(req.getParameter(CATEGORY)).thenReturn("1");
+        when(req.getParameter(CATEGORY_ID)).thenReturn("1");
         when(req.getParameter(DESCRIPTION)).thenReturn(DESCRIPTION);
         when(req.getParameter(EMAIL_SEND)).thenReturn("true");
         when(adminService.getCategory(1)).thenReturn(testServiceUtil.getCategoryDTO());
         when(appContext.getAdminService()).thenReturn(adminService);
         when(req.getSession()).thenReturn(httpSession);
         when(req.getParameter(TEACHER_ID)).thenReturn("1");
-        doNothing().when(adminService).assigned(anyInt(), anyInt());
         when(adminService.getTeacher(anyInt())).thenReturn(testServiceUtil.getTeacherDTO());
         doNothing().when(adminService).courseLaunchNewsLetter(isA(CourseDTO.class), isA(AppContext.class));
     }

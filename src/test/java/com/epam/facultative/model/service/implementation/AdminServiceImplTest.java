@@ -22,16 +22,12 @@ import com.epam.facultative.model.utils.hash_password.HashPassword;
 import com.epam.facultative.model.utils.validator.Validator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.MockedStatic;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -359,23 +355,6 @@ class AdminServiceImplTest {
     }
 
     @Test
-    void assignedSuccessful() throws DAOException, ValidateException {
-        when(courseDao.get(anyString())).thenReturn(Optional.ofNullable(course));
-        when(teacherDao.get(anyString())).thenReturn(Optional.ofNullable(teacher));
-        doNothing().when(courseDao).update(course);
-        assertDoesNotThrow(() -> adminService.assigned(1, 1));
-    }
-
-    @ParameterizedTest
-    @MethodSource("invalidIntValues")
-    void assignedWithIllegalArgument(int courseId, int teacherId) throws DAOException, ValidateException {
-        when(courseDao.get(anyString())).thenReturn(Optional.ofNullable(course));
-        when(teacherDao.get(anyString())).thenReturn(Optional.ofNullable(teacher));
-        doThrow(DAOException.class).when(courseDao).update(isA(Course.class));
-        assertThrows(ServiceException.class, () -> adminService.assigned(courseId, teacherId));
-    }
-
-    @Test
     void blockStudentSuccessful() throws DAOException {
         doNothing().when(studentDao).updateBlock(anyInt(), anyBoolean());
         assertDoesNotThrow(() -> adminService.blockStudent(1));
@@ -616,17 +595,4 @@ class AdminServiceImplTest {
         doThrow(DAOException.class).when(studentDao).getStudentsByCourse(anyString());
         assertThrows(ServiceException.class, () -> adminService.courseLaunchNewsLetter(courseDTO, appContext));
     }
-
-    private static Stream<Arguments> invalidIntValues() {
-        return Stream.of(
-                Arguments.of(0, 1),
-                Arguments.of(1, 0),
-                Arguments.of(0, 0),
-                Arguments.of(-1, 1),
-                Arguments.of(1, -1),
-                Arguments.of(-1, -1)
-        );
-    }
-
-
 }

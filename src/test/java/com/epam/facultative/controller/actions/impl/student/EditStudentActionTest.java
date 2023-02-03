@@ -69,5 +69,6 @@ class EditStudentActionTest {
         when(req.getParameter(COURSE_NUMBER)).thenReturn("1");
         when(appContext.getStudentService()).thenReturn(studentService);
         when(req.getSession()).thenReturn(httpSession);
+        when(httpSession.getAttribute(USER)).thenReturn(testServiceUtil.getStudentDTO());
     }
 }

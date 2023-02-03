@@ -14,6 +14,7 @@ import org.mockito.MockedStatic;
 
 import static com.epam.facultative.controller.actions.ActionUtils.getGetAction;
 import static com.epam.facultative.controller.actions.ActionUtils.transferAttributeFromSessionToRequest;
+import static com.epam.facultative.controller.constants.ActionNameConstants.AUTH_ACTION;
 import static com.epam.facultative.controller.constants.ActionNameConstants.REGISTER_ACTION;
 import static com.epam.facultative.controller.constants.AttributeConstants.*;
 import static com.epam.facultative.controller.constants.PageNameConstants.REGISTER_PAGE;
@@ -37,7 +38,7 @@ class RegisterActionTest {
         doNothing().when(studentService).addStudent(isA(StudentDTO.class));
         String path = new RegisterAction(appContext).execute(req, resp);
         verify(httpSession, times(1)).setAttribute(MESSAGE, SUCCESSFUL);
-        assertEquals(getGetAction(REGISTER_ACTION), path);
+        assertEquals(getGetAction(AUTH_ACTION), path);
     }
 
     @Test

@@ -59,6 +59,7 @@ class AddCourseActionTest {
             actionUtil.when(() -> transferAttributeFromSessionToRequest(isA(HttpServletRequest.class), anyString())).thenAnswer(invocation -> null);
             when(appContext.getGeneralService()).thenReturn(generalService);
             when(generalService.getCategories(anyString())).thenReturn(testServiceUtil.getCategoryDTOS());
+            when(generalService.getTeachers(anyString())).thenReturn(testServiceUtil.getTeacherDTOS());
             String path = new AddCourseAction(appContext).execute(req, resp);
             assertEquals(ADD_COURSE_PAGE, path);
         }
@@ -70,9 +71,11 @@ class AddCourseActionTest {
         when(req.getParameter(DURATION)).thenReturn("1");
         when(req.getParameter(START_DATE)).thenReturn("2022-01-02");
         when(req.getParameter(STATUS)).thenReturn("COMING_SOON");
-        when(req.getParameter(CATEGORY)).thenReturn("1");
+        when(req.getParameter(CATEGORY_ID)).thenReturn("1");
+        when(req.getParameter(TEACHER_ID)).thenReturn("1");
         when(req.getParameter(DESCRIPTION)).thenReturn(DESCRIPTION);
         when(adminService.getCategory(1)).thenReturn(testServiceUtil.getCategoryDTO());
+        when(adminService.getTeacher(1)).thenReturn(testServiceUtil.getTeacherDTO());
         when(appContext.getAdminService()).thenReturn(adminService);
         when(req.getSession()).thenReturn(httpSession);
     }

@@ -33,7 +33,7 @@ class RecoveryPasswordActionTest {
         setUpReturn();
         doNothing().when(generalService).recoveryPassword(anyString(), isA(AppContext.class));
         String path = new RecoveryPasswordAction(appContext).execute(req, resp);
-        verify(httpSession, times(1)).setAttribute(MESSAGE, SUCCESSFUL);
+        verify(httpSession, times(1)).setAttribute(MESSAGE, SUCCESSFUL_RECOVERY);
         assertEquals(getGetAction(RECOVERY_PASSWORD_ACTION), path);
     }
 

@@ -4,8 +4,7 @@ import com.epam.facultative.controller.app_context.AppContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * ContextListener  class.
@@ -14,8 +13,8 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  */
 @WebListener
+@Slf4j
 public class ContextListener implements ServletContextListener {
-    private static final Logger logger = LoggerFactory.getLogger(ContextListener.class);
     private static final String CONFIGURATION_PROPERTIES_FILE = "configuration.properties";
 
     /**
@@ -26,6 +25,6 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         AppContext.createAppContext(CONFIGURATION_PROPERTIES_FILE);
-        logger.info("AppContext is set");
+        log.info("AppContext is set. Application started successfully");
     }
 }

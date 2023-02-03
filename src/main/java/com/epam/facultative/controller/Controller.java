@@ -9,10 +9,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+
+import static com.epam.facultative.controller.constants.PageNameConstants.ERROR_PAGE;
 
 /**
  * Controller  class. Implements Front-controller pattern. Chooses action to execute and redirect or forward result.
@@ -20,12 +21,12 @@ import java.io.IOException;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
-@WebServlet("/controller")
+@WebServlet(value = "/controller", name = "controller")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 100)
+@Slf4j
 public class Controller extends HttpServlet {
-    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
     private static final ActionFactory ACTION_FACTORY = ActionFactory.getActionFactory();
 
     /**
@@ -61,9 +62,9 @@ public class Controller extends HttpServlet {
         try {
             return action.execute(req, resp);
         } catch (ServiceException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             req.getSession().invalidate();
-            return "error.jsp";
+            return ERROR_PAGE;
         }
     }
 }

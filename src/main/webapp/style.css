@@ -1,0 +1,21 @@
+.my-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.my-bnt {
+    background: #cd0a0a !important;
+    color: #000000 !important;
+}
+
+.my-p {
+    color: #cd0a0a;
+}
+
+body {
+    background: #cd0a0a !important;
+}
+
+#back {
+    background: #cd0a0a;
+}

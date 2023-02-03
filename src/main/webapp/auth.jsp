@@ -64,8 +64,8 @@
                         </label>
                     </div>
 
-<%--                    <div class="g-recaptcha"--%>
-<%--                         data-sitekey="6Len5_sjAAAAAMmiw0qgGKANuS-CJT-1vQi1b83Q"></div>--%>
+                    <div class="g-recaptcha"
+                         data-sitekey="6Len5_sjAAAAAMmiw0qgGKANuS-CJT-1vQi1b83Q"></div>
 
                     <div class="d-flex justify-content-between align-items-center">
                         <button type="submit" class="btn btn-primary btn-lg"

@@ -7,8 +7,7 @@ import com.epam.facultative.model.utils.email_sender.EmailSender;
 import com.epam.facultative.model.utils.pdf_creator.PdfCreator;
 import com.epam.facultative.model.utils.recaptcha.Recaptcha;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -22,8 +21,8 @@ import java.util.Properties;
  * @version 1.0
  */
 @Getter
+@Slf4j
 public class AppContext {
-    private static final Logger logger = LoggerFactory.getLogger(MyDataSource.class);
     @Getter
     private static AppContext appContext;
     private final GeneralService generalService;
@@ -64,7 +63,7 @@ public class AppContext {
                 .getResourceAsStream(confPropertiesFile)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         }
         return properties;
     }

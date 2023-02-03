@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.epam.facultative.controller.constants.PageNameConstants.*;
+
 /**
  * Containing all page names for filter
  *

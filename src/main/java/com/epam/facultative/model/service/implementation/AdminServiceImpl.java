@@ -175,29 +175,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * Gets courseId and userId from action and calls DAO to added teacher to course.
-     *
-     * @param courseId,userId- used to find and add
-     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
-     * @throws ValidateException - occurs when the course or teacher is not found
-     */
-    @Override
-    public void assigned(int courseId, int userId) throws ServiceException, ValidateException {
-        try {
-            Course course = courseDao
-                    .get(courseParamBuilderForQuery().setIdCourseFilter(String.valueOf(courseId)).getParam())
-                    .orElseThrow(() -> new ValidateException(COURSE_NOT_FOUND_MESSAGE));
-            Teacher teacher = teacherDao
-                    .get(userParamBuilderForQuery().setUserIdFilter(String.valueOf(userId)).getParam())
-                    .orElseThrow(() -> new ValidateException(TEACHER_NOT_FOUND_MESSAGE));
-            course.setTeacher(teacher);
-            courseDao.update(course);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    /**
      * Gets userId from action and calls DAO to block status student.
      *
      * @param userId- used to find and block

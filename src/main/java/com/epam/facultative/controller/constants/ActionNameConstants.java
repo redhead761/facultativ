@@ -30,7 +30,6 @@ public class ActionNameConstants {
     public static String ADD_COURSE_ACTION = "add_course";
     public static String UPDATE_COURSE_ACTION = "update_course";
     public static String DELETE_COURSE_ACTION = "delete_course";
-    public static String ASSIGN_ACTION = "assign";
     public static String UPDATE_BLOCK_ACTION = "update_block";
     public static String ADD_TEACHER_ACTION = "add_teacher";
     public static String DELETE_TEACHER_ACTION = "delete_teacher";

@@ -43,7 +43,6 @@ public class PageAccessConstants {
         ADMIN_PAGES.add(ADD_COURSE_PAGE);
         ADMIN_PAGES.add(ADD_TEACHER_PAGE);
         ADMIN_PAGES.add(ADMIN_PROFILE_PAGE);
-        ADMIN_PAGES.add(ASSIGN_PAGE);
         ADMIN_PAGES.add(EDIT_CATEGORY_PAGE);
         ADMIN_PAGES.add(EDIT_COURSE_PAGE);
         ADMIN_PAGES.add(MANAGE_CATEGORIES_PAGE);

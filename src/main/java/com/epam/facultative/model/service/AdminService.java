@@ -84,15 +84,6 @@ public interface AdminService {
     void deleteCategory(int categoryId) throws ServiceException, ValidateException;
 
     /**
-     * Calls DAO to add entities
-     *
-     * @param courseId,userId - DTOs with this id to be added as entity to database
-     * @throws ServiceException  - may wrap DAOException or be thrown by another mistakes
-     * @throws ValidateException - occurs in case of non-validation of data
-     */
-    void assigned(int courseId, int userId) throws ServiceException, ValidateException;
-
-    /**
      * Calls DAO to update relevant entity
      *
      * @param userId - DTO with this id to be updated as entity to database

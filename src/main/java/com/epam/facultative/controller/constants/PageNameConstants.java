@@ -26,7 +26,6 @@ public class PageNameConstants {
     public static final String ADD_COURSE_PAGE = "admin/add_course.jsp";
     public static final String ADD_TEACHER_PAGE = "admin/add_teacher.jsp";
     public static final String ADMIN_PROFILE_PAGE = "admin/admin_profile.jsp";
-    public static final String ASSIGN_PAGE = "admin/assign.jsp";
     public static final String EDIT_CATEGORY_PAGE = "admin/edit_category.jsp";
     public static final String EDIT_COURSE_PAGE = "admin/edit_course.jsp";
     public static final String MANAGE_CATEGORIES_PAGE = "admin/manage_categories.jsp";

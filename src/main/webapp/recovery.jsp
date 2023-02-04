@@ -33,7 +33,8 @@
                         <input type="email" class="form-control" name="email" id="floatingInputEmail"
                                placeholder="email"
                                value="${requestScope.email}"
-                               pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" title="Email must contain @"
+                               pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$"
+                               title="<fmt:message key="email.validate.message"/>"
                                required>
                         <label for="floatingInputEmail"><fmt:message key="email"/></label>
                     </div>

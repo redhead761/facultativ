@@ -45,7 +45,7 @@
                                            id="old_password"
                                            placeholder="old_password"
                                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
-                                           title="Password must..." required>
+                                           title="<fmt:message key="password.validate.message"/>" required>
                                     <label for="old_password"><fmt:message key="old.password"/></label>
                                 </div>
 
@@ -54,7 +54,7 @@
                                            id="new_password"
                                            placeholder="new_password"
                                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
-                                           title="Password must..." required>
+                                           title="<fmt:message key="password.validate.message"/>" required>
                                     <label for="new_password"><fmt:message key="new.password"/></label>
                                 </div>
 
@@ -63,7 +63,7 @@
                                            id="repeat_password"
                                            placeholder="confirm password"
                                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
-                                           title="Password must..." required>
+                                           title="<fmt:message key="password.validate.message"/>" required>
                                     <label for="repeat_password"><fmt:message key="confirm.password"/></label>
                                 </div>
 

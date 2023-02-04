@@ -44,14 +44,15 @@
                                     <input class="form-control" name="login" id="floatingInputLogin"
                                            placeholder="login" value="${sessionScope.user.login}"
                                            pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$"
-                                           title="Login must..." required>
+                                           title="<fmt:message key="login.validate.message"/>" required>
                                     <label for="floatingInputLogin"><fmt:message key="login"/></label>
                                 </div>
 
                                 <div class="form-floating d-flex flex-row align-items-center mb-4 ">
                                     <input class="form-control" name="name" id="floatingInputName"
                                            placeholder="name" value="${sessionScope.user.name}"
-                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Name must..."
+                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'\- ]{1,30}"
+                                           title="<fmt:message key="name.validate.message"/>"
                                            required>
                                     <label for="floatingInputName"><fmt:message key="name"/></label>
                                 </div>
@@ -60,7 +61,8 @@
                                     <input class="form-control" name="surname" id="floatingInputSurname"
                                            placeholder="surname"
                                            value="${sessionScope.user.surname}"
-                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Surname must..."
+                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'\- ]{1,30}"
+                                           title="<fmt:message key="surname.validate.message"/>"
                                            required>
                                     <label for="floatingInputSurname"><fmt:message key="surname"/></label>
                                 </div>
@@ -69,7 +71,8 @@
                                     <input type="email" class="form-control" name="email" id="floatingInputEmail"
                                            placeholder="email"
                                            value="${sessionScope.user.email}"
-                                           pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$" title="Email must contains @"
+                                           pattern="^[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}$"
+                                           title="<fmt:message key="email.validate.message"/>"
                                            required>
                                     <label for="floatingInputEmail"><fmt:message key="email"/></label>
                                 </div>
@@ -77,8 +80,8 @@
                                 <div class="form-floating d-flex flex-row align-items-center mb-4">
                                     <input class="form-control" name="degree" id="floatingInputDegree"
                                            placeholder="name" value="${sessionScope.user.degree}"
-                                           pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє'-]{1,30}" title="Degree must contains 1 to 30 symbols"
-                                           required>
+                                           pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!?@#$^&*()={}| ]{1,100}"
+                                           title="<fmt:message key="degree.validate.message"/>">
                                     <label for="floatingInputDegree"><fmt:message key="degree"/></label>
                                 </div>
 

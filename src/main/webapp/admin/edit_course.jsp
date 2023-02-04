@@ -59,8 +59,8 @@
                                     <div class="form-floating">
                                         <input type="text" id="title" class="form-control form-control-lg"
                                                value="${requestScope.course.title}"
-                                               pattern="^[A-Za-zА-ЩЬЮЯҐІЇЄа-щьюяґіїє0-9\\s\\-_,\\.:;()''\'\'#№]{1,30}"
-                                               title="Title must contain 1 to 3 characters" required
+                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!?@#$^&*()={}| ]{1,100}"
+                                               title="<fmt:message key="title.validate.message"/>" required
                                                name="title"/>
                                         <label class="form-label" for="title"><fmt:message key="title"/></label>
                                     </div>
@@ -74,7 +74,7 @@
                                                name="duration"
                                                value="${requestScope.course.duration}"
                                                min="1" max="999"
-                                               title="Duration must contain a value from 1 to 999" required/>
+                                               title="<fmt:message key="duration.validate.message"/>" required/>
                                         <label class="form-label" for="duration"><fmt:message key="duration"/></label>
                                     </div>
 
@@ -144,8 +144,8 @@
                                         <input type="text" id="description" class="form-control form-control-lg"
                                                name="description"
                                                value="${requestScope.course.description}"
-                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!@#$^&*()={} ]{0,200}"
-                                               title="Description must contain 0 to 200 characters"/>
+                                               pattern="^[\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\-~`!?@#$^&*()={}| ]{0,400}"
+                                               title="<fmt:message key="description.validate.message"/>"/>
                                         <label class="form-label" for="description"><fmt:message
                                                 key="description"/></label>
                                     </div>

@@ -6,7 +6,6 @@
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
-<!DOCTYPE html>
 <html lang="${sessionScope.language}">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -40,7 +39,7 @@
                                        placeholder="login"
                                        value="${requestScope.login}"
                                        pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{4,16}$"
-                                       title="Login must contains 4 to 16 characters" required>
+                                       title="<fmt:message key="login.validate.message"/>" required>
                                 <label class="form-label" for="floatingInput"><fmt:message key="login"/></label>
                             </div>
 
@@ -48,7 +47,7 @@
                                 <input type="password" class="form-control form-control-lg" name="password"
                                        id="password" placeholder="Password"
                                        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
-                                       title="Password must be between 8 and 20 characters, capital letter and digit"
+                                       title="<fmt:message key="password.validate.message"/>"
                                        required>
                                 <label class="form-label" for="password"><fmt:message key="password.login"/></label>
                             </div>

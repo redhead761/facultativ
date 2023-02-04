@@ -1,7 +1,6 @@
 package com.epam.facultative.model.utils.validator;
 
 import com.epam.facultative.model.dto.CourseDTO;
-import com.epam.facultative.model.entities.Course;
 import com.epam.facultative.model.entities.Status;
 import com.epam.facultative.model.exception.ValidateException;
 

@@ -1,7 +1,6 @@
 package com.epam.facultative.model.utils.recaptcha;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.ProtocolException;
@@ -21,9 +20,8 @@ import static com.epam.facultative.model.utils.recaptcha.CaptchaConstants.*;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@Slf4j
 public class Recaptcha {
-
-    private static final Logger logger = LoggerFactory.getLogger(Recaptcha.class);
     private final String captchaURL;
     private final String secret;
     private final String userAgent;
@@ -55,7 +53,7 @@ public class Recaptcha {
             StringBuilder response = getResponse(con);
             return isCaptchaPassed(response);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(String.format("Couldn't verify captcha. Cause: %s", e.getMessage()));
             return false;
         }
     }

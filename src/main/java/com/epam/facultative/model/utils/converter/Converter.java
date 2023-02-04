@@ -13,6 +13,9 @@ import java.util.List;
  * @version 1.0
  */
 public class Converter {
+    private Converter() {
+    }
+
     /**
      * Converts User into UserDTO
      *

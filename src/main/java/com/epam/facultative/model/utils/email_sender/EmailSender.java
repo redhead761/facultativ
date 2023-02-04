@@ -1,7 +1,6 @@
 package com.epam.facultative.model.utils.email_sender;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -15,8 +14,8 @@ import java.util.Properties;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@Slf4j
 public class EmailSender {
-    private static final Logger logger = LoggerFactory.getLogger(EmailSender.class);
     private final String user;
     private final Session session;
 
@@ -43,7 +42,7 @@ public class EmailSender {
             message.setContent(multipart);
             Transport.send(message);
         } catch (MessagingException e) {
-            logger.error(e.getMessage());
+            log.error(String.format("Couldn't send email. Cause: %s", e.getMessage()));
         }
     }
 
@@ -59,7 +58,7 @@ public class EmailSender {
             message.setContent(multipart);
             Transport.send(message);
         } catch (MessagingException | IOException e) {
-            logger.error(e.getMessage());
+            log.error(String.format("Couldn't sent certificate. Cause: %s", e.getMessage()));
         }
     }
 

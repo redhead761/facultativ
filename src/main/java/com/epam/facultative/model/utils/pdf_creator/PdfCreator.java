@@ -15,8 +15,7 @@ import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -34,8 +33,8 @@ import static java.util.ResourceBundle.getBundle;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@Slf4j
 public class PdfCreator {
-    private static final Logger logger = LoggerFactory.getLogger(PdfCreator.class);
     private static final String COURSE_TITLE = "all.course";
     private static final int TITLE_SIZE = 20;
     private static final Paragraph LINE_SEPARATOR = new Paragraph(new Text("\n"));
@@ -91,7 +90,7 @@ public class PdfCreator {
             setCertificate(document, studentDTO, course, grade);
             return dest;
         } catch (FileNotFoundException e) {
-            logger.error(e.getMessage());
+            log.error(String.format("Couldn't create certificate. Cause: %s", e.getMessage()));
             throw new RuntimeException(e);
         }
     }
@@ -174,7 +173,7 @@ public class PdfCreator {
         try {
             return PdfFontFactory.createFont(PATH_FONT);
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            log.error(String.format("Couldn't get pdf font. Cause: %s", e.getMessage()));
             return null;
         }
     }

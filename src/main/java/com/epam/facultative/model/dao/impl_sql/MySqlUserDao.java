@@ -5,6 +5,7 @@ import com.epam.facultative.model.entities.Role;
 import com.epam.facultative.model.entities.User;
 import com.epam.facultative.model.exception.DAOException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ import static com.epam.facultative.model.dao.impl_sql.сonstants.SQLRequestConst
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MySqlUserDao implements UserDao {
     private final DataSource dataSource;
@@ -45,6 +47,7 @@ public class MySqlUserDao implements UserDao {
                 user = mapRow(rs);
             }
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get the User. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Optional.ofNullable(user);
@@ -62,6 +65,7 @@ public class MySqlUserDao implements UserDao {
              PreparedStatement stmt = con.prepareStatement(INSERT_USER)) {
             setStatementFields(user, stmt);
             stmt.executeUpdate();
+            log.info(String.format("User - %s added", user.getLogin()));
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -79,7 +83,9 @@ public class MySqlUserDao implements UserDao {
              PreparedStatement stmt = con.prepareStatement(UPDATE_USER)) {
             stmt.setString(setStatementFields(user, stmt), String.valueOf(user.getId()));
             stmt.executeUpdate();
+            log.info(String.format("User - %s updated", user.getLogin()));
         } catch (SQLException e) {
+            log.error(String.format("Couldn't update the User - %s. Cause: %s", user.getLogin(), e.getMessage()));
             throw new DAOException(e);
         }
     }
@@ -96,6 +102,7 @@ public class MySqlUserDao implements UserDao {
              PreparedStatement stmt = con.prepareStatement(DELETE_USER)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            log.info(String.format("User - %s deleted", id));
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -124,6 +131,7 @@ public class MySqlUserDao implements UserDao {
                 noOfRecords = rs.getInt(1);
             }
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get the Users. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, users);
@@ -144,7 +152,9 @@ public class MySqlUserDao implements UserDao {
             stmt.setBlob(++k, avatar);
             stmt.setInt(++k, userId);
             stmt.executeUpdate();
+            log.info(String.format("Avatar for user %s added", userId));
         } catch (SQLException e) {
+            log.info(String.format("Avatar for user %s didn't add", userId));
             throw new DAOException(e);
         }
     }

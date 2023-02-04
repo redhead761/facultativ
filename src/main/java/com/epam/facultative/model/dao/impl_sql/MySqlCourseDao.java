@@ -5,6 +5,7 @@ import com.epam.facultative.model.entities.*;
 import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -21,6 +22,7 @@ import static com.epam.facultative.model.exception.ConstantsValidateMessage.TITL
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MySqlCourseDao implements CourseDao {
     private final DataSource dataSource;
@@ -42,6 +44,7 @@ public class MySqlCourseDao implements CourseDao {
                 course = mapRowCourse(rs);
             }
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get the Course. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Optional.ofNullable(course);
@@ -59,9 +62,11 @@ public class MySqlCourseDao implements CourseDao {
              PreparedStatement stmt = con.prepareStatement(INSERT_COURSE)) {
             setStatementFields(course, stmt);
             stmt.executeUpdate();
+            log.info(String.format("Course - %s added", course.getTitle()));
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't add new Course - %s. Cause: %s", course.getTitle(), e.getMessage()));
             throw new DAOException();
         }
     }
@@ -79,9 +84,11 @@ public class MySqlCourseDao implements CourseDao {
             int k = setStatementFields(course, stmt);
             stmt.setString(++k, String.valueOf(course.getId()));
             stmt.executeUpdate();
+            log.info(String.format("Course - %s updated", course.getTitle()));
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't update the Course - %s. Cause: %s", course.getTitle(), e.getMessage()));
             throw new DAOException(e);
         }
     }
@@ -98,7 +105,9 @@ public class MySqlCourseDao implements CourseDao {
              PreparedStatement stmt = con.prepareStatement(DELETE_COURSE)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            log.info(String.format("Course - %s deleted", id));
         } catch (SQLException e) {
+            log.error(String.format("Couldn't delete the Course - %s. Cause: %s", id, e.getMessage()));
             throw new DAOException(e);
         }
     }
@@ -123,6 +132,7 @@ public class MySqlCourseDao implements CourseDao {
             }
             noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get hte Courses. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, courses);
@@ -148,6 +158,7 @@ public class MySqlCourseDao implements CourseDao {
             }
             noOfRecords = setFoundRows(stmt);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get hte Courses. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, courses);
@@ -175,8 +186,10 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(1, courseId);
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Student %s added to course %s", courseId, studentId));
         } catch (SQLException e) {
             rollback(con);
+            log.error(String.format("Student %s didn't add to course %s", courseId, studentId));
             throw new DAOException(e);
         } finally {
             close(stmt);
@@ -199,7 +212,9 @@ public class MySqlCourseDao implements CourseDao {
             stmt.setInt(++k, courseId);
             stmt.setInt(++k, studentId);
             stmt.executeUpdate();
+            log.info(String.format("Student %s updated to course %s", courseId, studentId));
         } catch (SQLException e) {
+            log.error(String.format("Student %s didn't update to course %s", courseId, studentId));
             throw new DAOException(e);
         }
     }

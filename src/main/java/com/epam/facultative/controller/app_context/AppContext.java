@@ -63,7 +63,7 @@ public class AppContext {
                 .getResourceAsStream(confPropertiesFile)) {
             properties.load(inputStream);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(String.format("App Context couldn't read properties. Cause: %s", e.getMessage()));
         }
         return properties;
     }

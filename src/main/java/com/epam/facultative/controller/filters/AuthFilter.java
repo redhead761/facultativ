@@ -6,10 +6,12 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 import static com.epam.facultative.controller.constants.ActionAccessConstants.*;
+import static com.epam.facultative.controller.constants.AttributeConstants.USER;
 import static com.epam.facultative.controller.constants.PageAccessConstants.*;
 
 /**
@@ -18,6 +20,7 @@ import static com.epam.facultative.controller.constants.PageAccessConstants.*;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@Slf4j
 @WebFilter(filterName = "AuthFilter")
 public class AuthFilter extends HttpFilter {
     /**
@@ -78,5 +81,6 @@ public class AuthFilter extends HttpFilter {
     private void accessDenied(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.getSession().invalidate();
         resp.sendRedirect(req.getContextPath() + "/auth.jsp");
+        log.warn(String.format("User: %s tried to access forbidden page", req.getSession().getAttribute(USER)));
     }
 }

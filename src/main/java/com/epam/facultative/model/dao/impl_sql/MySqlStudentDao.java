@@ -6,6 +6,7 @@ import com.epam.facultative.model.entities.Student;
 import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
@@ -24,6 +25,7 @@ import static com.epam.facultative.model.exception.ConstantsValidateMessage.LOE_
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MySqlStudentDao implements StudentDao {
     private final DataSource dataSource;
@@ -44,6 +46,7 @@ public class MySqlStudentDao implements StudentDao {
             if (rs.next())
                 student = mapRow(rs);
         } catch (SQLException | IOException e) {
+            log.error(String.format("Couldn't get the Student. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Optional.ofNullable(student);
@@ -76,10 +79,12 @@ public class MySqlStudentDao implements StudentDao {
             setStatementFieldsStudent(student, stmt);
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Student - %s added", student.getLogin()));
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
             throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't add new Student - %s. Cause: %s", student.getLogin(), e.getMessage()));
             rollback(con);
             throw new DAOException(e);
         } finally {
@@ -112,11 +117,13 @@ public class MySqlStudentDao implements StudentDao {
             stmt.setInt(++k, student.getId());
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Student - %s updated", student.getLogin()));
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
             throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
+            log.error(String.format("Couldn't update the Student - %s. Cause: %s", student.getLogin(), e.getMessage()));
             throw new DAOException(e);
         } finally {
             close(stmt);
@@ -144,8 +151,10 @@ public class MySqlStudentDao implements StudentDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Student - %s deleted", id));
         } catch (SQLException e) {
             rollback(con);
+            log.error(String.format("Couldn't delete the Student - %s. Cause: %s", id, e.getMessage()));
             throw new DAOException(e);
         } finally {
             close(stmt);
@@ -173,6 +182,7 @@ public class MySqlStudentDao implements StudentDao {
             }
             noOfRecords = setFoundRows(stmt);
         } catch (SQLException | IOException e) {
+            log.error(String.format("Couldn't get hte Students. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, students);
@@ -200,6 +210,7 @@ public class MySqlStudentDao implements StudentDao {
             }
             noOfRecords = setFoundRows(stmt);
         } catch (SQLException | IOException e) {
+            log.error(String.format("Couldn't get hte Students. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, students);
@@ -219,7 +230,9 @@ public class MySqlStudentDao implements StudentDao {
             stmt.setBoolean(++k, block);
             stmt.setInt(++k, studentId);
             stmt.executeUpdate();
+            log.info(String.format("Student - %s block updated", studentId));
         } catch (SQLException e) {
+            log.info(String.format("Student - %s block didn't update", studentId));
             throw new DAOException(e);
         }
 
@@ -243,6 +256,7 @@ public class MySqlStudentDao implements StudentDao {
             if (rs.next())
                 grade = rs.getInt(GRADE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get the grade. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return grade;

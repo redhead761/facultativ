@@ -6,6 +6,7 @@ import com.epam.facultative.model.entities.Teacher;
 import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
@@ -25,6 +26,7 @@ import static com.epam.facultative.model.exception.ConstantsValidateMessage.LOE_
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MySqlTeacherDao implements TeacherDao {
     private final DataSource dataSource;
@@ -45,6 +47,7 @@ public class MySqlTeacherDao implements TeacherDao {
             if (rs.next())
                 teacher = mapRow(rs);
         } catch (SQLException | IOException e) {
+            log.error(String.format("Couldn't get the Teacher. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Optional.ofNullable(teacher);
@@ -77,11 +80,13 @@ public class MySqlTeacherDao implements TeacherDao {
             setStatementFieldsTeacher(teacher, stmt);
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Teacher - %s added", teacher.getLogin()));
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
             throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
+            log.error(String.format("Couldn't add new Teacher - %s. Cause: %s", teacher.getLogin(), e.getMessage()));
             throw new DAOException(e);
         } finally {
             close(stmt);
@@ -112,11 +117,13 @@ public class MySqlTeacherDao implements TeacherDao {
             stmt.setInt(++k, teacher.getId());
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Teacher - %s updated", teacher.getLogin()));
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
             throw new ValidateException(LOE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
+            log.error(String.format("Couldn't update the Teacher - %s. Cause: %s", teacher.getLogin(), e.getMessage()));
             throw new DAOException(e);
         } finally {
             close(stmt);
@@ -144,11 +151,13 @@ public class MySqlTeacherDao implements TeacherDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
             con.commit();
+            log.info(String.format("Teacher - %s deleted", id));
         } catch (SQLIntegrityConstraintViolationException e) {
             rollback(con);
             throw new ValidateException(CAN_NOT_DELETE_TEACHER_MESSAGE);
         } catch (SQLException e) {
             rollback(con);
+            log.error(String.format("Couldn't delete the Teacher - %s. Cause: %s", id, e.getMessage()));
             throw new DAOException(e);
         } finally {
             close(stmt);
@@ -179,6 +188,7 @@ public class MySqlTeacherDao implements TeacherDao {
                 noOfRecords = rs.getInt(1);
             }
         } catch (SQLException | IOException e) {
+            log.error(String.format("Couldn't get the Teachers. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, teachers);

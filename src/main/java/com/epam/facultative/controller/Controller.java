@@ -62,8 +62,7 @@ public class Controller extends HttpServlet {
         try {
             return action.execute(req, resp);
         } catch (ServiceException e) {
-            log.error(e.getMessage());
-            req.getSession().invalidate();
+            log.error(String.format("Couldn't execute action. Cause: %s", e.getMessage()));
             return ERROR_PAGE;
         }
     }

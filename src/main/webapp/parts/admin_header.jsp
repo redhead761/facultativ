@@ -5,14 +5,6 @@
 <fmt:setLocale value="${sessionScope.language}" scope="session"/>
 <fmt:setBundle basename="resources"/>
 
-
-<html>
-<head>
-
-    <title> Facultative </title>
-</head>
-<body>
-
 <ul class="nav">
     <li class="nav-item">
         <a class="nav-link active" aria-current="page"
@@ -24,7 +16,8 @@
                 key="change.password"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message key="manage.courses"/></a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_courses"><fmt:message
+                key="manage.courses"/></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/controller?action=manage_categories"><fmt:message
@@ -39,5 +32,4 @@
                 key="manage.students"/></a>
     </li>
 </ul>
-</body>
-</html>
+

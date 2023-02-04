@@ -5,6 +5,7 @@ import com.epam.facultative.model.entities.Category;
 import com.epam.facultative.model.exception.DAOException;
 import com.epam.facultative.model.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -24,6 +25,7 @@ import static com.epam.facultative.model.exception.ConstantsValidateMessage.TITL
  * @author Oleksandr Pacnhenko
  * @version 1.0
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MySqlCategoryDao implements CategoryDao {
     private final DataSource dataSource;
@@ -45,6 +47,7 @@ public class MySqlCategoryDao implements CategoryDao {
                 category = mapRow(rs);
             }
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get the Category. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Optional.ofNullable(category);
@@ -62,9 +65,11 @@ public class MySqlCategoryDao implements CategoryDao {
              PreparedStatement stmt = con.prepareStatement(INSERT_CATEGORY)) {
             setStatementFields(category, stmt);
             stmt.executeUpdate();
+            log.info(String.format("Category - %s added", category.getTitle()));
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't add new Category - %s. Cause: %s", category.getTitle(), e.getMessage()));
             throw new DAOException(e);
         }
     }
@@ -81,9 +86,11 @@ public class MySqlCategoryDao implements CategoryDao {
              PreparedStatement stmt = con.prepareStatement(UPDATE_CATEGORY)) {
             stmt.setString(setStatementFields(category, stmt), String.valueOf(category.getId()));
             stmt.executeUpdate();
+            log.info(String.format("Category - %s updated", category.getTitle()));
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new ValidateException(TITLE_NOT_UNIQUE_MESSAGE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't update the Category - %s. Cause: %s", category.getTitle(), e.getMessage()));
             throw new DAOException(e);
         }
     }
@@ -100,9 +107,11 @@ public class MySqlCategoryDao implements CategoryDao {
              PreparedStatement stmt = con.prepareStatement(DELETE_CATEGORY)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            log.info(String.format("Category - %s deleted", id));
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new ValidateException(CAN_NOT_DELETE_CATEGORY_MESSAGE);
         } catch (SQLException e) {
+            log.error(String.format("Couldn't delete the Category - %s. Cause: %s", id, e.getMessage()));
             throw new DAOException(e);
         }
     }
@@ -130,6 +139,7 @@ public class MySqlCategoryDao implements CategoryDao {
                 noOfRecords = rs.getInt(1);
             }
         } catch (SQLException e) {
+            log.error(String.format("Couldn't get the Categories. Cause: %s", e.getMessage()));
             throw new DAOException(e);
         }
         return Map.entry(noOfRecords, categories);

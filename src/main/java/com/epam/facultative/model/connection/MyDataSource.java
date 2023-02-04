@@ -2,6 +2,7 @@ package com.epam.facultative.model.connection;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -12,6 +13,7 @@ import java.util.Properties;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@Slf4j
 public class MyDataSource {
 
     private static HikariDataSource ds;
@@ -29,6 +31,7 @@ public class MyDataSource {
         if (ds == null) {
             HikariConfig config = getHikariConfig(properties);
             ds = new HikariDataSource(config);
+            log.info("Hikari Pool has been created.");
         }
         return ds;
     }
@@ -43,6 +46,7 @@ public class MyDataSource {
         config.addDataSourceProperty("cachePrepStmts", properties.getProperty(ConnectionConstants.CACHE_PREPARED_STATEMENT));
         config.addDataSourceProperty("prepStmtCacheSize", properties.getProperty(ConnectionConstants.CACHE_SIZE));
         config.addDataSourceProperty("prepStmtCacheSqlLimit", properties.getProperty(ConnectionConstants.CACHE_SQL_LIMIT));
+        log.info("Hikari Pool has been configured.");
         return config;
     }
 

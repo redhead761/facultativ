@@ -1,21 +1,22 @@
-.my-container {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.my-bnt {
-    background: #cd0a0a !important;
-    color: #000000 !important;
-}
-
-.my-p {
-    color: #cd0a0a;
-}
-
 body {
-    background: #cd0a0a !important;
+    height: 100vh;
 }
 
-#back {
-    background: #cd0a0a;
+.wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
+.main {
+    flex: 1 1 auto;
+}
+
+.main-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

@@ -13,19 +13,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Facultative </title>
+    <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-
-<jsp:include page="/parts/header.jsp"/>
-<div class="text-center">
-    <h2><fmt:message key="contacts"/></h2>
-    <hr>
-    <fmt:message key="contacts.message"/>
+<div class="wrapper">
+    <jsp:include page="/parts/header.jsp"/>
+    <main class="main main-center">
+        <div class="col-lg-4">
+            <h2><fmt:message key="contacts"/></h2>
+            <hr>
+            <fmt:message key="contacts.message"/>
+        </div>
+    </main>
+    <jsp:include page="/parts/footer.jsp"/>
 </div>
-<jsp:include page="/parts/footer.jsp"/>
 </body>
 </html>

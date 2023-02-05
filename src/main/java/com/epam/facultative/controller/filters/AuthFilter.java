@@ -50,7 +50,8 @@ public class AuthFilter extends HttpFilter {
         if (getNoLoggedUserActions().contains(action) || getNoLoggedUserPages().contains(servletPath.substring(1))) {
             filterChain.doFilter(req, resp);
         } else {
-            accessDenied(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/auth.jsp");
+            log.warn("No logged user tried to access forbidden page");
         }
     }
 

@@ -20,7 +20,7 @@
 <div class="wrapper">
     <jsp:include page="/parts/header.jsp"/>
     <tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
-    <main class="main-center">
+    <main class="main main-center">
         <div class="card text-center col-lg-4 mt-4">
             <div class="card-header h5 text-white bg-secondary"><fmt:message key="recovery"/></div>
             <div class="card-body px-5 ">

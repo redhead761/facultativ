@@ -43,7 +43,7 @@
                                 <label class="form-label" for="floatingInput"><fmt:message key="login"/></label>
                             </div>
 
-                            <div class="form-floating mb-1">
+                            <div class="form-floating">
                                 <input type="password" class="form-control form-control-lg" name="password"
                                        id="password" placeholder="Password"
                                        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
@@ -52,12 +52,15 @@
                                 <label class="form-label" for="password"><fmt:message key="password.login"/></label>
                             </div>
 
-                            <div class="form-check-inline mb-4">
-                                <input class="form-check-input" type="checkbox" onclick="checkPass()"
-                                       id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    <fmt:message key="show.password"/>
-                                </label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="form-check-inline mb-4">
+                                    <input class="form-check-input" type="checkbox" onclick="checkPass()"
+                                           id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <fmt:message key="show.password"/>
+                                    </label>
+                                </div>
+                                <a href="recovery.jsp" class="text-body mb-4"><fmt:message key="forgot.password"/></a>
                             </div>
 
                             <div class="g-recaptcha"
@@ -68,7 +71,6 @@
                                         style="padding-left: 2.5rem; padding-right: 2.5rem;"><fmt:message
                                         key="log.in"/>
                                 </button>
-                                <a href="recovery.jsp" class="text-body"><fmt:message key="forgot.password"/></a>
                             </div>
 
                             <div class="text-center text-lg-start pt-2">

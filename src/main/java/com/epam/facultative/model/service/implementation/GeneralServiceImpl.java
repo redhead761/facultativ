@@ -150,7 +150,7 @@ public class GeneralServiceImpl implements GeneralService {
     public void recoveryPassword(String email, AppContext appContext) throws ServiceException, ValidateException {
         try {
             User user = userDao.get(userParamBuilderForQuery().setUserEmailFilter(email).getParam())
-                    .orElseThrow(() -> new ValidateException(LOGIN_NOT_EXIST_MESSAGE));
+                    .orElseThrow(() -> new ValidateException(EMAIL_NOT_EXIST_MESSAGE));
             String newPass = getNewPassword();
             user.setPassword(encode(newPass));
             userDao.update(user);

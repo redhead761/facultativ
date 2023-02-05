@@ -59,7 +59,8 @@
                             <input type="hidden" name="course_id" value="${param.course_id}"/>
                             <input type="hidden" name="student_id" value="${student.id}"/>
                             <fmt:message key="grade"/>: <label>
-                            <input name="grade" type="number" min="1" max="100"/>
+                            <input name="grade" type="number" min="1" max="100"
+                                   value="<fmt:message key="grade.validate.message"/>"/>
                         </label>
                             <input type="submit" value="<fmt:message key="submit"/>"/>
                         </form>

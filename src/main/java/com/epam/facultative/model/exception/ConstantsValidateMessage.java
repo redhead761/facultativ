@@ -9,6 +9,7 @@ package com.epam.facultative.model.exception;
 
 public class ConstantsValidateMessage {
     public static final String LOGIN_NOT_EXIST_MESSAGE = "login.not.exist";
+    public static final String EMAIL_NOT_EXIST_MESSAGE = "email.not.exist";
     public static final String WRONG_PASSWORD_MESSAGE = "wrong.password";
     public static final String TITLE_NOT_UNIQUE_MESSAGE = "title.not.unique";
     public static final String LOE_NOT_UNIQUE_MESSAGE = "login.or.email.not.unique";

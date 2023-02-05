@@ -35,9 +35,9 @@
         </div>
     </div>
 
-    <main class="main">
+    <main class="main main-center">
         <tags:notification value_message="${requestScope.message}" value_error="${requestScope.error}"/>
-        <div align="center">
+        <div align="center"  class="container">
 
             <h2><fmt:message key="edit.category.form"/></h2>
 

@@ -46,7 +46,7 @@
                                       method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="action" value="add_avatar"/>
                                     <input type="hidden" name="user_id" value="${sessionScope.user.id}"/>
-                                    <input type="file" name="avatar">
+                                    <input type="file" name="avatar" accept="image/*">
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button type="submit" class="btn btn-primary btn-sm"><fmt:message
                                                 key="submit"/></button>

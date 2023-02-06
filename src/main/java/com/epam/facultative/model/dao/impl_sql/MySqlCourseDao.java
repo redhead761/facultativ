@@ -150,7 +150,7 @@ public class MySqlCourseDao implements CourseDao {
         List<Course> courses = new ArrayList<>();
         int noOfRecords;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_PAGINATION, param))) {
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_COURSES, param))) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     courses.add(mapRowCourse(rs));
@@ -272,10 +272,8 @@ public class MySqlCourseDao implements CourseDao {
 
     private Integer setFoundRows(PreparedStatement stmt) throws SQLException {
         ResultSet rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
-        return 0;
+        rs.next();
+        return rs.getInt(1);
     }
 
     private void close(AutoCloseable stmt) throws DAOException {

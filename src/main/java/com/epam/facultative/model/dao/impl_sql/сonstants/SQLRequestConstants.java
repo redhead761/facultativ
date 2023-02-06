@@ -28,7 +28,7 @@ public class SQLRequestConstants {
     public static final String SELECT_TEACHER =
             "SELECT * FROM teacher JOIN user ON user_id = user.id %s";
     public static final String DELETE_TEACHER = "DELETE FROM teacher WHERE user_id=?";
-    public static final String SELECT_ALL_TEACHERS_PAGINATION =
+    public static final String SELECT_ALL_TEACHERS =
             "SELECT SQL_CALC_FOUND_ROWS * FROM teacher JOIN user ON user_id = user.id %s";
 
     /**
@@ -39,7 +39,7 @@ public class SQLRequestConstants {
     public static final String SELECT_STUDENT =
             "SELECT * FROM student JOIN user ON user_id = user.id %s";
     public static final String DELETE_STUDENT = "DELETE FROM student WHERE user_id=?";
-    public static final String SELECT_ALL_STUDENTS_PAGINATION =
+    public static final String SELECT_ALL_STUDENTS =
             "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id %s";
     public static final String SELECT_STUDENTS_BY_COURSE =
             "SELECT SQL_CALC_FOUND_ROWS * FROM student JOIN user ON user_id = user.id JOIN journal ON student_id = user_id %s";
@@ -72,7 +72,7 @@ public class SQLRequestConstants {
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id " +
                     "LEFT JOIN user ON teacher.user_id = user.id JOIN journal ON course.id = journal.course_id " +
                     "JOIN student ON journal.student_id = student.user_id %s";
-    public static final String SELECT_ALL_PAGINATION =
+    public static final String SELECT_ALL_COURSES =
             "SELECT SQL_CALC_FOUND_ROWS * FROM course JOIN category ON category_id = category.id " +
                     "JOIN status ON status_id = status.id LEFT JOIN teacher ON teacher_id = user_id" +
                     " LEFT JOIN user ON teacher.user_id = user.id %s";

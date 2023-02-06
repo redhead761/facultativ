@@ -76,7 +76,7 @@ public class TestServiceUtil {
                 .surname("Testsurname")
                 .email("test@fa.ve")
                 .role(Role.STUDENT)
-                .grade(1)
+                .grade(0)
                 .courseNumber(1)
                 .block(false)
                 .build();
@@ -125,7 +125,7 @@ public class TestServiceUtil {
                 .surname("Testsurname")
                 .email("test@fa.ve")
                 .role(Role.STUDENT)
-                .grade(1)
+                .grade(0)
                 .courseNumber(1)
                 .block(false)
                 .build();

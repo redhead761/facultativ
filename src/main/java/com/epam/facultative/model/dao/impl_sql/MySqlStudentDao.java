@@ -174,7 +174,7 @@ public class MySqlStudentDao implements StudentDao {
         List<Student> students = new ArrayList<>();
         int noOfRecords;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_STUDENTS_PAGINATION, param))) {
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_STUDENTS, param))) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     students.add(mapRow(rs));
@@ -315,10 +315,8 @@ public class MySqlStudentDao implements StudentDao {
 
     private Integer setFoundRows(PreparedStatement stmt) throws SQLException {
         ResultSet rs = stmt.executeQuery(SELECT_FOUND_ROWS);
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
-        return 0;
+        rs.next();
+        return rs.getInt(1);
     }
 
     private void close(AutoCloseable stmt) throws DAOException {

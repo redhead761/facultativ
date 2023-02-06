@@ -177,7 +177,7 @@ public class MySqlTeacherDao implements TeacherDao {
         List<Teacher> teachers = new ArrayList<>();
         int noOfRecords = 0;
         try (Connection con = dataSource.getConnection();
-             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_TEACHERS_PAGINATION, param))) {
+             PreparedStatement stmt = con.prepareStatement(String.format(SELECT_ALL_TEACHERS, param))) {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     teachers.add(mapRow(rs));

@@ -1,15 +1,16 @@
 package com.epam.facultative.model.dao.impl_sql;
 
-import com.epam.facultative.model.dao.CategoryDao;
-import com.epam.facultative.model.entities.Category;
+import com.epam.facultative.model.dao.UserDao;
+import com.epam.facultative.model.entities.User;
 import com.epam.facultative.model.exception.DAOException;
-import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.implementation.TestServiceUtil;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-
+import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,23 +18,35 @@ import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants
 import static com.epam.facultative.model.dao.impl_sql.сonstants.SQLRequestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
 
-class MySqlCategoryDaoTest {
+class MySqlUserDaoTest {
+
     private static final DataSource dataSource = mock(DataSource.class);
     Connection con = mock(Connection.class);
     PreparedStatement stmt = mock(PreparedStatement.class);
     ResultSet resultSet = mock(ResultSet.class);
-    private static Category category;
-    private static Map.Entry<Integer, List<Category>> categories;
-    private static CategoryDao categoryDao;
+    private static User user;
+    private static Map.Entry<Integer, List<User>> users;
+    private static UserDao userDao;
+    private static InputStream avatar;
 
     @BeforeAll
     static void init() {
         TestServiceUtil testServiceUtil = new TestServiceUtil();
-        category = testServiceUtil.getCategory();
-        categoryDao = new MySqlCategoryDao(dataSource);
-        categories = testServiceUtil.getCategories();
+        user = testServiceUtil.getAdmin();
+        userDao = new MySqlUserDao(dataSource);
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
+        users = Map.entry(1, userList);
+        avatar = new InputStream() {
+            @Override
+            public int read() {
+                return 0;
+            }
+        };
     }
 
     @Test
@@ -42,9 +55,9 @@ class MySqlCategoryDaoTest {
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeQuery()).thenReturn(resultSet);
         setResultSet();
-        Category resultCategory = categoryDao.get(SELECT_CATEGORY).orElse(null);
-        assertNotNull(resultCategory);
-        assertEquals(category, resultCategory);
+        User resultUser = userDao.get(SELECT_USER).orElse(null);
+        assertNotNull(resultUser);
+        assertEquals(user, resultUser);
     }
 
     @Test
@@ -53,8 +66,8 @@ class MySqlCategoryDaoTest {
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(false);
-        Category resultCategory = categoryDao.get(SELECT_CATEGORY).orElse(null);
-        assertNull(resultCategory);
+        User resultUser = userDao.get(SELECT_USER).orElse(null);
+        assertNull(resultUser);
     }
 
     @Test
@@ -62,7 +75,7 @@ class MySqlCategoryDaoTest {
         when(dataSource.getConnection()).thenReturn(con);
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeQuery()).thenThrow(SQLException.class);
-        assertThrows(DAOException.class, () -> categoryDao.get(SELECT_CATEGORY));
+        assertThrows(DAOException.class, () -> userDao.get(SELECT_USER));
     }
 
     @Test
@@ -71,15 +84,7 @@ class MySqlCategoryDaoTest {
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeUpdate()).thenReturn(1);
         setStmt();
-        assertDoesNotThrow(() -> categoryDao.add(category));
-    }
-
-    @Test
-    void addCopy() throws SQLException {
-        when(dataSource.getConnection()).thenReturn(con);
-        when(con.prepareStatement(anyString())).thenReturn(stmt);
-        when(stmt.executeUpdate()).thenThrow(SQLIntegrityConstraintViolationException.class);
-        assertThrows(ValidateException.class, () -> categoryDao.add(category));
+        assertDoesNotThrow(() -> userDao.add(user));
     }
 
     @Test
@@ -87,7 +92,7 @@ class MySqlCategoryDaoTest {
         when(dataSource.getConnection()).thenReturn(con);
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeUpdate()).thenThrow(SQLException.class);
-        assertThrows(DAOException.class, () -> categoryDao.add(category));
+        assertThrows(DAOException.class, () -> userDao.add(user));
     }
 
     @Test
@@ -96,15 +101,7 @@ class MySqlCategoryDaoTest {
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeUpdate()).thenReturn(1);
         setStmt();
-        assertDoesNotThrow(() -> categoryDao.update(category));
-    }
-
-    @Test
-    void updateCopy() throws SQLException {
-        when(dataSource.getConnection()).thenReturn(con);
-        when(con.prepareStatement(anyString())).thenReturn(stmt);
-        when(stmt.executeUpdate()).thenThrow(SQLIntegrityConstraintViolationException.class);
-        assertThrows(ValidateException.class, () -> categoryDao.update(category));
+        assertDoesNotThrow(() -> userDao.update(user));
     }
 
     @Test
@@ -112,7 +109,7 @@ class MySqlCategoryDaoTest {
         when(dataSource.getConnection()).thenReturn(con);
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeUpdate()).thenThrow(SQLException.class);
-        assertThrows(DAOException.class, () -> categoryDao.update(category));
+        assertThrows(DAOException.class, () -> userDao.update(user));
     }
 
     @Test
@@ -121,15 +118,7 @@ class MySqlCategoryDaoTest {
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeUpdate()).thenReturn(1);
         setStmt();
-        assertDoesNotThrow(() -> categoryDao.delete(1));
-    }
-
-    @Test
-    void deleteNoCascade() throws SQLException {
-        when(dataSource.getConnection()).thenReturn(con);
-        when(con.prepareStatement(anyString())).thenReturn(stmt);
-        when(stmt.executeUpdate()).thenThrow(SQLIntegrityConstraintViolationException.class);
-        assertThrows(ValidateException.class, () -> categoryDao.delete(1));
+        assertDoesNotThrow(() -> userDao.delete(1));
     }
 
     @Test
@@ -137,7 +126,7 @@ class MySqlCategoryDaoTest {
         when(dataSource.getConnection()).thenReturn(con);
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeUpdate()).thenThrow(SQLException.class);
-        assertThrows(DAOException.class, () -> categoryDao.delete(1));
+        assertThrows(DAOException.class, () -> userDao.delete(1));
     }
 
     @Test
@@ -148,8 +137,8 @@ class MySqlCategoryDaoTest {
         setResultSet();
         when(stmt.executeQuery(SELECT_FOUND_ROWS)).thenReturn(resultSet);
         when(resultSet.getInt(1)).thenReturn(1);
-        Map.Entry<Integer, List<Category>> resultCategory = categoryDao.getAll(SELECT_ALL_CATEGORIES);
-        assertEquals(categories, resultCategory);
+        Map.Entry<Integer, List<User>> resultUsers = userDao.getAll(SELECT_ALL_USERS);
+        assertEquals(users, resultUsers);
     }
 
     @Test
@@ -157,7 +146,25 @@ class MySqlCategoryDaoTest {
         when(dataSource.getConnection()).thenReturn(con);
         when(con.prepareStatement(anyString())).thenReturn(stmt);
         when(stmt.executeQuery()).thenThrow(SQLException.class);
-        assertThrows(DAOException.class, () -> categoryDao.getAll(SELECT_ALL_CATEGORIES));
+        assertThrows(DAOException.class, () -> userDao.getAll(SELECT_ALL_USERS));
+    }
+
+    @Test
+    void addAvatarSuccessful() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenReturn(1);
+        setStmt();
+        doNothing().when(stmt).setBlob(anyInt(), isA(Blob.class));
+        assertDoesNotThrow(() -> userDao.addAvatar(1, avatar));
+    }
+
+    @Test
+    void addAvatarFailed() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenThrow(SQLException.class);
+        assertThrows(DAOException.class, () -> userDao.addAvatar(1, avatar));
     }
 
     private void setStmt() throws SQLException {
@@ -167,8 +174,13 @@ class MySqlCategoryDaoTest {
 
     private void setResultSet() throws SQLException {
         when(resultSet.next()).thenReturn(true).thenReturn(false).thenReturn(true).thenReturn(false);
-        when(resultSet.getInt(CATEGORY_ID)).thenReturn(category.getId());
-        when(resultSet.getString(CATEGORY_TITLE)).thenReturn(category.getTitle());
-        when(resultSet.getString(CATEGORY_DESCRIPTION)).thenReturn(category.getDescription());
+        when(resultSet.getInt(USER_ID)).thenReturn(user.getId());
+        when(resultSet.getString(USER_LOGIN)).thenReturn(user.getLogin());
+        when(resultSet.getString(USER_PASSWORD)).thenReturn(user.getPassword());
+        when(resultSet.getString(USER_FIRST_NAME)).thenReturn(user.getName());
+        when(resultSet.getString(USER_FAMILY_NAME)).thenReturn(user.getSurname());
+        when(resultSet.getString(USER_EMAIL)).thenReturn(user.getEmail());
+        when(resultSet.getString(ROLE_NAME)).thenReturn(String.valueOf(user.getRole()));
     }
+
 }

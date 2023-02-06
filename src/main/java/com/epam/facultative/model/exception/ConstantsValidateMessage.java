@@ -1,12 +1,15 @@
 package com.epam.facultative.model.exception;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Class containing messages for all user-defined exceptions
  *
  * @author Oleksandr Panchenko
  * @version 1.0
  */
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConstantsValidateMessage {
     public static final String LOGIN_NOT_EXIST_MESSAGE = "login.not.exist";
     public static final String EMAIL_NOT_EXIST_MESSAGE = "email.not.exist";

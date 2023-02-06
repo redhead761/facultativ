@@ -1,12 +1,15 @@
 package com.epam.facultative.model.dao.impl_sql.сonstants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Class containing My SQL database fields
  *
  * @author Oleksandr Panchenko
  * @version 1.0
  */
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FieldsConstants {
 
     /**

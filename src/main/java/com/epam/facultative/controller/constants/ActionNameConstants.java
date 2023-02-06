@@ -1,11 +1,15 @@
 package com.epam.facultative.controller.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Containing all action names
  *
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ActionNameConstants {
     /**
      * Any user's actions
@@ -57,7 +61,4 @@ public class ActionNameConstants {
     public static String MY_CABINET_ACTION = "my_cabinet";
     public static String CHANGE_PASSWORD_ACTION = "change_password";
     public static String ADD_AVATAR_ACTION = "add_avatar";
-
-    private ActionNameConstants() {
-    }
 }

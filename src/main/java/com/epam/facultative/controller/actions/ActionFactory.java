@@ -85,5 +85,4 @@ public class ActionFactory {
     public Action getAction(String actionName) {
         return ACTION_MAP.get(actionName);
     }
-
 }

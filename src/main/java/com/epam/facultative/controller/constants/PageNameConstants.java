@@ -1,11 +1,15 @@
 package com.epam.facultative.controller.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Containing all page names
  *
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PageNameConstants {
     /**
      * No logged pages

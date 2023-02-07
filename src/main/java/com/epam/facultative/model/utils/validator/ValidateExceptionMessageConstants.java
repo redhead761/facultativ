@@ -1,11 +1,15 @@
 package com.epam.facultative.model.utils.validator;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Class containing message with not validate parameter
  *
  * @author Oleksandr Panchenko
  * @version 1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidateExceptionMessageConstants {
     static final String LOGIN_NO_VALIDATE_MESSAGE = "You entered incorrect login, login must contains 4-16 characters";
     static final String PASSWORD_NO_VALIDATE_MESSAGE = "You entered incorrect password, password must contains 8-20 characters";
@@ -17,4 +21,5 @@ public class ValidateExceptionMessageConstants {
     public static final String COMING_SOON_NO_VALIDATE_MESSAGE = "coming.soon.no.validate";
     public static final String IN_PROCESS_NO_VALIDATE_MESSAGE = "in.process.no.validate";
     public static final String COMPLETED_NO_VALIDATE_MESSAGE = "completed.no.validate";
+    public static final String NOT_NULL_MESSAGE = "Status or start date can't be null";
 }

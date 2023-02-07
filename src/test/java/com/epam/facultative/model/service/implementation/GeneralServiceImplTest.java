@@ -54,8 +54,8 @@ class GeneralServiceImplTest {
     @BeforeAll
     static void beforeAll() {
         TestServiceUtil testServiceUtil = new TestServiceUtil();
-        admin = testServiceUtil.getAdmin();
-        adminDTO = testServiceUtil.getAdminDTO();
+        admin = testServiceUtil.getUser();
+        adminDTO = testServiceUtil.getUserDTO();
         teacher = testServiceUtil.getTeacher();
         teacherDTO = testServiceUtil.getTeacherDTO();
         student = testServiceUtil.getStudent();

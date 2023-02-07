@@ -22,7 +22,7 @@ class LogOutActionTest {
     @Test
     void executeSuccessful() {
         when(req.getSession()).thenReturn(httpSession);
-        when(httpSession.getAttribute(USER)).thenReturn(testServiceUtil.getAdminDTO());
+        when(httpSession.getAttribute(USER)).thenReturn(testServiceUtil.getUserDTO());
         when(httpSession.getAttribute(LANGUAGE)).thenReturn("en");
         when(req.getSession(true)).thenReturn(httpSession);
         String path = new LogOutAction().execute(req, resp);

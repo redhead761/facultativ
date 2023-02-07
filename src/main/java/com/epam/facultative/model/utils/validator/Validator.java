@@ -1,6 +1,5 @@
 package com.epam.facultative.model.utils.validator;
 
-import com.epam.facultative.model.dto.CourseDTO;
 import com.epam.facultative.model.entities.Status;
 import com.epam.facultative.model.exception.ValidateException;
 
@@ -63,9 +62,10 @@ public final class Validator {
         }
     }
 
-    public static void validateStatus(CourseDTO courseDTO) throws ValidateException {
-        Status status = courseDTO.getStatus();
-        LocalDate startDate = courseDTO.getStartDate();
+    public static void validateStatus(Status status, LocalDate startDate) throws ValidateException {
+        if (status == null || startDate == null) {
+            throw new ValidateException(NOT_NULL_MESSAGE);
+        }
 
         if (status.equals(COMING_SOON) && startDate.isBefore(LocalDate.now())) {
             throw new ValidateException(COMING_SOON_NO_VALIDATE_MESSAGE);
@@ -78,8 +78,5 @@ public final class Validator {
         if (status.equals(COMPLETED) && startDate.isAfter(LocalDate.now())) {
             throw new ValidateException((COMPLETED_NO_VALIDATE_MESSAGE));
         }
-
     }
-
-
 }

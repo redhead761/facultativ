@@ -1,6 +1,8 @@
 package com.epam.facultative.model.utils.validator;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -9,7 +11,7 @@ import lombok.Setter;
  * @author Oleksandr Panchenko
  * @version 1.0
  */
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class RegexConstants {
     //Regex
     static final String TITLE_PATTERN_REGEX = "^[\\wА-ЩЬЮЯҐІЇЄа-щьюяґіїє'.,;:+\\-~`!?@#$^&*()={}| ]{1,100}";

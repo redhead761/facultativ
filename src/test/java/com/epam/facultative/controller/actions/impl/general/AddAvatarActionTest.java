@@ -39,7 +39,7 @@ class AddAvatarActionTest {
     @Test
     void executeSuccessful() throws ServletException, IOException, ValidateException, ServiceException {
         setUpReturn();
-        when(generalService.addAvatar(anyInt(), isA(InputStream.class))).thenReturn(testServiceUtil.getAdminDTO());
+        when(generalService.addAvatar(anyInt(), isA(InputStream.class))).thenReturn(testServiceUtil.getUserDTO());
         String path = new AddAvatarAction(appContext).execute(req, resp);
         verify(httpSession, times(1)).setAttribute(MESSAGE, SUCCESSFUL);
         assertEquals(getGetAction(MY_CABINET_ACTION), path);

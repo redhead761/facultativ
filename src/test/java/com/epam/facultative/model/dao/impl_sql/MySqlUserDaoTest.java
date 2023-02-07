@@ -36,7 +36,7 @@ class MySqlUserDaoTest {
     @BeforeAll
     static void init() {
         TestServiceUtil testServiceUtil = new TestServiceUtil();
-        user = testServiceUtil.getAdmin();
+        user = testServiceUtil.getUser();
         userDao = new MySqlUserDao(dataSource);
         List<User> userList = new ArrayList<>();
         userList.add(user);

@@ -31,7 +31,7 @@ class AuthFilterTest {
     @BeforeAll
     static void init() {
         TestServiceUtil testServiceUtil = new TestServiceUtil();
-        adminDTO = testServiceUtil.getAdminDTO();
+        adminDTO = testServiceUtil.getUserDTO();
         teacherDTO = testServiceUtil.getTeacherDTO();
         studentDTO = testServiceUtil.getStudentDTO();
     }

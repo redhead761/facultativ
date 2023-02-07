@@ -11,7 +11,7 @@ import java.util.Map;
 import static com.epam.facultative.model.utils.hash_password.HashPassword.encode;
 
 public class TestServiceUtil {
-    public User getAdmin() {
+    public User getUser() {
         return User.builder()
                 .login("admin")
                 .password(encode("Admin1234"))
@@ -22,7 +22,7 @@ public class TestServiceUtil {
                 .build();
     }
 
-    public UserDTO getAdminDTO() {
+    public UserDTO getUserDTO() {
         return UserDTO.builder()
                 .login("admin")
                 .password("Admin1234")

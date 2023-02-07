@@ -9,11 +9,15 @@ import com.epam.facultative.model.exception.ValidateException;
 import com.epam.facultative.model.service.implementation.TestServiceUtil;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static com.epam.facultative.model.dao.impl_sql.сonstants.FieldsConstants.*;
 import static com.epam.facultative.model.dao.impl_sql.сonstants.SQLRequestConstants.*;
@@ -160,6 +164,79 @@ class MySqlCourseDaoTest {
         assertThrows(DAOException.class, () -> courseDao.getAll(SELECT_ALL_COURSES));
     }
 
+    @Test
+    void getByJournalSuccessful() throws SQLException, DAOException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeQuery()).thenReturn(resultSet);
+        setResultSet();
+        when(stmt.executeQuery(SELECT_FOUND_ROWS)).thenReturn(resultSet);
+        when(resultSet.getInt(1)).thenReturn(1);
+        Map.Entry<Integer, List<Course>> resultCourse = courseDao.getByJournal(SELECT_COURSE_BY_JOURNAL);
+        assertEquals(courses, resultCourse);
+    }
+
+    @Test
+    void getByJournalFailed() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeQuery()).thenThrow(SQLException.class);
+        assertThrows(DAOException.class, () -> courseDao.getByJournal(SELECT_COURSE_BY_JOURNAL));
+    }
+
+    @Test
+    void insertJournalSuccessful() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenReturn(1);
+        setStmt();
+        assertDoesNotThrow(() -> courseDao.insertJournal(1, 1));
+    }
+
+    @Test
+    void insertJournalFailed() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenThrow(SQLException.class);
+        assertThrows(DAOException.class, () -> courseDao.insertJournal(1, 1));
+    }
+
+    @Test
+    void rollbackFailed() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenThrow(SQLException.class);
+        doThrow(SQLException.class).when(con).rollback();
+        assertThrows(DAOException.class, () -> courseDao.insertJournal(1, 1));
+    }
+
+    @Test
+    void closeFailed() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenThrow(SQLException.class);
+        doThrow(SQLException.class).when(con).close();
+        assertThrows(DAOException.class, () -> courseDao.insertJournal(1, 1));
+    }
+
+    @Test
+    void updateJournalSuccessful() throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenReturn(1);
+        setStmt();
+        assertDoesNotThrow(() -> courseDao.updateJournal(1, 1, 1));
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidIntValues")
+    void updateJournalFailed(int courseId, int studentId, int grade) throws SQLException {
+        when(dataSource.getConnection()).thenReturn(con);
+        when(con.prepareStatement(anyString())).thenReturn(stmt);
+        when(stmt.executeUpdate()).thenThrow(SQLException.class);
+        assertThrows(DAOException.class, () -> courseDao.updateJournal(courseId, studentId, grade));
+    }
+
     private void setStmt() throws SQLException {
         doNothing().when(stmt).setInt(anyInt(), anyInt());
         doNothing().when(stmt).setString(anyInt(), anyString());
@@ -188,4 +265,14 @@ class MySqlCourseDaoTest {
         when(resultSet.getString(CATEGORY_DESCRIPTION)).thenReturn(category.getDescription());
     }
 
+    private static Stream<Arguments> invalidIntValues() {
+        return Stream.of(Arguments.of(0, 1, 1),
+                Arguments.of(1, 0, 1),
+                Arguments.of(1, 1, 0),
+                Arguments.of(0, 0, 0),
+                Arguments.of(-1, 1, 1),
+                Arguments.of(1, -1, 1),
+                Arguments.of(1, 1, -1),
+                Arguments.of(-1, -1, -1));
+    }
 }

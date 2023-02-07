@@ -35,7 +35,7 @@ class AuthActionTest {
     void executePostSuccessfulAdmin() throws ValidateException, ServiceException {
         setUpReturn();
         when(recaptcha.verify(anyString())).thenReturn(true);
-        when(generalService.authorization(anyString(), anyString())).thenReturn(testServiceUtil.getAdminDTO());
+        when(generalService.authorization(anyString(), anyString())).thenReturn(testServiceUtil.getUserDTO());
         String path = new AuthAction(appContext).execute(req, resp);
         assertEquals(ADMIN_PROFILE_PAGE, path);
     }
@@ -62,7 +62,7 @@ class AuthActionTest {
     void executePostWithValidateException1() throws ValidateException, ServiceException {
         setUpReturn();
         when(recaptcha.verify(anyString())).thenReturn(false);
-        when(generalService.authorization(anyString(), anyString())).thenReturn(testServiceUtil.getAdminDTO());
+        when(generalService.authorization(anyString(), anyString())).thenReturn(testServiceUtil.getUserDTO());
         String path = new AuthAction(appContext).execute(req, resp);
         assertEquals(getGetAction(AUTH_ACTION), path);
     }

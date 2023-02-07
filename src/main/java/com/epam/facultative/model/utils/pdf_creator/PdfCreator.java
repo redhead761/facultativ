@@ -154,11 +154,7 @@ public class PdfCreator {
                     table.addCell(String.valueOf(course.getAmountStudents()));
                     table.addCell(course.getCategory().getTitle());
                     table.addCell(String.valueOf(course.getStatus()));
-                    if (course.getTeacher() != null) {
-                        table.addCell(course.getTeacher().getName() + " " + course.getTeacher().getSurname());
-                    } else {
-                        table.addCell("No teacher");
-                    }
+                    table.addCell(course.getTeacher().getName() + " " + course.getTeacher().getSurname());
                 }
         );
     }
